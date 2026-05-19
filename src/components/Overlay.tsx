@@ -46,9 +46,6 @@ export default function Overlay() {
           <p className="text-xs md:text-sm text-white/50 uppercase tracking-widest mt-3">
             at <span className="font-rubik text-white font-semibold tracking-widest">BAJAJ FINSERV</span>
           </p>
-          <p className="mt-6 text-sm md:text-base font-light leading-relaxed text-white/60 max-w-md">
-            Designing simple, thoughtful user experiences that bridge the gap between complex financial ecosystems and daily human interactions.
-          </p>
         </motion.div>
 
         {/* Scroll to explore (Centered bottom) */}

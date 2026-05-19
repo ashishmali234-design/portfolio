@@ -113,15 +113,14 @@ export default function Overlay() {
             <Typewriter
               trigger={isSection2Visible}
               segments={[
-                { text: "I build digital\n", className: "text-white" },
-                { text: "experiences.", className: "text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500" }
+                { text: "Turning Ideas Into\n", className: "text-white" },
+                { text: "Seamless Experiences.", className: "text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500" }
               ]}
               delay={200}
             />
           </h2>
           <p className="mt-6 text-sm md:text-lg text-white/60 leading-relaxed font-light font-sans">
-            Combining Next.js speed, high-performance Canvas loops, and motion design 
-            to create websites that don&apos;t just present information—they tell a story.
+            Focused on user-centric UI/UX, product thinking, and immersive digital interactions.
           </p>
         </motion.div>
 

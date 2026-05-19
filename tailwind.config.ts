@@ -12,6 +12,10 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        sans: ["var(--font-inter)", "sans-serif"],
+        rubik: ["var(--font-rubik)", "sans-serif"],
+      },
     },
   },
   plugins: [],

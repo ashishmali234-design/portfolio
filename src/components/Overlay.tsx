@@ -1,0 +1,132 @@
+"use client";
+
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Code2, Layers } from "lucide-react";
+
+export default function Overlay() {
+  const { scrollY } = useScroll();
+
+  // Section 1 Transforms (Hero, centered)
+  const y1 = useTransform(scrollY, [0, 300], [0, -120]);
+  const opacity1 = useTransform(scrollY, [0, 200], [1, 0]);
+  const scale1 = useTransform(scrollY, [0, 300], [1, 0.95]);
+  const heroPointerEvents = useTransform(scrollY, (value) => value > 200 ? "none" : "auto") as unknown as React.CSSProperties["pointerEvents"];
+
+  // Section 2 Transforms (Left-aligned)
+  const y2 = useTransform(scrollY, [400, 700, 1500], [100, 0, -100]);
+  const opacity2 = useTransform(scrollY, [400, 600, 1200, 1500], [0, 1, 1, 0]);
+  const pointerEvents2 = useTransform(scrollY, (value) => (value >= 400 && value <= 1500) ? "auto" : "none") as unknown as React.CSSProperties["pointerEvents"];
+
+  // Section 3 Transforms (Left-aligned)
+  const y3 = useTransform(scrollY, [1600, 1900, 2700], [100, 0, -100]);
+  const opacity3 = useTransform(scrollY, [1600, 1800, 2400, 2700], [0, 1, 1, 0]);
+  const pointerEvents3 = useTransform(scrollY, (value) => (value >= 1600 && value <= 2700) ? "auto" : "none") as unknown as React.CSSProperties["pointerEvents"];
+
+  // Scroll Indicator transforms (Stay visible until scrollytelling completes)
+  const scrollIndicatorOpacity = useTransform(scrollY, [0, 2400, 2600], [1, 1, 0]);
+
+  return (
+    <div className="absolute inset-0 pointer-events-none z-10 font-sans">
+      <div className="sticky top-0 left-0 w-full h-screen overflow-hidden">
+
+        {/* Section 1: Hero (Left Corner / Blank Space Aligned) */}
+        <motion.div
+          style={{ y: y1, opacity: opacity1, scale: scale1, pointerEvents: heroPointerEvents }}
+          className="absolute inset-x-6 md:inset-x-24 top-0 bottom-0 flex flex-col justify-center items-start text-left max-w-2xl"
+        >
+          <span className="text-xs md:text-sm font-bold tracking-[0.25em] text-white/40 uppercase mb-3 block">
+            Hello! I&apos;m
+          </span>
+          <h1 className="text-5xl md:text-8xl font-bold tracking-tight text-white select-none uppercase leading-none">
+            Ashish Mali
+          </h1>
+          <h2 className="text-2xl md:text-4xl font-semibold tracking-tight text-amber-400 select-none uppercase mt-3">
+            Product Designer
+          </h2>
+          <p className="text-xs md:text-sm text-white/50 uppercase tracking-widest mt-3">
+            at <span className="font-rubik text-white font-semibold tracking-widest">BAJAJ FINSERV</span>
+          </p>
+          <p className="mt-6 text-sm md:text-base font-light leading-relaxed text-white/60 max-w-md">
+            Designing simple, thoughtful user experiences that bridge the gap between complex financial ecosystems and daily human interactions.
+          </p>
+        </motion.div>
+
+        {/* Scroll to explore (Centered bottom) */}
+        <motion.div 
+          style={{ opacity: scrollIndicatorOpacity }}
+          className="absolute bottom-16 left-0 right-0 flex flex-col items-center gap-2 pointer-events-none"
+        >
+          <span className="text-[10px] tracking-[0.25em] text-white/40 uppercase font-bold">
+            Scroll to explore
+          </span>
+          <div className="w-5 h-8 border-2 border-white/20 rounded-full flex justify-center p-1 mt-1">
+            <motion.div 
+              animate={{ 
+                y: [0, 8, 0],
+                opacity: [0.3, 1, 0.3]
+              }}
+              transition={{ 
+                duration: 1.5, 
+                repeat: Infinity, 
+                ease: "easeInOut" 
+              }}
+              className="w-1 h-2 bg-amber-400 rounded-full"
+            />
+          </div>
+        </motion.div>
+
+        {/* Section 2: Statement (Left-aligned) */}
+        <motion.div
+          style={{ y: y2, opacity: opacity2, pointerEvents: pointerEvents2 }}
+          className="absolute inset-x-6 md:inset-x-24 top-0 bottom-0 flex flex-col justify-center items-start text-left max-w-2xl"
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400">
+              <Code2 className="w-5 h-5" />
+            </div>
+            <span className="text-xs font-bold tracking-widest text-cyan-400 uppercase">
+              Core Expertise
+            </span>
+          </div>
+          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
+            I build digital <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
+              experiences.
+            </span>
+          </h2>
+          <p className="mt-6 text-sm md:text-lg text-white/60 leading-relaxed font-light font-sans">
+            Combining Next.js speed, high-performance Canvas loops, and motion design 
+            to create websites that don&apos;t just present information—they tell a story.
+          </p>
+        </motion.div>
+
+        {/* Section 3: Value Prop (Left-aligned) */}
+        <motion.div
+          style={{ y: y3, opacity: opacity3, pointerEvents: pointerEvents3 }}
+          className="absolute inset-x-6 md:inset-x-24 top-0 bottom-0 flex flex-col justify-center items-start text-left max-w-2xl"
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400">
+              <Layers className="w-5 h-5" />
+            </div>
+            <span className="text-xs font-bold tracking-widest text-amber-400 uppercase">
+              The Philosophy
+            </span>
+          </div>
+          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
+            Bridging design <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-600">
+              and engineering.
+            </span>
+          </h2>
+          <p className="mt-6 text-sm md:text-lg text-white/60 leading-relaxed font-light font-sans max-w-md">
+            Designing code that respects details and developing design systems 
+            that scale. Zero compromise on responsiveness, performance, or accessibility.
+          </p>
+        </motion.div>
+
+
+      </div>
+    </div>
+  );
+}

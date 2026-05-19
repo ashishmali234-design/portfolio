@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight, Send } from "lucide-react";
 import Image from "next/image";
+import Typewriter from "./Typewriter";
 
 const Github = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
@@ -82,9 +83,9 @@ export default function Projects() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="text-4xl md:text-6xl font-black tracking-tight text-white uppercase"
+            className="text-4xl md:text-6xl font-black tracking-tight text-white uppercase min-h-[1.2em]"
           >
-            Selected Projects
+            <Typewriter text="Selected Projects" delay={100} />
           </motion.h2>
         </div>
 
@@ -172,8 +173,8 @@ export default function Projects() {
               <span className="text-xs font-bold tracking-[0.3em] text-amber-500 uppercase block mb-3">
                 Get In Touch
               </span>
-              <h3 className="text-3xl md:text-4xl font-extrabold tracking-tight text-white uppercase mb-4">
-                Let&apos;s collaborate
+              <h3 className="text-3xl md:text-4xl font-extrabold tracking-tight text-white uppercase mb-4 min-h-[1.2em]">
+                <Typewriter text="Let's collaborate" delay={150} />
               </h3>
               <p className="text-sm md:text-base text-white/60 font-light leading-relaxed max-w-sm mb-6">
                 Have a project in mind, want to build something cinematic, or just chat? Feel free to reach out.

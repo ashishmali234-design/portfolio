@@ -1,10 +1,29 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Code2, Layers } from "lucide-react";
+import Typewriter from "./Typewriter";
 
 export default function Overlay() {
   const { scrollY } = useScroll();
+
+  const [isSection2Visible, setIsSection2Visible] = useState(false);
+  const [isSection3Visible, setIsSection3Visible] = useState(false);
+
+  useEffect(() => {
+    if (scrollY.get() >= 450) setIsSection2Visible(true);
+    if (scrollY.get() >= 1650) setIsSection3Visible(true);
+
+    return scrollY.on("change", (latest) => {
+      if (latest >= 450) {
+        setIsSection2Visible(true);
+      }
+      if (latest >= 1650) {
+        setIsSection3Visible(true);
+      }
+    });
+  }, [scrollY]);
 
   // Section 1 Transforms (Hero, centered)
   const y1 = useTransform(scrollY, [0, 300], [0, -120]);
@@ -37,11 +56,11 @@ export default function Overlay() {
           <span className="text-xs md:text-sm font-bold tracking-[0.25em] text-white/40 uppercase mb-3 block">
             Hello! I&apos;m
           </span>
-          <h1 className="text-5xl md:text-8xl font-bold tracking-tight text-white select-none uppercase leading-none">
-            Ashish Mali
+          <h1 className="text-5xl md:text-8xl font-bold tracking-tight text-white select-none uppercase leading-none min-h-[1.1em]">
+            <Typewriter text="Ashish Mali" delay={150} speed={50} />
           </h1>
-          <h2 className="text-2xl md:text-4xl font-semibold tracking-tight text-amber-400 select-none uppercase mt-3">
-            Product Designer
+          <h2 className="text-2xl md:text-4xl font-semibold tracking-tight text-amber-400 select-none uppercase mt-3 min-h-[1.2em]">
+            <Typewriter text="Product Designer" delay={900} speed={40} />
           </h2>
           <p className="text-xs md:text-sm text-white/50 uppercase tracking-widest mt-3">
             at <span className="font-rubik text-white font-semibold tracking-widest">BAJAJ FINSERV</span>
@@ -85,11 +104,15 @@ export default function Overlay() {
               Core Expertise
             </span>
           </div>
-          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
-            I build digital <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
-              experiences.
-            </span>
+          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight min-h-[2.2em]">
+            <Typewriter
+              trigger={isSection2Visible}
+              segments={[
+                { text: "I build digital\n", className: "text-white" },
+                { text: "experiences.", className: "text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500" }
+              ]}
+              delay={200}
+            />
           </h2>
           <p className="mt-6 text-sm md:text-lg text-white/60 leading-relaxed font-light font-sans">
             Combining Next.js speed, high-performance Canvas loops, and motion design 
@@ -110,11 +133,15 @@ export default function Overlay() {
               The Philosophy
             </span>
           </div>
-          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
-            Bridging design <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-600">
-              and engineering.
-            </span>
+          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight min-h-[2.2em]">
+            <Typewriter
+              trigger={isSection3Visible}
+              segments={[
+                { text: "Bridging design\n", className: "text-white" },
+                { text: "and engineering.", className: "text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-600" }
+              ]}
+              delay={200}
+            />
           </h2>
           <p className="mt-6 text-sm md:text-lg text-white/60 leading-relaxed font-light font-sans max-w-md">
             Designing code that respects details and developing design systems 

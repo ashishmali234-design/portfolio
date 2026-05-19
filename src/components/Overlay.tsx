@@ -10,6 +10,7 @@ export default function Overlay() {
 
   const [isSection2Visible, setIsSection2Visible] = useState(false);
   const [isSection3Visible, setIsSection3Visible] = useState(false);
+  const [showFinserv, setShowFinserv] = useState(false);
 
   useEffect(() => {
     if (scrollY.get() >= 450) setIsSection2Visible(true);
@@ -60,11 +61,16 @@ export default function Overlay() {
             <Typewriter text="Ashish Mali" delay={150} speed={50} />
           </h1>
           <h2 className="text-2xl md:text-4xl font-semibold tracking-tight text-amber-400 select-none uppercase mt-3 min-h-[1.2em]">
-            <Typewriter text="Product Designer" delay={900} speed={40} />
+            <Typewriter text="Product Designer" delay={900} speed={40} onComplete={() => setShowFinserv(true)} />
           </h2>
-          <p className="text-xs md:text-sm text-white/50 uppercase tracking-widest mt-3">
+          <motion.p 
+            initial={{ opacity: 0, y: 8 }}
+            animate={showFinserv ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="text-xs md:text-sm text-white/50 uppercase tracking-widest mt-3"
+          >
             at <span className="font-rubik text-white font-semibold tracking-widest">BAJAJ FINSERV</span>
-          </p>
+          </motion.p>
         </motion.div>
 
         {/* Scroll to explore (Centered bottom) */}

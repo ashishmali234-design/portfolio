@@ -15,6 +15,7 @@ interface TypewriterProps {
   delay?: number; // start delay in ms
   className?: string;
   trigger?: boolean; // Manual trigger override
+  onComplete?: () => void; // Callback when typing finishes
 }
 
 export default function Typewriter({
@@ -24,6 +25,7 @@ export default function Typewriter({
   delay = 0,
   className = "",
   trigger,
+  onComplete,
 }: TypewriterProps) {
   const [charCount, setCharCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
@@ -58,6 +60,8 @@ export default function Typewriter({
           setCharCount(current);
           current++;
           timeoutId = setTimeout(type, speed);
+        } else if (onComplete) {
+          onComplete();
         }
       };
       type();
@@ -69,7 +73,7 @@ export default function Typewriter({
       isCancelled = true;
       clearTimeout(timeoutId);
     };
-  }, [isActivated, totalChars, speed, delay]);
+  }, [isActivated, totalChars, speed, delay, onComplete]);
 
   let currentOffset = 0;
 
@@ -89,10 +93,8 @@ export default function Typewriter({
           </span>
         );
       })}
-      {/* Pulsing/blinking typewriter cursor */}
-      {charCount < totalChars && (
-        <span className="animate-blink inline-block w-[3px] bg-amber-400 h-[0.85em] ml-1.5 align-middle" />
-      )}
+      {/* Always show the pulsing/blinking typewriter cursor */}
+      <span className="animate-blink inline-block w-[3px] bg-amber-400 h-[0.85em] ml-1.5 align-middle" />
     </span>
   );
 }

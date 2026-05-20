@@ -3,6 +3,8 @@
 import { useRef, useState, useEffect } from "react";
 import ScrollyCanvas from "@/components/ScrollyCanvas";
 import Overlay from "@/components/Overlay";
+import Experience from "@/components/Experience";
+import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Logo from "@/components/Logo";
 import CustomCursor from "@/components/CustomCursor";
@@ -34,6 +36,8 @@ export default function Home() {
           <Logo />
           
           <nav className="flex gap-6 text-xs uppercase tracking-widest font-semibold text-white/60">
+            <a href="#experience" className="hover:text-white transition-colors">Experience</a>
+            <a href="#skills" className="hover:text-white transition-colors">Skills</a>
             <a href="#projects" className="hover:text-white transition-colors">Work</a>
             <a href="#contact" className="hover:text-white transition-colors">Contact</a>
           </nav>
@@ -49,8 +53,14 @@ export default function Home() {
         {isLoaded && <Overlay />}
       </div>
 
-      {/* Component 3: Work Grid & Contact */}
-      {isLoaded && <Projects />}
+      {/* Experience, Skills, Work Grid & Contact */}
+      {isLoaded && (
+        <>
+          <Experience />
+          <Skills />
+          <Projects />
+        </>
+      )}
     </main>
   );
 }

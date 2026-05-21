@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 interface LogoProps {
   className?: string;
@@ -8,13 +9,23 @@ interface LogoProps {
 export default function Logo({ className = "", showText = true }: LogoProps) {
   return (
     <div className={`flex items-center gap-3.5 ${className}`}>
-      {/* Golden SVG Icon */}
-      <svg
-        viewBox="0 0 54 54"
+      {/* Golden SVG Icon (Wrapped in motion.div for shared landing animation) */}
+      <motion.div
+        layoutId="rocketLogo"
         className="w-8 h-8 md:w-9 md:h-9 flex-shrink-0"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
+        transition={{
+          type: "spring",
+          stiffness: 70,
+          damping: 18,
+          mass: 1.2
+        }}
       >
+        <svg
+          viewBox="0 0 54 54"
+          className="w-full h-full"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
         <path
           fillRule="evenodd"
           clipRule="evenodd"
@@ -35,6 +46,7 @@ export default function Logo({ className = "", showText = true }: LogoProps) {
           </linearGradient>
         </defs>
       </svg>
+      </motion.div>
 
       {/* Brand Text */}
       {showText && (

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useMemo } from "react";
-import { useScroll, useTransform, useMotionValueEvent } from "framer-motion";
+import { useScroll, useTransform, useMotionValueEvent, motion } from "framer-motion";
 
 interface ScrollyCanvasProps {
   onLoadComplete: () => void;
@@ -469,7 +469,16 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
                   </div>
 
                   {/* The Rocket Core - User's SVG Logo (Vibrant Gemini-inspired gradient) */}
-                  <div className="relative z-10 w-20 h-20 filter drop-shadow-[0_0_20px_rgba(236,72,153,0.45)]">
+                  <motion.div
+                    layoutId="rocketLogo"
+                    className="relative z-10 w-20 h-20 filter drop-shadow-[0_0_20px_rgba(236,72,153,0.45)]"
+                    transition={{
+                      type: "spring",
+                      stiffness: 70,
+                      damping: 18,
+                      mass: 1.2
+                    }}
+                  >
                     <svg
                       viewBox="0 0 54 54"
                       className="w-full h-full"
@@ -497,7 +506,7 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
                         </linearGradient>
                       </defs>
                     </svg>
-                  </div>
+                  </motion.div>
 
                 </div>
               </div>

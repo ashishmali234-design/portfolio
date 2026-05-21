@@ -356,7 +356,7 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
                   {/* Layered Organic Plumes (Blown out behind the Logo) */}
                   <div className="absolute top-[62px] left-1/2 -translate-x-1/2 w-48 h-80 pointer-events-none z-0">
                     
-                    {/* 1. Ambient Outer Plume Glow (Vibrant Pink-Orange, ultra-blurred) */}
+                    {/* 1. Ambient Outer Plume Glow (Vibrant Crimson-Gold, ultra-blurred) */}
                     <svg 
                       viewBox="0 0 100 200" 
                       className="absolute top-0 left-1/2 -translate-x-1/2 w-36 h-72 blur-[28px] origin-top opacity-65 transition-all duration-500"

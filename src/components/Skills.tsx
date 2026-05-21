@@ -393,8 +393,7 @@ export default function Skills() {
               </span>
             </div>
 
-            {/* Injected scoped keyframes */}
-            <style jsx="true">{`
+            <style dangerouslySetInnerHTML={{ __html: `
               @keyframes marqueeLeft {
                 0% {
                   transform: translate3d(0, 0, 0);
@@ -421,7 +420,7 @@ export default function Skills() {
               .animate-marquee-right:hover {
                 animation-play-state: paused;
               }
-            `}</style>
+            ` }} />
           </motion.div>
         </div>
       </div>

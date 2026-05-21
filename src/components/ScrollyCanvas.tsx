@@ -38,7 +38,8 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
       const duration = Math.random() * 1.2 + 0.8; // 0.8s to 2s
       const left = Math.random() * 60 + 20; // 20% to 80%
       const drift = (Math.random() - 0.5) * 24; // drift in px
-      return { id: i, size, delay, duration, left, drift };
+      const color = i % 2 === 0 ? "#38bdf8" : "#fbbf24"; // Alternate electric cyan and gold/amber
+      return { id: i, size, delay, duration, left, drift, color };
     });
   }, []);
 
@@ -56,9 +57,9 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
       const scaleTo = Math.random() * 0.4 + 1.2;
       
       const gradients = [
-        "linear-gradient(to top, rgba(236,72,153,0.14) 0%, rgba(245,158,11,0.06) 50%, rgba(0,0,0,0) 100%)",
-        "linear-gradient(to top, rgba(249,115,22,0.16) 0%, rgba(239,68,68,0.08) 60%, rgba(0,0,0,0) 100%)",
-        "linear-gradient(to top, rgba(168,85,247,0.12) 0%, rgba(56,189,248,0.06) 70%, rgba(0,0,0,0) 100%)"
+        "linear-gradient(to top, rgba(56,189,248,0.14) 0%, rgba(239,68,68,0.06) 50%, rgba(0,0,0,0) 100%)", // Cyan to Red
+        "linear-gradient(to top, rgba(239,68,68,0.16) 0%, rgba(245,158,11,0.08) 60%, rgba(0,0,0,0) 100%)", // Red to Amber/Gold
+        "linear-gradient(to top, rgba(56,189,248,0.14) 0%, rgba(245,158,11,0.08) 60%, rgba(0,0,0,0) 100%)"  // Cyan to Amber/Gold
       ];
       const gradient = gradients[i % gradients.length];
       return { id: i, size, left, delay, duration, driftX, driftY, maxOpacity, scaleFrom, scaleTo, gradient };
@@ -78,9 +79,9 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
       const scaleTo = Math.random() * 0.8 + 1.8;
       
       const gradients = [
-        "radial-gradient(circle, rgba(245,158,11,0.22) 0%, rgba(236,72,153,0.1) 50%, rgba(0,0,0,0) 100%)",
-        "radial-gradient(circle, rgba(239,68,68,0.22) 0%, rgba(249,115,22,0.1) 55%, rgba(0,0,0,0) 100%)",
-        "radial-gradient(circle, rgba(168,85,247,0.18) 0%, rgba(56,189,248,0.08) 60%, rgba(0,0,0,0) 100%)"
+        "radial-gradient(circle, rgba(56,189,248,0.22) 0%, rgba(239,68,68,0.1) 50%, rgba(0,0,0,0) 100%)",   // Cyan to Red
+        "radial-gradient(circle, rgba(239,68,68,0.25) 0%, rgba(245,158,11,0.1) 55%, rgba(0,0,0,0) 100%)",  // Red to Amber/Gold
+        "radial-gradient(circle, rgba(56,189,248,0.20) 0%, rgba(245,158,11,0.1) 60%, rgba(0,0,0,0) 100%)"  // Cyan to Amber/Gold
       ];
       const gradient = gradients[i % gradients.length];
       return { id: i, size, delay, duration, driftX, driftY, maxOpacity, scaleFrom, scaleTo, gradient };
@@ -274,7 +275,7 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
           {/* Radial ambient lighting in center */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none z-0 opacity-40 blur-[80px]" 
             style={{
-              background: "radial-gradient(circle, rgba(236,72,153,0.12) 0%, rgba(245,158,11,0.06) 50%, rgba(0,0,0,0) 100%)"
+              background: "radial-gradient(circle, rgba(56,189,248,0.12) 0%, rgba(239,68,68,0.06) 50%, rgba(0,0,0,0) 100%)"
             }}
           />
 
@@ -309,7 +310,7 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
             style={{
               transform: `translateX(-50%) scale(${isLaunching ? '2.0, 0.5' : isLaunchingReady ? '1.5, 1.2' : '1, 1'})`,
               opacity: isLaunching ? 0 : isLaunchingReady ? 0.95 : 0.45,
-              background: "radial-gradient(circle, rgba(245,158,11,0.25) 0%, rgba(236,72,153,0.14) 40%, rgba(239,68,68,0.05) 75%, rgba(0,0,0,0) 100%)",
+              background: "radial-gradient(circle, rgba(245,158,11,0.25) 0%, rgba(56,189,248,0.12) 40%, rgba(239,68,68,0.08) 75%, rgba(0,0,0,0) 100%)",
             }}
           />
 
@@ -404,21 +405,21 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
                     <svg className="hidden">
                       <defs>
                         <linearGradient id="outer-plume-grad" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="#ec4899" stopOpacity="0.8" />
-                          <stop offset="35%" stopColor="#f97316" stopOpacity="0.45" />
-                          <stop offset="70%" stopColor="#ef4444" stopOpacity="0.15" />
+                          <stop offset="0%" stopColor="#ef4444" stopOpacity="0.8" />
+                          <stop offset="40%" stopColor="#f59e0b" stopOpacity="0.45" />
+                          <stop offset="80%" stopColor="#d97706" stopOpacity="0.1" />
                           <stop offset="100%" stopColor="#121212" stopOpacity="0" />
                         </linearGradient>
                         <linearGradient id="inner-plume-grad" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="#ffffff" />
-                          <stop offset="25%" stopColor="#facc15" stopOpacity="0.95" />
-                          <stop offset="65%" stopColor="#f97316" stopOpacity="0.5" />
+                          <stop offset="0%" stopColor="#38bdf8" />
+                          <stop offset="35%" stopColor="#f59e0b" stopOpacity="0.9" />
+                          <stop offset="75%" stopColor="#ef4444" stopOpacity="0.4" />
                           <stop offset="100%" stopColor="#121212" stopOpacity="0" />
                         </linearGradient>
                         <linearGradient id="core-plume-grad" x1="0" y1="0" x2="0" y2="1">
                           <stop offset="0%" stopColor="#ffffff" />
-                          <stop offset="45%" stopColor="#fef08a" stopOpacity="0.9" />
-                          <stop offset="100%" stopColor="#facc15" stopOpacity="0" />
+                          <stop offset="50%" stopColor="#38bdf8" stopOpacity="0.95" />
+                          <stop offset="100%" stopColor="#f59e0b" stopOpacity="0" />
                         </linearGradient>
                       </defs>
                     </svg>
@@ -429,12 +430,13 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
                     {particles.map((p) => (
                       <div
                         key={p.id}
-                        className="absolute bg-amber-400 rounded-full opacity-0"
+                        className="absolute rounded-full opacity-0"
                         style={{
                           width: p.size,
                           height: p.size,
                           left: `${p.left}%`,
                           bottom: "100%",
+                          backgroundColor: p.color,
                           animation: `floatDown ${p.duration}s linear infinite`,
                           animationDelay: `${p.delay}s`,
                           "--px": `${p.drift}px`,
@@ -471,7 +473,7 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
                   {/* The Rocket Core - User's SVG Logo (Vibrant Gemini-inspired gradient) */}
                   <motion.div
                     layoutId="rocketLogo"
-                    className="relative z-10 w-20 h-20 filter drop-shadow-[0_0_20px_rgba(236,72,153,0.45)]"
+                    className="relative z-10 w-20 h-20 filter drop-shadow-[0_0_20px_rgba(56,189,248,0.45)]"
                     transition={{
                       type: "spring",
                       stiffness: 70,
@@ -501,8 +503,8 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
                           gradientUnits="userSpaceOnUse"
                         >
                           <stop offset="0%" stopColor="#38bdf8" />
-                          <stop offset="45%" stopColor="#ec4899" />
-                          <stop offset="100%" stopColor="#fbbf24" />
+                          <stop offset="50%" stopColor="#fbbf24" />
+                          <stop offset="100%" stopColor="#d97706" />
                         </linearGradient>
                       </defs>
                     </svg>
@@ -528,7 +530,7 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
             {/* Sleek Gradient Loading Bar */}
             <div className="relative w-44 h-[2px] bg-white/5 rounded-full overflow-hidden">
               <div 
-                className="absolute left-0 top-0 h-full bg-gradient-to-r from-cyan-400 via-pink-500 to-amber-400 rounded-full transition-all duration-300 ease-out"
+                className="absolute left-0 top-0 h-full bg-gradient-to-r from-cyan-400 via-amber-400 to-red-500 rounded-full transition-all duration-300 ease-out"
                 style={{ width: `${loadingProgress}%` }}
               />
             </div>

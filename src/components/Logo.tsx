@@ -4,9 +4,10 @@ import { motion } from "framer-motion";
 interface LogoProps {
   className?: string;
   showText?: boolean;
+  forceShowTextOnMobile?: boolean;
 }
 
-export default function Logo({ className = "", showText = true }: LogoProps) {
+export default function Logo({ className = "", showText = true, forceShowTextOnMobile = false }: LogoProps) {
   return (
     <div className={`flex items-center gap-3.5 ${className}`}>
       {/* Golden SVG Icon (Wrapped in motion.div for shared landing animation) */}
@@ -50,7 +51,7 @@ export default function Logo({ className = "", showText = true }: LogoProps) {
 
       {/* Brand Text */}
       {showText && (
-        <div className="flex flex-col text-left leading-tight">
+        <div className={`${forceShowTextOnMobile ? "flex" : "hidden md:flex"} flex-col text-left leading-tight`}>
           <span className="font-sans font-bold text-sm md:text-base tracking-wide text-white/90">
             Ashish C Mali
           </span>

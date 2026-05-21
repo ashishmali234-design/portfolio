@@ -134,48 +134,40 @@ export default function Skills() {
       )
     },
     {
-      name: "Node.js",
+      name: "N8N Workflow",
       icon: (
-        <svg className="w-5 h-5 text-[#339933]" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 2L2 7.75v11.5L12 22l10-5.75v-11.5L12 2zM3.5 8.62l7.5-4.33v8.66l-7.5 4.33V8.62z" fill="#339933" />
+        <svg className="w-5 h-5 text-[#FF6D5A]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="6" cy="12" r="3" />
+          <circle cx="18" cy="6" r="3" />
+          <circle cx="18" cy="18" r="3" />
+          <path d="M9 12h3v-5h3" />
+          <path d="M12 7v10h3" />
         </svg>
       )
     },
     {
-      name: "Angular",
+      name: "Figma AI",
       icon: (
-        <svg className="w-5 h-5 text-[#DD0031]" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 2L2.4 5.4l1.4 12.9 8.2 4.5 8.2-4.5 1.4-12.9L12 2zm0 3.2l6.8 2.4-1 9.6-5.8 3.2-5.8-3.2-1-9.6 6.8-2.4zM12 7.8L7.5 16h2.2l.9-2.2h2.8l.9 2.2h2.2L12 7.8zm0 2.2l1 2.4H11l1-2.4z" />
+        <svg className="w-5 h-5 text-[#FF7262]" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C12 7.5 16.5 12 22 12C16.5 12 12 16.5 12 22C12 16.5 7.5 12 2 12C7.5 12 12 7.5 12 2Z" />
         </svg>
       )
     },
     {
-      name: "Tailwind CSS",
+      name: "Magnific AI",
       icon: (
-        <svg className="w-5 h-5 text-[#38BDF8]" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12.072 8.072c-2.4 0-3.84 1.2-4.32 3.6.96-1.44 2.16-1.92 3.6-1.44.823.275 1.41.87 2.062 1.53 1.06 1.072 2.292 2.31 4.978 2.31 2.4 0 3.84-1.2 4.32-3.6-.96 1.44-2.16 1.92-3.6 1.44-.823-.275-1.41-.87-2.062-1.53-1.06-1.072-2.292-2.31-4.978-2.31zM7.752 13.832c-2.4 0-3.84 1.2-4.32 3.6.96-1.44 2.16-1.92 3.6-1.44.823.274 1.41.87 2.062 1.53 1.06 1.07 2.292 2.31 4.978 2.31 2.4 0 3.84-1.2 4.32-3.6-.96 1.44-2.16 1.92-3.6 1.44-.823-.275-1.41-.87-2.062-1.53-1.06-1.072-2.292-2.31-4.978-2.31z" />
+        <svg className="w-5 h-5 text-[#FF00C7]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="11" cy="11" r="6" />
+          <path d="M16 16l5 5M16 8l1-1M8 16l-1 1" />
         </svg>
       )
     },
     {
-      name: "Three.js",
+      name: "Notebook LM",
       icon: (
-        <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 2.2l9.5 5.5v11L12 21.8l-9.5-5.5v-11L12 2.2zm0 2.2L4.5 8.7v6.6l7.5 4.3 7.5-4.3V8.7L12 4.4z" />
-        </svg>
-      )
-    },
-    {
-      name: "Express",
-      icon: (
-        <div className="font-sans font-extrabold text-[10px] select-none px-1.5 py-0.5 text-neutral-300 border border-neutral-700 rounded-[4px] tracking-tight leading-tight">ex</div>
-      )
-    },
-    {
-      name: "MongoDB",
-      icon: (
-        <svg className="w-5 h-5 text-[#13AA52]" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M11.5 0C8.5 2.5 7 6.2 7 10c0 3.8 1.5 7.5 4.5 10v1.5c0 .8.7 1.5 1.5 1.5s1.5-.7 1.5-1.5V20c3-2.5 4.5-6.2 4.5-10 0-3.8-1.5-7.5-4.5-10H11.5zm.5 2.5c2.2 1.8 3.5 4.5 3.5 7.5s-1.3 5.7-3.5 7.5c-2.2-1.8-3.5-4.5-3.5-7.5s1.3-5.7 3.5-7.5z" />
+        <svg className="w-5 h-5 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z" />
+          <path d="M6 6h10M6 10h10" />
         </svg>
       )
     }
@@ -286,144 +278,148 @@ export default function Skills() {
               ))}
             </div>
           </motion.div>
-
-          {/* Card 3: Arsenal Marquee (col-span-3) */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="glass-card p-8 rounded-3xl md:col-span-3 min-h-[380px] flex flex-col justify-between hover:border-cyan-500/20 relative overflow-hidden"
-          >
-            {/* Header */}
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <span className="text-xs font-bold tracking-[0.3em] text-cyan-400 uppercase block mb-2">
-                  Technologies & Tools
-                </span>
-                <h3 className="text-3xl md:text-4xl font-light text-white tracking-tight">
-                  My <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-neutral-400">Arsenal</span>
-                </h3>
-              </div>
-              <div className="p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 shrink-0">
-                <Sparkles className="w-5 h-5" />
-              </div>
-            </div>
-
-            {/* Marquee Rows Container */}
-            <div className="relative -mx-8 py-4 overflow-hidden flex flex-col gap-5 select-none">
-              {/* Fade masks */}
-              <div className="absolute inset-y-0 left-0 w-16 md:w-28 bg-gradient-to-r from-[#121212] via-[#121212]/95 to-transparent pointer-events-none z-10" />
-              <div className="absolute inset-y-0 right-0 w-16 md:w-28 bg-gradient-to-l from-[#121212] via-[#121212]/95 to-transparent pointer-events-none z-10" />
-
-              {/* Row 1: Creative Suite (Left scrolling) */}
-              <div className="flex gap-4 w-full overflow-hidden relative">
-                <div className="flex gap-4 shrink-0 animate-marquee-left">
-                  {[...creativeTools, ...creativeTools].map((tool, idx) => (
-                    <div
-                      key={`creative-1-${tool.name}-${idx}`}
-                      className="flex items-center gap-3 px-5 py-3 rounded-full bg-[#161618]/90 border border-white/[0.08] hover:border-cyan-500/30 hover:bg-[#1c1c1f]/90 hover:shadow-[0_0_20px_rgba(6,182,212,0.12)] transition-all duration-300 group cursor-default shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
-                    >
-                      <div className="flex items-center justify-center w-5 h-5 shrink-0 transition-transform duration-300 group-hover:scale-110">
-                        {tool.icon}
-                      </div>
-                      <span className="text-sm font-semibold tracking-wide text-neutral-300 group-hover:text-white transition-colors duration-200">
-                        {tool.name}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                <div className="flex gap-4 shrink-0 animate-marquee-left" aria-hidden="true">
-                  {[...creativeTools, ...creativeTools].map((tool, idx) => (
-                    <div
-                      key={`creative-2-${tool.name}-${idx}`}
-                      className="flex items-center gap-3 px-5 py-3 rounded-full bg-[#161618]/90 border border-white/[0.08] hover:border-cyan-500/30 hover:bg-[#1c1c1f]/90 hover:shadow-[0_0_20px_rgba(6,182,212,0.12)] transition-all duration-300 group cursor-default shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
-                    >
-                      <div className="flex items-center justify-center w-5 h-5 shrink-0 transition-transform duration-300 group-hover:scale-110">
-                        {tool.icon}
-                      </div>
-                      <span className="text-sm font-semibold tracking-wide text-neutral-300 group-hover:text-white transition-colors duration-200">
-                        {tool.name}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Row 2: Tech & Engineering Suite (Right scrolling) */}
-              <div className="flex gap-4 w-full overflow-hidden relative">
-                <div className="flex gap-4 shrink-0 animate-marquee-right">
-                  {[...techTools, ...techTools].map((tool, idx) => (
-                    <div
-                      key={`tech-1-${tool.name}-${idx}`}
-                      className="flex items-center gap-3 px-5 py-3 rounded-full bg-[#161618]/90 border border-white/[0.08] hover:border-amber-500/30 hover:bg-[#1c1c1f]/90 hover:shadow-[0_0_20px_rgba(245,158,11,0.12)] transition-all duration-300 group cursor-default shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
-                    >
-                      <div className="flex items-center justify-center w-5 h-5 shrink-0 transition-transform duration-300 group-hover:scale-110">
-                        {tool.icon}
-                      </div>
-                      <span className="text-sm font-semibold tracking-wide text-neutral-300 group-hover:text-white transition-colors duration-200">
-                        {tool.name}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                <div className="flex gap-4 shrink-0 animate-marquee-right" aria-hidden="true">
-                  {[...techTools, ...techTools].map((tool, idx) => (
-                    <div
-                      key={`tech-2-${tool.name}-${idx}`}
-                      className="flex items-center gap-3 px-5 py-3 rounded-full bg-[#161618]/90 border border-white/[0.08] hover:border-amber-500/30 hover:bg-[#1c1c1f]/90 hover:shadow-[0_0_20px_rgba(245,158,11,0.12)] transition-all duration-300 group cursor-default shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
-                    >
-                      <div className="flex items-center justify-center w-5 h-5 shrink-0 transition-transform duration-300 group-hover:scale-110">
-                        {tool.icon}
-                      </div>
-                      <span className="text-sm font-semibold tracking-wide text-neutral-300 group-hover:text-white transition-colors duration-200">
-                        {tool.name}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom Footer metadata */}
-            <div className="border-t border-white/5 pt-4 text-xs text-white/40 tracking-widest uppercase flex justify-between items-center">
-              <span>Infinite Scroller</span>
-              <span className="flex items-center gap-1.5">
-                <Layers className="w-3.5 h-3.5 text-cyan-400" /> DYNAMIC DEPTH
-              </span>
-            </div>
-
-            <style dangerouslySetInnerHTML={{ __html: `
-              @keyframes marqueeLeft {
-                0% {
-                  transform: translate3d(0, 0, 0);
-                }
-                100% {
-                  transform: translate3d(calc(-100% - 16px), 0, 0);
-                }
-              }
-              @keyframes marqueeRight {
-                0% {
-                  transform: translate3d(calc(-100% - 16px), 0, 0);
-                }
-                100% {
-                  transform: translate3d(0, 0, 0);
-                }
-              }
-              .animate-marquee-left {
-                animation: marqueeLeft 38s linear infinite;
-              }
-              .animate-marquee-right {
-                animation: marqueeRight 38s linear infinite;
-              }
-              .animate-marquee-left:hover,
-              .animate-marquee-right:hover {
-                animation-play-state: paused;
-              }
-            ` }} />
-          </motion.div>
         </div>
       </div>
+
+      {/* Standalone Full-Width "My Arsenal" Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: 0.3 }}
+        className="mt-20 w-full relative overflow-hidden"
+      >
+        <div className="max-w-6xl mx-auto px-6 md:px-12">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-10">
+            <div>
+              <span className="text-xs font-bold tracking-[0.3em] text-cyan-400 uppercase block mb-2">
+                Technologies & Tools
+              </span>
+              <h3 className="text-3xl md:text-4xl font-light text-white tracking-tight">
+                My <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-neutral-400">Arsenal</span>
+              </h3>
+            </div>
+            <div className="p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 shrink-0">
+              <Sparkles className="w-5 h-5" />
+            </div>
+          </div>
+        </div>
+
+        {/* Marquee Rows Container */}
+        <div className="relative -mx-6 md:-mx-12 py-8 overflow-hidden flex flex-col gap-6 select-none bg-gradient-to-b from-transparent via-white/[0.01] to-transparent border-y border-white/[0.04]">
+          {/* Fade masks */}
+          <div className="absolute inset-y-0 left-0 w-16 md:w-48 bg-gradient-to-r from-[#121212] via-[#121212]/90 to-transparent pointer-events-none z-10" />
+          <div className="absolute inset-y-0 right-0 w-16 md:w-48 bg-gradient-to-l from-[#121212] via-[#121212]/90 to-transparent pointer-events-none z-10" />
+
+          {/* Row 1: Creative Suite (Left scrolling) */}
+          <div className="flex gap-4 w-full overflow-hidden relative marquee-row">
+            <div className="flex gap-4 shrink-0 animate-marquee-left">
+              {[...creativeTools, ...creativeTools].map((tool, idx) => (
+                <div
+                  key={`creative-1-${tool.name}-${idx}`}
+                  className="flex items-center gap-3 px-6 py-3.5 rounded-full bg-[#161618]/90 border border-white/[0.08] hover:border-cyan-500/30 hover:bg-[#1c1c1f]/90 hover:shadow-[0_0_20px_rgba(6,182,212,0.12)] transition-all duration-300 group cursor-default shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
+                >
+                  <div className="flex items-center justify-center w-5 h-5 shrink-0 transition-transform duration-300 group-hover:scale-110">
+                    {tool.icon}
+                  </div>
+                  <span className="text-sm font-semibold tracking-wide text-neutral-300 group-hover:text-white transition-colors duration-200">
+                    {tool.name}
+                  </span>
+                </div>
+              ))}
+            </div>
+            <div className="flex gap-4 shrink-0 animate-marquee-left" aria-hidden="true">
+              {[...creativeTools, ...creativeTools].map((tool, idx) => (
+                <div
+                  key={`creative-2-${tool.name}-${idx}`}
+                  className="flex items-center gap-3 px-6 py-3.5 rounded-full bg-[#161618]/90 border border-white/[0.08] hover:border-cyan-500/30 hover:bg-[#1c1c1f]/90 hover:shadow-[0_0_20px_rgba(6,182,212,0.12)] transition-all duration-300 group cursor-default shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
+                >
+                  <div className="flex items-center justify-center w-5 h-5 shrink-0 transition-transform duration-300 group-hover:scale-110">
+                    {tool.icon}
+                  </div>
+                  <span className="text-sm font-semibold tracking-wide text-neutral-300 group-hover:text-white transition-colors duration-200">
+                    {tool.name}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Row 2: AI & Agentic Workflow (Right scrolling) */}
+          <div className="flex gap-4 w-full overflow-hidden relative marquee-row">
+            <div className="flex gap-4 shrink-0 animate-marquee-right">
+              {[...techTools, ...techTools, ...techTools].map((tool, idx) => (
+                <div
+                  key={`tech-1-${tool.name}-${idx}`}
+                  className="flex items-center gap-3 px-6 py-3.5 rounded-full bg-[#161618]/90 border border-white/[0.08] hover:border-amber-500/30 hover:bg-[#1c1c1f]/90 hover:shadow-[0_0_20px_rgba(245,158,11,0.12)] transition-all duration-300 group cursor-default shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
+                >
+                  <div className="flex items-center justify-center w-5 h-5 shrink-0 transition-transform duration-300 group-hover:scale-110">
+                    {tool.icon}
+                  </div>
+                  <span className="text-sm font-semibold tracking-wide text-neutral-300 group-hover:text-white transition-colors duration-200">
+                    {tool.name}
+                  </span>
+                </div>
+              ))}
+            </div>
+            <div className="flex gap-4 shrink-0 animate-marquee-right" aria-hidden="true">
+              {[...techTools, ...techTools, ...techTools].map((tool, idx) => (
+                <div
+                  key={`tech-2-${tool.name}-${idx}`}
+                  className="flex items-center gap-3 px-6 py-3.5 rounded-full bg-[#161618]/90 border border-white/[0.08] hover:border-amber-500/30 hover:bg-[#1c1c1f]/90 hover:shadow-[0_0_20px_rgba(245,158,11,0.12)] transition-all duration-300 group cursor-default shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
+                >
+                  <div className="flex items-center justify-center w-5 h-5 shrink-0 transition-transform duration-300 group-hover:scale-110">
+                    {tool.icon}
+                  </div>
+                  <span className="text-sm font-semibold tracking-wide text-neutral-300 group-hover:text-white transition-colors duration-200">
+                    {tool.name}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Footer metadata */}
+        <div className="max-w-6xl mx-auto px-6 md:px-12 mt-6">
+          <div className="border-t border-white/5 pt-4 text-xs text-white/40 tracking-widest uppercase flex justify-between items-center">
+            <span>Infinite Scroller</span>
+            <span className="flex items-center gap-1.5">
+              <Layers className="w-3.5 h-3.5 text-cyan-400" /> DYNAMIC DEPTH
+            </span>
+          </div>
+        </div>
+
+        <style dangerouslySetInnerHTML={{ __html: `
+          @keyframes marqueeLeft {
+            0% {
+              transform: translate3d(0, 0, 0);
+            }
+            100% {
+              transform: translate3d(calc(-100% - 16px), 0, 0);
+            }
+          }
+          @keyframes marqueeRight {
+            0% {
+              transform: translate3d(calc(-100% - 16px), 0, 0);
+            }
+            100% {
+              transform: translate3d(0, 0, 0);
+            }
+          }
+          .animate-marquee-left {
+            animation: marqueeLeft 38s linear infinite;
+          }
+          .animate-marquee-right {
+            animation: marqueeRight 38s linear infinite;
+          }
+          .marquee-row:hover .animate-marquee-left,
+          .marquee-row:hover .animate-marquee-right {
+            animation-play-state: paused;
+          }
+        ` }} />
+      </motion.div>
     </section>
   );
 }

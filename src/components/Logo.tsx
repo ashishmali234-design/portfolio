@@ -9,7 +9,7 @@ interface LogoProps {
 }
 
 export default function Logo({ className = "", showText = true, forceShowTextOnMobile = false, onClick }: LogoProps) {
-  const handleClick = (e: React.MouseEvent) => {
+  const handleClick = () => {
     if (onClick) {
       onClick();
     } else {

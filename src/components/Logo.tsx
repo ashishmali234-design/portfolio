@@ -5,11 +5,23 @@ interface LogoProps {
   className?: string;
   showText?: boolean;
   forceShowTextOnMobile?: boolean;
+  onClick?: () => void;
 }
 
-export default function Logo({ className = "", showText = true, forceShowTextOnMobile = false }: LogoProps) {
+export default function Logo({ className = "", showText = true, forceShowTextOnMobile = false, onClick }: LogoProps) {
+  const handleClick = (e: React.MouseEvent) => {
+    if (onClick) {
+      onClick();
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   return (
-    <div className={`flex items-center gap-3.5 ${className}`}>
+    <div 
+      onClick={handleClick}
+      className={`flex items-center gap-3.5 cursor-pointer select-none ${className}`}
+    >
       {/* Golden SVG Icon (Wrapped in motion.div for shared landing animation) */}
       <motion.div
         layoutId="rocketLogo"

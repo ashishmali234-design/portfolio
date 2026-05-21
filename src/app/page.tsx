@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowUp } from "lucide-react";
 import ScrollyCanvas from "@/components/ScrollyCanvas";
 import Overlay from "@/components/Overlay";
 import Experience from "@/components/Experience";
@@ -16,10 +16,12 @@ export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
+      setShowScrollTop(window.scrollY > 500);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -68,7 +70,10 @@ export default function Home() {
               >
                 {/* Header inside drawer */}
                 <div className="flex justify-between items-center w-full">
-                  <Logo forceShowTextOnMobile={true} />
+                  <Logo forceShowTextOnMobile={true} onClick={() => {
+                    setMenuOpen(false);
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }} />
                   
                   {/* Close Button */}
                   <button 
@@ -134,6 +139,23 @@ export default function Home() {
           <Projects />
         </>
       )}
+
+      {/* Scroll-To-Top Up Arrow CTA */}
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 20 }}
+            transition={{ type: "spring", stiffness: 260, damping: 20 }}
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="fixed bottom-6 right-6 z-40 p-3.5 rounded-full bg-[#121212]/80 border border-white/10 text-white/80 backdrop-blur-md shadow-2xl hover:text-white hover:border-amber-500/50 hover:shadow-[0_0_24px_rgba(245,158,11,0.25)] transition-all duration-300 group focus:outline-none"
+            aria-label="Scroll to top"
+          >
+            <ArrowUp size={20} className="stroke-[2.5] group-hover:-translate-y-0.5 transition-transform duration-300" />
+          </motion.button>
+        )}
+      </AnimatePresence>
     </main>
   );
 }

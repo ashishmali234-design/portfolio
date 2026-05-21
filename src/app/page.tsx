@@ -10,6 +10,7 @@ import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Logo from "@/components/Logo";
 import CustomCursor from "@/components/CustomCursor";
+import WhatIDo from "@/components/WhatIDo";
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -134,6 +135,7 @@ export default function Home() {
       {/* Experience, Skills, Work Grid & Contact */}
       {isLoaded && (
         <>
+          <WhatIDo />
           <Experience />
           <Skills />
           <Projects />

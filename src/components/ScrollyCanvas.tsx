@@ -42,6 +42,51 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
     });
   }, []);
 
+  // Generate smoke puffs for the bottom billowing smoke effect
+  const smokePuffs = useMemo(() => {
+    return Array.from({ length: 18 }).map((_, i) => {
+      const size = Math.random() * 100 + 140; // 140px to 240px
+      const left = Math.random() * 90 + 5; // 5% to 95%
+      const delay = Math.random() * 4; // 0s to 4s
+      const duration = Math.random() * 3 + 3; // 3s to 6s
+      const driftX = (Math.random() - 0.5) * 80; // -40px to 40px drift
+      const driftY = -Math.random() * 100 - 80; // -80px to -180px billowing up
+      const maxOpacity = Math.random() * 0.12 + 0.08;
+      const scaleFrom = Math.random() * 0.2 + 0.4;
+      const scaleTo = Math.random() * 0.4 + 1.2;
+      
+      const gradients = [
+        "linear-gradient(to top, rgba(236,72,153,0.14) 0%, rgba(245,158,11,0.06) 50%, rgba(0,0,0,0) 100%)",
+        "linear-gradient(to top, rgba(249,115,22,0.16) 0%, rgba(239,68,68,0.08) 60%, rgba(0,0,0,0) 100%)",
+        "linear-gradient(to top, rgba(168,85,247,0.12) 0%, rgba(56,189,248,0.06) 70%, rgba(0,0,0,0) 100%)"
+      ];
+      const gradient = gradients[i % gradients.length];
+      return { id: i, size, left, delay, duration, driftX, driftY, maxOpacity, scaleFrom, scaleTo, gradient };
+    });
+  }, []);
+
+  // Generate engine smoke puffs that shoot out of the engine nozzle and dissipate
+  const engineSmokePuffs = useMemo(() => {
+    return Array.from({ length: 12 }).map((_, i) => {
+      const size = Math.random() * 30 + 35; // 35px to 65px
+      const delay = Math.random() * 1.5; // 0s to 1.5s
+      const duration = Math.random() * 1.2 + 1.2; // 1.2s to 2.4s
+      const driftX = (Math.random() - 0.5) * 80; // drift out wide horizontally
+      const driftY = Math.random() * 100 + 120; // shoot down and dissipate
+      const maxOpacity = Math.random() * 0.22 + 0.14;
+      const scaleFrom = 0.3;
+      const scaleTo = Math.random() * 0.8 + 1.8;
+      
+      const gradients = [
+        "radial-gradient(circle, rgba(245,158,11,0.22) 0%, rgba(236,72,153,0.1) 50%, rgba(0,0,0,0) 100%)",
+        "radial-gradient(circle, rgba(239,68,68,0.22) 0%, rgba(249,115,22,0.1) 55%, rgba(0,0,0,0) 100%)",
+        "radial-gradient(circle, rgba(168,85,247,0.18) 0%, rgba(56,189,248,0.08) 60%, rgba(0,0,0,0) 100%)"
+      ];
+      const gradient = gradients[i % gradients.length];
+      return { id: i, size, delay, duration, driftX, driftY, maxOpacity, scaleFrom, scaleTo, gradient };
+    });
+  }, []);
+
   // Preload images
   useEffect(() => {
     let loadedCount = 0;
@@ -233,6 +278,41 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
             }}
           />
 
+          {/* Background billowing smoke clouds */}
+          <div className="absolute bottom-0 left-0 right-0 h-[280px] overflow-hidden pointer-events-none z-0 select-none">
+            {smokePuffs.map((p) => (
+              <div
+                key={p.id}
+                className="absolute rounded-full blur-[24px] md:blur-[36px] mix-blend-screen opacity-0"
+                style={{
+                  width: p.size,
+                  height: p.size,
+                  left: `${p.left}%`,
+                  bottom: "-40px",
+                  marginLeft: `-${p.size / 2}px`,
+                  backgroundImage: p.gradient,
+                  animation: `billowSmoke ${p.duration}s ease-in-out infinite`,
+                  animationDelay: `${p.delay}s`,
+                  "--dx": `${p.driftX}px`,
+                  "--dy": `${p.driftY}px`,
+                  "--scale-from": p.scaleFrom,
+                  "--scale-to": p.scaleTo,
+                  "--max-opacity": isLaunchingReady ? p.maxOpacity * 2.2 : p.maxOpacity,
+                } as React.CSSProperties}
+              />
+            ))}
+          </div>
+
+          {/* Interactive Ground Exhaust Cloud (Center bottom) */}
+          <div 
+            className="absolute bottom-[-60px] left-1/2 -translate-x-1/2 w-[100vw] md:w-[750px] h-64 rounded-full blur-[48px] pointer-events-none z-0 transition-all duration-[1000ms] ease-out mix-blend-screen"
+            style={{
+              transform: `translateX(-50%) scale(${isLaunching ? '2.0, 0.5' : isLaunchingReady ? '1.5, 1.2' : '1, 1'})`,
+              opacity: isLaunching ? 0 : isLaunchingReady ? 0.95 : 0.45,
+              background: "radial-gradient(circle, rgba(245,158,11,0.25) 0%, rgba(236,72,153,0.14) 40%, rgba(239,68,68,0.05) 75%, rgba(0,0,0,0) 100%)",
+            }}
+          />
+
           {/* Top Header Section (Fades out on launch) */}
           <div className={`text-center z-10 transition-all duration-700 ease-out ${
             isLaunching ? "opacity-0 -translate-y-8" : "opacity-100"
@@ -363,6 +443,31 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
                     ))}
                   </div>
 
+                  {/* Engine plume smoke puffs billowing downwards and outwards */}
+                  <div className="absolute top-[75px] left-1/2 -translate-x-1/2 w-48 h-64 overflow-hidden pointer-events-none z-0 mix-blend-screen">
+                    {engineSmokePuffs.map((p) => (
+                      <div
+                        key={p.id}
+                        className="absolute rounded-full blur-[10px] md:blur-[14px] opacity-0"
+                        style={{
+                          width: p.size,
+                          height: p.size,
+                          left: "50%",
+                          top: "0px",
+                          marginLeft: `-${p.size / 2}px`,
+                          backgroundImage: p.gradient,
+                          animation: `engineSmoke ${p.duration}s ease-out infinite`,
+                          animationDelay: `${p.delay}s`,
+                          "--edx": `${p.driftX}px`,
+                          "--edy": `${p.driftY}px`,
+                          "--escale-from": p.scaleFrom,
+                          "--escale-to": p.scaleTo,
+                          "--emax-opacity": isLaunchingReady ? p.maxOpacity * 2.0 : p.maxOpacity,
+                        } as React.CSSProperties}
+                      />
+                    ))}
+                  </div>
+
                   {/* The Rocket Core - User's SVG Logo (Vibrant Gemini-inspired gradient) */}
                   <div className="relative z-10 w-20 h-20 filter drop-shadow-[0_0_20px_rgba(236,72,153,0.45)]">
                     <svg
@@ -466,6 +571,38 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
               }
               100% {
                 transform: translateY(140px) scale(0.1) translateX(var(--px, 10px));
+                opacity: 0;
+              }
+            }
+            @keyframes engineSmoke {
+              0% {
+                transform: translateY(0) scale(var(--escale-from, 0.3)) translateX(0);
+                opacity: 0;
+              }
+              15% {
+                opacity: var(--emax-opacity, 0.3);
+              }
+              80% {
+                opacity: var(--emax-opacity, 0.3);
+              }
+              100% {
+                transform: translateY(var(--edy, 140px)) scale(var(--escale-to, 2.0)) translateX(var(--edx, 40px));
+                opacity: 0;
+              }
+            }
+            @keyframes billowSmoke {
+              0% {
+                transform: translateY(40px) scale(var(--scale-from, 0.5)) translateX(0);
+                opacity: 0;
+              }
+              25% {
+                opacity: var(--max-opacity, 0.3);
+              }
+              75% {
+                opacity: var(--max-opacity, 0.3);
+              }
+              100% {
+                transform: translateY(var(--dy, -80px)) scale(var(--scale-to, 1.4)) translateX(var(--dx, 25px));
                 opacity: 0;
               }
             }

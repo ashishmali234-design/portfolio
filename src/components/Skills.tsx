@@ -23,7 +23,7 @@ export default function Skills() {
   const primaryTools = [
     {
       name: "Antigravity IDE",
-      highlight: true,
+      highlight: false,
       icon: (
         <svg className="w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
           <path d="M12 2L2 22h20L12 2zm0 3.8L18.5 18H5.5L12 5.8z" />

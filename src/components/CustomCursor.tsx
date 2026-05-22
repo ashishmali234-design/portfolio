@@ -97,23 +97,35 @@ export default function CustomCursor() {
 
   return (
     <>
-      {/* Outer Minimalist Blurred Circular Shape Cursor */}
+      {/* Outer Liquid Glass Circular Cursor (80px x 80px) */}
       <motion.div
-        className="fixed top-0 left-0 w-14 h-14 rounded-full pointer-events-none z-[9999] backdrop-blur-[12px] border border-white/15 bg-white/[0.08]"
+        className="fixed top-0 left-0 w-20 h-20 rounded-full pointer-events-none z-[9999] backdrop-blur-[20px] border border-white/[0.18] bg-white/[0.08] overflow-hidden"
         style={{
           x: outerX,
           y: outerY,
           translateX: "-50%",
           translateY: "-50%",
-          scale: hideOuterRing ? 0 : isClicked ? 0.90 : isHovered ? 1.35 : 1,
+          scale: hideOuterRing ? 0 : isClicked ? 0.90 : isHovered ? 1.08 : 1,
           opacity: hideOuterRing ? 0 : 1,
-          boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.25)",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.18), inset 0 1px 1px rgba(255,255,255,0.45), inset 0 -1px 1px rgba(255,255,255,0.08)",
         }}
         transition={{
-          scale: { type: "spring", stiffness: 480, damping: 24 },
-          opacity: { duration: 0.15 },
+          scale: { type: "spring", stiffness: 320, damping: 20 },
+          opacity: { duration: 0.2 },
         }}
-      />
+      >
+        {/* Reflection Overlay Layer */}
+        <div 
+          className="absolute inset-0 rounded-full pointer-events-none"
+          style={{
+            background: "linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.12) 30%, rgba(255,255,255,0.02) 100%)"
+          }}
+        />
+        {/* Edge Glow / Refraction Layer */}
+        <div 
+          className="absolute inset-[2px] rounded-full pointer-events-none border border-white/[0.12] opacity-80"
+        />
+      </motion.div>
 
       {/* Inner Pinpoint Dot / Golden Laser Needle */}
       <motion.div

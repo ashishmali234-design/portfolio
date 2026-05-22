@@ -33,10 +33,10 @@ interface Project {
 
 const projects: Project[] = [
   {
-    title: "NeoGenesis",
-    description: "Futuristic dashboard monitoring cyber-biological interfaces. Merging neural networks with organic system readouts.",
-    image: "/images/neogenesis.png",
-    tags: ["UI/UX Design", "Spline 3D", "Framer Motion", "Interactive Prototype"],
+    title: "Prime Video Redesign",
+    description: "A Lean UX strategic overhaul of Amazon Prime Video's landing portal, optimizing content discovery and IA paths through high-fidelity interactive design.",
+    image: "/images/primevideo.png",
+    tags: ["Lean UX", "Interaction Design", "Framer Motion", "Interactive Prototype"],
     link: "#",
     github: "#",
   },
@@ -58,7 +58,11 @@ const projects: Project[] = [
   },
 ];
 
-export default function Projects() {
+interface ProjectsProps {
+  onOpenPrimeVideo?: () => void;
+}
+
+export default function Projects({ onOpenPrimeVideo }: ProjectsProps) {
   return (
     <section id="projects" className="relative z-20 py-24 px-6 md:px-12 bg-[#121212] overflow-hidden">
       
@@ -98,7 +102,14 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, delay: index * 0.15 }}
-              className="glass-card flex flex-col h-full rounded-2xl overflow-hidden pointer-events-auto"
+              onClick={() => {
+                if (project.title === "Prime Video Redesign") {
+                  onOpenPrimeVideo?.();
+                }
+              }}
+              className={`glass-card flex flex-col h-full rounded-2xl overflow-hidden pointer-events-auto group ${
+                project.title === "Prime Video Redesign" ? "cursor-pointer" : ""
+              }`}
             >
               {/* Image Preview Container */}
               <div className="relative aspect-square w-full overflow-hidden bg-black/40">
@@ -107,33 +118,61 @@ export default function Projects() {
                   alt={project.title}
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover transition-transform duration-700 ease-out hover:scale-105"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   priority={index === 0}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#121212] via-transparent to-transparent opacity-60" />
+                
+                {/* Immersive blur and explore overlay on hover for Prime Video */}
+                {project.title === "Prime Video Redesign" && (
+                  <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center gap-3">
+                    <div className="px-5 py-2.5 rounded-full bg-cyan-500 text-black font-extrabold text-xs tracking-widest uppercase shadow-[0_0_20px_rgba(6,182,212,0.4)] transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                      Explore Redesign
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Card Details */}
               <div className="p-6 flex flex-col flex-grow">
                 <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-2xl font-bold tracking-tight text-white">
+                  <h3 className={`text-2xl font-bold tracking-tight text-white transition-colors duration-300 ${
+                    project.title === "Prime Video Redesign" ? "group-hover:text-cyan-400" : ""
+                  }`}>
                     {project.title}
                   </h3>
                   <div className="flex gap-2">
-                    <a
-                      href={project.github}
-                      className="p-1.5 rounded-full bg-white/5 hover:bg-amber-500/20 text-white/70 hover:text-white transition-colors border border-white/5"
-                      aria-label={`${project.title} Github`}
-                    >
-                      <Github className="w-4 h-4" />
-                    </a>
-                    <a
-                      href={project.link}
-                      className="p-1.5 rounded-full bg-white/5 hover:bg-amber-500/20 text-white/70 hover:text-white transition-colors border border-white/5"
-                      aria-label={`${project.title} live demo`}
-                    >
-                      <ArrowUpRight className="w-4 h-4" />
-                    </a>
+                    {project.title === "Prime Video Redesign" ? (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onOpenPrimeVideo?.();
+                        }}
+                        className="p-1.5 rounded-full bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 hover:text-cyan-300 transition-colors border border-cyan-500/20 cursor-pointer"
+                        aria-label={`${project.title} live case study`}
+                      >
+                        <ArrowUpRight className="w-4 h-4" />
+                      </button>
+                    ) : (
+                      <>
+                        <a
+                          href={project.github}
+                          onClick={(e) => e.stopPropagation()}
+                          className="p-1.5 rounded-full bg-white/5 hover:bg-amber-500/20 text-white/70 hover:text-white transition-colors border border-white/5"
+                          aria-label={`${project.title} Github`}
+                        >
+                          <Github className="w-4 h-4" />
+                        </a>
+                        <a
+                          href={project.link}
+                          onClick={(e) => e.stopPropagation()}
+                          className="p-1.5 rounded-full bg-white/5 hover:bg-amber-500/20 text-white/70 hover:text-white transition-colors border border-white/5"
+                          aria-label={`${project.title} live demo`}
+                        >
+                          <ArrowUpRight className="w-4 h-4" />
+                        </a>
+                      </>
+                    )}
                   </div>
                 </div>
 
@@ -146,7 +185,11 @@ export default function Projects() {
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="text-[10px] font-semibold tracking-wider text-cyan-400 uppercase px-2.5 py-1 rounded-md bg-cyan-400/5 border border-cyan-400/10"
+                      className={`text-[10px] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-md border ${
+                        project.title === "Prime Video Redesign"
+                          ? "text-cyan-400 bg-cyan-400/5 border-cyan-400/10"
+                          : "text-amber-500 bg-amber-500/5 border-amber-500/10"
+                      }`}
                     >
                       {tag}
                     </span>

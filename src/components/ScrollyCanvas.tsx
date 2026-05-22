@@ -31,6 +31,7 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
   const frameIndex = useTransform(scrollYProgress, [0, 1], [0, totalFrames - 1]);
 
   // Generate particle parameters once so they animate smoothly via CSS
+  // Generate particle parameters once so they animate smoothly via CSS
   const particles = useMemo(() => {
     return Array.from({ length: 15 }).map((_, i) => {
       const size = Math.random() * 3 + 2; // 2px to 5px
@@ -38,7 +39,7 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
       const duration = Math.random() * 1.2 + 0.8; // 0.8s to 2s
       const left = Math.random() * 60 + 20; // 20% to 80%
       const drift = (Math.random() - 0.5) * 24; // drift in px
-      const color = i % 2 === 0 ? "#38bdf8" : "#fbbf24"; // Alternate electric cyan and gold/amber
+      const color = i % 2 === 0 ? "#f59e0b" : "#fbbf24"; // Alternate vibrant amber and gold/amber (avoiding clashing cyan)
       return { id: i, size, delay, duration, left, drift, color };
     });
   }, []);
@@ -56,10 +57,11 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
       const scaleFrom = Math.random() * 0.2 + 0.4;
       const scaleTo = Math.random() * 0.4 + 1.2;
       
+      // Use radial-gradient with a complete fade to 0% opacity at 70% distance to guarantee no hard cut-offs or blocky edges
       const gradients = [
-        "linear-gradient(to top, rgba(56,189,248,0.14) 0%, rgba(239,68,68,0.06) 50%, rgba(0,0,0,0) 100%)", // Cyan to Red
-        "linear-gradient(to top, rgba(239,68,68,0.16) 0%, rgba(245,158,11,0.08) 60%, rgba(0,0,0,0) 100%)", // Red to Amber/Gold
-        "linear-gradient(to top, rgba(56,189,248,0.14) 0%, rgba(245,158,11,0.08) 60%, rgba(0,0,0,0) 100%)"  // Cyan to Amber/Gold
+        "radial-gradient(circle, rgba(245,158,11,0.08) 0%, rgba(239,68,68,0.03) 45%, rgba(0,0,0,0) 70%)", // Amber to dark Red-Grey
+        "radial-gradient(circle, rgba(239,68,68,0.08) 0%, rgba(245,158,11,0.03) 45%, rgba(0,0,0,0) 70%)", // Dark Red to Amber
+        "radial-gradient(circle, rgba(245,158,11,0.1) 0%, rgba(245,158,11,0.02) 50%, rgba(0,0,0,0) 70%)"  // Pure golden amber
       ];
       const gradient = gradients[i % gradients.length];
       return { id: i, size, left, delay, duration, driftX, driftY, maxOpacity, scaleFrom, scaleTo, gradient };
@@ -78,10 +80,11 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
       const scaleFrom = 0.3;
       const scaleTo = Math.random() * 0.8 + 1.8;
       
+      // Use radial-gradient with complete fade at 70% to ensure smooth dissipation without flat clipping boundaries
       const gradients = [
-        "radial-gradient(circle, rgba(56,189,248,0.22) 0%, rgba(239,68,68,0.1) 50%, rgba(0,0,0,0) 100%)",   // Cyan to Red
-        "radial-gradient(circle, rgba(239,68,68,0.25) 0%, rgba(245,158,11,0.1) 55%, rgba(0,0,0,0) 100%)",  // Red to Amber/Gold
-        "radial-gradient(circle, rgba(56,189,248,0.20) 0%, rgba(245,158,11,0.1) 60%, rgba(0,0,0,0) 100%)"  // Cyan to Amber/Gold
+        "radial-gradient(circle, rgba(251,191,36,0.16) 0%, rgba(239,68,68,0.06) 45%, rgba(0,0,0,0) 70%)",   // Amber to Red-Grey
+        "radial-gradient(circle, rgba(239,68,68,0.18) 0%, rgba(245,158,11,0.06) 45%, rgba(0,0,0,0) 70%)",  // Red to Amber
+        "radial-gradient(circle, rgba(251,191,36,0.14) 0%, rgba(251,191,36,0.03) 50%, rgba(0,0,0,0) 70%)"  // Pure golden amber
       ];
       const gradient = gradients[i % gradients.length];
       return { id: i, size, delay, duration, driftX, driftY, maxOpacity, scaleFrom, scaleTo, gradient };
@@ -275,16 +278,16 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
           {/* Radial ambient lighting in center */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none z-0 opacity-40 blur-[80px]" 
             style={{
-              background: "radial-gradient(circle, rgba(56,189,248,0.12) 0%, rgba(239,68,68,0.06) 50%, rgba(0,0,0,0) 100%)"
+              background: "radial-gradient(circle, rgba(255,191,79,0.15) 0%, rgba(239,68,68,0.05) 60%, rgba(0,0,0,0) 100%)"
             }}
           />
 
-          {/* Background billowing smoke clouds */}
-          <div className="absolute bottom-0 left-0 right-0 h-[280px] overflow-hidden pointer-events-none z-0 select-none">
+          {/* Background billowing smoke clouds - increased height and enabled overflow-visible to avoid harsh clipping lines */}
+          <div className="absolute bottom-0 left-0 right-0 h-[65vh] overflow-visible pointer-events-none z-0 select-none">
             {smokePuffs.map((p) => (
               <div
                 key={p.id}
-                className="absolute rounded-full blur-[24px] md:blur-[36px] mix-blend-screen opacity-0"
+                className="absolute rounded-full blur-[32px] md:blur-[48px] mix-blend-screen opacity-0"
                 style={{
                   width: p.size,
                   height: p.size,
@@ -298,7 +301,7 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
                   "--dy": `${p.driftY}px`,
                   "--scale-from": p.scaleFrom,
                   "--scale-to": p.scaleTo,
-                  "--max-opacity": isLaunchingReady ? p.maxOpacity * 2.2 : p.maxOpacity,
+                  "--max-opacity": isLaunchingReady ? p.maxOpacity * 1.5 : p.maxOpacity,
                 } as React.CSSProperties}
               />
             ))}
@@ -310,7 +313,7 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
             style={{
               transform: `translateX(-50%) scale(${isLaunching ? '2.0, 0.5' : isLaunchingReady ? '1.5, 1.2' : '1, 1'})`,
               opacity: isLaunching ? 0 : isLaunchingReady ? 0.95 : 0.45,
-              background: "radial-gradient(circle, rgba(245,158,11,0.25) 0%, rgba(56,189,248,0.12) 40%, rgba(239,68,68,0.08) 75%, rgba(0,0,0,0) 100%)",
+              background: "radial-gradient(circle, rgba(245,158,11,0.25) 0%, rgba(251,191,36,0.12) 40%, rgba(239,68,68,0.08) 75%, rgba(0,0,0,0) 100%)", // Replaced clashing cyan with warm golden glow
             }}
           />
 
@@ -353,13 +356,13 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
                       : "animate-[rocketVibrate_0.2s_linear_infinite]"
                 }>
                   
-                  {/* Layered Organic Plumes (Blown out behind the Logo) */}
-                  <div className="absolute top-[62px] left-1/2 -translate-x-1/2 w-48 h-80 pointer-events-none z-0">
+                  {/* Layered Organic Plumes (Blown out behind the Logo) - enabled overflow-visible */}
+                  <div className="absolute top-[62px] left-1/2 -translate-x-1/2 w-48 h-80 pointer-events-none z-0 overflow-visible">
                     
-                    {/* 1. Ambient Outer Plume Glow (Vibrant Crimson-Gold, ultra-blurred) */}
+                    {/* 1. Ambient Outer Plume Glow (Vibrant Crimson-Gold, ultra-blurred) - enabled overflow-visible */}
                     <svg 
                       viewBox="0 0 100 200" 
-                      className="absolute top-0 left-1/2 -translate-x-1/2 w-36 h-72 blur-[28px] origin-top opacity-65 transition-all duration-500"
+                      className="absolute top-0 left-1/2 -translate-x-1/2 w-36 h-72 blur-[28px] origin-top opacity-65 transition-all duration-500 overflow-visible"
                       style={{
                         transform: `scale(${isLaunching || isLaunchingReady ? '1.45, 1.25' : '1, 1'}) translateX(-50%)`,
                         animation: `plumeFlicker 0.15s ease-in-out infinite`,
@@ -371,10 +374,10 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
                       />
                     </svg>
 
-                    {/* 2. Inner Plume Jet (Orange-Yellow, moderately blurred) */}
+                    {/* 2. Inner Plume Jet (Orange-Yellow, moderately blurred) - enabled overflow-visible */}
                     <svg 
                       viewBox="0 0 100 200" 
-                      className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-52 blur-[10px] origin-top opacity-85 transition-all duration-500"
+                      className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-52 blur-[10px] origin-top opacity-85 transition-all duration-500 overflow-visible"
                       style={{
                         transform: `scale(${isLaunching || isLaunchingReady ? '1.35, 1.2' : '1, 1'}) translateX(-50%)`,
                         animation: `plumeFlicker 0.09s ease-in-out infinite`,
@@ -386,10 +389,10 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
                       />
                     </svg>
 
-                    {/* 3. Core Fire Flame (Intense White-Yellow, low-blurred) */}
+                    {/* 3. Core Fire Flame (Intense White-Yellow, low-blurred) - enabled overflow-visible */}
                     <svg 
                       viewBox="0 0 100 200" 
-                      className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-32 blur-[3px] origin-top opacity-95 transition-all duration-500"
+                      className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-32 blur-[3px] origin-top opacity-95 transition-all duration-500 overflow-visible"
                       style={{
                         transform: `scale(${isLaunching || isLaunchingReady ? '1.25, 1.35' : '1, 1'}) translateX(-50%)`,
                         animation: `plumeFlicker 0.05s ease-in-out infinite`,
@@ -411,22 +414,22 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
                           <stop offset="100%" stopColor="#121212" stopOpacity="0" />
                         </linearGradient>
                         <linearGradient id="inner-plume-grad" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="#38bdf8" />
+                          <stop offset="0%" stopColor="#fbbf24" />
                           <stop offset="35%" stopColor="#f59e0b" stopOpacity="0.9" />
                           <stop offset="75%" stopColor="#ef4444" stopOpacity="0.4" />
                           <stop offset="100%" stopColor="#121212" stopOpacity="0" />
                         </linearGradient>
                         <linearGradient id="core-plume-grad" x1="0" y1="0" x2="0" y2="1">
                           <stop offset="0%" stopColor="#ffffff" />
-                          <stop offset="50%" stopColor="#38bdf8" stopOpacity="0.95" />
+                          <stop offset="50%" stopColor="#ffeb3b" stopOpacity="0.95" />
                           <stop offset="100%" stopColor="#f59e0b" stopOpacity="0" />
                         </linearGradient>
                       </defs>
                     </svg>
                   </div>
 
-                  {/* Micro-spark particles floating downward */}
-                  <div className="absolute top-[75px] left-1/2 -translate-x-1/2 w-28 h-44 overflow-hidden pointer-events-none z-0">
+                  {/* Micro-spark particles floating downward - enabled overflow-visible to prevent boundary cutoff */}
+                  <div className="absolute top-[75px] left-1/2 -translate-x-1/2 w-28 h-44 overflow-visible pointer-events-none z-0">
                     {particles.map((p) => (
                       <div
                         key={p.id}
@@ -445,12 +448,12 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
                     ))}
                   </div>
 
-                  {/* Engine plume smoke puffs billowing downwards and outwards */}
-                  <div className="absolute top-[75px] left-1/2 -translate-x-1/2 w-48 h-64 overflow-hidden pointer-events-none z-0 mix-blend-screen">
+                  {/* Engine plume smoke puffs billowing downwards and outwards - widened and set to overflow-visible to prevent edge clipping */}
+                  <div className="absolute top-[75px] left-1/2 -translate-x-1/2 w-96 h-[400px] overflow-visible pointer-events-none z-0 mix-blend-screen">
                     {engineSmokePuffs.map((p) => (
                       <div
                         key={p.id}
-                        className="absolute rounded-full blur-[10px] md:blur-[14px] opacity-0"
+                        className="absolute rounded-full blur-[14px] md:blur-[20px] opacity-0"
                         style={{
                           width: p.size,
                           height: p.size,
@@ -464,16 +467,16 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
                           "--edy": `${p.driftY}px`,
                           "--escale-from": p.scaleFrom,
                           "--escale-to": p.scaleTo,
-                          "--emax-opacity": isLaunchingReady ? p.maxOpacity * 2.0 : p.maxOpacity,
+                          "--emax-opacity": isLaunchingReady ? p.maxOpacity * 1.5 : p.maxOpacity,
                         } as React.CSSProperties}
                       />
                     ))}
                   </div>
 
-                  {/* The Rocket Core - User's SVG Logo (Vibrant Gemini-inspired gradient) */}
+                  {/* The Rocket Core - User's SVG Logo (Warm Premium Gold gradient, avoiding clash) */}
                   <motion.div
                     layoutId="rocketLogo"
-                    className="relative z-10 w-20 h-20 filter drop-shadow-[0_0_20px_rgba(56,189,248,0.45)]"
+                    className="relative z-10 w-20 h-20 filter drop-shadow-[0_0_25px_rgba(251,191,36,0.5)]"
                     transition={{
                       type: "spring",
                       stiffness: 70,
@@ -491,20 +494,20 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
                         fillRule="evenodd"
                         clipRule="evenodd"
                         d="M27.7906 5.5864C27.3385 5.59566 26.9705 5.94626 26.9476 6.38957C26.9252 6.82376 26.931 7.41494 26.9659 8.13723C26.8931 10.1656 26.5626 13.4374 25.9453 17.2112C25.2117 21.696 24.0885 26.7941 22.5679 31.2004C21.4191 29.577 20.1929 28.4157 18.91 27.6731C17.2435 26.7086 15.5252 26.4777 13.8693 26.8112C10.6225 27.4653 7.76289 30.2474 5.79722 33.4524C3.81979 36.6765 2.60077 40.5613 2.81789 43.7159C2.92699 45.3011 3.40569 46.7796 4.42435 47.8705C5.46131 48.9809 6.96111 49.5862 8.88479 49.5862C12.1856 49.5862 15.058 47.5921 17.4611 44.6719C19.5456 42.1388 21.3611 38.812 22.8881 35.1687C24.4118 38.3708 25.8125 42.9783 26.9631 48.8986C27.0408 49.2985 27.3977 49.5874 27.8124 49.5862C28.2272 49.585 28.5823 49.294 28.6576 48.8937C29.7584 43.0412 31.1224 38.6947 32.6181 35.5571C32.6734 35.441 32.7288 35.3267 32.7844 35.2141C33.9741 38.2551 35.3723 41.0847 37.002 43.4109C39.5334 47.0241 42.746 49.5862 46.735 49.5862C49.0063 49.5862 50.6659 48.7462 51.6712 47.2774C52.6429 45.8577 52.9145 43.9789 52.7465 42.0359C52.4103 38.1491 50.279 33.5511 47.3264 30.473C45.8449 28.9287 44.1051 27.7129 42.2159 27.1979C40.2951 26.6742 38.2703 26.8913 36.3266 28.133C35.2287 28.8344 34.1746 29.8505 33.1781 31.2131C32.9903 30.6412 32.8087 30.0643 32.6331 29.4839C31.1555 24.5985 30.1268 19.5283 29.4862 15.3237C29.0303 12.3308 28.776 9.80946 28.6908 8.11823C28.7151 7.3805 28.7073 6.78198 28.667 6.35435C28.6253 5.91237 28.2427 5.57714 27.7906 5.5864ZM27.793 16.1631C28.4469 20.3185 29.5366 25.1923 30.9803 29.9656C31.2947 31.005 31.6299 32.0393 31.9867 33.0583C31.6694 33.6115 31.3591 34.2049 31.0564 34.8399C29.8521 37.3663 28.7521 40.5835 27.8022 44.6049C26.6323 39.6778 25.2531 35.7841 23.7302 33.0518C25.5379 28.2339 26.8337 22.4553 27.6476 17.4795C27.7236 17.0151 27.7251 16.6141 27.793 16.1631ZM33.8779 33.2387C34.9965 31.4475 36.1468 30.2671 37.2671 29.5514C38.7842 28.5822 40.2964 28.4309 41.7544 28.8284C43.244 29.2345 44.7248 30.2297 46.0711 31.6331C48.774 34.4508 50.7272 38.6962 51.0285 42.179C51.1792 43.9208 50.9077 45.3583 50.2401 46.3337C49.6061 47.26 48.5301 47.8939 46.735 47.8939C43.5844 47.8939 40.8246 45.8804 38.4226 42.452C36.6526 39.9255 35.1432 36.7191 33.8779 33.2387ZM21.8304 33.2006C20.2292 37.2858 18.305 40.9532 16.1199 43.6085C13.8575 46.3577 11.4267 47.8939 8.88479 47.8939C7.34927 47.8939 6.34655 47.4243 5.69535 46.727C5.02585 46.01 4.63075 44.9479 4.53811 43.6018C4.35172 40.8937 5.4174 37.3529 7.27435 34.3252C9.14307 31.2783 11.6675 28.9824 14.216 28.469C15.4577 28.2188 16.7398 28.3818 18.0342 29.1309C19.2788 29.8512 20.5723 31.1367 21.8304 33.2006Z"
-                        fill="url(#rocket-logo-grad)"
+                        fill="url(#logo-gold-gradient)"
                       />
                       <defs>
                         <linearGradient
-                          id="rocket-logo-grad"
+                          id="logo-gold-gradient"
                           x1="27.793"
                           y1="5.58621"
                           x2="28"
                           y2="48"
                           gradientUnits="userSpaceOnUse"
                         >
-                          <stop offset="0%" stopColor="#38bdf8" />
-                          <stop offset="50%" stopColor="#fbbf24" />
-                          <stop offset="100%" stopColor="#d97706" />
+                          <stop offset="0%" stopColor="#FFE082" />
+                          <stop offset="40%" stopColor="#FFBF4F" />
+                          <stop offset="100%" stopColor="#A06A0A" />
                         </linearGradient>
                       </defs>
                     </svg>
@@ -527,10 +530,10 @@ export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
                   : "Initializing Systems"}
             </span>
             
-            {/* Sleek Gradient Loading Bar */}
+            {/* Sleek Cohesive Gradient Loading Bar (Replaced clashing cyan with warm golden-amber theme) */}
             <div className="relative w-44 h-[2px] bg-white/5 rounded-full overflow-hidden">
               <div 
-                className="absolute left-0 top-0 h-full bg-gradient-to-r from-cyan-400 via-amber-400 to-red-500 rounded-full transition-all duration-300 ease-out"
+                className="absolute left-0 top-0 h-full bg-gradient-to-r from-amber-500 via-yellow-500 to-red-500 rounded-full transition-all duration-300 ease-out"
                 style={{ width: `${loadingProgress}%` }}
               />
             </div>

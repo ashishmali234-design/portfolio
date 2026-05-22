@@ -11,6 +11,7 @@ import Projects from "@/components/Projects";
 import Logo from "@/components/Logo";
 import CustomCursor from "@/components/CustomCursor";
 import WhatIDo from "@/components/WhatIDo";
+import PrimeVideoRedesign from "@/components/PrimeVideoRedesign";
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -18,6 +19,7 @@ export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [showPrimeVideo, setShowPrimeVideo] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,21 +44,39 @@ export default function Home() {
           }`}>
             <Logo />
             
-            <nav className="hidden md:flex gap-6 text-xs uppercase tracking-widest font-semibold text-white/60">
+            <nav className="hidden md:flex gap-6 text-xs uppercase tracking-widest font-semibold text-white/60 items-center">
               <a href="#experience" className="hover:text-white transition-colors">Experience</a>
               <a href="#skills" className="hover:text-white transition-colors">Skills</a>
               <a href="#projects" className="hover:text-white transition-colors">Work</a>
               <a href="#contact" className="hover:text-white transition-colors">Contact</a>
+              <a 
+                href="/Ashish_C_Mali_Resume.pdf" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="ml-4 px-4 py-2 rounded-full border border-amber-500/20 bg-amber-500/10 text-amber-400 font-bold hover:bg-amber-500 hover:text-black hover:border-amber-500 transition-all duration-300 shadow-[0_0_15px_rgba(245,158,11,0.12)] hover:shadow-[0_0_20px_rgba(245,158,11,0.3)] text-[10px] tracking-wider uppercase"
+              >
+                Resume
+              </a>
             </nav>
 
-            {/* Hamburger Menu Button for Mobile */}
-            <button 
-              onClick={() => setMenuOpen(true)}
-              className="flex md:hidden text-white/80 hover:text-white transition-colors focus:outline-none p-2 -mr-2"
-              aria-label="Toggle Menu"
-            >
-              <Menu size={22} className="stroke-[2.5]" />
-            </button>
+            {/* Mobile Header Right Side (Resume + Hamburger) */}
+            <div className="flex md:hidden items-center gap-2">
+              <a 
+                href="/Ashish_C_Mali_Resume.pdf" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="px-3.5 py-1.5 rounded-full border border-amber-500/20 bg-amber-500/10 text-amber-400 font-bold text-[9px] tracking-widest uppercase transition-all duration-300 shadow-[0_0_10px_rgba(245,158,11,0.08)] hover:bg-amber-500 hover:text-black hover:border-amber-500 active:scale-95"
+              >
+                Resume
+              </a>
+              <button 
+                onClick={() => setMenuOpen(true)}
+                className="text-white/80 hover:text-white transition-colors focus:outline-none p-2 -mr-2"
+                aria-label="Toggle Menu"
+              >
+                <Menu size={22} className="stroke-[2.5]" />
+              </button>
+            </div>
           </header>
 
           {/* Mobile Fullscreen Glassmorphic Menu Drawer */}
@@ -92,12 +112,15 @@ export default function Home() {
                     { name: "Experience", href: "#experience" },
                     { name: "Skills", href: "#skills" },
                     { name: "Work", href: "#projects" },
-                    { name: "Contact", href: "#contact" }
+                    { name: "Contact", href: "#contact" },
+                    { name: "Resume", href: "/Ashish_C_Mali_Resume.pdf", isExternal: true }
                   ].map((item, idx) => (
                     <motion.a
                       key={item.name}
                       href={item.href}
                       onClick={() => setMenuOpen(false)}
+                      target={item.isExternal ? "_blank" : undefined}
+                      rel={item.isExternal ? "noopener noreferrer" : undefined}
                       initial={{ opacity: 0, x: -30 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ 
@@ -106,7 +129,11 @@ export default function Home() {
                         damping: 15,
                         delay: 0.1 + idx * 0.08 
                       }}
-                      className="text-3xl font-black uppercase tracking-wider text-white/70 hover:text-amber-500 transition-colors active:text-amber-500"
+                      className={`text-3xl font-black uppercase tracking-wider transition-colors ${
+                        item.isExternal 
+                          ? "text-amber-400 hover:text-white" 
+                          : "text-white/70 hover:text-amber-500 active:text-amber-500"
+                      }`}
                     >
                       {item.name}
                     </motion.a>
@@ -136,9 +163,10 @@ export default function Home() {
       {isLoaded && (
         <>
           <WhatIDo />
+          <Projects onOpenPrimeVideo={() => setShowPrimeVideo(true)} />
           <Experience />
           <Skills />
-          <Projects />
+          <PrimeVideoRedesign isOpen={showPrimeVideo} onClose={() => setShowPrimeVideo(false)} />
         </>
       )}
 

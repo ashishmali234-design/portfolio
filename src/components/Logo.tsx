@@ -54,8 +54,9 @@ export default function Logo({ className = "", showText = true, forceShowTextOnM
             y2="48"
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="0.137976" stopColor="#FFBF4F" />
-            <stop offset="1" stopColor="#84580A" />
+            <stop offset="0%" stopColor="#FFE082" />
+            <stop offset="40%" stopColor="#FFBF4F" />
+            <stop offset="100%" stopColor="#A06A0A" />
           </linearGradient>
         </defs>
       </svg>

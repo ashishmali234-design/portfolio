@@ -83,26 +83,27 @@ export default function Typewriter({
         if (charCount <= start) return null;
         const visibleLen = Math.min(segLen, charCount - start);
 
-        if (seg.text === "AI") {
+        if (seg.text === "Ai") {
           return (
-            <span key={idx} className="relative inline-block mx-0.5 group">
-              {/* Subtle back-glow */}
+            <span key={idx} className="relative inline-block mx-0.5 group font-sans font-normal">
+              {/* Soft ice-blue neon glow backdrop */}
               <motion.span 
                 animate={{
-                  opacity: [0.4, 0.8, 0.4],
+                  opacity: [0.3, 0.6, 0.3],
                   scale: [0.95, 1.05, 0.95]
                 }}
                 transition={{
-                  duration: 2,
+                  duration: 2.5,
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                className="absolute -inset-1.5 rounded-lg bg-gradient-to-r from-amber-500/25 to-yellow-500/25 blur-md pointer-events-none"
+                className="absolute -inset-1 rounded-lg bg-sky-400/15 blur-md pointer-events-none"
               />
-              <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-500 font-black">
-                {seg.text.slice(0, visibleLen)}
+              {/* Silver-white gradient text (Simple, non-golden) */}
+              <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-sky-100 font-normal">
+                {visibleLen >= 2 ? "Aı" : visibleLen === 1 ? "A" : ""}
               </span>
-              {/* Star spark above the letter 'I' */}
+              {/* Delicate star spark replacing the dot of the lowercase 'i' */}
               {visibleLen >= 2 && (
                 <motion.span 
                   initial={{ opacity: 0, scale: 0, rotate: -45 }}
@@ -110,21 +111,21 @@ export default function Typewriter({
                     opacity: 1, 
                     scale: 1, 
                     rotate: 0,
-                    y: [0, -1.5, 0]
+                    y: [0, -1, 0]
                   }}
                   transition={{ 
-                    opacity: { duration: 0.3 },
-                    scale: { duration: 0.3 },
-                    rotate: { duration: 0.3 },
+                    opacity: { duration: 0.25 },
+                    scale: { duration: 0.25 },
+                    rotate: { duration: 0.25 },
                     y: {
                       duration: 2,
                       repeat: Infinity,
                       ease: "easeInOut"
                     }
                   }}
-                  className="absolute -top-3.5 right-0.5 pointer-events-none text-amber-300 filter drop-shadow-[0_0_5px_rgba(251,191,36,0.85)]"
+                  className="absolute top-[-0.12em] right-[0.02em] pointer-events-none text-sky-300 filter drop-shadow-[0_0_3px_rgba(56,189,248,0.8)]"
                 >
-                  <svg className="w-3.5 h-3.5 fill-amber-300" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <svg className="w-[0.28em] h-[0.28em] fill-sky-300" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z" />
                   </svg>
                 </motion.span>

@@ -72,7 +72,7 @@ export default function Overlay() {
               transition={{ delay: 1.6, duration: 0.6, ease: "easeOut" }}
               className="text-xs md:text-sm text-white/50 uppercase tracking-widest mt-3"
             >
-              at <span className="font-rubik text-white font-semibold tracking-widest">BAJAJ FINSERV</span>
+              at <span className="font-rubik text-white font-semibold tracking-widest">Bajaj Finance</span>
             </motion.p>
           </div>
         </motion.div>
@@ -163,19 +163,19 @@ export default function Overlay() {
                 The Philosophy
               </span>
             </div>
-            <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-[1.1] min-h-[2.2em]">
+            <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-[1.6] md:leading-[1.7] min-h-[2.8em]">
               <Typewriter
                 trigger={isSection3Visible}
                 segments={[
                   { text: "Designing with ", className: "text-white" },
-                  { text: "AI", className: "text-white" },
+                  { text: "Ai", className: "text-white" },
                   { text: ",\n", className: "text-white" },
                   { text: "thinking like humans.", className: "text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-600" }
                 ]}
                 delay={200}
               />
             </h2>
-            <p className="mt-4 md:mt-5 text-sm md:text-lg text-white/60 leading-relaxed font-light font-sans max-w-md">
+            <p className="mt-6 md:mt-7 text-sm md:text-lg text-white/60 leading-relaxed font-light font-sans max-w-md">
               Using AI thoughtfully to create seamless, innovative, and human-centered experiences.
             </p>
           </div>

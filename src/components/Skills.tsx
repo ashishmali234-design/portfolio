@@ -376,9 +376,6 @@ export default function Skills() {
           {/* Header */}
           <div className="flex items-center justify-between mb-10">
             <div>
-              <span className="text-xs font-bold tracking-[0.3em] text-amber-400 uppercase block mb-2">
-                TECHNOLOGIES & TOOLS
-              </span>
               <h3 className="text-3xl md:text-4xl font-light text-white tracking-tight">
                 My <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-neutral-400">Toolkit</span>
               </h3>

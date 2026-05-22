@@ -40,7 +40,7 @@ export default function WhatIDo() {
   ];
 
   return (
-    <section id="what-i-do" className="relative z-20 py-24 px-6 md:px-12 bg-[#121212] overflow-hidden border-b border-white/5">
+    <section id="about-me" className="relative z-20 py-24 px-6 md:px-12 bg-[#121212] overflow-hidden border-b border-white/5">
       {/* Background glow effects */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[140px] pointer-events-none" />
 
@@ -54,7 +54,7 @@ export default function WhatIDo() {
             transition={{ duration: 0.6 }}
             className="text-4xl md:text-5xl font-light text-white tracking-tight"
           >
-            What I <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-100 to-neutral-300">Do</span>
+            About <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-100 to-neutral-300">Me</span>
           </motion.h2>
           
           <motion.div

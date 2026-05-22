@@ -281,7 +281,7 @@ export default function Skills() {
         </div>
       </div>
 
-      {/* Standalone Full-Width "My Arsenal" Section */}
+      {/* Standalone Full-Width "My Toolkit" Section */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -297,7 +297,7 @@ export default function Skills() {
                 Technologies & Tools
               </span>
               <h3 className="text-3xl md:text-4xl font-light text-white tracking-tight">
-                My <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-neutral-400">Arsenal</span>
+                My <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-neutral-400">Toolkit</span>
               </h3>
             </div>
             <div className="p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 shrink-0">

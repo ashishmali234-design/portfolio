@@ -105,10 +105,10 @@ export default function Overlay() {
         >
           <div className="w-full bg-gradient-to-br from-black/90 via-black/80 to-black/95 md:bg-none p-6 md:p-0 rounded-2xl md:rounded-none backdrop-blur-md md:backdrop-blur-none border border-white/10 md:border-none shadow-2xl md:shadow-none">
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400">
+              <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400">
                 <Code2 className="w-5 h-5" />
               </div>
-              <span className="text-xs font-bold tracking-widest text-cyan-400 uppercase">
+              <span className="text-xs font-bold tracking-widest text-amber-400 uppercase">
                 Core Expertise
               </span>
             </div>
@@ -118,7 +118,7 @@ export default function Overlay() {
                 trigger={isSection2Visible}
                 segments={[
                   { text: "Crafting\n", className: "text-white" },
-                  { text: "Seamless UX.", className: "text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500" }
+                  { text: "Seamless UX.", className: "text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-[#FFBF4F] to-yellow-500" }
                 ]}
                 delay={200}
               />
@@ -129,7 +129,7 @@ export default function Overlay() {
                 trigger={isSection2Visible}
                 segments={[
                   { text: "Turning Ideas Into\n", className: "text-white" },
-                  { text: "Seamless Experiences.", className: "text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500" }
+                  { text: "Seamless Experiences.", className: "text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-[#FFBF4F] to-yellow-500" }
                 ]}
                 delay={200}
               />

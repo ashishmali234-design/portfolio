@@ -101,7 +101,7 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
                 onClick={() => setActiveTab("figma")}
                 className={`px-3 py-1.5 md:px-4 py-1.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
                   activeTab === "figma"
-                    ? "bg-[#00A8E1] text-black font-extrabold"
+                    ? "bg-[#FFBF4F] text-black font-extrabold shadow-[0_0_15px_rgba(255,191,79,0.3)]"
                     : "text-white/60 hover:text-white"
                 }`}
               >
@@ -111,7 +111,7 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
                 onClick={() => setActiveTab("case-study")}
                 className={`px-3 py-1.5 md:px-4 py-1.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
                   activeTab === "case-study"
-                    ? "bg-[#00A8E1] text-black font-extrabold"
+                    ? "bg-[#FFBF4F] text-black font-extrabold shadow-[0_0_15px_rgba(255,191,79,0.3)]"
                     : "text-white/60 hover:text-white"
                 }`}
               >
@@ -166,7 +166,7 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
 
                 {/* Portfolio Navigation Links */}
                 <nav className="flex flex-col gap-6 my-auto text-left pl-4">
-                  <span className="text-[10px] uppercase tracking-widest text-[#00A8E1] font-black mb-1">Portfolio</span>
+                  <span className="text-[10px] uppercase tracking-widest text-[#FFBF4F] font-black mb-1">Portfolio</span>
                   {[
                     { name: "Experience", target: "experience" },
                     { name: "Skills", target: "skills" },
@@ -176,7 +176,7 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
                     <button
                       key={item.name}
                       onClick={() => handleNavLinkClick(item.target)}
-                      className="text-3xl font-black uppercase tracking-wider text-white/70 hover:text-[#00A8E1] active:text-[#00A8E1] text-left transition-colors cursor-pointer bg-transparent border-none"
+                      className="text-3xl font-black uppercase tracking-wider text-white/70 hover:text-[#FFBF4F] active:text-[#FFBF4F] text-left transition-colors cursor-pointer bg-transparent border-none"
                     >
                       {item.name}
                     </button>
@@ -187,7 +187,7 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
                     href="file:///Users/rac/Downloads/Ashish%20C%20Mali%20Resume.pdf" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-3xl font-black uppercase tracking-wider text-cyan-400 hover:text-cyan-300 text-left transition-colors mt-2"
+                    className="text-3xl font-black uppercase tracking-wider text-amber-400 hover:text-amber-300 text-left transition-colors mt-2"
                   >
                     Resume
                   </a>
@@ -219,7 +219,7 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
               <div className="max-w-7xl mx-auto w-full mb-8 flex flex-col sm:flex-row justify-between items-center gap-4">
                 <div>
                   <h3 className="text-2xl font-light text-white">
-                    Figma <span className="font-extrabold text-cyan-400">Interactive Prototypes</span>
+                    Figma <span className="font-extrabold text-amber-400">Interactive Prototypes</span>
                   </h3>
                   <p className="text-xs text-neutral-400 font-light mt-1">
                     Play directly with the user flows designed in the Prime Video Lean UX case study.
@@ -326,7 +326,7 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
                   </div>
 
                   <div className="lg:col-span-6 relative flex justify-center items-center w-full">
-                    <div className="absolute inset-0 bg-[#00A8E1]/10 rounded-full blur-[120px] pointer-events-none" />
+                    <div className="absolute inset-0 bg-[#FFBF4F]/10 rounded-full blur-[120px] pointer-events-none" />
                     <motion.div 
                       initial={{ opacity: 0, y: 30 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -349,7 +349,7 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
                   <div className="lg:col-span-7 text-left space-y-8">
                     <div>
-                      <span className="text-xs font-bold tracking-[0.3em] text-[#00A8E1] uppercase block mb-1">
+                      <span className="text-xs font-bold tracking-[0.3em] text-[#FFBF4F] uppercase block mb-1">
                         Overview
                       </span>
                       <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
@@ -380,7 +380,7 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
               {/* 3. Style Guide Section */}
               <div className="max-w-7xl mx-auto px-6 md:px-12 py-24 space-y-12 border-b border-white/5">
                 <div className="text-left">
-                  <span className="text-xs font-bold tracking-[0.3em] text-[#00A8E1] uppercase block mb-1">
+                  <span className="text-xs font-bold tracking-[0.3em] text-[#FFBF4F] uppercase block mb-1">
                     Design Tokens
                   </span>
                   <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
@@ -416,7 +416,7 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
               {/* 5. Comparative Design Evolution & Slider */}
               <div className="max-w-7xl mx-auto px-6 md:px-12 py-24 space-y-12 border-b border-white/5">
                 <div className="text-left space-y-2">
-                  <span className="text-xs font-bold tracking-[0.3em] text-[#00A8E1] uppercase block mb-1">
+                  <span className="text-xs font-bold tracking-[0.3em] text-[#FFBF4F] uppercase block mb-1">
                     Comparative Evolution
                   </span>
                   <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight uppercase">
@@ -430,7 +430,7 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
                   {/* Left Column: Draggable Slider */}
                   <div className="lg:col-span-8 space-y-4">
-                    <span className="text-[10px] uppercase font-black tracking-widest text-[#00A8E1] block">
+                    <span className="text-[10px] uppercase font-black tracking-widest text-[#FFBF4F] block">
                       Desktop Evolution Slider (Drag horizontally to compare)
                     </span>
                     <div 
@@ -458,7 +458,7 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
                         }}
                       >
                         <img 
-                          src="/images/primevideo_before_full.png" 
+                           src="/images/primevideo_before_full.png" 
                           alt="Original Prime Video layout"
                           className="absolute inset-0 w-full h-full object-fill pointer-events-none"
                         />
@@ -468,17 +468,17 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
                       <div className="absolute top-4 left-4 z-10 px-2.5 py-1 rounded-md bg-black/60 border border-white/10 backdrop-blur-md text-[10px] font-black uppercase text-red-400 tracking-wider pointer-events-none">
                         Old Design
                       </div>
-                      <div className="absolute top-4 right-4 z-10 px-2.5 py-1 rounded-md bg-black/60 border border-white/10 backdrop-blur-md text-[10px] font-black uppercase text-cyan-400 tracking-wider pointer-events-none">
+                      <div className="absolute top-4 right-4 z-10 px-2.5 py-1 rounded-md bg-black/60 border border-white/10 backdrop-blur-md text-[10px] font-black uppercase text-amber-400 tracking-wider pointer-events-none">
                         New Design
                       </div>
 
                       {/* Slider Control Line & Circular Handle */}
                       <div 
-                        className="absolute top-0 bottom-0 w-[2px] bg-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.8)] pointer-events-none z-20"
+                        className="absolute top-0 bottom-0 w-[2px] bg-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.8)] pointer-events-none z-20"
                         style={{ left: `${sliderPosition}%` }}
                       />
                       <div 
-                        className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-[#00A8E1] border border-cyan-300 text-black flex items-center justify-center shadow-[0_0_20px_rgba(0,168,225,0.6)] cursor-ew-resize pointer-events-none z-30 font-black text-lg select-none"
+                        className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-[#FFBF4F] border border-amber-300 text-black flex items-center justify-center shadow-[0_0_20px_rgba(255,191,79,0.6)] cursor-ew-resize pointer-events-none z-30 font-black text-lg select-none"
                         style={{ left: `${sliderPosition}%` }}
                       >
                         ↔
@@ -488,7 +488,7 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
 
                   {/* Right Column: Mobile View Directly */}
                   <div className="lg:col-span-4 space-y-4">
-                    <span className="text-[10px] uppercase font-black tracking-widest text-[#00A8E1] block">
+                    <span className="text-[10px] uppercase font-black tracking-widest text-[#FFBF4F] block">
                       New Mobile Design Mockup
                     </span>
                     <div 
@@ -508,7 +508,7 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
               {/* 7. Footer CTA Block */}
               <div className="max-w-7xl mx-auto px-6 md:px-12 pt-16">
                 <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#0d1624] via-[#080d16] to-[#070709] border border-white/5 p-12 md:p-20 text-center space-y-8 flex flex-col items-center">
-                  <div className="absolute inset-0 bg-[#00A8E1]/5 blur-[60px] pointer-events-none" />
+                  <div className="absolute inset-0 bg-[#FFBF4F]/5 blur-[60px] pointer-events-none" />
                   
                   <div className="space-y-4 max-w-2xl relative z-10">
                     <h3 className="text-3xl md:text-5xl font-black tracking-tight text-white leading-tight uppercase">
@@ -531,7 +531,7 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
                           }
                         }, 300);
                       }}
-                      className="px-8 py-4 rounded-full bg-[#00A8E1] hover:bg-[#0092c4] text-black font-extrabold uppercase tracking-widest text-xs transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,168,225,0.4)] active:scale-95 cursor-pointer w-full sm:w-auto"
+                      className="px-8 py-4 rounded-full bg-[#FFBF4F] hover:bg-[#FFE082] text-black font-extrabold uppercase tracking-widest text-xs transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,191,79,0.4)] active:scale-95 cursor-pointer w-full sm:w-auto"
                     >
                       Contact me
                     </button>
@@ -540,17 +540,16 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
                       href="https://www.behance.net/gallery/219780733/Prime-Video-Redesigned-Landing-Page-%28Lean-UX%29"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-8 py-4 rounded-full bg-[#1769ff]/10 border border-[#1769ff]/30 hover:bg-[#1769ff]/20 hover:border-[#1769ff]/50 text-white font-extrabold uppercase tracking-widest text-xs transition-all duration-300 active:scale-95 cursor-pointer flex items-center justify-center gap-2 w-full sm:w-auto"
+                      className="px-8 py-4 rounded-full bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 hover:border-[#FFBF4F] text-white font-extrabold uppercase tracking-widest text-xs transition-all duration-300 active:scale-95 cursor-pointer flex items-center justify-center gap-2 w-full sm:w-auto"
                     >
                       <svg className="w-4 h-4 fill-current text-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.228 15.011H6v-2.316h2.228c.454 0 .81.103 1.066.309.256.206.384.498.384.877 0 .368-.124.656-.37.863-.248.207-.599.31-.552.31zM8.01 9.422H6v2.002h1.902c.402 0 .717-.086.944-.257.227-.172.34-.438.34-.8 0-.342-.116-.595-.347-.759-.232-.164-.56-.245-.829-.245v.259zm13.762 1.341h-4.382c.041-.663.226-1.168.555-1.516.329-.348.783-.522 1.362-.522.531 0 .951.157 1.258.471.307.314.475.753.504 1.317.703-.105.703-.105.703-.75zM24 12c0-6.627-5.373-12-12-12S0 5.373 0 12s5.373 12 12 12 12-5.373 12-12zm-12.72 1.701c-.139.544-.442.973-.912 1.29-.469.316-1.042.475-1.72.475H4V7.075h5.059c.72 0 1.295.148 1.723.444.428.297.642.715.642 1.255 0 .54-.207.954-.62 1.24-.413.287-.936.43-1.57.43v.041c.783.082 1.378.361 1.785.836.407.475.611 1.077.611 1.808v.572zm8.683-1.924h-5.068c.039.733.25 1.302.632 1.705.382.403.905.605 1.57.605.514 0 .937-.099 1.267-.297.33-.198.599-.481.806-.85l.993.582c-.347.595-.826 1.057-1.439 1.385-.612.329-1.347.493-2.204.493-1.229 0-2.207-.384-2.934-1.15-.727-.767-1.09-1.809-1.09-3.125 0-1.332.355-2.385 1.066-3.159.71-.774 1.637-1.162 2.78-1.162 1.155 0 2.062.366 2.72.502.658.502.987 1.25.987 2.247v.728zm-3.856-4.992h3.364v-.69h-3.364v.69z"/>
+                        <path d="M8.228 15.011H6v-2.316h2.228c.454 0 .81.103 1.066.309.256.206.384.498.384.877 0 .368-.124.656-.37.863-.248.207-.599.31-.552.31zM8.01 9.422H6v-2.002h1.902c.402 0 .717-.086.944-.257.227-.172.34-.438.34-.8 0-.342-.116-.595-.347-.759-.232-.164-.56-.245-.829-.245v.259zm13.762 1.341h-4.382c.041-.663.226-1.168.555-1.516.329-.348.783-.522 1.362-.522.531 0 .951.157 1.258.471.307.314.475.753.504 1.317.703-.105.703-.105.703-.75zM24 12c0-6.627-5.373-12-12-12S0 5.373 0 12s5.373 12 12 12 12-5.373 12-12zm-12.72 1.701c-.139.544-.442.973-.912 1.29-.469.316-1.042.475-1.72.475H4V7.075h5.059c.72 0 1.295.148 1.723.444.428.297.642.715.642 1.255 0 .54-.207.954-.62 1.24-.413.287-.936.43-1.57.43v.041c.783.082 1.378.361 1.785.836.407.475.611 1.077.611 1.808v.572zm8.683-1.924h-5.068c.039.733.25 1.302.632 1.705.382.403.905.605 1.57.605.514 0 .937-.099 1.267-.297.33-.198.599-.481.806-.85l.993.582c-.347.595-.826 1.057-1.439 1.385-.612.329-1.347.493-2.204.493-1.229 0-2.207-.384-2.934-1.15-.727-.767-1.09-1.809-1.09-3.125 0-1.332.355-2.385 1.066-3.159.71-.774 1.637-1.162 2.78-1.162 1.155 0 2.062.366 2.72.502.658.502.987 1.25.987 2.247v.728zm-3.856-4.992h3.364v-.69h-3.364v.69z"/>
                       </svg>
                       <span>View on Behance</span>
                     </a>
                   </div>
                 </div>
               </div>
-
             </div>
           )}
 

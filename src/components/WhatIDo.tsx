@@ -53,7 +53,7 @@ export default function WhatIDo() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-xs font-bold tracking-[0.3em] text-cyan-400 uppercase block mb-3"
+            className="text-xs font-bold tracking-[0.3em] text-amber-400 uppercase block mb-3"
           >
             ABOUT ME
           </motion.span>

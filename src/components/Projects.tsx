@@ -71,7 +71,7 @@ export default function Projects({ onOpenPrimeVideo }: ProjectsProps) {
       
       {/* Decorative radial gradients for glow */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto">
         {/* Section Title */}
@@ -81,7 +81,7 @@ export default function Projects({ onOpenPrimeVideo }: ProjectsProps) {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-xs font-bold tracking-[0.3em] text-cyan-400 uppercase block mb-3"
+            className="text-xs font-bold tracking-[0.3em] text-amber-400 uppercase block mb-3"
           >
             CURATED WORKS
           </motion.span>
@@ -136,7 +136,7 @@ export default function Projects({ onOpenPrimeVideo }: ProjectsProps) {
                 {/* Immersive blur and explore overlay on hover for Prime Video */}
                 {project.title === "Prime Video Redesign" && (
                   <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center gap-3">
-                    <div className="px-5 py-2.5 rounded-full bg-cyan-500 text-black font-extrabold text-xs tracking-widest uppercase shadow-[0_0_20px_rgba(6,182,212,0.4)] transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    <div className="px-5 py-2.5 rounded-full bg-amber-500 text-black font-extrabold text-xs tracking-widest uppercase shadow-[0_0_20px_rgba(245,158,11,0.4)] transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                       Explore Redesign
                     </div>
                   </div>
@@ -157,7 +157,7 @@ export default function Projects({ onOpenPrimeVideo }: ProjectsProps) {
                 <div className="flex justify-between items-start gap-2 mb-3">
                   <h3 className={`text-2xl font-bold tracking-tight text-white transition-colors duration-300 ${
                     project.title === "Prime Video Redesign" 
-                      ? "group-hover:text-cyan-400" 
+                      ? "group-hover:text-amber-400" 
                       : project.isComingSoon 
                         ? "group-hover:text-amber-400" 
                         : "group-hover:text-amber-500"
@@ -171,7 +171,7 @@ export default function Projects({ onOpenPrimeVideo }: ProjectsProps) {
                           e.stopPropagation();
                           onOpenPrimeVideo?.();
                         }}
-                        className="p-1.5 rounded-full bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 hover:text-cyan-300 transition-colors border border-cyan-500/20 cursor-pointer"
+                        className="p-1.5 rounded-full bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 hover:text-amber-300 transition-colors border border-amber-500/20 cursor-pointer"
                         aria-label={`${project.title} live case study`}
                       >
                         <ArrowUpRight className="w-4 h-4" />

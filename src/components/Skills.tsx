@@ -165,7 +165,7 @@ export default function Skills() {
     {
       name: "Notebook LM",
       icon: (
-        <svg className="w-5 h-5 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
+        <svg className="w-5 h-5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
           <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z" />
           <path d="M6 6h10M6 10h10" />
         </svg>
@@ -177,7 +177,7 @@ export default function Skills() {
     <section id="skills" className="relative z-20 py-24 px-6 md:px-12 bg-[#121212] overflow-hidden">
       {/* Glow overlays */}
       <div className="absolute top-1/4 left-10 w-96 h-96 bg-amber-500/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-amber-500/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto">
         {/* Title */}
@@ -187,7 +187,7 @@ export default function Skills() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-xs font-bold tracking-[0.3em] text-cyan-400 uppercase block mb-3"
+            className="text-xs font-bold tracking-[0.3em] text-amber-400 uppercase block mb-3"
           >
             TECHNOLOGIES & TOOLS
           </motion.span>
@@ -293,14 +293,14 @@ export default function Skills() {
           {/* Header */}
           <div className="flex items-center justify-between mb-10">
             <div>
-              <span className="text-xs font-bold tracking-[0.3em] text-cyan-400 uppercase block mb-2">
+              <span className="text-xs font-bold tracking-[0.3em] text-amber-400 uppercase block mb-2">
                 TECHNOLOGIES & TOOLS
               </span>
               <h3 className="text-3xl md:text-4xl font-light text-white tracking-tight">
                 My <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-neutral-400">Toolkit</span>
               </h3>
             </div>
-            <div className="p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 shrink-0">
+            <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 shrink-0">
               <Sparkles className="w-5 h-5" />
             </div>
           </div>
@@ -318,7 +318,7 @@ export default function Skills() {
               {[...creativeTools, ...creativeTools].map((tool, idx) => (
                 <div
                   key={`creative-1-${tool.name}-${idx}`}
-                  className="flex items-center gap-3 px-6 py-3.5 rounded-full bg-[#161618]/90 border border-white/[0.08] hover:border-cyan-500/30 hover:bg-[#1c1c1f]/90 hover:shadow-[0_0_20px_rgba(6,182,212,0.12)] transition-all duration-300 group cursor-default shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
+                  className="flex items-center gap-3 px-6 py-3.5 rounded-full bg-[#161618]/90 border border-white/[0.08] hover:border-amber-500/30 hover:bg-[#1c1c1f]/90 hover:shadow-[0_0_20px_rgba(245,158,11,0.12)] transition-all duration-300 group cursor-default shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
                 >
                   <div className="flex items-center justify-center w-5 h-5 shrink-0 transition-transform duration-300 group-hover:scale-110">
                     {tool.icon}
@@ -333,7 +333,7 @@ export default function Skills() {
               {[...creativeTools, ...creativeTools].map((tool, idx) => (
                 <div
                   key={`creative-2-${tool.name}-${idx}`}
-                  className="flex items-center gap-3 px-6 py-3.5 rounded-full bg-[#161618]/90 border border-white/[0.08] hover:border-cyan-500/30 hover:bg-[#1c1c1f]/90 hover:shadow-[0_0_20px_rgba(6,182,212,0.12)] transition-all duration-300 group cursor-default shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
+                  className="flex items-center gap-3 px-6 py-3.5 rounded-full bg-[#161618]/90 border border-white/[0.08] hover:border-amber-500/30 hover:bg-[#1c1c1f]/90 hover:shadow-[0_0_20px_rgba(245,158,11,0.12)] transition-all duration-300 group cursor-default shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
                 >
                   <div className="flex items-center justify-center w-5 h-5 shrink-0 transition-transform duration-300 group-hover:scale-110">
                     {tool.icon}
@@ -386,7 +386,7 @@ export default function Skills() {
           <div className="border-t border-white/5 pt-4 text-xs text-white/40 tracking-widest uppercase flex justify-between items-center">
             <span>Infinite Scroller</span>
             <span className="flex items-center gap-1.5">
-              <Layers className="w-3.5 h-3.5 text-cyan-400" /> DYNAMIC DEPTH
+              <Layers className="w-3.5 h-3.5 text-amber-400" /> DYNAMIC DEPTH
             </span>
           </div>
         </div>

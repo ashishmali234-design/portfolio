@@ -46,7 +46,7 @@ export default function Experience() {
   return (
     <section id="experience" className="relative z-20 py-24 px-6 md:px-12 bg-[#121212] overflow-hidden">
       {/* Background glow effects */}
-      <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-amber-500/5 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-1/3 left-1/4 w-80 h-80 bg-amber-500/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="max-w-4xl mx-auto">
@@ -57,7 +57,7 @@ export default function Experience() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-xs font-bold tracking-[0.3em] text-cyan-400 uppercase block mb-3"
+            className="text-xs font-bold tracking-[0.3em] text-amber-400 uppercase block mb-3"
           >
             CAREER JOURNEY
           </motion.span>
@@ -85,16 +85,16 @@ export default function Experience() {
             >
               {/* Glowing timeline node dot */}
               <span className="absolute -left-[35px] md:-left-[51px] top-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-[#121212] border border-white/20 shadow-md">
-                <span className="h-2.5 w-2.5 rounded-full bg-cyan-400 animate-pulse" />
+                <span className="h-2.5 w-2.5 rounded-full bg-amber-400 animate-pulse" />
               </span>
 
               {/* Glassmorphic timeline card */}
-              <div className="glass-card p-6 md:p-8 rounded-2xl relative overflow-hidden transition-all duration-300 hover:border-cyan-500/30">
+              <div className="glass-card p-6 md:p-8 rounded-2xl relative overflow-hidden transition-all duration-300 hover:border-amber-500/30">
                 {/* Header details */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-6">
                   <div>
                     <h3 className="text-xl md:text-2xl font-bold text-white flex items-center gap-2">
-                      <Briefcase className="w-5 h-5 text-cyan-400" />
+                      <Briefcase className="w-5 h-5 text-amber-400" />
                       {exp.role}
                     </h3>
                     <div className="flex items-center gap-2 mt-1.5 text-white/70 text-sm font-medium">
@@ -103,7 +103,7 @@ export default function Experience() {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-cyan-400 uppercase px-3 py-1.5 rounded-full bg-cyan-400/5 border border-cyan-400/10 w-fit self-start md:self-center">
+                  <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-amber-400 uppercase px-3 py-1.5 rounded-full bg-amber-400/5 border border-amber-400/10 w-fit self-start md:self-center">
                     <Calendar className="w-3.5 h-3.5" />
                     <span>{exp.period}</span>
                   </div>

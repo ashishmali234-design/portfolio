@@ -55,7 +55,7 @@ export default function Home() {
                 href="/Ashish_C_Mali_Resume.pdf" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="ml-4 px-4 py-2 rounded-full border border-cyan-500/20 bg-cyan-500/10 text-cyan-400 font-bold hover:bg-cyan-500 hover:text-black hover:border-cyan-500 transition-all duration-300 shadow-[0_0_15px_rgba(6,182,212,0.12)] hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] text-[10px] tracking-wider uppercase"
+                className="ml-4 px-4 py-2 rounded-full border border-amber-500/20 bg-amber-500/10 text-amber-400 font-bold hover:bg-amber-500 hover:text-black hover:border-amber-500 transition-all duration-300 shadow-[0_0_15px_rgba(245,158,11,0.12)] hover:shadow-[0_0_20px_rgba(245,158,11,0.3)] text-[10px] tracking-wider uppercase"
               >
                 Resume
               </a>
@@ -67,7 +67,7 @@ export default function Home() {
                 href="/Ashish_C_Mali_Resume.pdf" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="px-3.5 py-1.5 rounded-full border border-cyan-500/20 bg-cyan-500/10 text-cyan-400 font-bold text-[9px] tracking-widest uppercase transition-all duration-300 shadow-[0_0_10px_rgba(6,182,212,0.08)] hover:bg-cyan-500 hover:text-black hover:border-cyan-500 active:scale-95"
+                className="px-3.5 py-1.5 rounded-full border border-amber-500/20 bg-amber-500/10 text-amber-400 font-bold text-[9px] tracking-widest uppercase transition-all duration-300 shadow-[0_0_10px_rgba(245,158,11,0.08)] hover:bg-amber-500 hover:text-black hover:border-amber-500 active:scale-95"
               >
                 Resume
               </a>
@@ -134,8 +134,8 @@ export default function Home() {
                       }}
                       className={`text-3xl font-black uppercase tracking-wider transition-colors ${
                         item.isExternal 
-                          ? "text-cyan-400 hover:text-white" 
-                          : "text-white/70 hover:text-cyan-400 active:text-cyan-400"
+                          ? "text-amber-400 hover:text-white" 
+                          : "text-white/70 hover:text-amber-400 active:text-amber-400"
                       }`}
                     >
                       {item.name}
@@ -183,7 +183,7 @@ export default function Home() {
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
             transition={{ type: "spring", stiffness: 260, damping: 20 }}
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="fixed bottom-6 right-6 z-40 p-3.5 rounded-full bg-[#121212]/80 border border-white/10 text-white/80 backdrop-blur-md shadow-2xl hover:text-white hover:border-cyan-500/50 hover:shadow-[0_0_24px_rgba(6,182,212,0.25)] transition-all duration-300 group focus:outline-none"
+            className="fixed bottom-6 right-6 z-40 p-3.5 rounded-full bg-[#121212]/80 border border-white/10 text-white/80 backdrop-blur-md shadow-2xl hover:text-white hover:border-amber-500/50 hover:shadow-[0_0_24px_rgba(245,158,11,0.25)] transition-all duration-300 group focus:outline-none"
             aria-label="Scroll to top"
           >
             <ArrowUp size={20} className="stroke-[2.5] group-hover:-translate-y-0.5 transition-transform duration-300" />

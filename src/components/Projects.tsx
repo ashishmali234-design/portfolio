@@ -59,22 +59,6 @@ const projects: Project[] = [
     github: "#",
     isComingSoon: true,
   },
-  {
-    title: "Aether Flow",
-    description: "An interactive high-fidelity 3D fluid simulation playground using customized GLSL shaders and GPU computation.",
-    image: "/images/aetherflow.png",
-    tags: ["Creative Design", "WebGL Interaction", "3D Shaders", "Visual FX"],
-    link: "#",
-    github: "#",
-  },
-  {
-    title: "Chronos OS",
-    description: "A spatial computing holographic desktop mockup showcasing translucent glassmorphism widget environments.",
-    image: "/images/chronos.png",
-    tags: ["Product Design", "Framer Motion", "Design System", "Spatial UI"],
-    link: "#",
-    github: "#",
-  },
 ];
 
 interface ProjectsProps {

@@ -53,23 +53,25 @@ export default function Overlay() {
           style={{ y: y1, opacity: opacity1, scale: scale1, pointerEvents: heroPointerEvents }}
           className="absolute inset-x-6 md:inset-x-24 top-0 bottom-0 flex flex-col justify-center items-start text-left max-w-2xl"
         >
-          <span className="text-xs md:text-sm font-bold tracking-[0.25em] text-white/40 uppercase mb-3 block">
-            Hello! I&apos;m
-          </span>
-          <h1 className="text-5xl md:text-8xl font-bold tracking-tight text-white select-none uppercase leading-none min-h-[1.1em]">
-            <Typewriter text="Ashish Mali" delay={150} speed={50} />
-          </h1>
-          <h2 className="text-2xl md:text-4xl font-semibold tracking-tight text-amber-400 select-none uppercase mt-3 min-h-[1.2em]">
-            <Typewriter text="Product Designer" delay={900} speed={40} />
-          </h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.6, duration: 0.6, ease: "easeOut" }}
-            className="text-xs md:text-sm text-white/50 uppercase tracking-widest mt-3"
-          >
-            at <span className="font-rubik text-white font-semibold tracking-widest">BAJAJ FINSERV</span>
-          </motion.p>
+          <div className="w-full bg-gradient-to-br from-black/90 via-black/80 to-black/95 md:bg-none p-6 md:p-0 rounded-2xl md:rounded-none backdrop-blur-md md:backdrop-blur-none border border-white/10 md:border-none shadow-2xl md:shadow-none">
+            <span className="text-xs md:text-sm font-bold tracking-[0.25em] text-white/40 uppercase mb-3 block">
+              Hello! I&apos;m
+            </span>
+            <h1 className="text-5xl md:text-8xl font-bold tracking-tight text-white select-none uppercase leading-none min-h-[1.1em]">
+              <Typewriter text="Ashish Mali" delay={150} speed={50} />
+            </h1>
+            <h2 className="text-2xl md:text-4xl font-semibold tracking-tight text-amber-400 select-none uppercase mt-3 min-h-[1.2em]">
+              <Typewriter text="Product Designer" delay={900} speed={40} />
+            </h2>
+            <motion.p 
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.6, duration: 0.6, ease: "easeOut" }}
+              className="text-xs md:text-sm text-white/50 uppercase tracking-widest mt-3"
+            >
+              at <span className="font-rubik text-white font-semibold tracking-widest">BAJAJ FINSERV</span>
+            </motion.p>
+          </div>
         </motion.div>
 
         {/* Scroll to explore (Centered bottom) */}
@@ -101,27 +103,41 @@ export default function Overlay() {
           style={{ y: y2, opacity: opacity2, pointerEvents: pointerEvents2 }}
           className="absolute inset-x-6 md:inset-x-24 top-0 bottom-0 flex flex-col justify-center items-start text-left max-w-2xl"
         >
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400">
-              <Code2 className="w-5 h-5" />
+          <div className="w-full bg-gradient-to-br from-black/90 via-black/80 to-black/95 md:bg-none p-6 md:p-0 rounded-2xl md:rounded-none backdrop-blur-md md:backdrop-blur-none border border-white/10 md:border-none shadow-2xl md:shadow-none">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400">
+                <Code2 className="w-5 h-5" />
+              </div>
+              <span className="text-xs font-bold tracking-widest text-cyan-400 uppercase">
+                Core Expertise
+              </span>
             </div>
-            <span className="text-xs font-bold tracking-widest text-cyan-400 uppercase">
-              Core Expertise
-            </span>
+            {/* Mobile Title: Shortened to Crafting Seamless UX */}
+            <h2 className="text-4xl font-extrabold tracking-tight text-white leading-tight min-h-[2.2em] md:hidden">
+              <Typewriter
+                trigger={isSection2Visible}
+                segments={[
+                  { text: "Crafting\n", className: "text-white" },
+                  { text: "Seamless UX.", className: "text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500" }
+                ]}
+                delay={200}
+              />
+            </h2>
+            {/* Desktop Title: Keep Original */}
+            <h2 className="text-6xl font-extrabold tracking-tight text-white leading-tight min-h-[2.2em] hidden md:block">
+              <Typewriter
+                trigger={isSection2Visible}
+                segments={[
+                  { text: "Turning Ideas Into\n", className: "text-white" },
+                  { text: "Seamless Experiences.", className: "text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500" }
+                ]}
+                delay={200}
+              />
+            </h2>
+            <p className="mt-6 text-sm md:text-lg text-white/60 leading-relaxed font-light font-sans">
+              Focused on user-centric UI/UX, product thinking, and immersive digital interactions.
+            </p>
           </div>
-          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight min-h-[2.2em]">
-            <Typewriter
-              trigger={isSection2Visible}
-              segments={[
-                { text: "Turning Ideas Into\n", className: "text-white" },
-                { text: "Seamless Experiences.", className: "text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500" }
-              ]}
-              delay={200}
-            />
-          </h2>
-          <p className="mt-6 text-sm md:text-lg text-white/60 leading-relaxed font-light font-sans">
-            Focused on user-centric UI/UX, product thinking, and immersive digital interactions.
-          </p>
         </motion.div>
 
         {/* Section 3: Value Prop (Left-aligned) */}
@@ -129,28 +145,29 @@ export default function Overlay() {
           style={{ y: y3, opacity: opacity3, pointerEvents: pointerEvents3 }}
           className="absolute inset-x-6 md:inset-x-24 top-0 bottom-0 flex flex-col justify-center items-start text-left max-w-2xl"
         >
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400">
-              <Layers className="w-5 h-5" />
+          <div className="w-full bg-gradient-to-br from-black/90 via-black/80 to-black/95 md:bg-none p-6 md:p-0 rounded-2xl md:rounded-none backdrop-blur-md md:backdrop-blur-none border border-white/10 md:border-none shadow-2xl md:shadow-none">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400">
+                <Layers className="w-5 h-5" />
+              </div>
+              <span className="text-xs font-bold tracking-widest text-amber-400 uppercase">
+                The Philosophy
+              </span>
             </div>
-            <span className="text-xs font-bold tracking-widest text-amber-400 uppercase">
-              The Philosophy
-            </span>
+            <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight min-h-[2.2em]">
+              <Typewriter
+                trigger={isSection3Visible}
+                segments={[
+                  { text: "Designing with AI,\n", className: "text-white" },
+                  { text: "thinking like humans.", className: "text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-600" }
+                ]}
+                delay={200}
+              />
+            </h2>
+            <p className="mt-6 text-sm md:text-lg text-white/60 leading-relaxed font-light font-sans max-w-md">
+              Using AI thoughtfully to create seamless, innovative, and human-centered experiences.
+            </p>
           </div>
-          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight min-h-[2.2em]">
-            <Typewriter
-              trigger={isSection3Visible}
-              segments={[
-                { text: "Bridging design\n", className: "text-white" },
-                { text: "and engineering.", className: "text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-600" }
-              ]}
-              delay={200}
-            />
-          </h2>
-          <p className="mt-6 text-sm md:text-lg text-white/60 leading-relaxed font-light font-sans max-w-md">
-            Designing code that respects details and developing design systems 
-            that scale. Zero compromise on responsiveness, performance, or accessibility.
-          </p>
         </motion.div>
 
 

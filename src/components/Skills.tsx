@@ -1,10 +1,109 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Sparkles, Layers } from "lucide-react";
+import { Sparkles, Layers, Cpu, Bot } from "lucide-react";
 import Typewriter from "./Typewriter";
 
 export default function Skills() {
+  const capabilities = [
+    "UX Research",
+    "Wireframing",
+    "Prototyping",
+    "User Flow Design",
+    "Information Architecture",
+    "Interaction Design",
+    "Financial Product Design",
+    "Dashboard Design",
+    "Responsive Web Design",
+    "Motion & Visual Design",
+    "Design Systems",
+    "AI-Driven Experiences"
+  ];
+
+  const primaryTools = [
+    {
+      name: "Antigravity IDE",
+      highlight: true,
+      icon: (
+        <svg className="w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L2 22h20L12 2zm0 3.8L18.5 18H5.5L12 5.8z" />
+          <circle cx="12" cy="13" r="2" fill="currentColor" />
+          <path d="M12 8v3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+      )
+    },
+    {
+      name: "ChatGPT",
+      highlight: false,
+      icon: (
+        <svg className="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
+          <path d="M12 8v8M8 12h8" />
+        </svg>
+      )
+    },
+    {
+      name: "Claude AI",
+      highlight: false,
+      icon: (
+        <svg className="w-4 h-4 text-[#D97706]" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2a1 1 0 0 1 .9.6l2.1 4.2 4.6.7a1 1 0 0 1 .6 1.7l-3.3 3.3.8 4.6a1 1 0 0 1-1.5 1.1L12 16.1l-4.1 2.1a1 1 0 0 1-1.5-1.1l.8-4.6-3.3-3.3a1 1 0 0 1 .6-1.7l4.6-.7L11.1 2.6A1 1 0 0 1 12 2z" />
+        </svg>
+      )
+    },
+    {
+      name: "Gemini AI",
+      highlight: false,
+      icon: (
+        <svg className="w-4 h-4 text-[#38BDF8]" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2c.2 2.5 2 4.3 4.5 4.5-2.5.2-4.3 2-4.5 4.5-.2-2.5-2-4.3-4.5-4.5 2.5-.2 4.3-2 4.5-4.5zM19 13c.1 1.2 1 2.1 2.2 2.2-1.2.1-2.1 1-2.2 2.2-.1-1.2-1-2.1-2.2-2.2 1.2-.1 2.1-1 2.2-2.2zM7 14c.1.9.8 1.6 1.7 1.7-.9.1-1.6.8-1.7 1.7-.1-.9-.8-1.6-1.7-1.7.9-.1 1.6-.8 1.7-1.7z" />
+        </svg>
+      )
+    },
+    {
+      name: "Figma AI",
+      highlight: false,
+      icon: (
+        <svg className="w-4 h-4 text-[#FF7262]" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C12 7.5 16.5 12 22 12C16.5 12 12 16.5 12 22C12 16.5 7.5 12 2 12C7.5 12 12 7.5 12 2Z" />
+        </svg>
+      )
+    },
+    {
+      name: "Magnific AI",
+      highlight: false,
+      icon: (
+        <svg className="w-4 h-4 text-[#FF00C7]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="11" cy="11" r="6" />
+          <path d="M16 16l5 5M16 8l1-1M8 16l-1 1" />
+        </svg>
+      )
+    },
+    {
+      name: "Notebook LM",
+      highlight: false,
+      icon: (
+        <svg className="w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z" />
+          <path d="M6 6h10M6 10h10" />
+        </svg>
+      )
+    },
+    {
+      name: "N8N Workflow",
+      highlight: false,
+      icon: (
+        <svg className="w-4 h-4 text-[#FF6D5A]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="6" cy="12" r="3" />
+          <circle cx="18" cy="6" r="3" />
+          <circle cx="18" cy="18" r="3" />
+          <path d="M9 12h3v-5h3" />
+          <path d="M12 7v10h3" />
+        </svg>
+      )
+    }
+  ];
+
   const creativeTools = [
     {
       name: "Figma",
@@ -32,9 +131,9 @@ export default function Skills() {
       name: "Framer Motion",
       icon: (
         <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 0L24 0L24 12L12 24L12 12L0 12L12 0Z" fill="url(#framer-grad)" />
+          <path d="M12 0L24 0L24 12L12 24L12 12L0 12L12 0Z" fill="url(#framer-grad-skills)" />
           <defs>
-            <linearGradient id="framer-grad" x1="0" y1="0" x2="24" y2="24">
+            <linearGradient id="framer-grad-skills" x1="0" y1="0" x2="24" y2="24">
               <stop offset="0%" stopColor="#FF00C7" />
               <stop offset="100%" stopColor="#00AFFF" />
             </linearGradient>
@@ -159,8 +258,8 @@ export default function Skills() {
       <div className="absolute top-1/4 left-10 w-96 h-96 bg-amber-500/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-amber-500/5 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto">
-        {/* Title: Renamed to My Expertise */}
+      <div className="max-w-6xl mx-auto mb-20">
+        {/* Section Header: My Expertise */}
         <div className="mb-16 text-left">
           <motion.span
             initial={{ opacity: 0, x: -20 }}
@@ -181,9 +280,91 @@ export default function Skills() {
             <Typewriter segments={[{ text: "My ", className: "font-light" }, { text: "Expertise", className: "font-extrabold" }]} delay={100} />
           </motion.h2>
         </div>
+
+        {/* Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          {/* Card 1: Core Expertise (col-span-2) */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="glass-card p-8 rounded-3xl md:col-span-2 flex flex-col justify-between min-h-[350px] hover:border-amber-500/30"
+          >
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-2 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400">
+                  <Cpu className="w-5 h-5" />
+                </div>
+                <h3 className="text-xl font-bold tracking-tight text-white uppercase">Core Expertise</h3>
+              </div>
+              <p className="text-sm md:text-base text-white/50 font-light leading-relaxed mb-8">
+                Designing user-centered digital experiences with a focus on financial products, AI-integrated workflows, and scalable interface systems. Experienced in transforming complex processes into intuitive, engaging, and business-focused product experiences.
+              </p>
+            </div>
+            
+            <div>
+              <h4 className="text-xs text-white/40 uppercase font-bold tracking-wider mb-3">Capabilities</h4>
+              <div className="flex flex-wrap gap-2">
+                {capabilities.map((skill) => (
+                  <span
+                    key={skill}
+                    className="text-[10px] md:text-xs font-semibold tracking-wide text-white/80 bg-white/5 border border-white/10 px-3 py-1.5 rounded-xl hover:bg-amber-500/15 hover:border-amber-500/30 hover:text-white transition-all cursor-default"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Card 2: AI & Design Stack (col-span-1) */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="glass-card p-8 rounded-3xl flex flex-col justify-between min-h-[350px] hover:border-purple-500/30 relative overflow-hidden"
+          >
+            <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-purple-500/10 rounded-full blur-[40px] pointer-events-none" />
+            
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-2 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400">
+                  <Bot className="w-5 h-5" />
+                </div>
+                <h3 className="text-xl font-bold tracking-tight text-white uppercase">AI & Design Stack</h3>
+              </div>
+              <p className="text-xs md:text-sm text-white/50 font-light leading-relaxed mb-6">
+                Leveraging AI-powered tools and modern workflows to accelerate ideation, automate repetitive tasks, enhance creativity, and prototype intelligent digital experiences faster.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="text-xs text-white/40 uppercase font-bold tracking-wider mb-3">Primary Tools</h4>
+              <div className="grid grid-cols-2 gap-2">
+                {primaryTools.map((tool) => (
+                  <div
+                    key={tool.name}
+                    className={`flex items-center gap-2 text-[10px] md:text-xs px-2.5 py-2 rounded-xl border transition-all ${
+                      tool.highlight
+                        ? "bg-gradient-to-r from-amber-500/10 to-yellow-600/10 border-amber-500/30 text-amber-300 font-semibold shadow-lg shadow-amber-500/5 animate-pulse col-span-2"
+                        : "bg-white/5 border-white/5 text-white/70 hover:border-purple-500/20 hover:text-white"
+                    }`}
+                  >
+                    <div className="shrink-0">{tool.icon}</div>
+                    <span className="truncate">{tool.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+          
+        </div>
       </div>
 
-      {/* Standalone Full-Width "My Toolkit" Section (Keep title unchanged) */}
+      {/* Standalone Full-Width "My Toolkit" Section */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}

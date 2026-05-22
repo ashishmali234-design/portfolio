@@ -1,35 +1,65 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Cpu, Bot } from "lucide-react";
+import { Bot, Layers, TrendingUp, Video, Grid, Sparkles } from "lucide-react";
 import Typewriter from "./Typewriter";
 
 export default function WhatIDo() {
-  const coreExpertise = [
-    "UX Research",
-    "Wireframing",
-    "Prototyping",
-    "User Flow",
-    "Information Architecture",
-    "Interaction Design",
-    "Financial Product Design",
-    "Design Systems",
-  ];
-
-  const aiTools = [
-    { name: "Antigravity IDE", highlight: true },
-    { name: "Claude AI", highlight: false },
-    { name: "Gemini AI", highlight: false },
-    { name: "N8N (Agentic Workflow)", highlight: false },
-    { name: "Figma AI & Magnific", highlight: false },
-    { name: "Notebook LM", highlight: false },
+  const capabilities = [
+    {
+      title: "AI-Driven Product Design",
+      description: "Designing intelligent and user-focused digital experiences by combining UX strategy, modern UI, and AI-powered workflows. Using AI tools to speed up ideation, content generation, interaction concepts, user experience improvements, and creative production.",
+      icon: <Bot className="w-5 h-5 text-indigo-400" />,
+      iconBg: "bg-indigo-500/10 border-indigo-500/20 text-indigo-400",
+      hoverStyle: "hover:border-indigo-500/30 hover:shadow-[0_0_30px_rgba(99,102,241,0.12)]",
+      glowColor: "from-indigo-500/5 to-transparent"
+    },
+    {
+      title: "Product & UX Design",
+      description: "Creating user flows, wireframes, prototypes, and scalable UI systems for web and mobile products focused on usability and business impact.",
+      icon: <Layers className="w-5 h-5 text-emerald-400" />,
+      iconBg: "bg-emerald-500/10 border-emerald-500/20 text-emerald-400",
+      hoverStyle: "hover:border-emerald-500/30 hover:shadow-[0_0_30px_rgba(16,185,129,0.12)]",
+      glowColor: "from-emerald-500/5 to-transparent"
+    },
+    {
+      title: "Financial Product Experiences",
+      description: "Designing digital journeys for Gold Loan, Personal Loan, INSTA EMI, EDC onboarding, merchant ecosystems, and enterprise platforms.",
+      icon: <TrendingUp className="w-5 h-5 text-amber-400" />,
+      iconBg: "bg-amber-500/10 border-amber-500/20 text-amber-400",
+      hoverStyle: "hover:border-amber-500/30 hover:shadow-[0_0_30px_rgba(245,158,11,0.12)]",
+      glowColor: "from-amber-500/5 to-transparent"
+    },
+    {
+      title: "Creative & Motion Content",
+      description: "Creating training videos, banners, GIFs, and digital creatives that enhance communication, engagement, and product understanding.",
+      icon: <Video className="w-5 h-5 text-rose-400" />,
+      iconBg: "bg-rose-500/10 border-rose-500/20 text-rose-400",
+      hoverStyle: "hover:border-rose-500/30 hover:shadow-[0_0_30px_rgba(244,63,94,0.12)]",
+      glowColor: "from-rose-500/5 to-transparent"
+    },
+    {
+      title: "Design Systems & Consistency",
+      description: "Building scalable design systems and reusable components to maintain consistency across products and platforms.",
+      icon: <Grid className="w-5 h-5 text-cyan-400" />,
+      iconBg: "bg-cyan-500/10 border-cyan-500/20 text-cyan-400",
+      hoverStyle: "hover:border-cyan-500/30 hover:shadow-[0_0_30px_rgba(34,211,238,0.12)]",
+      glowColor: "from-cyan-500/5 to-transparent"
+    },
+    {
+      title: "Emerging Technology Exploration",
+      description: "Exploring AI, automation, immersive interfaces, and future-focused digital experiences to create smarter and more intuitive products.",
+      icon: <Sparkles className="w-5 h-5 text-purple-400" />,
+      iconBg: "bg-purple-500/10 border-purple-500/20 text-purple-400",
+      hoverStyle: "hover:border-purple-500/30 hover:shadow-[0_0_30px_rgba(168,85,247,0.12)]",
+      glowColor: "from-purple-500/5 to-transparent"
+    }
   ];
 
   return (
     <section id="what-i-do" className="relative z-20 py-24 px-6 md:px-12 bg-[#121212] overflow-hidden border-b border-white/5">
-      {/* Glow overlays */}
-      <div className="absolute top-1/4 left-10 w-96 h-96 bg-amber-500/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-amber-500/5 rounded-full blur-[120px] pointer-events-none" />
+      {/* Background glow effects */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto">
         {/* Title Block - No small yellow text as requested */}
@@ -45,82 +75,38 @@ export default function WhatIDo() {
           </motion.h2>
         </div>
 
-        {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Card 1: Core Expertise (col-span-2) */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="glass-card p-8 rounded-3xl md:col-span-2 flex flex-col justify-between min-h-[300px] hover:border-amber-500/30"
-          >
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-2 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400">
-                  <Cpu className="w-5 h-5" />
-                </div>
-                <h3 className="text-xl font-bold tracking-tight text-white uppercase">Core Expertise</h3>
-              </div>
-              <p className="text-sm md:text-base text-white/50 font-light leading-relaxed mb-6">
-                Applying user-centered processes to structure interfaces, validate ideas through quick prototype loops, and architect scalable visual frameworks.
-              </p>
-            </div>
-            
-            <div className="flex flex-wrap gap-2.5">
-              {coreExpertise.map((skill) => (
-                <span
-                  key={skill}
-                  className="text-xs font-medium tracking-wider text-white/80 bg-white/5 border border-white/10 px-3.5 py-2 rounded-xl hover:bg-amber-500/15 hover:border-amber-500/30 hover:text-white transition-all cursor-default"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </motion.div>
+        {/* 3-Column Capability Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {capabilities.map((cap, idx) => (
+            <motion.div
+              key={cap.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: idx * 0.08 }}
+              className={`group glass-card p-8 rounded-3xl min-h-[280px] relative overflow-hidden flex flex-col justify-between transition-all duration-300 ${cap.hoverStyle}`}
+            >
+              {/* Subtle background card gradient glow */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${cap.glowColor} opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
 
-          {/* Card 2: AI & Agentic Stack (col-span-1) */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="glass-card p-8 rounded-3xl flex flex-col justify-between min-h-[300px] hover:border-purple-500/30 relative overflow-hidden"
-          >
-            <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-purple-500/10 rounded-full blur-[40px] pointer-events-none" />
-            
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-2 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400">
-                  <Bot className="w-5 h-5" />
+              <div>
+                {/* Icon Badge */}
+                <div className={`inline-flex items-center justify-center p-3 rounded-2xl border bg-black/40 shadow-inner shrink-0 mb-6 transition-transform duration-300 group-hover:scale-110 ${cap.iconBg}`}>
+                  {cap.icon}
                 </div>
-                <h3 className="text-xl font-bold tracking-tight text-white uppercase">AI & Agentic Stack</h3>
-              </div>
-              <p className="text-xs md:text-sm text-white/50 font-light leading-relaxed mb-6">
-                Leveraging next-generation cognitive tools and agentic frameworks to accelerate workflows and prototype AI-integrated product concepts.
-              </p>
-            </div>
 
-            <div className="space-y-2.5">
-              {aiTools.map((tool) => (
-                <div
-                  key={tool.name}
-                  className={`flex items-center justify-between text-xs px-3.5 py-2 rounded-xl border transition-all ${
-                    tool.highlight
-                      ? "bg-gradient-to-r from-amber-500/10 to-yellow-600/10 border-amber-500/30 text-amber-300 font-semibold shadow-lg shadow-amber-500/5 animate-pulse"
-                      : "bg-white/5 border-white/5 text-white/70 hover:border-purple-500/20 hover:text-white"
-                  }`}
-                >
-                  <span>{tool.name}</span>
-                  {tool.highlight && (
-                    <span className="text-[9px] uppercase tracking-widest bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-md font-bold">
-                      Primary
-                    </span>
-                  )}
-                </div>
-              ))}
-            </div>
-          </motion.div>
+                {/* Capability Title */}
+                <h3 className="text-lg md:text-xl font-bold tracking-tight text-white mb-4 group-hover:text-white transition-colors duration-200 uppercase">
+                  {cap.title}
+                </h3>
+              </div>
+
+              {/* Description */}
+              <p className="text-xs md:text-sm text-white/50 font-light leading-relaxed mt-2 group-hover:text-white/70 transition-colors duration-300">
+                {cap.description}
+              </p>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

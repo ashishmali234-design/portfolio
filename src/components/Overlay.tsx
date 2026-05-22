@@ -53,7 +53,10 @@ export default function Overlay() {
           style={{ y: y1, opacity: opacity1, scale: scale1, pointerEvents: heroPointerEvents }}
           className="absolute inset-x-6 md:inset-x-24 top-0 bottom-0 flex flex-col justify-center items-start text-left max-w-2xl"
         >
-          <div className="w-full bg-gradient-to-br from-black/90 via-black/80 to-black/95 md:bg-none p-6 md:p-0 rounded-2xl md:rounded-none backdrop-blur-md md:backdrop-blur-none border border-white/10 md:border-none shadow-2xl md:shadow-none">
+          <div className="relative w-full p-2 md:p-0">
+            {/* Open navy blue gradient glow behind text only in mobile view */}
+            <div className="absolute -left-6 w-screen -inset-y-36 bg-[radial-gradient(circle_at_30%_50%,rgba(15,27,61,0.95)_0%,rgba(21,16,43,0.8)_50%,rgba(18,18,18,0)_100%)] md:hidden pointer-events-none z-[-1] blur-3xl" />
+            
             <span className="text-xs md:text-sm font-bold tracking-[0.25em] text-white/40 uppercase mb-3 block">
               Hello! I&apos;m
             </span>
@@ -103,7 +106,10 @@ export default function Overlay() {
           style={{ y: y2, opacity: opacity2, pointerEvents: pointerEvents2 }}
           className="absolute inset-x-6 md:inset-x-24 top-0 bottom-0 flex flex-col justify-center items-start text-left max-w-2xl"
         >
-          <div className="w-full bg-gradient-to-br from-black/90 via-black/80 to-black/95 md:bg-none p-6 md:p-0 rounded-2xl md:rounded-none backdrop-blur-md md:backdrop-blur-none border border-white/10 md:border-none shadow-2xl md:shadow-none">
+          <div className="relative w-full p-2 md:p-0">
+            {/* Open navy blue gradient glow behind text only in mobile view */}
+            <div className="absolute -left-6 w-screen -inset-y-36 bg-[radial-gradient(circle_at_30%_50%,rgba(15,27,61,0.95)_0%,rgba(21,16,43,0.8)_50%,rgba(18,18,18,0)_100%)] md:hidden pointer-events-none z-[-1] blur-3xl" />
+            
             <div className="flex items-center gap-3 mb-4">
               <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400">
                 <Code2 className="w-5 h-5" />
@@ -145,7 +151,10 @@ export default function Overlay() {
           style={{ y: y3, opacity: opacity3, pointerEvents: pointerEvents3 }}
           className="absolute inset-x-6 md:inset-x-24 top-0 bottom-0 flex flex-col justify-center items-start text-left max-w-2xl"
         >
-          <div className="w-full bg-gradient-to-br from-black/90 via-black/80 to-black/95 md:bg-none p-6 md:p-0 rounded-2xl md:rounded-none backdrop-blur-md md:backdrop-blur-none border border-white/10 md:border-none shadow-2xl md:shadow-none">
+          <div className="relative w-full p-2 md:p-0">
+            {/* Open navy blue gradient glow behind text only in mobile view */}
+            <div className="absolute -left-6 w-screen -inset-y-36 bg-[radial-gradient(circle_at_30%_50%,rgba(15,27,61,0.95)_0%,rgba(21,16,43,0.8)_50%,rgba(18,18,18,0)_100%)] md:hidden pointer-events-none z-[-1] blur-3xl" />
+            
             <div className="flex items-center gap-3 mb-4">
               <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400">
                 <Layers className="w-5 h-5" />

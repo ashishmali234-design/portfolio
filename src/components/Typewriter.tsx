@@ -85,7 +85,7 @@ export default function Typewriter({
 
         if (seg.text === "Ai") {
           return (
-            <span key={idx} className="relative inline-block mx-0.5 group font-sans font-normal">
+            <span key={idx} className="relative inline-block mx-0.5 group font-sans font-semibold">
               {/* Soft ice-blue neon glow backdrop */}
               <motion.span 
                 animate={{
@@ -100,7 +100,7 @@ export default function Typewriter({
                 className="absolute -inset-1 rounded-lg bg-sky-400/15 blur-md pointer-events-none"
               />
               {/* Silver-white gradient text (Simple, non-golden) */}
-              <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-sky-100 font-normal">
+              <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-sky-100 font-semibold">
                 {visibleLen >= 2 ? "Aı" : visibleLen === 1 ? "A" : ""}
               </span>
               {/* Delicate star spark replacing the dot of the lowercase 'i' */}
@@ -123,7 +123,7 @@ export default function Typewriter({
                       ease: "easeInOut"
                     }
                   }}
-                  className="absolute top-[-0.12em] right-[0.02em] pointer-events-none text-sky-300 filter drop-shadow-[0_0_3px_rgba(56,189,248,0.8)]"
+                  className="absolute top-[0.24em] right-[0.04em] pointer-events-none text-sky-300 filter drop-shadow-[0_0_3px_rgba(56,189,248,0.8)]"
                 >
                   <svg className="w-[0.28em] h-[0.28em] fill-sky-300" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z" />

@@ -59,9 +59,14 @@ export default function CustomCursor() {
       setIsOverText(!!isTextElement);
     };
 
-    // 3. Detect keyboard typing active state
+    // 3. Detect keyboard typing active state with 1-second auto-restore
+    let typingTimeout: NodeJS.Timeout;
     const handleKeyDown = () => {
       setIsTyping(true);
+      clearTimeout(typingTimeout);
+      typingTimeout = setTimeout(() => {
+        setIsTyping(false);
+      }, 1000);
     };
 
     window.addEventListener("mousemove", moveCursor);
@@ -72,6 +77,7 @@ export default function CustomCursor() {
       window.removeEventListener("mousemove", moveCursor);
       window.removeEventListener("mouseover", handleMouseOver);
       window.removeEventListener("keydown", handleKeyDown);
+      clearTimeout(typingTimeout);
     };
   }, [cursorX, cursorY]);
 
@@ -82,48 +88,44 @@ export default function CustomCursor() {
 
   return (
     <>
-      {/* Outer Liquid Glass Bubble */}
+      {/* Outer 3D Glass Sphere Cursor */}
       <motion.div
-        className="fixed top-0 left-0 w-11 h-11 pointer-events-none z-[9999] shadow-[0_8px_32px_rgba(14,165,233,0.15)] backdrop-blur-[6px] border border-white/30 overflow-hidden"
+        className="fixed top-0 left-0 w-14 h-14 rounded-full pointer-events-none z-[9999] backdrop-blur-[16px] border border-white/20 overflow-hidden"
         style={{
           x: outerX,
           y: outerY,
           translateX: "-50%",
           translateY: "-50%",
-          scale: hideOuterRing ? 0 : isHovered ? 1.5 : 1,
+          scale: hideOuterRing ? 0 : isHovered ? 1.3 : 1,
           opacity: hideOuterRing ? 0 : 1,
-          backgroundColor: isHovered ? "rgba(255, 255, 255, 0.16)" : "rgba(255, 255, 255, 0.08)",
-          borderColor: isHovered ? "rgba(255, 255, 255, 0.5)" : "rgba(255, 255, 255, 0.3)",
-        }}
-        animate={{
-          borderRadius: [
-            "42% 58% 50% 50% / 45% 45% 55% 55%",
-            "55% 45% 55% 45% / 50% 55% 45% 50%",
-            "45% 55% 40% 60% / 55% 45% 55% 45%",
-            "42% 58% 50% 50% / 45% 45% 55% 55%"
-          ]
+          // 3D Glass shading using a beautiful complex gradient background
+          background: isHovered
+            ? "radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.04) 40%, rgba(0, 0, 0, 0.12) 75%, rgba(0, 0, 0, 0.25) 100%)"
+            : "radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.02) 40%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.22) 100%)",
+          // Specular and refraction shadows that mimic 3D sphere volume
+          boxShadow: isHovered
+            ? "inset 4px 4px 8px rgba(255, 255, 255, 0.45), inset -4px -4px 8px rgba(0, 0, 0, 0.35), inset -2px -2px 6px rgba(245, 158, 11, 0.25), 0 10px 30px rgba(0, 0, 0, 0.35)"
+            : "inset 3px 3px 6px rgba(255, 255, 255, 0.35), inset -3px -3px 6px rgba(0, 0, 0, 0.25), inset -1.5px -1.5px 4px rgba(245, 158, 11, 0.15), 0 6px 20px rgba(0, 0, 0, 0.25)",
         }}
         transition={{
-          // Spring for state changes (scale, opacity)
-          scale: { type: "spring", stiffness: 400, damping: 28 },
-          opacity: { duration: 0.2 },
-          // Beautiful continuous fluid wobbly animation
-          borderRadius: {
-            duration: 5,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }
+          scale: { type: "spring", stiffness: 450, damping: 26 },
+          opacity: { duration: 0.15 },
         }}
       >
-        {/* Specular light highlight */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.25),transparent_65%)] pointer-events-none" />
-        <div className="absolute inset-0.5 rounded-full bg-gradient-to-tr from-white/0 via-white/10 to-white/0 pointer-events-none" />
+        {/* Sharp specular rim highlight crescent (Top-Left Edge) */}
+        <div className="absolute inset-[1.5px] rounded-full border-t-[1.5px] border-l-[1.5px] border-white/60 pointer-events-none filter blur-[0.2px]" />
         
-        {/* Subtle inner glass border reflection */}
-        <div className="absolute inset-[1px] rounded-full border border-white/10 pointer-events-none" />
+        {/* Soft blurred specular light source reflection ellipse in the top-left quadrant */}
+        <div className="absolute top-[8%] left-[8%] w-[35%] h-[20%] bg-gradient-to-b from-white/70 to-white/0 rounded-full rotate-[-40deg] filter blur-[0.3px] pointer-events-none" />
+
+        {/* Opposite rim reflection highlight (Bottom-Right Edge) */}
+        <div className="absolute inset-[1.5px] rounded-full border-b border-r border-white/10 pointer-events-none" />
+
+        {/* Chromatic edge flare reflection (Bottom-Right) */}
+        <div className="absolute bottom-0 right-0 w-7 h-7 rounded-full bg-[radial-gradient(circle_at_bottom_right,rgba(245,158,11,0.22),transparent_75%)] pointer-events-none" />
       </motion.div>
 
-      {/* Inner Pinpoint Dot / Golden Laser Laser Needle */}
+      {/* Inner Pinpoint Dot / Golden Laser Needle */}
       <motion.div
         className="fixed top-0 left-0 pointer-events-none z-[9999]"
         style={{
@@ -139,8 +141,8 @@ export default function CustomCursor() {
           borderRadius: isOverText ? "4px" : "50%",
           backgroundColor: isOverText ? "#F59E0B" : "rgba(255, 255, 255, 0.95)",
           boxShadow: isOverText 
-            ? "0 0 8px rgba(245, 158, 11, 0.8)" 
-            : "0 2px 4px rgba(0, 0, 0, 0.2)",
+            ? "0 0 8px rgba(245, 158, 11, 0.85)" 
+             : "0 2px 4px rgba(0, 0, 0, 0.2)",
           opacity: isTyping ? 0 : 1, // Completely hide while typing to not block visibility
         }}
         transition={{

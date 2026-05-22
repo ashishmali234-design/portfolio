@@ -110,16 +110,16 @@ export default function Overlay() {
             {/* Open navy blue gradient glow behind text only in mobile view */}
             <div className="absolute -left-6 w-screen -inset-y-36 bg-[radial-gradient(circle_at_30%_50%,rgba(15,27,61,0.95)_0%,rgba(21,16,43,0.8)_50%,rgba(18,18,18,0)_100%)] md:hidden pointer-events-none z-[-1] blur-3xl" />
             
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400">
-                <Code2 className="w-5 h-5" />
+            <div className="flex items-center gap-2 mb-2 md:mb-3">
+              <div className="p-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400">
+                <Code2 className="w-4 h-4" />
               </div>
-              <span className="text-xs font-bold tracking-widest text-amber-400 uppercase">
+              <span className="text-[10px] font-bold tracking-widest text-amber-400 uppercase">
                 Core Expertise
               </span>
             </div>
             {/* Mobile Title: Shortened to Crafting Seamless UX */}
-            <h2 className="text-4xl font-extrabold tracking-tight text-white leading-tight min-h-[2.2em] md:hidden">
+            <h2 className="text-[1.65rem] font-extrabold tracking-tight text-white leading-[1.25] min-h-[2.0em] md:hidden">
               <Typewriter
                 trigger={isSection2Visible}
                 segments={[
@@ -130,7 +130,7 @@ export default function Overlay() {
               />
             </h2>
             {/* Desktop Title: Keep Original */}
-            <h2 className="text-6xl font-extrabold tracking-tight text-white leading-tight min-h-[2.2em] hidden md:block">
+            <h2 className="text-4xl font-extrabold tracking-tight text-white leading-[1.25] min-h-[2.0em] hidden md:block">
               <Typewriter
                 trigger={isSection2Visible}
                 segments={[
@@ -140,7 +140,7 @@ export default function Overlay() {
                 delay={200}
               />
             </h2>
-            <p className="mt-6 text-sm md:text-lg text-white/60 leading-relaxed font-light font-sans">
+            <p className="mt-3 md:mt-4 text-[11px] md:text-sm text-white/60 leading-normal md:leading-relaxed font-light font-sans">
               Focused on user-centric UI/UX, product thinking, and immersive digital interactions.
             </p>
           </div>
@@ -155,15 +155,15 @@ export default function Overlay() {
             {/* Open navy blue gradient glow behind text only in mobile view */}
             <div className="absolute -left-6 w-screen -inset-y-36 bg-[radial-gradient(circle_at_30%_50%,rgba(15,27,61,0.95)_0%,rgba(21,16,43,0.8)_50%,rgba(18,18,18,0)_100%)] md:hidden pointer-events-none z-[-1] blur-3xl" />
             
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400">
-                <Layers className="w-5 h-5" />
+            <div className="flex items-center gap-2 mb-2 md:mb-3">
+              <div className="p-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400">
+                <Layers className="w-4 h-4" />
               </div>
-              <span className="text-xs font-bold tracking-widest text-amber-400 uppercase">
+              <span className="text-[10px] font-bold tracking-widest text-amber-400 uppercase">
                 The Philosophy
               </span>
             </div>
-            <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-[1.6] md:leading-[1.7] min-h-[2.8em]">
+            <h2 className="text-2xl md:text-4xl font-extrabold tracking-tight text-white leading-[1.25] md:leading-[1.35] min-h-[2.0em]">
               <Typewriter
                 trigger={isSection3Visible}
                 segments={[
@@ -175,7 +175,7 @@ export default function Overlay() {
                 delay={200}
               />
             </h2>
-            <p className="mt-6 md:mt-7 text-sm md:text-lg text-white/60 leading-relaxed font-light font-sans max-w-md">
+            <p className="mt-3 md:mt-4 text-[11px] md:text-sm text-white/60 leading-normal md:leading-relaxed font-light font-sans max-w-md">
               Using AI thoughtfully to create seamless, innovative, and human-centered experiences.
             </p>
           </div>

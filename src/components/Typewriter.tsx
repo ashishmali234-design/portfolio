@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useInView } from "framer-motion";
+import { useInView, motion } from "framer-motion";
 
 export interface TypewriterSegment {
   text: string;
@@ -82,6 +82,56 @@ export default function Typewriter({
 
         if (charCount <= start) return null;
         const visibleLen = Math.min(segLen, charCount - start);
+
+        if (seg.text === "AI") {
+          return (
+            <span key={idx} className="relative inline-block mx-0.5 group">
+              {/* Subtle back-glow */}
+              <motion.span 
+                animate={{
+                  opacity: [0.4, 0.8, 0.4],
+                  scale: [0.95, 1.05, 0.95]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                className="absolute -inset-1.5 rounded-lg bg-gradient-to-r from-amber-500/25 to-yellow-500/25 blur-md pointer-events-none"
+              />
+              <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-500 font-black">
+                {seg.text.slice(0, visibleLen)}
+              </span>
+              {/* Star spark above the letter 'I' */}
+              {visibleLen >= 2 && (
+                <motion.span 
+                  initial={{ opacity: 0, scale: 0, rotate: -45 }}
+                  animate={{ 
+                    opacity: 1, 
+                    scale: 1, 
+                    rotate: 0,
+                    y: [0, -1.5, 0]
+                  }}
+                  transition={{ 
+                    opacity: { duration: 0.3 },
+                    scale: { duration: 0.3 },
+                    rotate: { duration: 0.3 },
+                    y: {
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }
+                  }}
+                  className="absolute -top-3.5 right-0.5 pointer-events-none text-amber-300 filter drop-shadow-[0_0_5px_rgba(251,191,36,0.85)]"
+                >
+                  <svg className="w-3.5 h-3.5 fill-amber-300" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z" />
+                  </svg>
+                </motion.span>
+              )}
+            </span>
+          );
+        }
 
         return (
           <span key={idx} className={seg.className}>

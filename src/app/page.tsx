@@ -87,12 +87,13 @@ export default function Home() {
             </div>
             
             {/* Navigation Menu (Centered) */}
-            <nav className="hidden md:flex gap-8 text-xs uppercase tracking-widest font-semibold text-white/60 items-center justify-center flex-1">
-              <a href="#about-me" className="hover:text-white transition-colors">About Me</a>
-              <a href="#projects" className="hover:text-white transition-colors">Projects</a>
-              <a href="#skills" className="hover:text-white transition-colors">Skills</a>
-              <a href="#experience" className="hover:text-white transition-colors">Experience</a>
-              <a href="#contact" className="hover:text-white transition-colors">Contact</a>
+            <nav className="hidden md:flex gap-4 lg:gap-6 xl:gap-8 text-xs uppercase tracking-widest font-semibold text-white/60 items-center justify-center flex-1">
+              <a href="#what-i-do" className="hover:text-white transition-colors whitespace-nowrap">What I Do</a>
+              <a href="#projects" className="hover:text-white transition-colors whitespace-nowrap">Projects</a>
+              <a href="#skills" className="hover:text-white transition-colors whitespace-nowrap">Skills</a>
+              <a href="#about-me" className="hover:text-white transition-colors whitespace-nowrap">About Me</a>
+              <a href="#experience" className="hover:text-white transition-colors whitespace-nowrap">Experience</a>
+              <a href="#contact" className="hover:text-white transition-colors whitespace-nowrap">Contact</a>
             </nav>
 
             {/* CTAs (Resume with Icon + LinkedIn + Behance Icons on Right) */}
@@ -180,11 +181,12 @@ export default function Home() {
                 </div>
 
                 {/* Menu Links with Staggered Slide In (Centered) */}
-                <nav className="flex flex-col gap-7 my-auto items-center text-center w-full">
+                <nav className="flex flex-col gap-6 my-auto items-center text-center w-full">
                   {[
-                    { name: "About Me", href: "#about-me" },
+                    { name: "What I Do", href: "#what-i-do" },
                     { name: "Projects", href: "#projects" },
                     { name: "Skills", href: "#skills" },
+                    { name: "About Me", href: "#about-me" },
                     { name: "Experience", href: "#experience" },
                     { name: "Contact", href: "#contact" }
                   ].map((item, idx) => (

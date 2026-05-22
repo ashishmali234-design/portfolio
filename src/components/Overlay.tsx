@@ -163,17 +163,19 @@ export default function Overlay() {
                 The Philosophy
               </span>
             </div>
-            <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight min-h-[2.2em]">
+            <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-[1.1] min-h-[2.2em]">
               <Typewriter
                 trigger={isSection3Visible}
                 segments={[
-                  { text: "Designing with AI,\n", className: "text-white" },
+                  { text: "Designing with ", className: "text-white" },
+                  { text: "AI", className: "text-white" },
+                  { text: ",\n", className: "text-white" },
                   { text: "thinking like humans.", className: "text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-600" }
                 ]}
                 delay={200}
               />
             </h2>
-            <p className="mt-6 text-sm md:text-lg text-white/60 leading-relaxed font-light font-sans max-w-md">
+            <p className="mt-4 md:mt-5 text-sm md:text-lg text-white/60 leading-relaxed font-light font-sans max-w-md">
               Using AI thoughtfully to create seamless, innovative, and human-centered experiences.
             </p>
           </div>

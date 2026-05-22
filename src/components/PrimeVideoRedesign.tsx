@@ -7,9 +7,40 @@ import {
   Monitor,
   X,
   Menu,
-  ArrowLeft
+  ArrowLeft,
+  FileText
 } from "lucide-react";
 import Logo from "./Logo";
+
+// Custom official Behance SVG Icon Component
+const BehanceIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <path d="M22 13h-7v1.25h7V13zm-11.83-3.23c.31-.47.46-1.01.46-1.62 0-.66-.17-1.22-.51-1.67-.34-.45-.81-.79-1.42-1.02-.6-.23-1.3-.34-2.11-.34H2v13.62h5.27c1.37 0 2.45-.3 3.23-.9.78-.6 1.17-1.47 1.17-2.6 0-.85-.23-1.57-.69-2.16-.46-.59-1.1-1.03-1.93-1.31.74-.23 1.31-.63 1.72-1.2l-.39.2zm-5.3-2.6h1.91c.64 0 1.11.12 1.41.35.3.23.45.58.45 1.05 0 .42-.15.75-.44.97-.29.22-.76.33-1.4.33H4.87V7.17zm3.76 6.37c0 .54-.17.96-.51 1.24-.34.28-.88.42-1.62.42H4.87v-3.32h1.66c.72 0 1.25.13 1.59.39.34.26.51.68.51 1.27zm10.74-2.28c-.89 0-1.63.26-2.23.77-.6.51-.97 1.25-1.12 2.22h6.58c-.06-.94-.37-1.66-.94-2.17-.57-.51-1.34-.82-2.29-.82zm-.11-2c1.3 0 2.37.38 3.19 1.14.82.76 1.24 1.83 1.27 3.21H13.62c.12 1.34.6 2.38 1.44 3.1.84.72 1.93 1.08 3.26 1.08 1.16 0 2.11-.25 2.85-.75.74-.5 1.29-1.2 1.63-2.1h-2.82c-.18.39-.46.7-.85.93-.39.23-.88.35-1.47.35-.78 0-1.37-.22-1.78-.65-.41-.43-.65-1.07-.72-1.92h10.28c.04-.32.06-.67.06-1.04 0-1.35-.38-2.43-1.14-3.23-.76-.8-1.78-1.2-3.07-1.2z" />
+  </svg>
+);
+
+// Custom official LinkedIn SVG Icon Component
+const LinkedinIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect x="2" y="9" width="4" height="12" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
 
 interface PrimeVideoRedesignProps {
   isOpen: boolean;
@@ -164,9 +195,9 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
                   </button>
                 </div>
 
-                {/* Portfolio Navigation Links */}
-                <nav className="flex flex-col gap-6 my-auto text-left pl-4">
-                  <span className="text-[10px] uppercase tracking-widest text-[#FFBF4F] font-black mb-1">Portfolio</span>
+                {/* Portfolio Navigation Links (Centered) */}
+                <nav className="flex flex-col gap-7 my-auto items-center text-center w-full">
+                  <span className="text-[10px] uppercase tracking-widest text-[#FFBF4F] font-black mb-2">Portfolio</span>
                   {[
                     { name: "Experience", target: "experience" },
                     { name: "Skills", target: "skills" },
@@ -176,32 +207,62 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
                     <button
                       key={item.name}
                       onClick={() => handleNavLinkClick(item.target)}
-                      className="text-3xl font-black uppercase tracking-wider text-white/70 hover:text-[#FFBF4F] active:text-[#FFBF4F] text-left transition-colors cursor-pointer bg-transparent border-none"
+                      className="text-2xl font-black uppercase tracking-widest text-white/70 hover:text-[#FFBF4F] active:text-[#FFBF4F] text-center transition-colors cursor-pointer bg-transparent border-none"
                     >
                       {item.name}
                     </button>
                   ))}
-                  
-                  {/* Resume CTA */}
-                  <a 
-                    href="file:///Users/rac/Downloads/Ashish%20C%20Mali%20Resume.pdf" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-3xl font-black uppercase tracking-wider text-amber-400 hover:text-amber-300 text-left transition-colors mt-2"
-                  >
-                    Resume
-                  </a>
                 </nav>
 
-                <div className="flex flex-col gap-4 text-left pl-4">
+                {/* CTAs & Footer inside drawer (Centered) */}
+                <div className="flex flex-col items-center gap-6 w-full pb-6 pt-4 border-t border-white/5">
+                  <div className="flex items-center gap-3">
+                    {/* Resume CTA */}
+                    <a 
+                      href="/Ashish_C_Mali_Resume.pdf" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      onClick={() => setModalMenuOpen(false)}
+                      className="px-5 py-2 rounded-full border border-amber-500/20 bg-amber-500/10 text-amber-400 font-bold hover:bg-amber-500 hover:text-black hover:border-amber-500 transition-all duration-300 shadow-[0_0_15px_rgba(245,158,11,0.12)] text-[10px] tracking-widest uppercase flex items-center gap-2"
+                    >
+                      <FileText size={13} className="stroke-[2.5]" />
+                      <span>Resume</span>
+                    </a>
+
+                    {/* LinkedIn Icon CTA */}
+                    <a 
+                      href="https://www.linkedin.com/in/ashish-mali-b071b526b?utm_source=share_via&utm_content=profile&utm_medium=member_android"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setModalMenuOpen(false)}
+                      className="p-2.5 rounded-full border border-white/10 bg-white/5 text-white/60 hover:text-amber-400 hover:border-amber-400/50 hover:bg-amber-500/10 transition-all duration-300 shadow-inner flex items-center justify-center active:scale-95"
+                      aria-label="LinkedIn"
+                    >
+                      <LinkedinIcon className="w-4 h-4" />
+                    </a>
+
+                    {/* Behance Icon CTA */}
+                    <a 
+                      href="https://www.behance.net/ashishmali"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setModalMenuOpen(false)}
+                      className="p-2.5 rounded-full border border-white/10 bg-white/5 text-white/60 hover:text-amber-400 hover:border-amber-400/50 hover:bg-amber-500/10 transition-all duration-300 shadow-inner flex items-center justify-center active:scale-95"
+                      aria-label="Behance"
+                    >
+                      <BehanceIcon className="w-4 h-4" />
+                    </a>
+                  </div>
+
                   <button
                     onClick={onClose}
-                    className="w-full py-4 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-white text-xs font-black uppercase tracking-widest transition-all duration-300 active:scale-95 cursor-pointer text-center"
+                    className="w-full py-3.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-white text-xs font-black uppercase tracking-widest transition-all duration-300 active:scale-95 cursor-pointer text-center"
                   >
                     Close Case Study
                   </button>
-                  <div className="text-[10px] tracking-[0.25em] text-gray-500 uppercase font-black">
-                    © 2026 ASHISH MALI • CREATIVE PORTFOLIO
+
+                  <div className="text-center text-[9px] tracking-[0.25em] text-gray-500 uppercase font-bold">
+                    © 2026 ASHISH C MALI • CREATIVE PORTFOLIO
                   </div>
                 </div>
               </motion.div>

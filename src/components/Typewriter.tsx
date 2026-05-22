@@ -105,6 +105,27 @@ export default function Typewriter({
                   {seg.text.slice(0, visibleLen)}
                 </span>
               </span>
+              {/* Delicate sparkling star spark floating precisely BELOW the capital 'AI' */}
+              {visibleLen >= 2 && (
+                <motion.span 
+                  animate={{ 
+                    opacity: [0.6, 1, 0.6], 
+                    scale: [0.85, 1.15, 0.85],
+                    rotate: [0, 90, 180, 270, 360],
+                    y: [0, 1, 0]
+                  }}
+                  transition={{ 
+                    duration: 3.5,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className="absolute left-1/2 -translate-x-1/2 bottom-[-0.32em] pointer-events-none text-cyan-300 filter drop-shadow-[0_0_6px_rgba(0,163,255,0.85)]"
+                >
+                  <svg className="w-[0.32em] h-[0.32em] fill-cyan-300" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z" />
+                  </svg>
+                </motion.span>
+              )}
             </span>
           );
         }

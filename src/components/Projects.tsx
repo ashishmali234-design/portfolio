@@ -37,7 +37,7 @@ const projects: Project[] = [
     title: "Prime Video Redesign",
     description: "A Lean UX strategic overhaul of Amazon Prime Video's landing portal, optimizing content discovery and IA paths through high-fidelity interactive design.",
     image: "/images/primevideo_cover_final.jpg",
-    tags: ["Lean UX", "Interaction Design", "Framer Motion", "Interactive Prototype"],
+    tags: ["Lean UX", "Interaction Design", "Interactive Prototype"],
     link: "#",
     github: "#",
   },
@@ -81,9 +81,9 @@ export default function Projects({ onOpenPrimeVideo }: ProjectsProps) {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-xs font-bold tracking-[0.3em] text-amber-500 uppercase block mb-3"
+            className="text-xs font-bold tracking-[0.3em] text-cyan-400 uppercase block mb-3"
           >
-            Curated Works
+            CURATED WORKS
           </motion.span>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -92,7 +92,7 @@ export default function Projects({ onOpenPrimeVideo }: ProjectsProps) {
             transition={{ duration: 0.8 }}
             className="text-4xl md:text-6xl font-black tracking-tight text-white uppercase min-h-[1.2em]"
           >
-            <Typewriter text="Selected Projects" delay={100} />
+            <Typewriter segments={[{ text: "Selected ", className: "font-light" }, { text: "Projects", className: "font-extrabold" }]} delay={100} />
           </motion.h2>
         </div>
 
@@ -212,13 +212,7 @@ export default function Projects({ onOpenPrimeVideo }: ProjectsProps) {
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className={`text-[10px] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-md border ${
-                        project.title === "Prime Video Redesign"
-                          ? "text-cyan-400 bg-cyan-400/5 border-cyan-400/10"
-                          : project.isComingSoon
-                            ? "text-amber-400 bg-amber-400/5 border-amber-400/10"
-                            : "text-amber-500 bg-amber-500/5 border-amber-500/10"
-                      }`}
+                      className="text-[10px] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-md border text-white bg-white/5 border-white/10"
                     >
                       {tag}
                     </span>

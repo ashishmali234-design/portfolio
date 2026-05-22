@@ -91,7 +91,7 @@ export default function Typewriter({
       })}
       {/* Pulsing/blinking typewriter cursor */}
       {charCount < totalChars && (
-        <span className="animate-blink inline-block w-[3px] bg-amber-400 h-[0.85em] ml-1.5 align-middle" />
+        <span className="animate-blink inline-block w-[3px] bg-cyan-400 h-[0.85em] ml-1.5 align-middle" />
       )}
     </span>
   );

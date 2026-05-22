@@ -187,7 +187,7 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
                     href="file:///Users/rac/Downloads/Ashish%20C%20Mali%20Resume.pdf" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-3xl font-black uppercase tracking-wider text-amber-400 hover:text-amber-300 text-left transition-colors mt-2"
+                    className="text-3xl font-black uppercase tracking-wider text-cyan-400 hover:text-cyan-300 text-left transition-colors mt-2"
                   >
                     Resume
                   </a>

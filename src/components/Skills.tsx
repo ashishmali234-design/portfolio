@@ -187,9 +187,9 @@ export default function Skills() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-xs font-bold tracking-[0.3em] text-amber-500 uppercase block mb-3"
+            className="text-xs font-bold tracking-[0.3em] text-cyan-400 uppercase block mb-3"
           >
-            Capabilities
+            TECHNOLOGIES & TOOLS
           </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -198,7 +198,7 @@ export default function Skills() {
             transition={{ duration: 0.8 }}
             className="text-4xl md:text-5xl font-black tracking-tight text-white uppercase min-h-[1.2em]"
           >
-            <Typewriter text="Skills & Toolkit" delay={100} />
+            <Typewriter segments={[{ text: "My ", className: "font-light" }, { text: "Toolkit", className: "font-extrabold" }]} delay={100} />
           </motion.h2>
         </div>
 
@@ -294,7 +294,7 @@ export default function Skills() {
           <div className="flex items-center justify-between mb-10">
             <div>
               <span className="text-xs font-bold tracking-[0.3em] text-cyan-400 uppercase block mb-2">
-                Technologies & Tools
+                TECHNOLOGIES & TOOLS
               </span>
               <h3 className="text-3xl md:text-4xl font-light text-white tracking-tight">
                 My <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-neutral-400">Toolkit</span>

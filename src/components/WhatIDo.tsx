@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Layers, Cpu, Zap, Monitor } from "lucide-react";
+import Typewriter from "./Typewriter";
 
 export default function WhatIDo() {
   const capabilities = [
@@ -46,28 +47,25 @@ export default function WhatIDo() {
 
       <div className="max-w-6xl mx-auto">
         {/* Title Block */}
-        <div className="flex flex-col items-center text-center mb-16">
-          <motion.h2 
-            initial={{ opacity: 0, y: -20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+        <div className="mb-16 text-left">
+          <motion.span
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-4xl md:text-5xl font-light text-white tracking-tight"
+            className="text-xs font-bold tracking-[0.3em] text-cyan-400 uppercase block mb-3"
           >
-            About <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-100 to-neutral-300">Me</span>
-          </motion.h2>
-          
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            ABOUT ME
+          </motion.span>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="mt-4 px-4 py-1.5 rounded-full bg-white/5 border border-white/10"
+            transition={{ duration: 0.8 }}
+            className="text-4xl md:text-5xl font-black tracking-tight text-white uppercase min-h-[1.2em]"
           >
-            <span className="text-[10px] md:text-xs font-bold tracking-[0.25em] text-neutral-400 uppercase">
-              Core Capabilities
-            </span>
-          </motion.div>
+            <Typewriter segments={[{ text: "About ", className: "font-light text-white" }, { text: "Me", className: "font-extrabold text-white" }]} delay={100} />
+          </motion.h2>
         </div>
 
         {/* 2-Column Capability Grid */}

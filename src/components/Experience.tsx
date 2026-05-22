@@ -59,7 +59,7 @@ export default function Experience() {
             transition={{ duration: 0.6 }}
             className="text-xs font-bold tracking-[0.3em] text-cyan-400 uppercase block mb-3"
           >
-            Professional Path
+            CAREER JOURNEY
           </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -68,7 +68,7 @@ export default function Experience() {
             transition={{ duration: 0.8 }}
             className="text-4xl md:text-5xl font-black tracking-tight text-white uppercase min-h-[1.2em]"
           >
-            <Typewriter text="Experience Timeline" delay={100} />
+            <Typewriter segments={[{ text: "Career ", className: "font-light" }, { text: "Journey", className: "font-extrabold" }]} delay={100} />
           </motion.h2>
         </div>
 

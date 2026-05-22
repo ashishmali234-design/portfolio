@@ -61,7 +61,7 @@ export default function CustomCursor() {
     <>
       {/* Outer trailing circle with iOS glass effect */}
       <motion.div
-        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-white/25 pointer-events-none z-50 shadow-[0_4px_12px_rgba(0,0,0,0.15)] backdrop-blur-[5px]"
+        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-white/25 pointer-events-none z-[9999] shadow-[0_4px_12px_rgba(0,0,0,0.15)] backdrop-blur-[5px]"
         style={{
           x: outerX,
           y: outerY,
@@ -75,7 +75,7 @@ export default function CustomCursor() {
       />
       {/* Inner pinpoint dot */}
       <motion.div
-        className="fixed top-0 left-0 w-1.5 h-1.5 bg-white/80 rounded-full pointer-events-none z-50"
+        className="fixed top-0 left-0 w-1.5 h-1.5 bg-white/80 rounded-full pointer-events-none z-[9999]"
         style={{
           x: cursorX,
           y: cursorY,

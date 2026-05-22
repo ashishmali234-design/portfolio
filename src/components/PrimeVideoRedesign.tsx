@@ -4,11 +4,9 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ChevronLeft,
-  ExternalLink,
   Smartphone,
   Monitor,
   BookOpen,
-  Sparkles,
   X
 } from "lucide-react";
 
@@ -20,7 +18,6 @@ interface PrimeVideoRedesignProps {
 export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesignProps) {
   const [activeTab, setActiveTab] = useState<"figma" | "case-study">("figma");
   const [figmaView, setFigmaView] = useState<"desktop" | "mobile">("desktop");
-  const [comparisonView, setComparisonView] = useState<"before" | "after">("after");
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
 
   // Prevent background scrolling when overlay is active
@@ -44,7 +41,7 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: "100%" }}
         transition={{ type: "spring", damping: 30, stiffness: 120 }}
-        className="fixed inset-0 z-50 bg-[#070709] overflow-y-auto flex flex-col font-sans text-neutral-100 select-none text-left"
+        className="fixed inset-0 z-50 bg-[#070709] overflow-y-auto flex flex-col font-sans text-neutral-100 select-none text-left lg:cursor-default"
       >
         {/* Navigation & Controls Top Bar */}
         <div className="sticky top-0 z-[100] bg-[#070709]/95 backdrop-blur-md border-b border-white/5 py-4 px-6 md:px-12 flex flex-col md:flex-row justify-between items-center gap-4">
@@ -105,15 +102,6 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <a
-                    href="https://www.figma.com/design/ReAm71jBATr3A2euzHS1A0/Prime-Video--Copy-?node-id=2602-5155&t=uX89AVLyKb6qtgIg-11"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 px-4 py-2 rounded-md bg-[#F24E1E]/10 hover:bg-[#F24E1E]/20 border border-[#F24E1E]/20 text-[#F24E1E] text-xs font-bold uppercase tracking-wider transition-all duration-300"
-                  >
-                    Open Figma File <ExternalLink size={12} />
-                  </a>
-                  
                   <div className="flex bg-[#121216] border border-white/5 p-1 rounded-lg">
                     <button
                       onClick={() => setFigmaView("desktop")}
@@ -188,321 +176,404 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
             </div>
           )}
 
-          {/* TAB 2: BEHANCE CASE STUDY INSIGHTS */}
+          {/* TAB 2: HIGH-FIDELITY CASE STUDY INSIGHTS */}
           {activeTab === "case-study" && (
-            <div className="flex-1 max-w-4xl mx-auto px-6 md:px-12 py-16 pb-32">
-              <div className="space-y-16">
-                
-                {/* 1. Immersive Cover Image Hero with click-to-zoom Lightbox */}
-                <div className="relative group/cover rounded-3xl overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] cursor-zoom-in bg-black">
-                  <img
-                    src="/images/primevideo_background.png"
-                    alt="Prime Video 3D embossed logo background"
-                    onClick={() => setLightboxImage("/images/primevideo_background.png")}
-                    className="w-full h-auto object-cover aspect-[21/9] transition-transform duration-700 ease-out group-hover/cover:scale-[1.02]"
-                  />
-                  {/* Backdrop glowing content */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90 pointer-events-none" />
-                  
-                  <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-12 text-left pointer-events-none">
-                    <span className="text-xs font-bold tracking-[0.3em] text-cyan-400 uppercase block mb-2">
-                      Figma Original Design Showcase
-                    </span>
-                    <h3 className="text-3xl md:text-5xl font-black tracking-tight text-white uppercase leading-none">
-                      Prime Video Redesign
-                    </h3>
-                    <p className="text-sm text-neutral-300 font-light mt-2 max-w-lg hidden md:block">
-                      Restructuring Information Architecture, visual cues, and platform consistency around real design mockups.
+            <div className="flex-1 w-full bg-[#070709] pb-32">
+              {/* 1. Header Banner Hero */}
+              <div className="relative w-full overflow-hidden bg-gradient-to-b from-[#0e1724] via-[#090d16] to-[#070709] border-b border-white/5 py-20 px-6 md:px-12">
+                <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                  <div className="lg:col-span-6 space-y-6 text-left">
+                    {/* Brand Typography */}
+                    <div className="flex flex-col gap-1">
+                      <div className="flex items-center gap-1">
+                        <span className="text-white text-5xl font-extrabold tracking-tight font-sans">prime</span>
+                        <span className="text-[#00A8E1] text-5xl font-extrabold tracking-tight font-sans">video</span>
+                      </div>
+                      <div className="w-[140px] h-[10px] bg-[#00A8E1] rounded-full scale-y-[-1] origin-top translate-x-4 -translate-y-1" style={{ clipPath: "ellipse(50% 100% at 50% 100%)" }} />
+                    </div>
+
+                    <h1 className="text-3xl md:text-5xl font-black tracking-tight text-white leading-tight uppercase">
+                      Redesigning the entertainment landing experience
+                    </h1>
+                    <p className="text-lg text-neutral-300 font-light max-w-xl leading-relaxed">
+                      Restructuring Information Architecture, visual cues, and cross-platform consistency to deliver an immersive cinematic journey.
                     </p>
                   </div>
-                  <div className="absolute bottom-4 right-6 bg-black/60 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full flex items-center gap-1.5 text-[10px] font-bold text-white/80 uppercase tracking-widest pointer-events-none group-hover/cover:text-white transition-colors duration-300">
-                    <Sparkles size={12} className="text-cyan-400" /> Click to Expand Wallpaper
-                  </div>
-                </div>
 
-                {/* Intro */}
-                <div className="text-left space-y-4">
-                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                    <div>
-                      <span className="text-xs font-bold tracking-[0.3em] text-cyan-400 uppercase block">
-                        Product Design Case Study
-                      </span>
-                      <h3 className="text-4xl md:text-5xl font-black tracking-tight text-white uppercase">
-                        Lean UX Redesign
-                      </h3>
-                    </div>
-                    <div className="flex gap-3 shrink-0">
-                      <a
-                        href="https://www.figma.com/design/ReAm71jBATr3A2euzHS1A0/Prime-Video--Copy-?node-id=2602-5155&t=uX89AVLyKb6qtgIg-11"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 px-4.5 py-2.5 rounded-full bg-[#F24E1E]/10 hover:bg-[#F24E1E]/20 border border-[#F24E1E]/20 text-[#F24E1E] text-xs font-extrabold uppercase tracking-wider transition-all"
-                      >
-                        Inspect Figma Design <ExternalLink size={12} />
-                      </a>
-                    </div>
-                  </div>
-                  <p className="text-lg text-neutral-300 font-light leading-relaxed">
-                    A comprehensive strategic overhaul of Amazon Prime Video&apos;s landing portal, solving content discoverability and subscription flow clutter through structured UX refinement.
-                  </p>
-                  <div className="pt-2">
-                    <a
-                      href="https://www.behance.net/gallery/219780733/Prime-Video-Redesigned-Landing-Page-%28Lean-UX%29"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-xs font-bold text-cyan-400 hover:text-cyan-300 tracking-wider uppercase transition-colors"
+                  <div className="lg:col-span-6 relative flex justify-center items-center w-full min-h-[300px] md:min-h-[400px]">
+                    <div className="absolute inset-0 bg-[#00A8E1]/10 rounded-full blur-[120px] pointer-events-none" />
+                    {/* Device composite images floating together */}
+                    <motion.div 
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.8 }}
+                      className="relative w-full flex items-center justify-center"
                     >
-                      View Original Behance Presentation <ExternalLink size={14} />
-                    </a>
-                  </div>
-                </div>
-
-                <div className="h-[1px] w-full bg-white/5" />
-
-                {/* 2. Interactive Before vs. After Design Comparison */}
-                <div className="space-y-6">
-                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                    <div>
-                      <h4 className="text-xl font-bold tracking-tight text-white uppercase flex items-center gap-2">
-                        <span className="w-2.5 h-2.5 rounded-full bg-cyan-500 animate-pulse" /> Before vs. After Comparison
-                      </h4>
-                      <p className="text-xs text-neutral-400 font-light mt-1">
-                        Compare the baseline Amazon Prime portal with our tailored Lean UX Redesign mockup.
-                      </p>
-                    </div>
-
-                    <div className="flex bg-[#121216] border border-white/5 p-1 rounded-lg shrink-0">
-                      <button
-                        onClick={() => setComparisonView("before")}
-                        className={`px-4 py-2 rounded-md text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
-                          comparisonView === "before"
-                            ? "bg-red-500/10 border border-red-500/20 text-red-400 font-extrabold"
-                            : "text-white/50 hover:text-white"
-                        }`}
-                      >
-                        Original (Before)
-                      </button>
-                      <button
-                        onClick={() => setComparisonView("after")}
-                        className={`px-4 py-2 rounded-md text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
-                          comparisonView === "after"
-                            ? "bg-green-500/10 border border-green-500/20 text-green-400 font-extrabold"
-                            : "text-white/50 hover:text-white"
-                        }`}
-                      >
-                        Redesigned (After)
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Render Comparison Image Frame with high-fidelity transition */}
-                  <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-black cursor-zoom-in group/comparison">
-                    <AnimatePresence mode="wait">
-                      {comparisonView === "before" ? (
-                        <motion.img
-                          key="comparison-before"
-                          src="/images/primevideo_before.png"
-                          alt="Original Amazon Prime Video landing page"
-                          initial={{ opacity: 0, scale: 0.98 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          exit={{ opacity: 0, scale: 0.98 }}
-                          transition={{ duration: 0.4 }}
-                          onClick={() => setLightboxImage("/images/primevideo_before.png")}
-                          className="w-full h-full object-cover object-top"
-                        />
-                      ) : (
-                        <motion.img
-                          key="comparison-after"
-                          src="/images/primevideo_desktop.png"
-                          alt="Redesigned Amazon Prime Video landing page mockup"
-                          initial={{ opacity: 0, scale: 0.98 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          exit={{ opacity: 0, scale: 0.98 }}
-                          transition={{ duration: 0.4 }}
-                          onClick={() => setLightboxImage("/images/primevideo_desktop.png")}
-                          className="w-full h-full object-cover object-top"
-                        />
-                      )}
-                    </AnimatePresence>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
-                    
-                    {/* Visual Label */}
-                    <div className={`absolute top-4 right-4 px-3 py-1.5 rounded-md text-[10px] font-black uppercase tracking-widest pointer-events-none border ${
-                      comparisonView === "before" 
-                        ? "bg-red-500/10 border-red-500/20 text-red-400" 
-                        : "bg-green-500/10 border-green-500/20 text-green-400"
-                    }`}>
-                      {comparisonView === "before" ? "Original Cluttered Layout" : "Lean High-Fidelity UI"}
-                    </div>
-                    <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full flex items-center gap-1.5 text-[10px] font-bold text-white/80 uppercase tracking-widest pointer-events-none group-hover/comparison:text-white transition-colors duration-300">
-                      <Sparkles size={12} className="text-cyan-400" /> Click to Expand View
-                    </div>
-                  </div>
-                </div>
-
-                <div className="h-[1px] w-full bg-white/5" />
-
-                {/* 3. Cross-Platform Showcase Device Mockups */}
-                <div className="space-y-6">
-                  <div>
-                    <h4 className="text-xl font-bold tracking-tight text-white uppercase flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-cyan-500" /> Responsive Cross-Platform Showcase
-                    </h4>
-                    <p className="text-xs text-neutral-400 font-light mt-1">
-                      Meticulously designed layouts tailored dynamically for desktop browsers and mobile devices.
-                    </p>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {/* Desktop Mockup Frame */}
-                    <div className="glass-card p-4 rounded-3xl border border-white/5 bg-[#121216]/40 backdrop-blur-md flex flex-col justify-between group/desk shadow-lg">
-                      <div className="relative aspect-[16/11] rounded-2xl overflow-hidden bg-black/40 border border-white/5 cursor-zoom-in">
-                        <img
-                          src="/images/primevideo_desktop_angled.png"
-                          alt="Redesigned Prime Video desktop viewport mockup"
-                          onClick={() => setLightboxImage("/images/primevideo_desktop_angled.png")}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover/desk:scale-[1.03]"
-                        />
-                        <div className="absolute bottom-3 right-3 bg-black/60 backdrop-blur-md border border-white/10 px-2.5 py-1 rounded-full flex items-center gap-1 text-[9px] font-bold text-white/80 uppercase tracking-widest pointer-events-none group-hover/desk:text-white transition-colors duration-300">
-                          <Sparkles size={10} className="text-cyan-400" /> Expand
-                        </div>
-                      </div>
-                      <div className="mt-4 text-left">
-                        <h5 className="text-sm font-bold text-white uppercase tracking-wide">Desktop Cinematic Frame</h5>
-                        <p className="text-xs text-neutral-400 font-light leading-relaxed mt-1">
-                          Leveraging wide aspect ratios to render custom backlit ambient glows, persistent spycarousels, and visual genre collections.
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Mobile Mockup Frame */}
-                    <div className="glass-card p-4 rounded-3xl border border-white/5 bg-[#121216]/40 backdrop-blur-md flex flex-col justify-between group/mob shadow-lg">
-                      <div className="relative aspect-[16/11] rounded-2xl overflow-hidden bg-black/40 border border-white/5 cursor-zoom-in flex items-center justify-center">
-                        <img
-                          src="/images/primevideo_mobile.png"
-                          alt="Redesigned Prime Video mobile viewport mockup"
-                          onClick={() => setLightboxImage("/images/primevideo_mobile.png")}
-                          className="h-full w-auto object-contain py-2 transition-transform duration-700 group-hover/mob:scale-[1.04]"
-                        />
-                        <div className="absolute bottom-3 right-3 bg-black/60 backdrop-blur-md border border-white/10 px-2.5 py-1 rounded-full flex items-center gap-1 text-[9px] font-bold text-white/80 uppercase tracking-widest pointer-events-none group-hover/mob:text-white transition-colors duration-300">
-                          <Sparkles size={10} className="text-cyan-400" /> Expand
-                        </div>
-                      </div>
-                      <div className="mt-4 text-left">
-                        <h5 className="text-sm font-bold text-white uppercase tracking-wide">Mobile Adaptive Layout</h5>
-                        <p className="text-xs text-neutral-400 font-light leading-relaxed mt-1">
-                          Optimizing details to match touch targets and layout heights, ensuring high visibility without compromising brand aesthetics.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="h-[1px] w-full bg-white/5" />
-
-                {/* 4. Embedded Interactive Behance Project */}
-                <div className="space-y-6 text-center">
-                  <h4 className="text-xl font-bold tracking-tight text-white uppercase text-left flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-cyan-500" /> Embedded Behance Presentation
-                  </h4>
-                  <div className="flex justify-center">
-                    <div className="relative w-full max-w-[600px] aspect-[404/316] rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-[#121216]/50 p-2">
-                      <iframe
-                        src="https://www.behance.net/embed/project/219780733?ilo0=1"
-                        height="100%"
-                        width="100%"
-                        allowFullScreen
-                        loading="lazy"
-                        frameBorder="0"
-                        allow="clipboard-write"
-                        referrerPolicy="strict-origin-when-cross-origin"
-                        className="w-full h-full rounded-2xl bg-black"
+                      <img 
+                        src="/images/primevideo_desktop.png" 
+                        alt="Desktop redesign front view"
+                        onClick={() => setLightboxImage("/images/primevideo_desktop.png")}
+                        className="w-[80%] h-auto rounded-xl shadow-[0_25px_60px_rgba(0,0,0,0.8)] border border-white/10 cursor-zoom-in hover:scale-[1.02] transition-transform duration-500 z-10"
                       />
+                      <img 
+                        src="/images/primevideo_mobile.png" 
+                        alt="Mobile redesign notch view"
+                        onClick={() => setLightboxImage("/images/primevideo_mobile.png")}
+                        className="absolute right-0 bottom-[-30px] w-[28%] h-auto shadow-[0_20px_45px_rgba(0,0,0,0.9)] border border-white/10 rounded-2xl cursor-zoom-in hover:scale-[1.05] transition-transform duration-500 z-20"
+                      />
+                    </motion.div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 2. Project Brief Section */}
+              <div className="max-w-7xl mx-auto px-6 md:px-12 py-24 border-b border-white/5">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                  <div className="lg:col-span-7 text-left space-y-8">
+                    <div>
+                      <span className="text-xs font-bold tracking-[0.3em] text-[#00A8E1] uppercase block mb-1">
+                        Overview
+                      </span>
+                      <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
+                        Project Brief
+                      </h2>
+                    </div>
+                    
+                    <p className="text-base text-neutral-300 font-light leading-relaxed">
+                      This case study focuses on restructuring the Amazon Prime Video landing page experience. The existing portal features complex information hierarchies, transactional clutter, and a heavy cognitive load that competes aggressively with the pure streaming tier.
+                    </p>
+                    <p className="text-base text-neutral-300 font-light leading-relaxed">
+                      By prioritizing high-impact cinema artwork, simplified channel routes, and intuitive content scoring systems, our redesigned interface bridges the gap between searching and streaming.
+                    </p>
+
+                    {/* Metadata Grid */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-6">
+                      <div className="space-y-1">
+                        <span className="text-[10px] uppercase font-bold tracking-widest text-neutral-500 block">Role</span>
+                        <span className="text-sm font-bold text-white block">Product Designer</span>
+                      </div>
+                      <div className="space-y-1">
+                        <span className="text-[10px] uppercase font-bold tracking-widest text-neutral-500 block">Timeline</span>
+                        <span className="text-sm font-bold text-white block">4 Weeks (Lean UX)</span>
+                      </div>
+                      <div className="space-y-1">
+                        <span className="text-[10px] uppercase font-bold tracking-widest text-neutral-500 block">Tools</span>
+                        <span className="text-sm font-bold text-white block">Figma, Photoshop</span>
+                      </div>
+                      <div className="space-y-1">
+                        <span className="text-[10px] uppercase font-bold tracking-widest text-[#00A8E1] block">Focus</span>
+                        <span className="text-sm font-bold text-[#00A8E1] block">Cinematic Interface</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="lg:col-span-5 relative group cursor-zoom-in">
+                    <div className="absolute inset-0 bg-[#00A8E1]/5 rounded-3xl blur-[40px] pointer-events-none" />
+                    <img 
+                      src="/images/primevideo_desktop_angled.png" 
+                      alt="Angled laptop brief mockup"
+                      onClick={() => setLightboxImage("/images/primevideo_desktop_angled.png")}
+                      className="w-full h-auto object-contain rounded-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.6)] group-hover:scale-[1.02] transition-transform duration-500"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* 3. Style Guide Section */}
+              <div className="max-w-7xl mx-auto px-6 md:px-12 py-24 space-y-24 border-b border-white/5">
+                <div className="text-left">
+                  <span className="text-xs font-bold tracking-[0.3em] text-[#00A8E1] uppercase block mb-1">
+                    Design Tokens
+                  </span>
+                  <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
+                    Style Guide
+                  </h2>
+                  <p className="text-sm text-neutral-400 font-light mt-2 max-w-2xl">
+                    A rigorous design system implemented to maintain high visual impact, cinematic focus, and unified component structure.
+                  </p>
+                </div>
+
+                {/* Grid 1: Colors & Typography */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 text-left">
+                  
+                  {/* Colors */}
+                  <div className="lg:col-span-6 space-y-6">
+                    <h3 className="text-lg font-bold text-white uppercase tracking-wider border-b border-white/10 pb-3">Color System</h3>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                      {/* Swatch 1: Prime Blue */}
+                      <div className="space-y-2 group">
+                        <div className="h-20 w-full rounded-xl bg-[#00A8E1] border border-white/10 shadow-lg group-hover:scale-95 transition-all duration-300" />
+                        <div>
+                          <span className="text-xs font-bold text-white block">Prime Blue</span>
+                          <span className="text-[10px] text-neutral-500 font-mono block">#00A8E1</span>
+                        </div>
+                      </div>
+                      {/* Swatch 2: White */}
+                      <div className="space-y-2 group">
+                        <div className="h-20 w-full rounded-xl bg-[#FFFFFF] border border-white/10 shadow-lg group-hover:scale-95 transition-all duration-300" />
+                        <div>
+                          <span className="text-xs font-bold text-white block">Pure White</span>
+                          <span className="text-[10px] text-neutral-500 font-mono block">#FFFFFF</span>
+                        </div>
+                      </div>
+                      {/* Swatch 3: Black */}
+                      <div className="space-y-2 group">
+                        <div className="h-20 w-full rounded-xl bg-[#000000] border border-white/20 shadow-lg group-hover:scale-95 transition-all duration-300" />
+                        <div>
+                          <span className="text-xs font-bold text-white block">Deep Obsidian</span>
+                          <span className="text-[10px] text-neutral-500 font-mono block">#000000</span>
+                        </div>
+                      </div>
+                      {/* Swatch 4: Grey */}
+                      <div className="space-y-2 group">
+                        <div className="h-20 w-full rounded-xl bg-[#1A1A1A] border border-white/10 shadow-lg group-hover:scale-95 transition-all duration-300" />
+                        <div>
+                          <span className="text-xs font-bold text-white block">Secondary Charcoal</span>
+                          <span className="text-[10px] text-neutral-500 font-mono block">#1A1A1A</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Typography */}
+                  <div className="lg:col-span-6 space-y-6">
+                    <h3 className="text-lg font-bold text-white uppercase tracking-wider border-b border-white/10 pb-3">Typography Spec</h3>
+                    <div className="flex gap-6 items-start">
+                      <span className="text-6xl md:text-7xl font-bold text-white/90 tracking-tighter leading-none shrink-0 font-sans">Aa</span>
+                      <div className="space-y-2">
+                        <h4 className="text-xl font-bold text-white">Poppins Typeface</h4>
+                        <p className="text-xs text-neutral-400 font-light leading-relaxed">
+                          Poppins provides unified visual scales across responsive layouts, geometric curves, clean numerical styles, and bold movie banners.
+                        </p>
+                        <div className="flex gap-2 flex-wrap text-[10px] font-bold text-white/60 tracking-wider uppercase pt-2">
+                          <span className="px-2 py-0.5 rounded bg-white/5 border border-white/10">Light</span>
+                          <span className="px-2 py-0.5 rounded bg-white/5 border border-white/10">Regular</span>
+                          <span className="px-2 py-0.5 rounded bg-white/5 border border-white/10">Medium</span>
+                          <span className="px-2 py-0.5 rounded bg-white/5 border border-white/10 font-bold">Bold</span>
+                          <span className="px-2 py-0.5 rounded bg-white/5 border border-white/10 font-black">Black</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="h-[1px] w-full bg-white/5" />
-
-                {/* Grid Insights */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+                {/* Grid 2: Buttons & Form Elements */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 text-left">
                   
-                  {/* Problem */}
-                  <div className="glass-card p-8 rounded-3xl space-y-4 border border-white/5 bg-[#121216]/40 backdrop-blur-md">
-                    <h4 className="text-xl font-bold tracking-tight text-white uppercase flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-red-500" /> The Problem
-                    </h4>
-                    <p className="text-sm text-neutral-300 font-light leading-relaxed">
-                      Amazon Prime Video&apos;s landing portal suffers from severe cognitive load. Visual hierarchy is cluttered, the global navigation is highly nested and obscure, and original content tags compete aggressively with rented assets, creating transactional friction.
-                    </p>
+                  {/* Interactive Button States */}
+                  <div className="lg:col-span-6 space-y-6">
+                    <h3 className="text-lg font-bold text-white uppercase tracking-wider border-b border-white/10 pb-3">Standard UI Components</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div className="space-y-4">
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-500 block">Filled States</span>
+                        
+                        {/* Primary Button */}
+                        <button className="w-full text-center py-3.5 rounded-xl bg-[#00A8E1] hover:bg-[#0092c4] font-bold text-black transition-all duration-300 text-xs uppercase tracking-wider select-none pointer-events-none">
+                          Primary Button
+                        </button>
+                        {/* Primary Hover Glow */}
+                        <button className="w-full text-center py-3.5 rounded-xl bg-[#00A8E1] font-bold text-black transition-all duration-300 text-xs uppercase tracking-wider shadow-[0_0_20px_rgba(0,168,225,0.4)] select-none pointer-events-none">
+                          Primary Hovered
+                        </button>
+                      </div>
+
+                      <div className="space-y-4">
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-500 block">Outline States</span>
+                        
+                        {/* Outline Button */}
+                        <button className="w-full text-center py-3.5 rounded-xl border border-white/20 bg-transparent hover:bg-white/5 text-white font-bold transition-all duration-300 text-xs uppercase tracking-wider select-none pointer-events-none">
+                          Secondary Button
+                        </button>
+                        {/* Outline Button Hover */}
+                        <button className="w-full text-center py-3.5 rounded-xl border border-white bg-white text-black font-bold transition-all duration-300 text-xs uppercase tracking-wider select-none pointer-events-none">
+                          Secondary Hovered
+                        </button>
+                      </div>
+                    </div>
                   </div>
 
-                  {/* Core Idea */}
-                  <div className="glass-card p-8 rounded-3xl space-y-4 border border-white/5 bg-[#121216]/40 backdrop-blur-md">
-                    <h4 className="text-xl font-bold tracking-tight text-white uppercase flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-green-500" /> The Lean Solution
-                    </h4>
-                    <p className="text-sm text-neutral-300 font-light leading-relaxed">
-                      We restructured the landing portal around high-impact immersive rows and a clean, dynamic category system. The global header was simplified to expose active streaming choices immediately, and movie cards were enhanced with visual ratings, matching factors, and instant watchlist shortcuts.
-                    </p>
+                  {/* Input Fields */}
+                  <div className="lg:col-span-6 space-y-6">
+                    <h3 className="text-lg font-bold text-white uppercase tracking-wider border-b border-white/10 pb-3">Form Input States</h3>
+                    <div className="space-y-4">
+                      {/* Default */}
+                      <div className="space-y-1">
+                        <span className="text-[9px] uppercase font-bold tracking-widest text-neutral-500">Default State</span>
+                        <div className="w-full border border-white/10 bg-[#121216]/50 rounded-xl px-4 py-3 text-xs text-neutral-500 pointer-events-none">
+                          Enter your streaming email address...
+                        </div>
+                      </div>
+                      {/* Active/Focused */}
+                      <div className="space-y-1">
+                        <span className="text-[9px] uppercase font-bold tracking-widest text-[#00A8E1]">Active State</span>
+                        <div className="w-full border border-[#00A8E1] bg-[#121216]/80 rounded-xl px-4 py-3 text-xs text-white shadow-[0_0_15px_rgba(0,168,225,0.15)] flex justify-between items-center pointer-events-none">
+                          <span>ashishmali@gmail.com</span>
+                          <span className="w-1.5 h-4 bg-[#00A8E1] animate-pulse" />
+                        </div>
+                      </div>
+                      {/* Error */}
+                      <div className="space-y-1">
+                        <span className="text-[9px] uppercase font-bold tracking-widest text-red-500">Error State</span>
+                        <div className="w-full border border-red-500 bg-red-500/5 rounded-xl px-4 py-3 text-xs text-white flex justify-between items-center pointer-events-none">
+                          <span>ashishmali@gmail</span>
+                          <span className="text-[10px] font-bold text-red-500 uppercase tracking-wider">Invalid Email</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                {/* Key UX Enhancements */}
-                <div className="space-y-6 text-left">
-                  <h4 className="text-2xl font-bold tracking-tight text-white uppercase">
-                    Core UX Enhancements
-                  </h4>
-                  
-                  <div className="space-y-4">
+                {/* Grid 3: Partner Brand Channels */}
+                <div className="space-y-8 text-left">
+                  <h3 className="text-lg font-bold text-white uppercase tracking-wider border-b border-white/10 pb-3">Partner Channels</h3>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
                     {[
-                      {
-                        title: "1. Immersive Hero Teaser Carousel",
-                        desc: "High-impact key art with dynamic backlighting colors that match the cinematic content. Direct action options for trailers and watchlists reduce discovery loops."
-                      },
-                      {
-                        title: "2. Flattened Information Architecture",
-                        desc: "Simplified structural channels ('Movies', 'TV Shows', 'Sports', 'My Stuff') directly visible in the global navigation bar, providing instantaneous paths."
-                      },
-                      {
-                        title: "3. Interactive Ratings & Badging System",
-                        desc: "Clear visual indicators for IMDb score, maturity constraints, and personal match percentage on hovering, optimizing critical selection criteria."
-                      },
-                      {
-                        title: "4. Clean Premium Subscription Flow",
-                        desc: "Removed complex checkout widgets and replaced them with seamless, glassmorphic selection panels that highlight the raw value of the Prime tier."
-                      }
-                    ].map((item, idx) => (
-                      <div key={idx} className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.04] space-y-2">
-                        <h5 className="text-sm font-bold text-cyan-400 uppercase tracking-wide">
-                          {item.title}
-                        </h5>
-                        <p className="text-xs text-neutral-300 font-light leading-relaxed">
-                          {item.desc}
-                        </p>
+                      "Lionsgate Play", "discovery+", "BBC Player", "Eros Now", "MUBI",
+                      "hoichoi", "Docubay", "ShortsTV", "Manorama Max", "chaupal"
+                    ].map((partner) => (
+                      <div 
+                        key={partner} 
+                        className="px-6 py-4 rounded-xl border border-white/[0.04] bg-white/[0.01] hover:bg-white/[0.03] hover:border-[#00A8E1]/30 hover:shadow-[0_0_20px_rgba(0,168,225,0.08)] flex items-center justify-center text-center font-bold text-xs text-neutral-400 hover:text-white transition-all duration-300 uppercase tracking-widest h-16 cursor-default"
+                      >
+                        {partner}
                       </div>
                     ))}
                   </div>
                 </div>
+              </div>
 
-                <div className="h-[1px] w-full bg-white/5" />
+              {/* 4. Immersive Laptop Backdrop Spacer */}
+              <div className="relative w-full bg-black py-24 flex items-center justify-center overflow-hidden border-b border-white/5">
+                <div className="absolute inset-0 bg-gradient-to-r from-[#00A8E1]/5 via-transparent to-[#00A8E1]/5 pointer-events-none" />
+                <div className="absolute w-[500px] h-[500px] bg-[#00A8E1]/5 rounded-full blur-[140px] pointer-events-none" />
+                <div className="max-w-5xl mx-auto w-full px-6 relative cursor-zoom-in group">
+                  <img 
+                    src="/images/primevideo_desktop.png" 
+                    alt="Wide desktop layout showcase"
+                    onClick={() => setLightboxImage("/images/primevideo_desktop.png")}
+                    className="w-full h-auto rounded-2xl shadow-[0_30px_70px_rgba(0,0,0,0.9)] border border-white/5 group-hover:scale-[1.01] transition-transform duration-500"
+                  />
+                  <div className="absolute inset-x-6 bottom-[-20px] h-20 bg-gradient-to-t from-black to-transparent opacity-60 pointer-events-none" />
+                </div>
+              </div>
 
-                {/* Design Philosophy Footer */}
-                <div className="p-8 rounded-3xl bg-gradient-to-r from-cyan-500/5 to-transparent border border-cyan-500/10 flex flex-col md:flex-row items-center gap-6 text-left">
-                  <div className="p-4 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400">
-                    <Sparkles size={28} />
-                  </div>
-                  <div>
-                    <h5 className="text-lg font-bold text-white uppercase tracking-wide mb-1">
-                      Lean Research, Iterative Designs
-                    </h5>
-                    <p className="text-xs text-neutral-400 font-light leading-relaxed">
-                      By focusing heavily on rapid prototyping and user journey mappings, we transformed the landing portal from a complex e-commerce catalog layout into an immersive, premium cinema experience.
-                    </p>
-                  </div>
+              {/* 5. Old Landing Page Section */}
+              <div className="max-w-7xl mx-auto px-6 md:px-12 py-24 space-y-12 border-b border-white/5">
+                <div className="text-left space-y-2">
+                  <span className="text-xs font-bold tracking-[0.3em] text-[#00A8E1] uppercase block mb-1">
+                    Baseline Interface Analysis
+                  </span>
+                  <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight uppercase">
+                    Old Landing Page
+                  </h2>
+                  <p className="text-sm text-neutral-400 font-light max-w-2xl leading-relaxed">
+                    The original design suffered from heavy visual clutter, obscure nested global navigation, and a dense catalog structure that resulted in transaction friction.
+                  </p>
                 </div>
 
+                <div className="relative w-full rounded-2xl overflow-hidden border border-red-500/10 shadow-2xl bg-black cursor-zoom-in group/old">
+                  <div className="absolute top-4 left-6 flex gap-1.5 z-10">
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
+                  </div>
+                  <img 
+                    src="/images/primevideo_before.png" 
+                    alt="Original Prime Video landing page clutter"
+                    onClick={() => setLightboxImage("/images/primevideo_before.png")}
+                    className="w-full h-auto object-cover object-top max-h-[600px] opacity-80 group-hover/old:scale-[1.01] group-hover/old:opacity-100 transition-all duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute bottom-6 right-6 px-3 py-1.5 rounded bg-red-500/10 border border-red-500/20 text-red-400 text-[10px] font-black uppercase tracking-widest pointer-events-none">
+                    Baseline Cluttered Grid
+                  </div>
+                </div>
               </div>
+
+              {/* 6. Redesigned Landing Page Section */}
+              <div className="max-w-7xl mx-auto px-6 md:px-12 py-24 space-y-12">
+                <div className="text-left space-y-2">
+                  <span className="text-xs font-bold tracking-[0.3em] text-[#00A8E1] uppercase block mb-1">
+                    Optimized High-Fidelity Mockup
+                  </span>
+                  <h2 className="text-3xl md:text-4xl font-extrabold text-[#00A8E1] tracking-tight uppercase">
+                    Redesigned Landing Page
+                  </h2>
+                  <p className="text-sm text-neutral-400 font-light max-w-2xl leading-relaxed">
+                    By prioritizing high-impact cinema artwork, simplified channel routes, ambient backlit glows, and persistent watchlist/rating overlays, the redesigned interface creates an immersive, premium streaming portal.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                  {/* Desktop Frame */}
+                  <div className="lg:col-span-8 relative rounded-2xl overflow-hidden border border-cyan-500/20 shadow-2xl bg-black cursor-zoom-in group/new">
+                    <div className="absolute top-4 left-6 flex gap-1.5 z-10">
+                      <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
+                    </div>
+                    <img 
+                      src="/images/primevideo_desktop.png" 
+                      alt="Redesigned Prime Video desktop view mockup"
+                      onClick={() => setLightboxImage("/images/primevideo_desktop.png")}
+                      className="w-full h-auto object-cover object-top max-h-[550px] group-hover/new:scale-[1.01] transition-transform duration-700"
+                    />
+                    <div className="absolute bottom-6 left-6 px-3 py-1.5 rounded bg-green-500/10 border border-green-500/20 text-green-400 text-[10px] font-black uppercase tracking-widest pointer-events-none">
+                      Cinematic Fluid Frame
+                    </div>
+                  </div>
+
+                  {/* Mobile Frame */}
+                  <div className="lg:col-span-4 relative rounded-2xl overflow-hidden border border-white/5 bg-[#121216]/40 p-6 flex flex-col justify-center items-center cursor-zoom-in group/newmob">
+                    <div className="relative w-full aspect-[9/16] rounded-xl overflow-hidden max-h-[500px]">
+                      <img 
+                        src="/images/primevideo_mobile.png" 
+                        alt="Redesigned Prime Video mobile view mockup"
+                        onClick={() => setLightboxImage("/images/primevideo_mobile.png")}
+                        className="w-full h-full object-contain group-hover/newmob:scale-[1.03] transition-transform duration-700"
+                      />
+                    </div>
+                    <span className="text-[10px] uppercase font-black tracking-widest text-[#00A8E1] mt-6">
+                      Mobile Responsive Adaptability
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 7. Footer CTA Block */}
+              <div className="max-w-7xl mx-auto px-6 md:px-12 pt-16">
+                <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#0d1624] via-[#080d16] to-[#070709] border border-white/5 p-12 md:p-20 text-center space-y-8 flex flex-col items-center">
+                  <div className="absolute inset-0 bg-[#00A8E1]/5 blur-[60px] pointer-events-none" />
+                  
+                  <div className="space-y-4 max-w-2xl relative z-10">
+                    <h3 className="text-3xl md:text-5xl font-black tracking-tight text-white leading-tight uppercase">
+                      Ready to transform your business?
+                    </h3>
+                    <p className="text-lg text-neutral-300 font-light">
+                      Let&apos;s build something extraordinary together.
+                    </p>
+                  </div>
+
+                  <div className="relative z-10 pt-4">
+                    <button 
+                      onClick={() => {
+                        onClose();
+                        // Delay slightly to allow transition and smooth scroll
+                        setTimeout(() => {
+                          const contactSection = document.getElementById("contact");
+                          if (contactSection) {
+                            contactSection.scrollIntoView({ behavior: "smooth" });
+                          }
+                        }, 300);
+                      }}
+                      className="px-8 py-4 rounded-full bg-[#00A8E1] hover:bg-[#0092c4] text-black font-extrabold uppercase tracking-widest text-xs transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,168,225,0.4)] active:scale-95 cursor-pointer"
+                    >
+                      Contact me
+                    </button>
+                  </div>
+                </div>
+              </div>
+
             </div>
           )}
 

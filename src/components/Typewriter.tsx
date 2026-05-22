@@ -89,7 +89,7 @@ export default function Typewriter({
               {/* Soft ice-blue neon glow backdrop */}
               <motion.span 
                 animate={{
-                  opacity: [0.2, 0.4, 0.2],
+                  opacity: [0.15, 0.3, 0.15],
                   scale: [0.95, 1.05, 0.95]
                 }}
                 transition={{
@@ -97,41 +97,43 @@ export default function Typewriter({
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                className="absolute -inset-2 rounded-lg bg-sky-400/10 blur-lg pointer-events-none"
+                className="absolute -inset-2 rounded-lg bg-sky-400/10 blur-md pointer-events-none"
               />
-              {/* Silver-white gradient text with a subtle text glow (drop-shadow) */}
-              <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-white via-sky-50 to-sky-100 font-bold inline-flex items-baseline filter drop-shadow-[0_0_8px_rgba(56,189,248,0.45)]">
-                <span>{visibleLen >= 1 ? "A" : ""}</span>
-                {visibleLen >= 2 && (
-                  <span className="relative inline-flex items-baseline ml-0.5">
-                    <span>I</span>
-                    {/* Delicate star spark floating above the capital 'I' */}
-                    <motion.span 
-                      initial={{ opacity: 0, scale: 0, rotate: -45 }}
-                      animate={{ 
-                        opacity: 1, 
-                        scale: 1, 
-                        rotate: 0,
-                        y: [0, -1, 0]
-                      }}
-                      transition={{ 
-                        opacity: { duration: 0.25 },
-                        scale: { duration: 0.25 },
-                        rotate: { duration: 0.25 },
-                        y: {
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }
-                      }}
-                      className="absolute left-1/2 -translate-x-1/2 top-[-0.20em] pointer-events-none text-sky-300 filter drop-shadow-[0_0_4px_rgba(56,189,248,0.85)]"
-                    >
-                      <svg className="w-[0.28em] h-[0.28em] fill-sky-300" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z" />
-                      </svg>
-                    </motion.span>
-                  </span>
-                )}
+              {/* Silver-white gradient text wrapper with browser-safe subtle glow (dual drop-shadow on parent to avoid bg-clip-text clipping bugs) */}
+              <span className="relative z-10 font-sans font-extrabold inline-flex items-baseline filter drop-shadow-[0_0_12px_rgba(56,189,248,0.45)] drop-shadow-[0_0_4px_rgba(255,255,255,0.25)]">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-sky-50 to-sky-100 font-sans font-extrabold inline-flex items-baseline uppercase">
+                  <span>{visibleLen >= 1 ? "A" : ""}</span>
+                  {visibleLen >= 2 && (
+                    <span className="relative inline-block ml-0.5 font-sans font-extrabold">
+                      <span>I</span>
+                      {/* Delicate star spark floating precisely above the capital 'I' */}
+                      <motion.span 
+                        initial={{ opacity: 0, scale: 0, rotate: -45 }}
+                        animate={{ 
+                          opacity: 1, 
+                          scale: 1, 
+                          rotate: 0,
+                          y: ["0em", "-0.06em", "0em"]
+                        }}
+                        transition={{ 
+                          opacity: { duration: 0.25 },
+                          scale: { duration: 0.25 },
+                          rotate: { duration: 0.25 },
+                          y: {
+                            duration: 2.5,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                          }
+                        }}
+                        className="absolute left-1/2 -translate-x-1/2 top-[-0.32em] pointer-events-none text-sky-300 filter drop-shadow-[0_0_4px_rgba(56,189,248,0.85)]"
+                      >
+                        <svg className="w-[0.34em] h-[0.34em] fill-sky-300" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z" />
+                        </svg>
+                      </motion.span>
+                    </span>
+                  )}
+                </span>
               </span>
             </span>
           );

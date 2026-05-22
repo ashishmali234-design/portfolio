@@ -83,13 +83,13 @@ export default function Typewriter({
         if (charCount <= start) return null;
         const visibleLen = Math.min(segLen, charCount - start);
 
-        if (seg.text === "Ai") {
+        if (seg.text === "AI" || seg.text === "Ai") {
           return (
-            <span key={idx} className="relative inline-block mx-0.5 group font-sans font-semibold">
+            <span key={idx} className="relative inline-block mx-0.5 group font-sans font-bold">
               {/* Soft ice-blue neon glow backdrop */}
               <motion.span 
                 animate={{
-                  opacity: [0.3, 0.6, 0.3],
+                  opacity: [0.2, 0.4, 0.2],
                   scale: [0.95, 1.05, 0.95]
                 }}
                 transition={{
@@ -97,18 +97,15 @@ export default function Typewriter({
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                className="absolute -inset-1 rounded-lg bg-sky-400/15 blur-md pointer-events-none"
+                className="absolute -inset-2 rounded-lg bg-sky-400/10 blur-lg pointer-events-none"
               />
-              {/* Silver-white gradient text (Simple, non-golden) */}
-              <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-sky-100 font-semibold inline-flex items-baseline">
+              {/* Silver-white gradient text with a subtle text glow (drop-shadow) */}
+              <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-white via-sky-50 to-sky-100 font-bold inline-flex items-baseline filter drop-shadow-[0_0_8px_rgba(56,189,248,0.45)]">
                 <span>{visibleLen >= 1 ? "A" : ""}</span>
                 {visibleLen >= 2 && (
                   <span className="relative inline-flex items-baseline ml-0.5">
-                    {/* Standard 'i' with its dot clipped off via clip-path */}
-                    <span className="inline-block" style={{ clipPath: "inset(28% 0 0 0)" }}>
-                      i
-                    </span>
-                    {/* Delicate star spark replacing the dot of the lowercase 'i' */}
+                    <span>I</span>
+                    {/* Delicate star spark floating above the capital 'I' */}
                     <motion.span 
                       initial={{ opacity: 0, scale: 0, rotate: -45 }}
                       animate={{ 
@@ -127,7 +124,7 @@ export default function Typewriter({
                           ease: "easeInOut"
                         }
                       }}
-                      className="absolute left-1/2 -translate-x-1/2 top-[-0.18em] pointer-events-none text-sky-300 filter drop-shadow-[0_0_3px_rgba(56,189,248,0.8)]"
+                      className="absolute left-1/2 -translate-x-1/2 top-[-0.20em] pointer-events-none text-sky-300 filter drop-shadow-[0_0_4px_rgba(56,189,248,0.85)]"
                     >
                       <svg className="w-[0.28em] h-[0.28em] fill-sky-300" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z" />

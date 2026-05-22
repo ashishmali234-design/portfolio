@@ -168,7 +168,7 @@ export default function Overlay() {
                 trigger={isSection3Visible}
                 segments={[
                   { text: "Designing with ", className: "text-white" },
-                  { text: "Ai", className: "text-white" },
+                  { text: "AI", className: "text-white" },
                   { text: ",\n", className: "text-white" },
                   { text: "thinking like humans.", className: "text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-600" }
                 ]}

@@ -46,9 +46,9 @@ export default function Home() {
             <Logo />
             
             <nav className="hidden md:flex gap-6 text-xs uppercase tracking-widest font-semibold text-white/60 items-center">
+              <a href="#about-me" className="hover:text-white transition-colors">About Me</a>
               <a href="#projects" className="hover:text-white transition-colors">Projects</a>
               <a href="#skills" className="hover:text-white transition-colors">Skills</a>
-              <a href="#about-me" className="hover:text-white transition-colors">About Me</a>
               <a href="#experience" className="hover:text-white transition-colors">Experience</a>
               <a href="#contact" className="hover:text-white transition-colors">Contact</a>
               <a 
@@ -111,9 +111,9 @@ export default function Home() {
                 {/* Menu Links with Staggered Slide In */}
                 <nav className="flex flex-col gap-8 my-auto text-left pl-4">
                   {[
+                    { name: "About Me", href: "#about-me" },
                     { name: "Projects", href: "#projects" },
                     { name: "Skills", href: "#skills" },
-                    { name: "About Me", href: "#about-me" },
                     { name: "Experience", href: "#experience" },
                     { name: "Contact", href: "#contact" },
                     { name: "Resume", href: "/Ashish_C_Mali_Resume.pdf", isExternal: true }
@@ -165,9 +165,9 @@ export default function Home() {
       {/* Experience, Skills, Work Grid & Contact */}
       {isLoaded && (
         <>
+          <WhatIDo />
           <Projects onOpenPrimeVideo={() => setShowPrimeVideo(true)} />
           <Skills />
-          <WhatIDo />
           <Experience />
           <Contact />
           <PrimeVideoRedesign isOpen={showPrimeVideo} onClose={() => setShowPrimeVideo(false)} />

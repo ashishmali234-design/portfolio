@@ -29,6 +29,7 @@ interface Project {
   tags: string[];
   link: string;
   github: string;
+  isComingSoon?: boolean;
 }
 
 const projects: Project[] = [
@@ -39,6 +40,24 @@ const projects: Project[] = [
     tags: ["Lean UX", "Interaction Design", "Framer Motion", "Interactive Prototype"],
     link: "#",
     github: "#",
+  },
+  {
+    title: "MedApp - Doctor's Appointment Booking App",
+    description: "A comprehensive digital healthcare ecosystem designed for seamless patient scheduling, real-time doctor availability consultations, and smart prescriptions.",
+    image: "/images/medapp_cover.png",
+    tags: ["UX Research", "Mobile Design", "Healthcare"],
+    link: "#",
+    github: "#",
+    isComingSoon: true,
+  },
+  {
+    title: "boAt Landing Page",
+    description: "A dark-mode, high-fidelity landing page interface highlighting the energetic audio performance and lifestyle brand language of boAt acoustics.",
+    image: "/images/boat_cover.png",
+    tags: ["Visual Design", "Landing Page", "Web UI"],
+    link: "#",
+    github: "#",
+    isComingSoon: true,
   },
   {
     title: "Aether Flow",
@@ -94,7 +113,7 @@ export default function Projects({ onOpenPrimeVideo }: ProjectsProps) {
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
             <motion.div
               key={project.title}
@@ -123,6 +142,13 @@ export default function Projects({ onOpenPrimeVideo }: ProjectsProps) {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#121212] via-transparent to-transparent opacity-60" />
                 
+                {/* Coming Soon Glass Badge */}
+                {project.isComingSoon && (
+                  <div className="absolute top-4 right-4 z-10 px-3.5 py-1.5 rounded-full bg-black/60 border border-amber-500/30 text-amber-400 text-[9px] uppercase tracking-widest font-black backdrop-blur-md shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
+                    Coming Soon
+                  </div>
+                )}
+
                 {/* Immersive blur and explore overlay on hover for Prime Video */}
                 {project.title === "Prime Video Redesign" && (
                   <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center gap-3">
@@ -131,17 +157,30 @@ export default function Projects({ onOpenPrimeVideo }: ProjectsProps) {
                     </div>
                   </div>
                 )}
+
+                {/* Coming Soon Overlay */}
+                {project.isComingSoon && (
+                  <div className="absolute inset-0 bg-black/50 backdrop-blur-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center gap-3">
+                    <div className="px-5 py-2.5 rounded-full bg-amber-500 text-black font-extrabold text-xs tracking-widest uppercase shadow-[0_0_20px_rgba(245,158,11,0.4)] transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                      Coming Soon
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Card Details */}
               <div className="p-6 flex flex-col flex-grow">
-                <div className="flex justify-between items-start mb-3">
+                <div className="flex justify-between items-start gap-2 mb-3">
                   <h3 className={`text-2xl font-bold tracking-tight text-white transition-colors duration-300 ${
-                    project.title === "Prime Video Redesign" ? "group-hover:text-cyan-400" : ""
+                    project.title === "Prime Video Redesign" 
+                      ? "group-hover:text-cyan-400" 
+                      : project.isComingSoon 
+                        ? "group-hover:text-amber-400" 
+                        : "group-hover:text-amber-500"
                   }`}>
                     {project.title}
                   </h3>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 shrink-0">
                     {project.title === "Prime Video Redesign" ? (
                       <button
                         onClick={(e) => {
@@ -153,6 +192,10 @@ export default function Projects({ onOpenPrimeVideo }: ProjectsProps) {
                       >
                         <ArrowUpRight className="w-4 h-4" />
                       </button>
+                    ) : project.isComingSoon ? (
+                      <span className="text-[9px] tracking-widest uppercase font-black text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1.5 rounded-full">
+                        Soon
+                      </span>
                     ) : (
                       <>
                         <a
@@ -188,7 +231,9 @@ export default function Projects({ onOpenPrimeVideo }: ProjectsProps) {
                       className={`text-[10px] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-md border ${
                         project.title === "Prime Video Redesign"
                           ? "text-cyan-400 bg-cyan-400/5 border-cyan-400/10"
-                          : "text-amber-500 bg-amber-500/5 border-amber-500/10"
+                          : project.isComingSoon
+                            ? "text-amber-400 bg-amber-400/5 border-amber-400/10"
+                            : "text-amber-500 bg-amber-500/5 border-amber-500/10"
                       }`}
                     >
                       {tag}

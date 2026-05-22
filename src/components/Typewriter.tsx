@@ -103,7 +103,7 @@ export default function Typewriter({
               <span 
                 className="relative z-10 font-sans font-extrabold inline-flex items-baseline"
                 style={{
-                  filter: "drop-shadow(0 0 2px rgba(255, 255, 255, 0.45)) drop-shadow(0 0 7px rgba(0, 240, 255, 0.75)) drop-shadow(0 0 15px rgba(0, 102, 255, 0.35))"
+                  filter: "drop-shadow(0 0 7px rgba(0, 240, 255, 0.75)) drop-shadow(0 0 15px rgba(0, 102, 255, 0.35))"
                 }}
               >
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00F0FF] via-[#00A3FF] to-[#0066FF] font-sans font-extrabold inline-flex items-baseline uppercase tracking-wide">

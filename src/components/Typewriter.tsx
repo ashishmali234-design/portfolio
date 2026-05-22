@@ -103,8 +103,11 @@ export default function Typewriter({
               <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-sky-100 font-semibold inline-flex items-baseline">
                 <span>{visibleLen >= 1 ? "A" : ""}</span>
                 {visibleLen >= 2 && (
-                  <span className="relative inline-block ml-0.5">
-                    <span>ı</span>
+                  <span className="relative inline-flex items-baseline ml-0.5">
+                    {/* Standard 'i' with its dot clipped off via clip-path */}
+                    <span className="inline-block" style={{ clipPath: "inset(28% 0 0 0)" }}>
+                      i
+                    </span>
                     {/* Delicate star spark replacing the dot of the lowercase 'i' */}
                     <motion.span 
                       initial={{ opacity: 0, scale: 0, rotate: -45 }}
@@ -124,7 +127,7 @@ export default function Typewriter({
                           ease: "easeInOut"
                         }
                       }}
-                      className="absolute left-1/2 -translate-x-1/2 top-[-0.22em] pointer-events-none text-sky-300 filter drop-shadow-[0_0_3px_rgba(56,189,248,0.8)]"
+                      className="absolute left-1/2 -translate-x-1/2 top-[-0.18em] pointer-events-none text-sky-300 filter drop-shadow-[0_0_3px_rgba(56,189,248,0.8)]"
                     >
                       <svg className="w-[0.28em] h-[0.28em] fill-sky-300" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z" />

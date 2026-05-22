@@ -97,45 +97,23 @@ export default function CustomCursor() {
 
   return (
     <>
-      {/* Outer iOS-Inspired Liquid Glass Sphere Cursor */}
+      {/* Outer Minimalist Blurred Circular Shape Cursor */}
       <motion.div
-        className="fixed top-0 left-0 w-14 h-14 rounded-full pointer-events-none z-[9999] backdrop-blur-[20px] border border-white/20 overflow-hidden"
+        className="fixed top-0 left-0 w-14 h-14 rounded-full pointer-events-none z-[9999] backdrop-blur-[12px] border border-white/15 bg-white/[0.08]"
         style={{
           x: outerX,
           y: outerY,
           translateX: "-50%",
           translateY: "-50%",
-          scale: hideOuterRing ? 0 : isClicked ? 0.92 : isHovered ? 1.3 : 1,
+          scale: hideOuterRing ? 0 : isClicked ? 0.90 : isHovered ? 1.35 : 1,
           opacity: hideOuterRing ? 0 : 1,
-          // Premium Apple-inspired 3D liquid frosted glass gradient
-          background: isHovered
-            ? "radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.05) 45%, rgba(0, 0, 0, 0.12) 80%, rgba(0, 0, 0, 0.26) 100%)"
-            : "radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.03) 45%, rgba(0, 0, 0, 0.1) 80%, rgba(0, 0, 0, 0.22) 100%)",
-          // Deep layered shadows + inner highlights that capture real 3D volume
-          boxShadow: isHovered
-            ? "inset 0 0 12px rgba(255, 255, 255, 0.2), inset 4px 4px 10px rgba(255, 255, 255, 0.45), inset -4px -4px 10px rgba(0, 0, 0, 0.35), inset -2px -2px 6px rgba(245, 158, 11, 0.2), 0 18px 45px rgba(0, 0, 0, 0.38), 0 4px 12px rgba(0, 0, 0, 0.15)"
-            : "inset 0 0 10px rgba(255, 255, 255, 0.15), inset 3px 3px 8px rgba(255, 255, 255, 0.35), inset -3px -3px 8px rgba(0, 0, 0, 0.25), inset -1.5px -1.5px 4px rgba(245, 158, 11, 0.12), 0 12px 30px rgba(0, 0, 0, 0.26), 0 3px 8px rgba(0, 0, 0, 0.12)",
+          boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.25)",
         }}
         transition={{
           scale: { type: "spring", stiffness: 480, damping: 24 },
           opacity: { duration: 0.15 },
         }}
-      >
-        {/* Soft centered lens reflection highlight (Magnification glow) */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.06),transparent_65%)] pointer-events-none" />
-
-        {/* Sharp specular rim highlight crescent (Top-Left Edge) */}
-        <div className="absolute inset-[1.5px] rounded-full border-t-[1.5px] border-l-[1.5px] border-white/65 pointer-events-none filter blur-[0.1px]" />
-        
-        {/* Soft blurred specular window-pane ellipse reflection in the top-left quadrant */}
-        <div className="absolute top-[8%] left-[8%] w-[38%] h-[22%] bg-gradient-to-b from-white/75 to-white/0 rounded-full rotate-[-42deg] filter blur-[0.4px] pointer-events-none" />
-
-        {/* Opposite bounce-light reflection crescent (Bottom-Right Edge) */}
-        <div className="absolute inset-[1.5px] rounded-full border-b border-r border-white/15 pointer-events-none" />
-
-        {/* Chromatic aberration dispersion flare (Bottom-Right) */}
-        <div className="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-[radial-gradient(circle_at_bottom_right,rgba(245,158,11,0.22),transparent_75%)] pointer-events-none" />
-      </motion.div>
+      />
 
       {/* Inner Pinpoint Dot / Golden Laser Needle */}
       <motion.div

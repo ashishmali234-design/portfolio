@@ -86,9 +86,9 @@ export default function Typewriter({
         if (seg.text === "AI" || seg.text === "Ai") {
           return (
             <span key={idx} className="relative inline-block mx-1 group font-sans font-bold">
-              {/* Vibrant fresh blue text wrapper */}
+              {/* Vibrant Electric Neon Blue text wrapper */}
               <span className="relative z-10 font-sans font-extrabold inline-flex items-baseline">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00F0FF] via-[#00A3FF] to-[#0066FF] font-sans font-extrabold inline-flex items-baseline uppercase tracking-wide">
+                <span className="text-[#0066FF] font-sans font-extrabold inline-flex items-baseline uppercase tracking-wide">
                   {seg.text.slice(0, visibleLen)}
                 </span>
               </span>

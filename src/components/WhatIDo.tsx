@@ -1,62 +1,39 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Layers, Cpu, Zap, Monitor } from "lucide-react";
+import { Cpu, Bot } from "lucide-react";
 import Typewriter from "./Typewriter";
 
 export default function WhatIDo() {
-  const capabilities = [
-    {
-      title: "Frontend Architecture",
-      description: "Designing scalable, maintainable, and high-performance frontend systems for enterprise applications using React, Next.js, and TypeScript.",
-      icon: <Layers className="w-5 h-5 text-indigo-400" />,
-      iconBg: "bg-indigo-500/10 border-indigo-500/20 text-indigo-400",
-      hoverStyle: "hover:border-indigo-500/30 hover:shadow-[0_0_30px_rgba(99,102,241,0.12)]",
-      glowColor: "from-indigo-500/5 to-transparent"
-    },
-    {
-      title: "Full-Stack Development",
-      description: "Building seamless end-to-end applications with robust Node.js backend services and modern interactive user interfaces.",
-      icon: <Cpu className="w-5 h-5 text-emerald-400" />,
-      iconBg: "bg-emerald-500/10 border-emerald-500/20 text-emerald-400",
-      hoverStyle: "hover:border-emerald-500/30 hover:shadow-[0_0_30px_rgba(16,185,129,0.12)]",
-      glowColor: "from-emerald-500/5 to-transparent"
-    },
-    {
-      title: "Performance Optimization",
-      description: "Identifying bottlenecks and implementing strategies across the stack to ensure lightning-fast load times and smooth rendering.",
-      icon: <Zap className="w-5 h-5 text-amber-400" />,
-      iconBg: "bg-amber-500/10 border-amber-500/20 text-amber-400",
-      hoverStyle: "hover:border-amber-500/30 hover:shadow-[0_0_30px_rgba(245,158,11,0.12)]",
-      glowColor: "from-amber-500/5 to-transparent"
-    },
-    {
-      title: "UI/UX Engineering",
-      description: "Translating complex design systems into pixel-perfect, accessible, and responsive digital experiences.",
-      icon: <Monitor className="w-5 h-5 text-rose-400" />,
-      iconBg: "bg-rose-500/10 border-rose-500/20 text-rose-400",
-      hoverStyle: "hover:border-rose-500/30 hover:shadow-[0_0_30px_rgba(244,63,94,0.12)]",
-      glowColor: "from-rose-500/5 to-transparent"
-    }
+  const coreExpertise = [
+    "UX Research",
+    "Wireframing",
+    "Prototyping",
+    "User Flow",
+    "Information Architecture",
+    "Interaction Design",
+    "Financial Product Design",
+    "Design Systems",
+  ];
+
+  const aiTools = [
+    { name: "Antigravity IDE", highlight: true },
+    { name: "Claude AI", highlight: false },
+    { name: "Gemini AI", highlight: false },
+    { name: "N8N (Agentic Workflow)", highlight: false },
+    { name: "Figma AI & Magnific", highlight: false },
+    { name: "Notebook LM", highlight: false },
   ];
 
   return (
-    <section id="about-me" className="relative z-20 py-24 px-6 md:px-12 bg-[#121212] overflow-hidden border-b border-white/5">
-      {/* Background glow effects */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[140px] pointer-events-none" />
+    <section id="what-i-do" className="relative z-20 py-24 px-6 md:px-12 bg-[#121212] overflow-hidden border-b border-white/5">
+      {/* Glow overlays */}
+      <div className="absolute top-1/4 left-10 w-96 h-96 bg-amber-500/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-amber-500/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto">
-        {/* Title Block */}
+        {/* Title Block - No small yellow text as requested */}
         <div className="mb-16 text-left">
-          <motion.span
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-xs font-bold tracking-[0.3em] text-amber-400 uppercase block mb-3"
-          >
-            ABOUT ME
-          </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -64,42 +41,86 @@ export default function WhatIDo() {
             transition={{ duration: 0.8 }}
             className="text-4xl md:text-5xl font-black tracking-tight text-white uppercase min-h-[1.2em]"
           >
-            <Typewriter segments={[{ text: "About ", className: "font-light text-white" }, { text: "Me", className: "font-extrabold text-white" }]} delay={100} />
+            <Typewriter segments={[{ text: "What I ", className: "font-light text-white" }, { text: "Do", className: "font-extrabold text-white" }]} delay={100} />
           </motion.h2>
         </div>
 
-        {/* 2-Column Capability Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-          {capabilities.map((cap, idx) => (
-            <motion.div
-              key={cap.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: idx * 0.1 }}
-              className={`group glass-card p-8 md:p-10 rounded-3xl min-h-[250px] relative overflow-hidden flex flex-col justify-between transition-all duration-300 ${cap.hoverStyle}`}
-            >
-              {/* Subtle background card gradient glow */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${cap.glowColor} opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
-
-              <div>
-                {/* Icon Badge */}
-                <div className={`inline-flex items-center justify-center p-3 rounded-2xl border bg-black/40 shadow-inner shrink-0 mb-6 transition-transform duration-300 group-hover:scale-110 ${cap.iconBg}`}>
-                  {cap.icon}
+        {/* Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Card 1: Core Expertise (col-span-2) */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="glass-card p-8 rounded-3xl md:col-span-2 flex flex-col justify-between min-h-[300px] hover:border-amber-500/30"
+          >
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-2 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400">
+                  <Cpu className="w-5 h-5" />
                 </div>
-
-                {/* Capability Title */}
-                <h3 className="text-xl md:text-2xl font-bold tracking-tight text-white mb-4 group-hover:text-white transition-colors duration-200">
-                  {cap.title}
-                </h3>
+                <h3 className="text-xl font-bold tracking-tight text-white uppercase">Core Expertise</h3>
               </div>
-
-              {/* Description */}
-              <p className="text-sm md:text-base text-white/50 font-light leading-relaxed max-w-lg mt-2 group-hover:text-white/70 transition-colors duration-300">
-                {cap.description}
+              <p className="text-sm md:text-base text-white/50 font-light leading-relaxed mb-6">
+                Applying user-centered processes to structure interfaces, validate ideas through quick prototype loops, and architect scalable visual frameworks.
               </p>
-            </motion.div>
-          ))}
+            </div>
+            
+            <div className="flex flex-wrap gap-2.5">
+              {coreExpertise.map((skill) => (
+                <span
+                  key={skill}
+                  className="text-xs font-medium tracking-wider text-white/80 bg-white/5 border border-white/10 px-3.5 py-2 rounded-xl hover:bg-amber-500/15 hover:border-amber-500/30 hover:text-white transition-all cursor-default"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Card 2: AI & Agentic Stack (col-span-1) */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="glass-card p-8 rounded-3xl flex flex-col justify-between min-h-[300px] hover:border-purple-500/30 relative overflow-hidden"
+          >
+            <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-purple-500/10 rounded-full blur-[40px] pointer-events-none" />
+            
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-2 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400">
+                  <Bot className="w-5 h-5" />
+                </div>
+                <h3 className="text-xl font-bold tracking-tight text-white uppercase">AI & Agentic Stack</h3>
+              </div>
+              <p className="text-xs md:text-sm text-white/50 font-light leading-relaxed mb-6">
+                Leveraging next-generation cognitive tools and agentic frameworks to accelerate workflows and prototype AI-integrated product concepts.
+              </p>
+            </div>
+
+            <div className="space-y-2.5">
+              {aiTools.map((tool) => (
+                <div
+                  key={tool.name}
+                  className={`flex items-center justify-between text-xs px-3.5 py-2 rounded-xl border transition-all ${
+                    tool.highlight
+                      ? "bg-gradient-to-r from-amber-500/10 to-yellow-600/10 border-amber-500/30 text-amber-300 font-semibold shadow-lg shadow-amber-500/5 animate-pulse"
+                      : "bg-white/5 border-white/5 text-white/70 hover:border-purple-500/20 hover:text-white"
+                  }`}
+                >
+                  <span>{tool.name}</span>
+                  {tool.highlight && (
+                    <span className="text-[9px] uppercase tracking-widest bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-md font-bold">
+                      Primary
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

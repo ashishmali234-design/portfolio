@@ -13,6 +13,7 @@ import CustomCursor from "@/components/CustomCursor";
 import WhatIDo from "@/components/WhatIDo";
 import PrimeVideoRedesign from "@/components/PrimeVideoRedesign";
 import Contact from "@/components/Contact";
+import AboutMe from "@/components/AboutMe";
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -168,6 +169,7 @@ export default function Home() {
           <WhatIDo />
           <Projects onOpenPrimeVideo={() => setShowPrimeVideo(true)} />
           <Skills />
+          <AboutMe />
           <Experience />
           <Contact />
           <PrimeVideoRedesign isOpen={showPrimeVideo} onClose={() => setShowPrimeVideo(false)} />

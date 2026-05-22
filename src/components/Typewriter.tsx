@@ -86,10 +86,10 @@ export default function Typewriter({
         if (seg.text === "AI" || seg.text === "Ai") {
           return (
             <span key={idx} className="relative inline-block mx-0.5 group font-sans font-bold">
-              {/* Soft blue neon glow backdrop */}
+              {/* Ultra-fresh cyan-blue neon glow backdrop */}
               <motion.span 
                 animate={{
-                  opacity: [0.15, 0.3, 0.15],
+                  opacity: [0.2, 0.4, 0.2],
                   scale: [0.95, 1.05, 0.95]
                 }}
                 transition={{
@@ -97,11 +97,11 @@ export default function Typewriter({
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                className="absolute -inset-2 rounded-lg bg-blue-500/10 blur-md pointer-events-none"
+                className="absolute -inset-2 rounded-lg bg-cyan-400/15 blur-md pointer-events-none"
               />
-              {/* Blue text wrapper with browser-safe subtle glow (drop-shadow on parent to avoid bg-clip-text clipping bugs) */}
-              <span className="relative z-10 font-sans font-extrabold inline-flex items-baseline filter drop-shadow-[0_0_12px_rgba(56,189,248,0.55)]">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-blue-400 to-indigo-400 font-sans font-extrabold inline-flex items-baseline uppercase">
+              {/* Vibrant fresh blue text wrapper with browser-safe high-end neon glow (drop-shadow on parent to avoid bg-clip-text clipping bugs) */}
+              <span className="relative z-10 font-sans font-extrabold inline-flex items-baseline filter drop-shadow-[0_0_15px_rgba(0,163,255,0.65)] drop-shadow-[0_0_4px_rgba(0,240,255,0.35)]">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00F0FF] via-[#00A3FF] to-[#0066FF] font-sans font-extrabold inline-flex items-baseline uppercase tracking-wide">
                   {seg.text.slice(0, visibleLen)}
                 </span>
               </span>

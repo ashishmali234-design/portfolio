@@ -6,9 +6,10 @@ import {
   ChevronLeft,
   Smartphone,
   Monitor,
-  BookOpen,
-  X
+  X,
+  Menu
 } from "lucide-react";
+import Logo from "./Logo";
 
 interface PrimeVideoRedesignProps {
   isOpen: boolean;
@@ -19,6 +20,40 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
   const [activeTab, setActiveTab] = useState<"figma" | "case-study">("figma");
   const [figmaView, setFigmaView] = useState<"desktop" | "mobile">("desktop");
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
+  const [sliderPosition, setSliderPosition] = useState(50);
+  const [isDragging, setIsDragging] = useState(false);
+  const [modalMenuOpen, setModalMenuOpen] = useState(false);
+
+  const handleNavLinkClick = (targetId: string) => {
+    setModalMenuOpen(false);
+    onClose();
+    setTimeout(() => {
+      const element = document.getElementById(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 300);
+  };
+
+  const handleMove = (clientX: number, rect: DOMRect) => {
+    const x = clientX - rect.left;
+    const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
+    setSliderPosition(percentage);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (e.touches.length > 0) {
+      const container = e.currentTarget.getBoundingClientRect();
+      handleMove(e.touches[0].clientX, container);
+    }
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (e.buttons === 1 || isDragging) {
+      const container = e.currentTarget.getBoundingClientRect();
+      handleMove(e.clientX, container);
+    }
+  };
 
   // Prevent background scrolling when overlay is active
   useEffect(() => {
@@ -41,48 +76,180 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: "100%" }}
         transition={{ type: "spring", damping: 30, stiffness: 120 }}
-        className="fixed inset-0 z-50 bg-[#070709] overflow-y-auto flex flex-col font-sans text-neutral-100 select-none text-left lg:cursor-default"
+        className="fixed inset-0 z-50 bg-[#070709] overflow-y-auto flex flex-col font-sans text-neutral-100 select-none text-left lg:cursor-default animate-fade-in"
       >
-        {/* Navigation & Controls Top Bar */}
-        <div className="sticky top-0 z-[100] bg-[#070709]/95 backdrop-blur-md border-b border-white/5 py-4 px-6 md:px-12 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-6 w-full md:w-auto">
-            {/* Immersive Pill Back Button */}
-            <button
-              onClick={onClose}
-              className="flex items-center gap-2 text-xs font-bold tracking-widest uppercase px-4 py-2.5 rounded-full bg-white/5 border border-white/10 text-white/80 hover:text-white hover:border-cyan-500/50 hover:bg-cyan-500/10 hover:shadow-[0_0_15px_rgba(6,182,212,0.15)] transition-all duration-300 active:scale-95 shrink-0"
-            >
-              <ChevronLeft size={16} /> Back to Portfolio
-            </button>
-            <div className="h-5 w-[1px] bg-white/10 hidden md:block" />
-            <h2 className="text-sm font-black tracking-[0.2em] text-cyan-400 uppercase truncate">
-              Prime Video Redesign <span className="font-light text-white/50 text-[10px]">Case Study & Prototypes</span>
-            </h2>
+        {/* Sticky Header Navigation */}
+        <header className="sticky top-0 z-[100] w-full px-6 py-4 flex justify-between items-center bg-[#070709]/85 backdrop-blur-xl border-b border-white/5 md:px-12">
+          <div className="flex items-center gap-6">
+            <Logo forceShowTextOnMobile={false} onClick={() => handleNavLinkClick("projects")} />
+            
+            {/* Tab Toggles for case study vs figma */}
+            <div className="hidden lg:flex bg-[#121216] border border-white/5 p-1 rounded-full ml-4">
+              <button
+                onClick={() => setActiveTab("case-study")}
+                className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
+                  activeTab === "case-study"
+                    ? "bg-[#00A8E1] text-black font-extrabold"
+                    : "text-white/60 hover:text-white"
+                }`}
+              >
+                Case Study
+              </button>
+              <button
+                onClick={() => setActiveTab("figma")}
+                className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
+                  activeTab === "figma"
+                    ? "bg-[#00A8E1] text-black font-extrabold"
+                    : "text-white/60 hover:text-white"
+                }`}
+              >
+                Interactive Prototype
+              </button>
+            </div>
           </div>
 
-          {/* Core Tab Toggles */}
-          <div className="flex bg-[#121216] border border-white/5 p-1 rounded-full w-full md:w-auto overflow-x-auto shrink-0">
-            <button
-              onClick={() => setActiveTab("figma")}
-              className={`flex items-center justify-center gap-1.5 px-6 py-2.5 text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-300 w-full md:w-auto whitespace-nowrap cursor-pointer ${
-                activeTab === "figma"
-                  ? "bg-cyan-500 text-black shadow-lg shadow-cyan-500/20 font-black"
-                  : "text-white/60 hover:text-white hover:bg-white/5"
-              }`}
+          {/* Desktop Navigation Links */}
+          <nav className="hidden xl:flex gap-6 text-xs uppercase tracking-widest font-semibold text-white/60 items-center">
+            <button onClick={() => handleNavLinkClick("experience")} className="hover:text-white transition-colors cursor-pointer bg-transparent border-none">Experience</button>
+            <button onClick={() => handleNavLinkClick("skills")} className="hover:text-white transition-colors cursor-pointer bg-transparent border-none">Skills</button>
+            <button onClick={() => handleNavLinkClick("projects")} className="hover:text-white transition-colors cursor-pointer bg-transparent border-none">Work</button>
+            <button onClick={() => handleNavLinkClick("contact")} className="hover:text-white transition-colors cursor-pointer bg-transparent border-none">Contact</button>
+            <a 
+              href="/Ashish_C_Mali_Resume.pdf" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="ml-2 px-4 py-2 rounded-full border border-amber-500/20 bg-amber-500/10 text-amber-400 font-bold hover:bg-amber-500 hover:text-black hover:border-amber-500 transition-all duration-300 text-[10px] tracking-wider uppercase"
             >
-              <Smartphone size={14} /> Figma Prototypes
+              Resume
+            </a>
+            <button
+              onClick={onClose}
+              className="ml-4 flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white font-bold hover:bg-white/10 transition-all text-[10px] tracking-wider uppercase cursor-pointer"
+            >
+              <ChevronLeft size={14} /> Close
             </button>
+          </nav>
+
+          {/* Mobile Navigation Header Controls */}
+          <div className="flex xl:hidden items-center gap-3">
+            {/* Quick Back button for mobile */}
             <button
-              onClick={() => setActiveTab("case-study")}
-              className={`flex items-center justify-center gap-1.5 px-6 py-2.5 text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-300 w-full md:w-auto whitespace-nowrap cursor-pointer ${
-                activeTab === "case-study"
-                  ? "bg-cyan-500 text-black shadow-lg shadow-cyan-500/20 font-black"
-                  : "text-white/60 hover:text-white hover:bg-white/5"
-              }`}
+              onClick={onClose}
+              className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-white text-[9px] tracking-wider font-extrabold uppercase transition-all active:scale-95 cursor-pointer"
             >
-              <BookOpen size={14} /> UX Insights
+              <ChevronLeft size={12} /> Back
+            </button>
+            
+            {/* Hamburger Button */}
+            <button 
+              onClick={() => setModalMenuOpen(true)}
+              className="text-white/80 hover:text-white transition-colors focus:outline-none p-2 cursor-pointer"
+              aria-label="Toggle Project Menu"
+            >
+              <Menu size={22} className="stroke-[2.5]" />
             </button>
           </div>
-        </div>
+        </header>
+
+        {/* Mobile Modal Hamburger Navigation Drawer */}
+        <AnimatePresence>
+          {modalMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, x: "100%" }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: "100%" }}
+              transition={{ type: "spring", stiffness: 260, damping: 28 }}
+              className="fixed inset-0 bg-[#070709]/96 backdrop-blur-xl z-[150] flex flex-col justify-between p-6 xl:hidden select-none text-left"
+            >
+              <div className="flex justify-between items-center w-full">
+                <Logo forceShowTextOnMobile={true} onClick={() => {
+                  setModalMenuOpen(false);
+                  onClose();
+                }} />
+                <button 
+                  onClick={() => setModalMenuOpen(false)}
+                  className="text-white/80 hover:text-white transition-colors focus:outline-none p-2 cursor-pointer"
+                  aria-label="Close Project Menu"
+                >
+                  <X size={24} className="stroke-[2.5]" />
+                </button>
+              </div>
+
+              {/* Links */}
+              <nav className="flex flex-col gap-6 my-auto text-left pl-4">
+                {/* Mode Selector inside Mobile Menu */}
+                <div className="flex flex-col gap-2 mb-6">
+                  <span className="text-[10px] uppercase tracking-widest text-[#00A8E1] font-bold">Select View</span>
+                  <div className="flex bg-[#121216] border border-white/5 p-1 rounded-lg w-full max-w-sm">
+                    <button
+                      onClick={() => {
+                        setActiveTab("case-study");
+                        setModalMenuOpen(false);
+                      }}
+                      className={`flex-1 py-2 text-center rounded-md text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
+                        activeTab === "case-study"
+                          ? "bg-[#00A8E1] text-black font-extrabold"
+                          : "text-white/50"
+                      }`}
+                    >
+                      Case Study
+                    </button>
+                    <button
+                      onClick={() => {
+                        setActiveTab("figma");
+                        setModalMenuOpen(false);
+                      }}
+                      className={`flex-1 py-2 text-center rounded-md text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
+                        activeTab === "figma"
+                          ? "bg-[#00A8E1] text-black font-extrabold"
+                          : "text-white/50"
+                      }`}
+                    >
+                      Prototype
+                    </button>
+                  </div>
+                </div>
+
+                <span className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold mb-1">Portfolio</span>
+                {[
+                  { name: "Experience", target: "experience" },
+                  { name: "Skills", target: "skills" },
+                  { name: "Work", target: "projects" },
+                  { name: "Contact", target: "contact" }
+                ].map((item) => (
+                  <button
+                    key={item.name}
+                    onClick={() => handleNavLinkClick(item.target)}
+                    className="text-2xl font-black uppercase tracking-wider text-white/70 hover:text-[#00A8E1] active:text-[#00A8E1] text-left transition-colors cursor-pointer bg-transparent border-none"
+                  >
+                    {item.name}
+                  </button>
+                ))}
+                
+                <a 
+                  href="/Ashish_C_Mali_Resume.pdf" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-2xl font-black uppercase tracking-wider text-amber-400 hover:text-white text-left transition-colors mt-2"
+                >
+                  Resume
+                </a>
+              </nav>
+
+              <div className="flex flex-col gap-4 text-left pl-4">
+                <button
+                  onClick={onClose}
+                  className="w-full py-3 rounded-full bg-white/5 border border-white/10 text-white text-xs font-bold uppercase tracking-widest transition-all active:scale-95 cursor-pointer"
+                >
+                  Close Case Study
+                </button>
+                <div className="text-[10px] tracking-[0.25em] text-gray-500 uppercase font-bold">
+                  © 2026 ASHISH MALI • CREATIVE PORTFOLIO
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Dynamic Inner Content */}
         <div className="flex-1 flex flex-col bg-[#070709]">
@@ -249,9 +416,9 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
 
                   <div className="lg:col-span-5 relative group cursor-zoom-in">
                     <img 
-                      src="/images/primevideo_desktop_new.png" 
-                      alt="Redesigned desktop interface"
-                      onClick={() => setLightboxImage("/images/primevideo_desktop_new.png")}
+                      src="/images/primevideo_brief_final.png" 
+                      alt="Prime Video Case Study Brief Sheet"
+                      onClick={() => setLightboxImage("/images/primevideo_brief_final.png")}
                       className="w-full h-auto object-contain group-hover:scale-[1.02] transition-transform duration-500"
                     />
                   </div>
@@ -274,94 +441,112 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
 
                 <div className="relative w-full cursor-zoom-in group">
                   <img 
-                    src="/images/primevideo_styleguide_new.png" 
+                    src="/images/primevideo_styleguide_final.png" 
                     alt="Prime Video Redesign Style Guide Sheet"
-                    onClick={() => setLightboxImage("/images/primevideo_styleguide_new.png")}
+                    onClick={() => setLightboxImage("/images/primevideo_styleguide_final.png")}
                     className="w-full h-auto object-contain group-hover:scale-[1.01] transition-transform duration-500"
                   />
                 </div>
               </div>
 
               {/* 4. Desktop Interface Detail Spacer */}
-              <div className="relative w-full bg-[#090d16] py-16 flex items-center justify-center border-b border-white/5">
-                <div className="max-w-7xl mx-auto w-full px-6 relative cursor-zoom-in group">
-                  <img 
-                    src="/images/primevideo_desktop_new.png" 
-                    alt="Wide desktop layout showcase"
-                    onClick={() => setLightboxImage("/images/primevideo_desktop_new.png")}
-                    className="w-full h-auto object-contain group-hover:scale-[1.01] transition-transform duration-500"
-                  />
-                </div>
+              <div className="relative w-full bg-[#070709] border-b border-white/5 cursor-zoom-in group overflow-hidden">
+                <img 
+                  src="/images/primevideo_desktop_spacer_final.png" 
+                  alt="Wide desktop layout showcase spacer"
+                  onClick={() => setLightboxImage("/images/primevideo_desktop_spacer_final.png")}
+                  className="w-full h-auto object-cover group-hover:scale-[1.005] transition-transform duration-700"
+                />
               </div>
 
-              {/* 5. Old Landing Page Section */}
+              {/* 5. Comparative Design Evolution & Slider */}
               <div className="max-w-7xl mx-auto px-6 md:px-12 py-24 space-y-12 border-b border-white/5">
                 <div className="text-left space-y-2">
                   <span className="text-xs font-bold tracking-[0.3em] text-[#00A8E1] uppercase block mb-1">
-                    Baseline Interface Analysis
+                    Comparative Evolution
                   </span>
                   <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight uppercase">
-                    Old Landing Page
+                    Landing Page Redesign
                   </h2>
                   <p className="text-sm text-neutral-400 font-light max-w-2xl leading-relaxed">
-                    The original design suffered from heavy visual clutter, obscure nested global navigation, and a dense catalog structure that resulted in transaction friction.
-                  </p>
-                </div>
-
-                <div className="relative w-full bg-black cursor-zoom-in group/old">
-                  <img 
-                    src="/images/primevideo_before.png" 
-                    alt="Original Prime Video landing page clutter"
-                    onClick={() => setLightboxImage("/images/primevideo_before.png")}
-                    className="w-full h-auto object-contain max-h-[600px] opacity-80 group-hover/old:scale-[1.01] group-hover/old:opacity-100 transition-all duration-700"
-                  />
-                  <div className="absolute bottom-6 right-6 px-3 py-1.5 rounded bg-red-500/10 border border-red-500/20 text-red-400 text-[10px] font-black uppercase tracking-widest pointer-events-none">
-                    Baseline Cluttered Grid
-                  </div>
-                </div>
-              </div>
-
-              {/* 6. Redesigned Landing Page Section */}
-              <div className="max-w-7xl mx-auto px-6 md:px-12 py-24 space-y-12">
-                <div className="text-left space-y-2">
-                  <span className="text-xs font-bold tracking-[0.3em] text-[#00A8E1] uppercase block mb-1">
-                    Optimized High-Fidelity Mockup
-                  </span>
-                  <h2 className="text-3xl md:text-4xl font-extrabold text-[#00A8E1] tracking-tight uppercase">
-                    Redesigned Landing Page
-                  </h2>
-                  <p className="text-sm text-neutral-400 font-light max-w-2xl leading-relaxed">
-                    By prioritizing high-impact cinema artwork, simplified channel routes, ambient backlit glows, and persistent watchlist/rating overlays, the redesigned interface creates an immersive, premium streaming portal.
+                    Interact directly with the comparison slider on the left to see the transformation from our baseline structure to the high-fidelity cinematic layout. On the right, explore the new mobile adaptive blueprint.
                   </p>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-                  {/* Desktop Screen */}
-                  <div className="lg:col-span-8 relative bg-black cursor-zoom-in group/new">
-                    <img 
-                      src="/images/primevideo_desktop_new.png" 
-                      alt="Redesigned Prime Video desktop view"
-                      onClick={() => setLightboxImage("/images/primevideo_desktop_new.png")}
-                      className="w-full h-auto object-contain max-h-[550px] group-hover/new:scale-[1.01] transition-transform duration-700"
-                    />
-                    <div className="absolute bottom-6 left-6 px-3 py-1.5 rounded bg-green-500/10 border border-green-500/20 text-green-400 text-[10px] font-black uppercase tracking-widest pointer-events-none">
-                      Cinematic Fluid Frame
+                  {/* Left Column: Draggable Slider */}
+                  <div className="lg:col-span-8 space-y-4">
+                    <span className="text-[10px] uppercase font-black tracking-widest text-[#00A8E1] block">
+                      Desktop Evolution Slider (Drag horizontally to compare)
+                    </span>
+                    <div 
+                      className="relative w-full aspect-[16/10] overflow-hidden rounded-2xl border border-white/10 bg-[#070709] cursor-ew-resize select-none shadow-2xl"
+                      onMouseMove={handleMouseMove}
+                      onTouchMove={handleTouchMove}
+                      onMouseDown={() => setIsDragging(true)}
+                      onMouseUp={() => setIsDragging(false)}
+                      onMouseLeave={() => setIsDragging(false)}
+                      onTouchStart={() => setIsDragging(true)}
+                      onTouchEnd={() => setIsDragging(false)}
+                    >
+                      {/* Background Layer: NEW design */}
+                      <img 
+                        src="/images/primevideo_desktop_new.png" 
+                        alt="Redesigned Prime Video layout"
+                        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+                      />
+                      
+                      {/* Foreground Layer (Clipped): OLD design */}
+                      <div 
+                        className="absolute inset-0 w-full h-full pointer-events-none"
+                        style={{
+                          clipPath: `polygon(0 0, ${sliderPosition}% 0, ${sliderPosition}% 100%, 0 100%)`
+                        }}
+                      >
+                        <img 
+                          src="/images/primevideo_before.png" 
+                          alt="Original Prime Video layout"
+                          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+                        />
+                      </div>
+
+                      {/* Glassmorphic Labels */}
+                      <div className="absolute top-4 left-4 z-10 px-2.5 py-1 rounded-md bg-black/60 border border-white/10 backdrop-blur-md text-[10px] font-black uppercase text-red-400 tracking-wider pointer-events-none">
+                        Old Design
+                      </div>
+                      <div className="absolute top-4 right-4 z-10 px-2.5 py-1 rounded-md bg-black/60 border border-white/10 backdrop-blur-md text-[10px] font-black uppercase text-cyan-400 tracking-wider pointer-events-none">
+                        New Design
+                      </div>
+
+                      {/* Slider Control Line & Circular Handle */}
+                      <div 
+                        className="absolute top-0 bottom-0 w-[2px] bg-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.8)] pointer-events-none z-20"
+                        style={{ left: `${sliderPosition}%` }}
+                      />
+                      <div 
+                        className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-cyan-500 border border-cyan-300 text-black flex items-center justify-center shadow-[0_0_20px_rgba(6,182,212,0.6)] cursor-ew-resize pointer-events-none z-30 font-black text-lg select-none"
+                        style={{ left: `${sliderPosition}%` }}
+                      >
+                        ↔
+                      </div>
                     </div>
                   </div>
 
-                  {/* Mobile Screen */}
-                  <div className="lg:col-span-4 relative flex flex-col justify-center items-center cursor-zoom-in group/newmob">
-                    <div className="relative w-full">
+                  {/* Right Column: Mobile View Directly */}
+                  <div className="lg:col-span-4 space-y-4">
+                    <span className="text-[10px] uppercase font-black tracking-widest text-[#00A8E1] block">
+                      New Mobile Design Mockup
+                    </span>
+                    <div 
+                      className="relative w-full overflow-hidden rounded-2xl border border-white/10 bg-[#070709] cursor-zoom-in group shadow-2xl"
+                      onClick={() => setLightboxImage("/images/primevideo_mobile_new.png")}
+                    >
                       <img 
                         src="/images/primevideo_mobile_new.png" 
                         alt="Redesigned Prime Video mobile view"
-                        onClick={() => setLightboxImage("/images/primevideo_mobile_new.png")}
-                        className="w-full h-auto object-contain max-h-[500px] group-hover/newmob:scale-[1.03] transition-transform duration-700"
+                        className="w-full h-auto object-contain max-h-[600px] group-hover:scale-[1.02] transition-transform duration-700"
                       />
                     </div>
-                    <span className="text-[10px] uppercase font-black tracking-widest text-[#00A8E1] mt-6">
-                      Mobile Responsive Adaptability
-                    </span>
                   </div>
                 </div>
               </div>

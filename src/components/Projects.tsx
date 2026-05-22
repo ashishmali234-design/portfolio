@@ -35,7 +35,7 @@ const projects: Project[] = [
   {
     title: "Prime Video Redesign",
     description: "A Lean UX strategic overhaul of Amazon Prime Video's landing portal, optimizing content discovery and IA paths through high-fidelity interactive design.",
-    image: "/images/primevideo.png",
+    image: "/images/primevideo_cover_final.jpg",
     tags: ["Lean UX", "Interaction Design", "Framer Motion", "Interactive Prototype"],
     link: "#",
     github: "#",

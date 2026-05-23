@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, AnimatePresence } from "framer-motion";
 
 export default function CustomCursor() {
   const [isVisible, setIsVisible] = useState(false);
@@ -13,11 +13,6 @@ export default function CustomCursor() {
   // Custom cursor position motion values
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
-  
-  // Smooth, organic, liquid-lag spring settings (iOS/VisionOS tactile physics)
-  const springConfig = { damping: 32, stiffness: 240, mass: 0.7 };
-  const outerX = useSpring(cursorX, springConfig);
-  const outerY = useSpring(cursorY, springConfig);
 
   useEffect(() => {
     // Disable custom cursor on mobile/touch screens
@@ -92,54 +87,77 @@ export default function CustomCursor() {
 
   if (!isVisible) return null;
 
-  // Determine state transitions
-  const hideOuterRing = isTyping || isOverText;
+  // Determine which cursor shape to show
+  const showIBeam = isOverText && !isHovered;
+  const hideCursor = isTyping;
 
   return (
     <>
-      {/* Outer Subtle Blurred Circular Shape Cursor */}
       <motion.div
-        className="fixed top-0 left-0 w-14 h-14 rounded-full pointer-events-none z-[9999] backdrop-blur-[12px] border border-white/15 bg-white/[0.08]"
-        style={{
-          x: outerX,
-          y: outerY,
-          translateX: "-50%",
-          translateY: "-50%",
-          scale: hideOuterRing ? 0 : isClicked ? 0.90 : isHovered ? 1.35 : 1,
-          opacity: hideOuterRing ? 0 : 1,
-          boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.25)",
-        }}
-        transition={{
-          scale: { type: "spring", stiffness: 480, damping: 24 },
-          opacity: { duration: 0.15 },
-        }}
-      />
-
-      {/* Inner Pinpoint Dot / Golden Laser Needle */}
-      <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9999]"
+        className="fixed top-0 left-0 pointer-events-none z-[99999] flex items-center justify-center"
         style={{
           x: cursorX,
           y: cursorY,
-          translateX: "-50%",
-          translateY: "-50%",
+          translateX: showIBeam ? "-50%" : isHovered ? "-35%" : "-15%",
+          translateY: showIBeam ? "-50%" : isHovered ? "-10%" : "-15%",
         }}
         animate={{
-          // Shape & Size transformation
-          width: isOverText ? 2 : isHovered ? 0 : 6,
-          height: isOverText ? 16 : isHovered ? 0 : 6,
-          borderRadius: isOverText ? "4px" : "50%",
-          backgroundColor: isOverText ? "#F59E0B" : "rgba(255, 255, 255, 0.95)",
-          boxShadow: isOverText 
-            ? "0 0 8px rgba(245, 158, 11, 0.85)" 
-            : "0 2px 4px rgba(0, 0, 0, 0.2)",
-          opacity: isTyping ? 0 : 1, // Completely hide while typing to not block visibility
+          opacity: hideCursor ? 0 : 1,
         }}
-        transition={{
-          duration: 0.15,
-          ease: "easeOut",
-        }}
-      />
+        transition={{ duration: 0.1 }}
+      >
+        <AnimatePresence mode="wait">
+          {showIBeam ? (
+            // Sleek Golden I-Beam for precise text selection
+            <motion.div
+              key="ibeam"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.12 }}
+              className="w-[2px] h-4 bg-amber-500 rounded-sm shadow-[0_0_8px_rgba(245,158,11,0.8)]"
+            />
+          ) : isHovered ? (
+            // Custom pointer hand icon inspired by default clicking state
+            <motion.div
+              key="hand"
+              initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+              animate={{ opacity: 1, scale: isClicked ? 0.85 : 1, rotate: 0 }}
+              exit={{ opacity: 0, scale: 0.8, rotate: -5 }}
+              transition={{ duration: 0.12 }}
+              className="text-amber-500 filter drop-shadow-[0_2px_8px_rgba(245,158,11,0.4)]"
+            >
+              <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none">
+                <path 
+                  d="M9 11.25V4.5a1.5 1.5 0 0 1 3 0v6.75h.75V5.25a1.5 1.5 0 0 1 3 0v6h.75V6.75a1.5 1.5 0 0 1 3 0v7.5a6.75 6.75 0 0 1-13.5 0v-3a1.5 1.5 0 0 1 3 0v3h.75Z" 
+                  fill="currentColor" 
+                  stroke="#000000" 
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </motion.div>
+          ) : (
+            // User's custom logo as default cursor (rotated slightly to the left)
+            <motion.div
+              key="logo"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: isClicked ? 0.85 : 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.12 }}
+              style={{ rotate: -22 }}
+              className="w-7 h-7 filter drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)]"
+            >
+              <img
+                src="/images/ai_avatar.png"
+                alt="logo cursor"
+                className="w-full h-full object-contain"
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
     </>
   );
 }

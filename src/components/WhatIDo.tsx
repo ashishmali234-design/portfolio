@@ -84,21 +84,23 @@ export default function WhatIDo() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: idx * 0.08 }}
-              className={`group glass-card p-8 rounded-3xl min-h-[280px] relative overflow-hidden flex flex-col items-center text-center transition-all duration-300 ${cap.hoverStyle}`}
+              className={`group glass-card p-8 rounded-3xl min-h-[280px] relative overflow-hidden flex flex-col items-start transition-all duration-300 ${cap.hoverStyle}`}
             >
               {/* Subtle background card gradient glow */}
               <div className={`absolute inset-0 bg-gradient-to-br ${cap.glowColor} opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
 
-              <div className="relative z-10 w-full flex flex-col items-center text-center">
-                {/* Icon Badge */}
-                <div className={`inline-flex items-center justify-center p-3 rounded-2xl border bg-black/40 shadow-inner shrink-0 mb-4 transition-transform duration-300 group-hover:scale-110 ${cap.iconBg}`}>
-                  {cap.icon}
+              <div className="relative z-10 w-full">
+                {/* Icon + Title Header */}
+                <div className="flex items-center gap-4 mb-4">
+                  {/* Icon Badge */}
+                  <div className={`inline-flex items-center justify-center p-2.5 rounded-xl border bg-black/40 shadow-inner shrink-0 transition-transform duration-300 group-hover:scale-110 ${cap.iconBg}`}>
+                    {cap.icon}
+                  </div>
+                  {/* Capability Title */}
+                  <h3 className="text-base md:text-lg font-bold tracking-tight text-white group-hover:text-white transition-colors duration-200 uppercase leading-snug">
+                    {cap.title}
+                  </h3>
                 </div>
-                
-                {/* Capability Title */}
-                <h3 className="text-base md:text-lg font-bold tracking-tight text-white group-hover:text-white transition-colors duration-200 uppercase leading-snug mb-3">
-                  {cap.title}
-                </h3>
 
                 {/* Description Subtext */}
                 <p className="text-xs md:text-sm text-white/50 font-light leading-relaxed group-hover:text-white/70 transition-colors duration-300">

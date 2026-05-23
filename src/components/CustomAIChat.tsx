@@ -72,11 +72,40 @@ export default function CustomAIChat() {
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+  const [showWelcome, setShowWelcome] = useState(false);
 
   const chatEndRef = useRef<HTMLDivElement>(null);
   const msgContainerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => { setMounted(true); }, []);
+  useEffect(() => {
+    setMounted(true);
+
+    // Track scroll y-coordinate for the scroll-to-top CTA
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    
+    // Delayed pop-up welcome message on first load (if still at hero top)
+    const welcomeTimer = setTimeout(() => {
+      if (window.scrollY < 100) {
+        setShowWelcome(true);
+      }
+    }, 2500);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      clearTimeout(welcomeTimer);
+    };
+  }, []);
+
+  // Dismiss welcome bubble if user scrolls down
+  useEffect(() => {
+    if (scrollY >= 100) {
+      setShowWelcome(false);
+    }
+  }, [scrollY]);
 
   useEffect(() => {
     if (isOpen) scrollToBottom();
@@ -159,8 +188,8 @@ export default function CustomAIChat() {
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth={2}
-        d="M3 12a9 9 0 109-9M3 12V6m0 6H9"
+        strokeWidth={1.8}
+        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
       />
     </svg>
   );
@@ -192,7 +221,7 @@ export default function CustomAIChat() {
         <img
           src="/images/ai_avatar.png"
           alt="Ashli AI Avatar"
-          className="w-9 h-9 rounded-full object-contain border border-amber-500/40"
+          className="w-10 h-10 rounded-full object-contain"
         />
         <span className="absolute inset-0 rounded-full border border-amber-500/20 animate-ping opacity-75 pointer-events-none" />
       </motion.button>
@@ -217,7 +246,7 @@ export default function CustomAIChat() {
                   <img
                     src="/images/ai_avatar.png"
                     alt="Ashli Header Avatar"
-                    className="w-10 h-10 rounded-full border border-amber-500/40 p-0.5 bg-[#090b0e] object-contain"
+                    className="w-10 h-10 rounded-full object-contain"
                   />
                   <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-[#090b0e] rounded-full animate-pulse" />
                 </div>
@@ -241,7 +270,7 @@ export default function CustomAIChat() {
                 {/* Reset */}
                 <button
                   onClick={handleReset}
-                  title="New conversation"
+                  title="Clear Chat History"
                   className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-neutral-800/50 text-neutral-400 hover:text-white transition-colors cursor-pointer"
                 >
                   <ResetIcon />
@@ -272,7 +301,7 @@ export default function CustomAIChat() {
                     <img
                       src="/images/ai_avatar.png"
                       alt="AI"
-                      className="w-8 h-8 rounded-full border border-amber-500/20 p-0.5 bg-[#090b0e] object-contain shrink-0"
+                      className="w-8 h-8 rounded-full object-contain shrink-0"
                     />
                   ) : (
                     <div className="w-8 h-8 rounded-full bg-neutral-800 border border-neutral-700/50 flex items-center justify-center text-white shrink-0">
@@ -299,7 +328,7 @@ export default function CustomAIChat() {
                   <img
                     src="/images/ai_avatar.png"
                     alt="AI"
-                    className="w-8 h-8 rounded-full border border-amber-500/20 p-0.5 bg-[#090b0e] object-contain shrink-0"
+                    className="w-8 h-8 rounded-full object-contain shrink-0"
                   />
                   <div className="bg-white/5 border border-white/5 p-3 rounded-2xl rounded-tl-none flex items-center gap-1.5 min-w-[60px] justify-center">
                     <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
@@ -410,6 +439,64 @@ export default function CustomAIChat() {
               </button>
             </form>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Delayed welcome pop-up above Chatbot button trigger (only active at hero top section) */}
+      <AnimatePresence>
+        {showWelcome && !isOpen && scrollY < 150 && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 15 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 15 }}
+            transition={{ type: "spring", stiffness: 350, damping: 25 }}
+            className="fixed bottom-[88px] right-6 z-[9998] w-72 p-4 rounded-2xl bg-[#0d0f14]/95 border border-amber-500/20 shadow-[0_10px_30px_rgba(0,0,0,0.6)] backdrop-blur-xl text-left flex gap-3 pointer-events-auto font-inter"
+          >
+            {/* Pointer arrow pointing to trigger button */}
+            <div className="absolute -bottom-1.5 right-6 w-3.5 h-3.5 bg-[#0d0f14] border-r border-b border-amber-500/20 transform rotate-45 pointer-events-none" />
+            
+            <img
+              src="/images/ai_avatar.png"
+              alt="Ashli welcome"
+              className="w-8 h-8 rounded-full object-contain shrink-0 bg-[#090b0e] border border-amber-500/10"
+            />
+            <div className="flex-1 pr-4">
+              <h4 className="text-[10px] text-amber-500 font-semibold tracking-wider uppercase mb-0.5 font-rubik">Ashli</h4>
+              <p className="text-[11px] text-white/95 leading-normal font-light">
+                Hey there! I am Ashli, Ashish&apos;s interactive AI assistant. Ask me anything about his work, Figma, or design! 👋
+              </p>
+            </div>
+            
+            <button
+              onClick={() => setShowWelcome(false)}
+              className="absolute top-2 right-2 w-5 h-5 rounded-full flex items-center justify-center text-neutral-500 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Floating Scroll to Top button stacked perfectly above Chatbot button trigger (only active after scrolling) */}
+      <AnimatePresence>
+        {scrollY >= 150 && !isOpen && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8, y: 15 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 15 }}
+            transition={{ type: "spring", stiffness: 350, damping: 25 }}
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            title="Scroll to top"
+            className="fixed bottom-[88px] right-6 z-[9998] w-14 h-14 rounded-full bg-[#12141c]/90 border border-neutral-800/80 flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.4)] hover:shadow-[0_4px_25px_rgba(245,158,11,0.15)] text-neutral-400 hover:text-amber-500 cursor-pointer"
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 15l7-7 7 7" />
+            </svg>
+          </motion.button>
         )}
       </AnimatePresence>
     </>

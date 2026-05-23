@@ -103,7 +103,7 @@ export default function Projects({ onOpenPrimeVideo }: ProjectsProps) {
               key={project.title}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: true, margin: "-20px" }}
               transition={{ duration: 0.8, delay: index * 0.15 }}
               onClick={() => {
                 if (project.title === "Prime Video Redesign") {
@@ -116,13 +116,11 @@ export default function Projects({ onOpenPrimeVideo }: ProjectsProps) {
             >
               {/* Image Preview Container */}
               <div className="relative aspect-square w-full overflow-hidden bg-black/40">
-                <Image
+                <img
                   src={project.image}
                   alt={project.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                  priority={index === 0}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  loading={index === 0 ? "eager" : "lazy"}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#121212] via-transparent to-transparent opacity-60" />
                 

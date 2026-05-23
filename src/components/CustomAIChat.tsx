@@ -98,8 +98,8 @@ export default function CustomAIChat() {
 
     if (!textToSend) setInput("");
 
-    // If sent from FAQ chip → close FAQ panel
-    if (fromFAQ) setShowFAQ(false);
+    // Close FAQ panel when any message is sent so follow-ups can show
+    setShowFAQ(false);
 
     // Clear previous follow-ups while processing
     setFollowUps([]);

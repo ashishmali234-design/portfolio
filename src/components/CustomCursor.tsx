@@ -118,23 +118,25 @@ export default function CustomCursor() {
               className="w-[2px] h-4 bg-amber-500 rounded-sm shadow-[0_0_8px_rgba(245,158,11,0.8)]"
             />
           ) : isHovered ? (
-            // User's custom high-fidelity pointing hand PNG (rotated slightly or upright with shadow)
+            // Custom high-fidelity pointing hand PNG
+            // clicking scale down to 0.70 of 40px = exactly 28px!
             <motion.div
               key="hand"
               initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-              animate={{ opacity: 1, scale: isClicked ? 0.85 : 1, rotate: 0 }}
+              animate={{ opacity: 1, scale: isClicked ? 0.70 : 1, rotate: 0 }}
               exit={{ opacity: 0, scale: 0.8, rotate: -5 }}
               transition={{ duration: 0.12 }}
-              className="w-10 h-10 filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.45)]"
+              className="w-10 h-10"
             >
               <img
                 src="/images/hand_cursor.png"
                 alt="hand cursor"
-                className="w-full h-full object-contain"
+                className="w-full h-full object-contain filter drop-shadow-[0_4px_10px_rgba(0,0,0,0.45)]"
               />
             </motion.div>
           ) : (
-            // User's custom monogram PNG as default cursor (rotated -22 deg, larger size, subtle shadow)
+            // Custom monogram PNG as default cursor (rotated -22 deg, large size w-10)
+            // Contour shadow applied directly to img for flawless transparent pixel outlining
             <motion.div
               key="logo"
               initial={{ opacity: 0, scale: 0.8 }}
@@ -142,12 +144,12 @@ export default function CustomCursor() {
               exit={{ opacity: 0, scale: 0.8 }}
               transition={{ duration: 0.12 }}
               style={{ rotate: -22 }}
-              className="w-10 h-10 filter drop-shadow-[0_4px_10px_rgba(0,0,0,0.55)]"
+              className="w-10 h-10"
             >
               <img
                 src="/images/logo_cursor.png"
                 alt="logo cursor"
-                className="w-full h-full object-contain"
+                className="w-full h-full object-contain filter drop-shadow-[0_5px_12px_rgba(0,0,0,0.55)]"
               />
             </motion.div>
           )}

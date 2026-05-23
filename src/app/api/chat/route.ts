@@ -15,9 +15,12 @@ Guidelines:
 `;
 
 // Direct intelligent simulator fallback responses in case the API key is not configured yet
-function getFallbackResponse(message: string): string {
+async function getFallbackResponse(message: string): Promise<string> {
   const query = message.toLowerCase();
 
+  if (query.includes("meaning of")) {
+    return "The phrase 'Designing with AI, thinking like humans' defines Ashish's philosophy. It means leveraging AI tools to accelerate workflows and automate repetitive tasks, while keeping the core creative strategy, empathy, and user-centric problem solving rooted in human expertise.";
+  }
   if (query.includes("hello") || query.includes("hi ") || query.includes("hey")) {
     return "Hi there! I'm Ashli, your virtual UX Design Co-pilot. I'm here to chat about Ashish's product design work, his experience at Bajaj Finance, his core toolkit, and how he bridges human-centric thinking with AI tools. What would you like to explore today?";
   }
@@ -45,7 +48,7 @@ export async function POST(request: Request) {
     // If API Key is not set, run the interactive fallback simulation smoothly
     if (!apiKey) {
       const userMessage = messages[messages.length - 1]?.content || "";
-      const simulatedText = getFallbackResponse(userMessage);
+      const simulatedText = await getFallbackResponse(userMessage);
 
       // Simulate a small network delay for premium visual pacing
       await new Promise((resolve) => setTimeout(resolve, 800));

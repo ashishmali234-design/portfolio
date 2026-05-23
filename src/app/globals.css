@@ -97,9 +97,9 @@ body {
 }
 
 .ai-outline {
-  color: transparent !important;
-  -webkit-text-stroke: 1px #00F0FF;
-  -webkit-text-fill-color: transparent !important;
+  color: #0066FF !important;
+  -webkit-text-stroke: 1.2px #00F0FF;
+  -webkit-text-fill-color: #0066FF !important;
 }
 
 

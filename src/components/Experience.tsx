@@ -68,7 +68,7 @@ export default function Experience() {
             transition={{ duration: 0.8 }}
             className="text-4xl md:text-5xl font-black tracking-tight text-white uppercase min-h-[1.2em]"
           >
-            <Typewriter segments={[{ text: "Career ", className: "font-light" }, { text: "Journey", className: "font-extrabold" }]} delay={100} />
+            <Typewriter segments={[{ text: "Career ", className: "font-light text-white" }, { text: "Journey", className: "font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-neutral-400 inline-block" }]} delay={100} />
           </motion.h2>
         </div>
 

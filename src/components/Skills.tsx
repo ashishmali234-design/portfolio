@@ -277,7 +277,7 @@ export default function Skills() {
             transition={{ duration: 0.8 }}
             className="text-4xl md:text-5xl font-black tracking-tight text-white uppercase min-h-[1.2em]"
           >
-            <Typewriter segments={[{ text: "My ", className: "font-light" }, { text: "Expertise", className: "font-extrabold" }]} delay={100} />
+            <Typewriter segments={[{ text: "My ", className: "font-light text-white" }, { text: "Expertise", className: "font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-neutral-400 inline-block" }]} delay={100} />
           </motion.h2>
         </div>
 
@@ -374,15 +374,10 @@ export default function Skills() {
       >
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           {/* Header */}
-          <div className="flex items-center justify-between mb-10">
-            <div>
-              <h3 className="text-3xl md:text-4xl font-light text-white tracking-tight">
-                My <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-neutral-400">Toolkit</span>
-              </h3>
-            </div>
-            <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 shrink-0">
-              <Sparkles className="w-5 h-5" />
-            </div>
+          <div className="mb-10 text-left">
+            <h3 className="text-3xl md:text-4xl font-light text-white tracking-tight">
+              My <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-neutral-400">Toolkit</span>
+            </h3>
           </div>
         </div>
 
@@ -461,15 +456,7 @@ export default function Skills() {
           </div>
         </div>
 
-        {/* Bottom Footer metadata */}
-        <div className="max-w-6xl mx-auto px-6 md:px-12 mt-6">
-          <div className="border-t border-white/5 pt-4 text-xs text-white/40 tracking-widest uppercase flex justify-between items-center">
-            <span>Infinite Scroller</span>
-            <span className="flex items-center gap-1.5">
-              <Layers className="w-3.5 h-3.5 text-amber-400" /> DYNAMIC DEPTH
-            </span>
-          </div>
-        </div>
+
 
         <style dangerouslySetInnerHTML={{ __html: `
           @keyframes marqueeLeft {

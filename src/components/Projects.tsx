@@ -91,7 +91,7 @@ export default function Projects({ onOpenPrimeVideo }: ProjectsProps) {
             transition={{ duration: 0.8 }}
             className="text-4xl md:text-6xl font-black tracking-tight text-white uppercase min-h-[1.2em]"
           >
-            <Typewriter segments={[{ text: "Selected ", className: "font-light" }, { text: "Projects", className: "font-extrabold" }]} delay={100} />
+            <Typewriter segments={[{ text: "Selected ", className: "font-light text-white" }, { text: "Projects", className: "font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-neutral-400 inline-block" }]} delay={100} />
           </motion.h2>
         </div>
 

@@ -21,7 +21,7 @@ export default function AboutMe() {
             transition={{ duration: 0.8 }}
             className="text-4xl md:text-5xl font-black tracking-tight text-white uppercase min-h-[1.2em]"
           >
-            <Typewriter segments={[{ text: "About ", className: "font-light text-white" }, { text: "Me", className: "font-extrabold text-white" }]} delay={100} />
+            <Typewriter segments={[{ text: "About ", className: "font-light text-white" }, { text: "Me", className: "font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-neutral-400 inline-block" }]} delay={100} />
           </motion.h2>
         </div>
 
@@ -40,7 +40,7 @@ export default function AboutMe() {
               I’m a <span className="text-white font-semibold border-b border-amber-500/30">UI/UX Designer</span> passionate about creating clean, intuitive, and impactful digital experiences. I specialize in end-to-end product design, including user research, wireframing, UI design, prototyping, and design systems, with a strong focus on solving real user problems through thoughtful and user-centered design.
             </p>
             <p>
-              Currently working at <span className="text-amber-400 font-semibold bg-amber-500/5 px-2 py-0.5 rounded border border-amber-500/10">Bajaj Finance</span>, I work on financial and merchant-based products including Gold Loan, Personal Loan, INSTA EMI, EDC Journeys, Sales One App, Enterprise Dashboard, and Bajaj Finserv for Business. I also create <span className="text-white font-medium">AI-driven experiences</span>, training videos, banners, GIFs, and digital creatives while collaborating on improving user journeys and modernizing digital platforms.
+              Currently working at <span className="text-amber-400 font-semibold">Bajaj Finance</span>, I work on financial and merchant-based products including Gold Loan, Personal Loan, INSTA EMI, EDC Journeys, Sales One App, Enterprise Dashboard, and Bajaj Finserv for Business. I also create <span className="text-white font-medium">AI-driven experiences</span>, training videos, banners, GIFs, and digital creatives while collaborating on improving user journeys and modernizing digital platforms.
             </p>
             <p>
               Along with product design, I actively explore AI tools, modern interaction design, and emerging technologies to craft experiences that are simple, engaging, and <span className="text-amber-400 font-semibold">future-ready</span>.

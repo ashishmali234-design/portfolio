@@ -71,7 +71,7 @@ export default function WhatIDo() {
             transition={{ duration: 0.8 }}
             className="text-4xl md:text-5xl font-black tracking-tight text-white uppercase min-h-[1.2em]"
           >
-            <Typewriter segments={[{ text: "What I ", className: "font-light text-white" }, { text: "Do", className: "font-extrabold text-white" }]} delay={100} />
+            <Typewriter segments={[{ text: "What I ", className: "font-light text-white" }, { text: "Do", className: "font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-neutral-400 inline-block" }]} delay={100} />
           </motion.h2>
         </div>
 

@@ -139,7 +139,6 @@ export default function CustomCursor() {
               </svg>
             </motion.div>
           ) : (
-            // User's custom logo as default cursor (rotated slightly to the left)
             <motion.div
               key="logo"
               initial={{ opacity: 0, scale: 0.8 }}
@@ -150,7 +149,7 @@ export default function CustomCursor() {
               className="w-7 h-7 filter drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)]"
             >
               <img
-                src="/images/ai_avatar.png"
+                src="/images/logo_cursor.png"
                 alt="logo cursor"
                 className="w-full h-full object-contain"
               />

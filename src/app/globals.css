@@ -102,4 +102,11 @@ body {
   -webkit-text-fill-color: #00F0FF !important;
 }
 
+/* Hide default cursor on desktop screens when custom cursor is active */
+@media (hover: hover) and (pointer: fine) {
+  html, body, a, button, [role="button"], input, textarea, select, iframe, [onclick], .clickable {
+    cursor: none !important;
+  }
+}
+
 

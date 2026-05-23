@@ -51,26 +51,26 @@ export default function Overlay() {
         {/* Section 1: Hero (Left Corner / Blank Space Aligned) */}
         <motion.div
           style={{ y: y1, opacity: opacity1, scale: scale1, pointerEvents: heroPointerEvents }}
-          className="absolute inset-x-6 md:inset-x-24 top-0 bottom-0 flex flex-col justify-center items-start text-left max-w-2xl"
+          className="absolute inset-x-4 md:inset-x-24 top-0 bottom-0 -mt-16 md:mt-0 flex flex-col justify-center items-start text-left max-w-2xl"
         >
-          <div className="relative w-full p-2 md:p-0">
+          <div className="relative w-full p-0">
             {/* Open navy blue gradient glow behind text only in mobile view */}
-            <div className="absolute -left-6 w-screen -inset-y-36 bg-[radial-gradient(circle_at_30%_50%,rgba(15,27,61,0.95)_0%,rgba(21,16,43,0.8)_50%,rgba(18,18,18,0)_100%)] md:hidden pointer-events-none z-[-1] blur-3xl" />
+            <div className="absolute -left-4 w-screen -inset-y-36 bg-[radial-gradient(circle_at_30%_50%,rgba(15,27,61,0.95)_0%,rgba(21,16,43,0.8)_50%,rgba(18,18,18,0)_100%)] md:hidden pointer-events-none z-[-1] blur-3xl" />
             
-            <span className="text-xs md:text-sm font-bold tracking-[0.25em] text-white/40 uppercase mb-3 block">
+            <span className="text-[9.6px] md:text-sm font-bold tracking-[0.25em] text-white/40 uppercase mb-3 block">
               Hello! I&apos;m
             </span>
-            <h1 className="text-5xl md:text-8xl font-bold tracking-tight text-white select-none uppercase leading-none min-h-[1.1em]">
+            <h1 className="text-[38.4px] md:text-8xl font-bold tracking-tight text-white select-none uppercase leading-none min-h-[1.1em]">
               <Typewriter text="Ashish Mali" delay={150} speed={50} />
             </h1>
-            <h2 className="text-2xl md:text-4xl font-semibold tracking-tight text-amber-400 select-none uppercase mt-3 min-h-[1.2em]">
+            <h2 className="text-[19.2px] md:text-4xl font-semibold tracking-tight text-amber-400 select-none uppercase mt-3 min-h-[1.2em]">
               <Typewriter text="Product Designer" delay={900} speed={40} />
             </h2>
             <motion.p 
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.6, duration: 0.6, ease: "easeOut" }}
-              className="text-xs md:text-sm text-white/50 uppercase tracking-widest mt-3"
+              className="text-[9.6px] md:text-sm text-white/50 uppercase tracking-widest mt-3"
             >
               at <span className="font-rubik text-white font-semibold tracking-widest">Bajaj Finance</span>
             </motion.p>
@@ -104,11 +104,11 @@ export default function Overlay() {
         {/* Section 2: Statement (Left-aligned) */}
         <motion.div
           style={{ y: y2, opacity: opacity2, pointerEvents: pointerEvents2 }}
-          className="absolute inset-x-6 md:inset-x-24 top-0 bottom-0 flex flex-col justify-center items-start text-left max-w-2xl"
+          className="absolute inset-x-4 md:inset-x-24 top-0 bottom-0 flex flex-col justify-center items-start text-left max-w-2xl"
         >
-          <div className="relative w-full p-2 md:p-0">
+          <div className="relative w-full p-0">
             {/* Open navy blue gradient glow behind text only in mobile view */}
-            <div className="absolute -left-6 w-screen -inset-y-36 bg-[radial-gradient(circle_at_30%_50%,rgba(15,27,61,0.95)_0%,rgba(21,16,43,0.8)_50%,rgba(18,18,18,0)_100%)] md:hidden pointer-events-none z-[-1] blur-3xl" />
+            <div className="absolute -left-4 w-screen -inset-y-36 bg-[radial-gradient(circle_at_30%_50%,rgba(15,27,61,0.95)_0%,rgba(21,16,43,0.8)_50%,rgba(18,18,18,0)_100%)] md:hidden pointer-events-none z-[-1] blur-3xl" />
             
             <div className="flex items-center gap-3 mb-4">
               <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400">
@@ -149,11 +149,11 @@ export default function Overlay() {
         {/* Section 3: Value Prop (Left-aligned) */}
         <motion.div
           style={{ y: y3, opacity: opacity3, pointerEvents: pointerEvents3 }}
-          className="absolute inset-x-6 md:inset-x-24 top-0 bottom-0 flex flex-col justify-center items-start text-left max-w-2xl"
+          className="absolute inset-x-4 md:inset-x-24 top-0 bottom-0 flex flex-col justify-center items-start text-left max-w-2xl"
         >
-          <div className="relative w-full p-2 md:p-0">
+          <div className="relative w-full p-0">
             {/* Open navy blue gradient glow behind text only in mobile view */}
-            <div className="absolute -left-6 w-screen -inset-y-36 bg-[radial-gradient(circle_at_30%_50%,rgba(15,27,61,0.95)_0%,rgba(21,16,43,0.8)_50%,rgba(18,18,18,0)_100%)] md:hidden pointer-events-none z-[-1] blur-3xl" />
+            <div className="absolute -left-4 w-screen -inset-y-36 bg-[radial-gradient(circle_at_30%_50%,rgba(15,27,61,0.95)_0%,rgba(21,16,43,0.8)_50%,rgba(18,18,18,0)_100%)] md:hidden pointer-events-none z-[-1] blur-3xl" />
             
             <div className="flex items-center gap-3 mb-4">
               <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400">

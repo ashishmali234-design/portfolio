@@ -156,7 +156,7 @@ export default function Overlay() {
                 THE PHILOSOPHY
               </span>
             </div>
-            <h2 className="text-[36px] md:text-[58px] font-extrabold tracking-tight text-white leading-tight md:leading-[1.4] min-h-[2.2em] md:min-h-[2.5em]">
+            <h2 className="text-[36px] md:text-[54px] font-extrabold tracking-tight text-white leading-tight md:leading-[1] min-h-[2.2em] md:min-h-[2.1em]">
               <Typewriter
                 trigger={isSection3Visible}
                 segments={[

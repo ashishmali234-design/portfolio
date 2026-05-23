@@ -98,8 +98,8 @@ export default function CustomCursor() {
         style={{
           x: cursorX,
           y: cursorY,
-          translateX: showIBeam ? "-50%" : isHovered ? "-35%" : "-15%",
-          translateY: showIBeam ? "-50%" : isHovered ? "-10%" : "-15%",
+          translateX: showIBeam ? "-50%" : isHovered ? "-32%" : "-15%",
+          translateY: showIBeam ? "-50%" : isHovered ? "-5%" : "-15%",
         }}
         animate={{
           opacity: hideCursor ? 0 : 1,
@@ -118,27 +118,23 @@ export default function CustomCursor() {
               className="w-[2px] h-4 bg-amber-500 rounded-sm shadow-[0_0_8px_rgba(245,158,11,0.8)]"
             />
           ) : isHovered ? (
-            // Custom pointer hand icon inspired by default clicking state
+            // User's custom high-fidelity pointing hand PNG (rotated slightly or upright with shadow)
             <motion.div
               key="hand"
               initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
               animate={{ opacity: 1, scale: isClicked ? 0.85 : 1, rotate: 0 }}
               exit={{ opacity: 0, scale: 0.8, rotate: -5 }}
               transition={{ duration: 0.12 }}
-              className="text-amber-500 filter drop-shadow-[0_2px_8px_rgba(245,158,11,0.4)]"
+              className="w-10 h-10 filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.45)]"
             >
-              <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none">
-                <path 
-                  d="M9 11.25V4.5a1.5 1.5 0 0 1 3 0v6.75h.75V5.25a1.5 1.5 0 0 1 3 0v6h.75V6.75a1.5 1.5 0 0 1 3 0v7.5a6.75 6.75 0 0 1-13.5 0v-3a1.5 1.5 0 0 1 3 0v3h.75Z" 
-                  fill="currentColor" 
-                  stroke="#000000" 
-                  strokeWidth="1.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <img
+                src="/images/hand_cursor.png"
+                alt="hand cursor"
+                className="w-full h-full object-contain"
+              />
             </motion.div>
           ) : (
+            // User's custom monogram PNG as default cursor (rotated -22 deg, larger size, subtle shadow)
             <motion.div
               key="logo"
               initial={{ opacity: 0, scale: 0.8 }}
@@ -146,7 +142,7 @@ export default function CustomCursor() {
               exit={{ opacity: 0, scale: 0.8 }}
               transition={{ duration: 0.12 }}
               style={{ rotate: -22 }}
-              className="w-7 h-7 filter drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)]"
+              className="w-10 h-10 filter drop-shadow-[0_4px_10px_rgba(0,0,0,0.55)]"
             >
               <img
                 src="/images/logo_cursor.png"

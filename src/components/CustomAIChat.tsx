@@ -14,7 +14,7 @@ export default function CustomAIChat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hello! I'm Ashli. Ask me about Ashish anything.",
+      content: "Hello! I'm Ashli. You can Ask me about Ashish anything.",
     },
   ]);
   const [input, setInput] = useState("");
@@ -76,15 +76,15 @@ export default function CustomAIChat() {
     setMessages([
       {
         role: "assistant",
-        content: "Reset complete! I'm Ashli. Ask me about Ashish anything.",
+        content: "Reset complete! I'm Ashli. You can Ask me about Ashish anything.",
       },
     ]);
   };
 
   const quickPrompts = [
-    { text: "💼 Bajaj Finance Experience", prompt: "Tell me about Ashish's product design work at Bajaj Finance." },
-    { text: "🛠️ Core Design Toolkit", prompt: "What design tools and methodologies does Ashish specialize in?" },
-    { text: "🎥 Prime Video Overhaul", prompt: "Tell me about Ashish's Prime Video Redesign project." },
+    { text: "What is Ashish's experience at Bajaj Finance?", prompt: "Tell me about Ashish's product design work at Bajaj Finance." },
+    { text: "What is Ashish's core design toolkit?", prompt: "What design tools and methodologies does Ashish specialize in?" },
+    { text: "Tell me about the Prime Video Redesign project.", prompt: "Tell me about Ashish's Prime Video Redesign project." },
   ];
 
   return (
@@ -217,7 +217,7 @@ export default function CustomAIChat() {
             {/* Quick-tap Questions Panel */}
             <div className="p-3 border-t border-neutral-900 bg-[#090a0e]/40 space-y-1.5">
               <p className="text-[10px] text-neutral-500 text-left font-medium uppercase tracking-wider px-1">
-                Frequently Asked
+                Frequently Asked Questions
               </p>
               <div className="flex flex-wrap gap-1.5">
                 {quickPrompts.map((btn, idx) => (

@@ -96,4 +96,10 @@ body {
   animation: blink 0.8s steps(2, start) infinite;
 }
 
+.ai-outline {
+  color: transparent !important;
+  -webkit-text-stroke: 1px #00F0FF;
+  -webkit-text-fill-color: transparent !important;
+}
+
 

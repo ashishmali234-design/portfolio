@@ -88,14 +88,7 @@ export default function Typewriter({
             <span key={idx} className="relative inline-block mx-1 group font-sans font-bold">
               {/* Vibrant Electric Neon Blue text wrapper */}
               <span className="relative z-10 font-sans font-extrabold inline-flex items-baseline">
-                <span 
-                  className="font-sans font-extrabold inline-flex items-baseline uppercase tracking-wide"
-                  style={{
-                    color: "transparent",
-                    WebkitTextStroke: "1px #00F0FF",
-                    WebkitTextFillColor: "transparent",
-                  }}
-                >
+                <span className="font-sans font-extrabold inline-flex items-baseline uppercase tracking-wide ai-outline">
                   {seg.text.slice(0, visibleLen)}
                 </span>
               </span>

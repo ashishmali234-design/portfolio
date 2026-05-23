@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Code2, Layers } from "lucide-react";
 import Typewriter from "./Typewriter";
 
 export default function Overlay() {

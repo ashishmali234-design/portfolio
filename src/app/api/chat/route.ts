@@ -226,7 +226,7 @@ export async function POST(request: Request) {
       }));
 
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -246,6 +246,9 @@ export async function POST(request: Request) {
             choices: [{ message: { role: "assistant", content: text } }],
           });
         }
+      } else {
+        const errText = await response.text();
+        console.error("Gemini API call failed status:", response.status, "body:", errText);
       }
     }
 

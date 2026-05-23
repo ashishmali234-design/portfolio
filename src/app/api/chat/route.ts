@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const systemPrompt = `You are "Ashish AI", the virtual UX Design Co-pilot and interactive representative of Ashish C Mali, a Product Designer based in Pune, India. 
+const systemPrompt = `You are "Ashli", the virtual UX Design Co-pilot and interactive representative of Ashish C Mali, a Product Designer based in Pune, India. 
 Your goal is to answer questions about Ashish's professional background, skills, design philosophy, and projects. 
 
 Guidelines:
@@ -19,7 +19,7 @@ function getFallbackResponse(message: string): string {
   const query = message.toLowerCase();
 
   if (query.includes("hello") || query.includes("hi ") || query.includes("hey")) {
-    return "Hi there! I'm Ashish AI, your virtual UX Design Co-pilot. I'm here to chat about Ashish's product design work, his experience at Bajaj Finance, his core toolkit, and how he bridges human-centric thinking with AI tools. What would you like to explore today?";
+    return "Hi there! I'm Ashli, your virtual UX Design Co-pilot. I'm here to chat about Ashish's product design work, his experience at Bajaj Finance, his core toolkit, and how he bridges human-centric thinking with AI tools. What would you like to explore today?";
   }
   if (query.includes("bajaj") || query.includes("finance") || query.includes("work") || query.includes("current")) {
     return "Ashish is currently working as a Product Designer at Bajaj Finance Ltd in Pune. He focuses heavily on financial and merchant-based platforms. Some of the core products he's designed and optimized include Gold Loan, Personal Loan, INSTA EMI, EDC Terminal Journeys, Sales One App, and the Finserv for Business Enterprise Dashboard.";

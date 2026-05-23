@@ -14,7 +14,7 @@ export default function CustomAIChat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hello! I'm Ashish AI, your virtual UX Design Co-pilot. I can tell you about Ashish's background, design philosophy, his experience at Bajaj Finance, or walk you through his featured projects. What would you like to explore?",
+      content: "Hello! I'm Ashli. Ask me about Ashish anything.",
     },
   ]);
   const [input, setInput] = useState("");
@@ -76,15 +76,15 @@ export default function CustomAIChat() {
     setMessages([
       {
         role: "assistant",
-        content: "Reset complete! Let's start fresh. Ask me about Ashish's product design work, tools, or experience at Bajaj Finance!",
+        content: "Reset complete! I'm Ashli. Ask me about Ashish anything.",
       },
     ]);
   };
 
   const quickPrompts = [
-    { text: "💼 Bajaj Finance Experience", prompt: "Tell me about your product design work at Bajaj Finance." },
-    { text: "🛠️ Core Design Toolkit", prompt: "What design tools and methodologies do you specialize in?" },
-    { text: "🎥 Prime Video Overhaul", prompt: "Tell me about your Prime Video Redesign project." },
+    { text: "💼 Bajaj Finance Experience", prompt: "Tell me about Ashish's product design work at Bajaj Finance." },
+    { text: "🛠️ Core Design Toolkit", prompt: "What design tools and methodologies does Ashish specialize in?" },
+    { text: "🎥 Prime Video Overhaul", prompt: "Tell me about Ashish's Prime Video Redesign project." },
   ];
 
   return (
@@ -131,7 +131,7 @@ export default function CustomAIChat() {
                 </div>
                 <div>
                   <h3 className="font-rubik text-sm font-semibold tracking-wide text-white">
-                    Ashish AI
+                    Ashli
                   </h3>
                   <p className="text-[10px] text-neutral-400 font-inter">
                     UX Design Co-pilot (GPT Enabled)

@@ -134,7 +134,7 @@ export default function CustomAIChat() {
                     Ashli
                   </h3>
                   <p className="text-[10px] text-neutral-400 font-inter">
-                    UX Design Co-pilot (GPT Enabled)
+                    AI Assistant
                   </p>
                 </div>
               </div>

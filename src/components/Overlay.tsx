@@ -110,16 +110,13 @@ export default function Overlay() {
             {/* Open navy blue gradient glow behind text only in mobile view */}
             <div className="absolute -left-5 w-screen -inset-y-36 bg-[radial-gradient(circle_at_30%_50%,rgba(15,27,61,0.95)_0%,rgba(21,16,43,0.8)_50%,rgba(18,18,18,0)_100%)] md:hidden pointer-events-none z-[-1] blur-3xl" />
             
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400">
-                <Code2 className="w-5 h-5" />
-              </div>
-              <span className="text-xs font-bold tracking-widest text-amber-400 uppercase">
-                Core Expertise
+            <div className="mb-4">
+              <span className="text-xs font-bold tracking-[0.25em] text-white/40 uppercase">
+                CORE EXPERIENCE
               </span>
             </div>
             {/* Mobile Title: Shortened to Crafting Seamless UX */}
-            <h2 className="text-3xl font-extrabold tracking-tight text-white leading-tight min-h-[2.2em] md:hidden">
+            <h2 className="text-[36px] font-extrabold tracking-tight text-white leading-tight min-h-[2.2em] md:hidden">
               <Typewriter
                 trigger={isSection2Visible}
                 segments={[
@@ -140,7 +137,7 @@ export default function Overlay() {
                 delay={200}
               />
             </h2>
-            <p className="mt-4 md:mt-6 text-xs md:text-base text-white/60 leading-relaxed font-light font-sans">
+            <p className="mt-4 md:mt-6 text-xs md:text-base text-white/60 leading-relaxed font-light font-sans max-w-[80%] md:max-w-none">
               Focused on user-centric UI/UX, product thinking, and immersive digital interactions.
             </p>
           </div>
@@ -155,15 +152,12 @@ export default function Overlay() {
             {/* Open navy blue gradient glow behind text only in mobile view */}
             <div className="absolute -left-5 w-screen -inset-y-36 bg-[radial-gradient(circle_at_30%_50%,rgba(15,27,61,0.95)_0%,rgba(21,16,43,0.8)_50%,rgba(18,18,18,0)_100%)] md:hidden pointer-events-none z-[-1] blur-3xl" />
             
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400">
-                <Layers className="w-5 h-5" />
-              </div>
-              <span className="text-xs font-bold tracking-widest text-amber-400 uppercase">
-                The Philosophy
+            <div className="mb-4">
+              <span className="text-xs font-bold tracking-[0.25em] text-white/40 uppercase">
+                THE PHILOSOPHY
               </span>
             </div>
-            <h2 className="text-3xl md:text-6xl font-extrabold tracking-tight text-white leading-[1.3] min-h-[2.6em]">
+            <h2 className="text-[36px] md:text-7xl font-extrabold tracking-tight text-white leading-tight min-h-[2.2em]">
               <Typewriter
                 trigger={isSection3Visible}
                 segments={[
@@ -175,7 +169,7 @@ export default function Overlay() {
                 delay={200}
               />
             </h2>
-            <p className="mt-4 md:mt-6 text-xs md:text-base text-white/60 leading-relaxed font-light font-sans max-w-md">
+            <p className="mt-4 md:mt-6 text-xs md:text-base text-white/60 leading-relaxed font-light font-sans max-w-[80%] md:max-w-md">
               Using AI thoughtfully to create seamless, innovative, and human-centered experiences.
             </p>
           </div>

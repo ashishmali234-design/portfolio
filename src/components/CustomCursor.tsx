@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, useMotionValue, AnimatePresence } from "framer-motion";
 
 export default function CustomCursor() {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true); // Active immediately (even on loading screen)
   const [isHovered, setIsHovered] = useState(false);
   const [isOverText, setIsOverText] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
@@ -17,9 +17,10 @@ export default function CustomCursor() {
   useEffect(() => {
     // Disable custom cursor on mobile/touch screens
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    if (isTouchDevice) return;
-
-    setIsVisible(true);
+    if (isTouchDevice) {
+      setIsVisible(false);
+      return;
+    }
 
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX);
@@ -94,7 +95,7 @@ export default function CustomCursor() {
   return (
     <>
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[99999] flex items-center justify-center"
+        className="fixed top-0 left-0 pointer-events-none z-[99999] flex items-center justify-center custom-cursor-container"
         style={{
           x: cursorX,
           y: cursorY,
@@ -106,6 +107,21 @@ export default function CustomCursor() {
         }}
         transition={{ duration: 0.1 }}
       >
+        {/* Subtle AI-themed glowing aura pulsing behind the cursor logo/hand */}
+        {!showIBeam && !hideCursor && (
+          <motion.div
+            className="absolute w-12 h-12 rounded-full border border-amber-500/20 bg-amber-500/[0.03] blur-[2px] pointer-events-none -z-10"
+            animate={{
+              scale: isClicked ? 0.65 : isHovered ? [1, 1.25, 1] : [1, 1.15, 1],
+              opacity: isHovered ? [0.4, 0.7, 0.4] : [0.25, 0.5, 0.25],
+            }}
+            transition={{
+              scale: isClicked ? { duration: 0.1 } : { repeat: Infinity, duration: 3, ease: "easeInOut" },
+              opacity: { repeat: Infinity, duration: 3, ease: "easeInOut" },
+            }}
+          />
+        )}
+
         <AnimatePresence mode="wait">
           {showIBeam ? (
             // Sleek Golden I-Beam for precise text selection
@@ -118,24 +134,23 @@ export default function CustomCursor() {
               className="w-[2px] h-4 bg-amber-500 rounded-sm shadow-[0_0_8px_rgba(245,158,11,0.8)]"
             />
           ) : isHovered ? (
-            // Custom high-fidelity pointing hand PNG
-            // clicking scale down to 0.70 of 40px = exactly 28px!
+            // User's custom pointing hand PNG (size reduced to w-8/32px normally, clicking scales to 0.75 = exactly 24px)
             <motion.div
               key="hand"
               initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-              animate={{ opacity: 1, scale: isClicked ? 0.70 : 1, rotate: 0 }}
+              animate={{ opacity: 1, scale: isClicked ? 0.75 : 1, rotate: 0 }}
               exit={{ opacity: 0, scale: 0.8, rotate: -5 }}
               transition={{ duration: 0.12 }}
-              className="w-10 h-10"
+              className="w-8 h-8"
             >
               <img
                 src="/images/hand_cursor.png"
                 alt="hand cursor"
-                className="w-full h-full object-contain filter drop-shadow-[0_4px_10px_rgba(0,0,0,0.45)]"
+                className="w-full h-full object-contain filter drop-shadow-[0_3px_6px_rgba(0,0,0,0.4)]"
               />
             </motion.div>
           ) : (
-            // Custom monogram PNG as default cursor (rotated -22 deg, large size w-10)
+            // User's custom monogram PNG as default cursor (rotated -22 deg, w-10/40px)
             // Contour shadow applied directly to img for flawless transparent pixel outlining
             <motion.div
               key="logo"

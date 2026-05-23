@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Rubik, Inter } from "next/font/google";
+import AssistLoopLoader from "../components/AssistLoopLoader";
 import "./globals.css";
 
 const interFont = Inter({
@@ -38,6 +39,7 @@ export default function RootLayout({
         className={`${interFont.variable} ${rubikFont.variable} antialiased bg-[#121212] text-white`}
       >
         {children}
+        <AssistLoopLoader />
       </body>
     </html>
   );

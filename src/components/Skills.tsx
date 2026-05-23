@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Sparkles, Layers, Cpu, Bot } from "lucide-react";
+import { Cpu, Bot } from "lucide-react";
 import Typewriter from "./Typewriter";
 
 export default function Skills() {

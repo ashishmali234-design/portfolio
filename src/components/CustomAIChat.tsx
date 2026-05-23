@@ -92,7 +92,7 @@ export default function CustomAIChat() {
 
   if (!mounted) return null;
 
-  const handleSend = async (textToSend?: string, fromFAQ = false) => {
+  const handleSend = async (textToSend?: string) => {
     const text = (textToSend || input).trim();
     if (!text || isLoading) return;
 
@@ -340,7 +340,7 @@ export default function CustomAIChat() {
                         <button
                           key={idx}
                           disabled={isLoading}
-                          onClick={() => handleSend(btn.prompt, true)}
+                          onClick={() => handleSend(btn.prompt)}
                           className="text-[10px] bg-white/5 hover:bg-amber-500/10 border border-white/5 hover:border-amber-500/20 text-neutral-300 hover:text-white px-2.5 py-1.5 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:pointer-events-none"
                         >
                           {btn.text}

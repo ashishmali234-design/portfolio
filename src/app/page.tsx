@@ -34,21 +34,15 @@ const BehanceIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-// Custom official LinkedIn SVG Icon Component
+// Custom official LinkedIn SVG Icon Component (Filled Variant)
 const LinkedinIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
+    fill="currentColor"
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-    <rect x="2" y="9" width="4" height="12" />
-    <circle cx="4" cy="4" r="2" />
+    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
   </svg>
 );
 
@@ -59,6 +53,16 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [showPrimeVideo, setShowPrimeVideo] = useState(false);
+
+  useEffect(() => {
+    // Redirect large deployment URLs to clean short subdomain to ensure correct copying
+    if (typeof window !== "undefined" && 
+        window.location.hostname !== "ashishmali.vercel.app" && 
+        !window.location.hostname.includes("localhost") &&
+        !window.location.hostname.includes("127.0.0.1")) {
+      window.location.replace("https://ashishmali.vercel.app" + window.location.pathname + window.location.search);
+    }
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {

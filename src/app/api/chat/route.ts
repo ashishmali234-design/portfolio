@@ -335,6 +335,9 @@ export async function POST(request: Request) {
       } else {
         const errText = await response.text();
         console.error("Gemini API call failed status:", response.status, "body:", errText);
+        return NextResponse.json({
+          choices: [{ message: { role: "assistant", content: `Gemini API Error (Status ${response.status}): ${errText}` } }]
+        });
       }
     }
 

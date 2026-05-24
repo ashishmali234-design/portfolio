@@ -5,13 +5,15 @@ const systemPrompt = `You are "Ashli", the virtual AI assistant and interactive 
 Primary goal: Answer questions about Ashish's professional background, skills, design philosophy, and projects in a professional, warm, and engaging tone. Avoid generic or dry textbook answers; always weave in specific details of Ashish's unique methodologies and work.
 
 Key facts about Ashish:
-- Philosophy: "Designing with AI, thinking like humans." He leverages AI to automate repetitive workflows (like asset generation, copy brainstorming, or quick prototyping) while keeping human empathy, strategy, and research at the core of the experience.
-- Currently: Product Designer at Bajaj Finance Ltd, Pune. He designs high-stakes financial and merchant products:
-  - Gold Loan: Streamlined the complex physical gold evaluation and online check-in, making disbursement intuitive and transparent.
-  - Personal Loan & INSTA EMI: Optimized multi-step applications into simple, progressive-disclosure forms that reduce friction and cognitive load.
-  - EDC Journeys: Designed points-of-sale terminal swipe journeys with large touch targets, high contrast, and clean layouts for merchant checkouts under pressure.
-  - Sales One App & Enterprise Dashboard: Designed information architectures to aggregate metrics for high-stakes business users without cognitive overload.
-  - Bajaj Finserv for Business: Created modern dashboards, B2B experiences, promotional banners, training videos, and interactive digital graphics.
+- Philosophy: "Designing with AI, thinking like humans." He leverages AI (such as ChatGPT for copywriting/brainstorming and Magnific AI for advanced upscaling/generation) to automate repetitive workflows while keeping human empathy, strategy, and research at the core of the experience.
+- Currently: Product Designer at Bajaj Finance Ltd, Pune. He designs high-stakes financial, B2B, marketing, and merchant products:
+  - Gold Loan, Personal Loan, & INSTA EMI Card: Optimized multi-step application journeys. Also designs highly engaging promotional banners and animated GIFs for in-app placement, push notifications, pop-up windows, pamphlets, and physical marketing collaterals. Heavily leverages AI tools like ChatGPT and Magnific AI (Spaces) to generate videos, GIFs, and creative graphics.
+  - Retail EMI (REMI) Banners: Designs customized banners for multi-brand promotional campaigns when offers are powered by Bajaj Finance.
+  - Bajaj Pay & EDC POS Banners: Designs banners and digital display creative for payments, merchant checkouts, and terminal swipe solutions.
+  - EDC Journeys: Designed point-of-sale terminal swipe journeys with large touch targets, high contrast, and clean layouts for merchant checkout flow under pressure.
+  - Sales One App Journey: Fully revamped the complete end-to-end Sales One App merchant and sales agent journey, including: Homepage, Merchant Profile, Onboarding Dashboard, Performance Dashboards, Team Tracking, Tasks, Attendance tracking, Merchant visits, Gate meetings, and "Scan & Start" features.
+  - Enterprise Solution: Designed robust B2B systems covering Aggregator and Non-Aggregator merchant onboarding and dashboard platforms.
+  - Interactive & Training Assets: Creates B2B training videos, promotional banners, and interactive digital graphics.
 - Design Process (User-Centered Design):
   1. Research & Empathy: Deep dives into behavioral analytics, tracking user drop-offs, and conducting qualitative interviews.
   2. Information Architecture & Wireframing: Organizing fintech parameters into logical user flows and blueprint wireframes in Figma.
@@ -59,7 +61,7 @@ const KNOWLEDGE_BASE: Array<{ patterns: string[]; answer: string }> = [
   // Experience
   {
     patterns: ["bajaj", "finance", "current job", "where does ashish work", "work experience"],
-    answer: "Ashish is currently a Product Designer at Bajaj Finance Ltd in Pune. He designs financial and merchant-facing products including Gold Loan, Personal Loan, INSTA EMI, EDC Terminal Journeys, Sales One App, and the Bajaj Finserv for Business Enterprise Dashboard.",
+    answer: "Ashish is a Product Designer at Bajaj Finance Ltd in Pune, working on fintech and B2B products. His work spans core lending products (Gold/Personal Loans, INSTA EMI Card), multi-brand Retail EMI (REMI) and Bajaj Pay campaigns, full revamp of the Sales One App agent journey, B2B Aggregator/Non-Aggregator platforms, and interactive training videos.",
   },
   // Skills
   {
@@ -153,8 +155,8 @@ const KNOWLEDGE_BASE: Array<{ patterns: string[]; answer: string }> = [
     answer: "Fintech (financial technology) UX refers to designing digital interfaces for banking, payments, lending, and financial services. It's a specialised field where clarity, trust, and compliance are critical. Ashish is an expert in fintech UX — he designs financial products like loan journeys, EMI flows, and merchant dashboards at Bajaj Finance every day.",
   },
   {
-    patterns: ["what is gold loan", "gold loan design"],
-    answer: "A Gold Loan is a secured loan where users pledge gold jewellery as collateral to receive funds quickly. Ashish designed the entire Gold Loan digital journey at Bajaj Finance — from onboarding and eligibility checks to disbursement — making a traditionally complex process feel fast, transparent, and trustworthy for users.",
+    patterns: ["what is gold loan", "gold loan design", "gold loan", "personal loan", "insta emi", "remi", "retail emi", "banner", "gif", "magnific", "chatgpt"],
+    answer: "For Gold Loan, Personal Loan, and the INSTA EMI Card, Ashish designs optimized user journeys as well as high-converting marketing collaterals. He creates banners and GIFs for in-app displays, push notifications, pop-up windows, and pamphlets. He leverages ChatGPT and Magnific AI (Spaces) to generate videos, GIFs, and Retail EMI (REMI) banners for co-branded merchant offers, plus banners for Bajaj Pay and EDC terminal products.",
   },
   {
     patterns: ["what is after effects", "explain after effects", "adobe after effects"],
@@ -189,8 +191,8 @@ const KNOWLEDGE_BASE: Array<{ patterns: string[]; answer: string }> = [
     answer: "UX (User Experience) is about how a product feels and functions — the overall journey, usability, and user satisfaction. UI (User Interface) is about how it looks — the visual design, colours, typography, and interactive elements. Simply put: UX is the blueprint, UI is the paint and decor. Ashish is skilled in both — he designs complete product experiences from research to pixel-perfect UI.",
   },
   {
-    patterns: ["what is a dashboard", "dashboard design", "enterprise dashboard"],
-    answer: "A dashboard is a data visualisation interface that displays key metrics, KPIs, and actionable information in a single view. Good dashboard design balances information density with clarity and usability. Ashish has designed enterprise dashboards at Bajaj Finance — including the Sales One App and Finserv for Business dashboards — for high-stakes business users.",
+    patterns: ["what is a dashboard", "dashboard design", "enterprise dashboard", "sales one", "sales one app", "enterprise solution", "aggregator"],
+    answer: "Ashish is an expert in dashboard and enterprise product design. At Bajaj Finance, he revamped the entire Sales One App journey, including the Homepage, Merchant Profile, Onboarding/Performance Dashboards, Team Tracking, Tasks, Attendance, Merchant Visits, Gate Meetings, and 'Scan & Start'. He also designed the Enterprise Solution covering Aggregator and Non-Aggregator onboarding and B2B merchant platforms.",
   },
   {
     patterns: ["process", "approach", "workflow", "methodology", "how do you design", "design process", "how you design"],

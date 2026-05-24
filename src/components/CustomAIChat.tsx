@@ -8,45 +8,93 @@ interface Message {
   content: string;
 }
 
+// Keyword → follow-up suggestions that Ashli DEFINITELY knows the answer to
 const KEYWORD_SUGGESTIONS: Record<string, string[]> = {
-  father: ["What is Ashish's full name and father's name?", "Where is Ashish based?", "What is Ashish's academic history?"],
-  chandrakant: ["What is Ashish's full name and father's name?", "Where is Ashish based?", "What is Ashish's academic history?"],
-  onboarding: ["How does the 'Scan & Start' onboarding flow work?", "Tell me about the merchant onboarding dashboards in the Sales One App."],
-  lending: ["How did Ashish optimize the Gold Loan journey?", "What about the Personal Loan and INSTA EMI Card UI?", "How did checkout conversions increase at Bajaj?"],
-  loan: ["How did Ashish optimize the Gold Loan journey?", "What about the Personal Loan and INSTA EMI Card UI?", "How did checkout conversions increase at Bajaj?"],
-  "b2b": ["What are the dashboards designed for B2B Aggregators?", "Explain how Ashish simplifies dense B2B merchant networks."],
-  enterprise: ["What are the dashboards designed for B2B Aggregators?", "Explain how Ashish simplifies dense B2B merchant networks."],
-  "sales one": ["What features did he revamp in the Sales One App?", "How do sales agents track attendance and visits?"],
-  "figma ai": ["How does Ashish use Figma AI in wireframing?", "What is his 'Designing with AI, thinking like humans' philosophy?"],
-  "figma make": ["How does Ashish use Figma AI in wireframing?", "What is his 'Designing with AI, thinking like humans' philosophy?"],
-  figma: ["How does Ashish use Figma for design systems?", "Tell me about Ashish's Figma AI/Figma Make workflow.", "Can you explain Ashish's Figma onboarding layouts?"],
-  protopie: ["Tell me about Ashish's ProtoPie swipe journeys.", "Why does Ashish prefer ProtoPie over standard Figma links?", "How does Ashish test logic-driven prototypes?"],
-  "framer motion": ["How is Framer Motion used in this portfolio?", "Does Ashish use Framer for live websites?"],
-  framer: ["How is Framer Motion used in this portfolio?", "Does Ashish use Framer for live websites?"],
-  webflow: ["What live websites has Ashish built in Webflow?", "Does Ashish use Webflow for custom UI design?"],
-  spline: ["How does Ashish use Spline 3D in UI design?", "Tell me about Ashish's interactive 3D environmental design."],
-  ux: ["Tell me about Ashish's fintech UX at Bajaj Finance.", "What is Ashish's user research process?", "How does Ashish balance Business requirements and UX?"],
-  ui: ["How does Ashish approach typography and spacing?", "Tell me about the co-branded Retail EMI UI.", "What are Ashish's high-contrast dashboard designs?"],
-  "design system": ["How does Ashish structure design tokens in Figma?", "What is Ashish's design system experience for enterprise apps?"],
-  wireframe: ["What is Ashish's wireframing process?", "How does Ashish align product managers using low-fi wireframes?"],
-  prototype: ["Tell me about Ashish's ProtoPie high-fidelity prototypes.", "How does Ashish validate interaction designs through prototypes?"],
-  "user research": ["What is Ashish's research methodology?", "How did Ashish analyze user drop-offs at Bajaj Finance?"],
-  "information architecture": ["How does Ashish structure B2B Enterprise Aggregator dashboards?", "How does Ashish apply progressive disclosure in IA?"],
-  "bajaj finance": ["What products has Ashish designed at Bajaj Finance?", "Tell me about the revamped Sales One App.", "What is the Merchant One App dashboard?"],
-  bajaj: ["What is Ashish's product design role at Bajaj Finance?", "How did he revamp the Sales One App agent journey?", "Tell me about the B2B Enterprise solution flows."],
-  "gold loan": ["How did Ashish optimize the Gold Loan journey?", "What about the Personal Loan and INSTA EMI Card UI?", "Tell me about the Retail EMI (REMI) banners."],
-  "prime video": ["What is the Amazon Prime Video Redesign?", "What was Ashish's Lean UX approach for Prime Video?"],
-  medapp: ["What features does MedApp have?", "Tell me about the doctor booking case study."],
-  "lean ux": ["What was Ashish's Lean UX process for Prime Video?", "How does Ashish iterate quickly in agile environments?"],
-  "after effects": ["How does Ashish create Merchant One training videos?", "What motion graphics tools does Ashish use?"],
-  illustrator: ["How does Ashish build vector assets in Illustrator?", "Tell me about Ashish's custom typography and monogram logos."],
-  photoshop: ["Does Ashish use Photoshop for creative banners?", "Tell me about Ashish's high-fidelity raster overlays."],
-  ai: ["How does Ashish use ChatGPT and Magnific AI?", "Tell me about Ashish's work with Figma AI and Figma Make.", "What is Ashish's 'Designing with AI, thinking like humans' philosophy?"],
-  "interaction design": ["How does Ashish design tactile micro-interactions?", "Tell me about the POS EDC terminal touch targets."],
-  "motion design": ["How does Ashish use motion design as a usability tool?", "Tell me about his After Effects UI choreographies."],
-  dashboard: ["Tell me about the Sales One App onboarding dashboards.", "What makes Ashish's B2B Aggregator dashboards high-performance?"],
-  "financial product": ["What are the challenges of Fintech UX?", "How does Ashish design for high-volume transactions?"],
-  fintech: ["What fintech products has Ashish designed?", "How does Ashish maximize checkout checkout conversions in fintech?"]
+  "bajaj": [
+    "Tell me about the Sales One App revamp",
+    "What is the Merchant One App?",
+    "What B2B Enterprise dashboards did Ashish design?",
+  ],
+  "sales one": [
+    "What features are in the Sales One App?",
+    "How does the Scan & Start onboarding work?",
+    "What tools did Ashish use for the Sales One revamp?",
+  ],
+  "merchant": [
+    "What is the Merchant One App?",
+    "How did Ashish design EDC terminal journeys?",
+    "Tell me about the merchant training videos",
+  ],
+  "figma": [
+    "How does Ashish use Figma AI and Figma Make?",
+    "What is Ashish's design system process in Figma?",
+    "How does Ashish hand off Figma designs to developers?",
+  ],
+  "ai": [
+    "What is Ashish's 'Designing with AI, thinking like humans' philosophy?",
+    "Which AI tools does Ashish use daily?",
+    "How does Ashish use ChatGPT in his design process?",
+  ],
+  "project": [
+    "Tell me about the Prime Video Redesign",
+    "What is MedApp?",
+    "What other projects has Ashish designed?",
+  ],
+  "prime video": [
+    "What was Ashish's Lean UX approach for Prime Video?",
+    "What design problems did the Prime Video redesign solve?",
+    "Tell me about Ashish's other projects",
+  ],
+  "medapp": [
+    "What features does MedApp have?",
+    "Tell me about the doctor booking UX case study",
+    "What tools did Ashish use for MedApp?",
+  ],
+  "ux": [
+    "What is Ashish's UX process at Bajaj Finance?",
+    "How does Ashish conduct user research?",
+    "What fintech UX challenges has Ashish solved?",
+  ],
+  "design system": [
+    "How does Ashish build design tokens in Figma?",
+    "What is Ashish's design system for enterprise apps?",
+    "How does Ashish ensure design consistency across products?",
+  ],
+  "tool": [
+    "Which AI tools does Ashish use?",
+    "How does Ashish use ProtoPie for prototyping?",
+    "What is Ashish's full toolkit?",
+  ],
+  "loan": [
+    "How did Ashish design the Gold Loan journey?",
+    "Tell me about the INSTA EMI Card UX",
+    "What marketing assets did Ashish create for Bajaj lending?",
+  ],
+  "philosophy": [
+    "What does 'Designing with AI, thinking like humans' mean?",
+    "How does Ashish balance AI tools with human empathy?",
+    "How does Ashish approach complex fintech UX problems?",
+  ],
+  "education": [
+    "What did Ashish study?",
+    "Where did Ashish learn UX design?",
+    "What was Ashish's CGPA in college?",
+  ],
+  "contact": [
+    "What is Ashish's email address?",
+    "Is Ashish available for freelance projects?",
+    "How can I connect with Ashish on LinkedIn?",
+  ],
+  "motion": [
+    "How does Ashish use After Effects for motion design?",
+    "What motion animations did Ashish create for Bajaj?",
+    "How does Ashish use Framer Motion in this portfolio?",
+  ],
+  "enterprise": [
+    "What is the B2B Aggregator dashboard?",
+    "How does Ashish design for complex merchant networks?",
+    "What problems did the B2B Enterprise solution solve?",
+  ],
 };
 
 function extractFollowUps(text: string): string[] {
@@ -57,13 +105,13 @@ function extractFollowUps(text: string): string[] {
   for (const [keyword, suggestions] of Object.entries(KEYWORD_SUGGESTIONS)) {
     if (lower.includes(keyword)) {
       for (const s of suggestions) {
-        if (!seenSuggestions.has(s) && found.length < 4) {
+        if (!seenSuggestions.has(s) && found.length < 3) {
           found.push(s);
           seenSuggestions.add(s);
         }
       }
     }
-    if (found.length >= 4) break;
+    if (found.length >= 3) break;
   }
   return found;
 }
@@ -229,16 +277,24 @@ export default function CustomAIChat() {
 
   const quickPrompts = [
     {
-      text: "What is Ashish's experience at Bajaj Finance?",
+      text: "💼 Bajaj Finance work",
       prompt: "Tell me about Ashish's product design work at Bajaj Finance.",
     },
     {
-      text: "How does Ashish design with AI?",
-      prompt: "How does Ashish use Figma AI, Figma Make, ChatGPT, and other AI tools in his design process?",
+      text: "🤖 How he designs with AI",
+      prompt: "How does Ashish use Figma AI, Figma Make, ChatGPT, and other AI tools in his workflow?",
     },
     {
-      text: "What is Ashish's philosophy on UX?",
-      prompt: "What is Ashish's core philosophy on UX/UI design?",
+      text: "📱 Sales One App revamp",
+      prompt: "Tell me about the Sales One App revamp Ashish did at Bajaj Finance.",
+    },
+    {
+      text: "🎯 His design philosophy",
+      prompt: "What is Ashish's 'Designing with AI, thinking like humans' philosophy?",
+    },
+    {
+      text: "🏥 MedApp project",
+      prompt: "Tell me about the MedApp doctor appointment booking project.",
     },
   ];
 
@@ -374,36 +430,36 @@ export default function CustomAIChat() {
             </div>
 
             {/* Bottom suggestions panel – FAQ OR dynamic follow-ups */}
-            <div className="p-3 border-t border-neutral-900 bg-[#090a0e]/40 space-y-1.5">
+            <div className="px-2.5 py-2 border-t border-neutral-900 bg-[#090a0e]/40">
               <AnimatePresence mode="wait">
                 {showFAQ ? (
                   /* ---- Frequently Asked Questions ---- */
                   <motion.div
                     key="faq"
-                    initial={{ opacity: 0, y: 6 }}
+                    initial={{ opacity: 0, y: 4 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -6 }}
-                    transition={{ duration: 0.2 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    transition={{ duration: 0.15 }}
                   >
-                    <p className="text-[10px] text-neutral-500 font-medium uppercase tracking-wider px-1 flex items-center justify-between mb-1.5">
-                      Frequently Asked Questions
+                    <div className="flex items-center justify-between mb-1.5 px-0.5">
+                      <p className="text-[9px] text-neutral-600 font-semibold uppercase tracking-widest">Quick questions</p>
                       <button
                         onClick={() => setShowFAQ(false)}
-                        title="Close FAQ"
-                        className="ml-2 text-neutral-400 hover:text-neutral-200 transition-colors"
+                        title="Close"
+                        className="text-neutral-600 hover:text-neutral-400 transition-colors"
                       >
-                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
                         </svg>
                       </button>
-                    </p>
-                    <div className="flex flex-row overflow-x-auto whitespace-nowrap scrollbar-none gap-2 pb-1 scroll-smooth">
+                    </div>
+                    <div className="flex flex-row overflow-x-auto whitespace-nowrap scrollbar-none gap-1.5 pb-0.5 scroll-smooth">
                       {quickPrompts.map((btn, idx) => (
                         <button
                           key={idx}
                           disabled={isLoading}
                           onClick={() => handleSend(btn.prompt)}
-                          className="shrink-0 text-[10px] bg-white/5 hover:bg-amber-500/10 border border-white/5 hover:border-amber-500/20 text-neutral-300 hover:text-white px-2.5 py-1.5 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:pointer-events-none"
+                          className="shrink-0 text-[10px] bg-white/4 hover:bg-amber-500/10 border border-white/8 hover:border-amber-500/25 text-neutral-400 hover:text-white px-2.5 py-1 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:pointer-events-none leading-none"
                         >
                           {btn.text}
                         </button>
@@ -414,30 +470,30 @@ export default function CustomAIChat() {
                   /* ---- Dynamic contextual follow-up chips ---- */
                   <motion.div
                     key="followups"
-                    initial={{ opacity: 0, y: 6 }}
+                    initial={{ opacity: 0, y: 4 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -6 }}
-                    transition={{ duration: 0.2 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    transition={{ duration: 0.15 }}
                   >
-                    <p className="text-[10px] text-neutral-500 font-medium uppercase tracking-wider px-1 flex items-center justify-between mb-1.5">
-                      You might also ask
+                    <div className="flex items-center justify-between mb-1.5 px-0.5">
+                      <p className="text-[9px] text-neutral-600 font-semibold uppercase tracking-widest">Ask next</p>
                       <button
                         onClick={() => setFollowUps([])}
                         title="Dismiss"
-                        className="ml-2 text-neutral-400 hover:text-neutral-200 transition-colors"
+                        className="text-neutral-600 hover:text-neutral-400 transition-colors"
                       >
-                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
                         </svg>
                       </button>
-                    </p>
-                    <div className="flex flex-row overflow-x-auto whitespace-nowrap scrollbar-none gap-2 pb-1 scroll-smooth">
+                    </div>
+                    <div className="flex flex-row overflow-x-auto whitespace-nowrap scrollbar-none gap-1.5 pb-0.5 scroll-smooth">
                       {followUps.map((chip, idx) => (
                         <button
                           key={idx}
                           disabled={isLoading}
                           onClick={() => handleSend(chip)}
-                          className="shrink-0 text-[10px] bg-amber-500/5 hover:bg-amber-500/15 border border-amber-500/10 hover:border-amber-500/30 text-amber-200/80 hover:text-amber-100 px-2.5 py-1.5 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:pointer-events-none"
+                          className="shrink-0 text-[10px] bg-amber-500/5 hover:bg-amber-500/12 border border-amber-500/15 hover:border-amber-500/35 text-amber-300/70 hover:text-amber-100 px-2.5 py-1 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:pointer-events-none leading-none"
                         >
                           {chip}
                         </button>

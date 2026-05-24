@@ -7,9 +7,10 @@ interface LogoProps {
   forceShowTextOnMobile?: boolean;
   onClick?: () => void;
   gradientId?: string;
+  layoutId?: string;
 }
 
-export default function Logo({ className = "", showText = true, forceShowTextOnMobile = false, onClick, gradientId = "header-logo-gold-gradient" }: LogoProps) {
+export default function Logo({ className = "", showText = true, forceShowTextOnMobile = false, onClick, gradientId = "header-logo-gold-gradient", layoutId }: LogoProps) {
   const handleClick = () => {
     if (onClick) {
       onClick();
@@ -25,7 +26,7 @@ export default function Logo({ className = "", showText = true, forceShowTextOnM
     >
       {/* Golden SVG Icon (Wrapped in motion.div for shared landing animation) */}
       <motion.div
-        layoutId="rocketLogo"
+        layoutId={layoutId}
         className="w-8 h-8 md:w-9 md:h-9 flex-shrink-0"
         transition={{
           type: "spring",

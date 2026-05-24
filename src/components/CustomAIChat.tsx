@@ -8,112 +8,269 @@ interface Message {
   content: string;
 }
 
-// Keyword → follow-up suggestions that Ashli DEFINITELY knows the answer to
-const KEYWORD_SUGGESTIONS: Record<string, string[]> = {
-  "bajaj": [
-    "Tell me about the Sales One App revamp",
-    "What is the Merchant One App?",
-    "What B2B Enterprise dashboards did Ashish design?",
-  ],
-  "sales one": [
-    "What features are in the Sales One App?",
-    "How does the Scan & Start onboarding work?",
-    "What tools did Ashish use for the Sales One revamp?",
-  ],
-  "merchant": [
-    "What is the Merchant One App?",
-    "How did Ashish design EDC terminal journeys?",
-    "Tell me about the merchant training videos",
-  ],
-  "figma": [
-    "How does Ashish use Figma AI and Figma Make?",
-    "What is Ashish's design system process in Figma?",
-    "How does Ashish hand off Figma designs to developers?",
-  ],
-  "ai": [
-    "What is Ashish's 'Designing with AI, thinking like humans' philosophy?",
-    "Which AI tools does Ashish use daily?",
-    "How does Ashish use ChatGPT in his design process?",
-  ],
-  "project": [
-    "Tell me about the Prime Video Redesign",
-    "What is MedApp?",
-    "What other projects has Ashish designed?",
-  ],
-  "prime video": [
-    "What was Ashish's Lean UX approach for Prime Video?",
-    "What design problems did the Prime Video redesign solve?",
-    "Tell me about Ashish's other projects",
-  ],
-  "medapp": [
-    "What features does MedApp have?",
-    "Tell me about the doctor booking UX case study",
-    "What tools did Ashish use for MedApp?",
-  ],
-  "ux": [
-    "What is Ashish's UX process at Bajaj Finance?",
-    "How does Ashish conduct user research?",
-    "What fintech UX challenges has Ashish solved?",
-  ],
-  "design system": [
-    "How does Ashish build design tokens in Figma?",
-    "What is Ashish's design system for enterprise apps?",
-    "How does Ashish ensure design consistency across products?",
-  ],
-  "tool": [
-    "Which AI tools does Ashish use?",
-    "How does Ashish use ProtoPie for prototyping?",
-    "What is Ashish's full toolkit?",
-  ],
-  "loan": [
-    "How did Ashish design the Gold Loan journey?",
-    "Tell me about the INSTA EMI Card UX",
-    "What marketing assets did Ashish create for Bajaj lending?",
-  ],
-  "philosophy": [
-    "What does 'Designing with AI, thinking like humans' mean?",
-    "How does Ashish balance AI tools with human empathy?",
-    "How does Ashish approach complex fintech UX problems?",
-  ],
-  "education": [
-    "What did Ashish study?",
-    "Where did Ashish learn UX design?",
-    "What was Ashish's CGPA in college?",
-  ],
-  "contact": [
-    "What is Ashish's email address?",
-    "Is Ashish available for freelance projects?",
-    "How can I connect with Ashish on LinkedIn?",
-  ],
-  "motion": [
-    "How does Ashish use After Effects for motion design?",
-    "What motion animations did Ashish create for Bajaj?",
-    "How does Ashish use Framer Motion in this portfolio?",
-  ],
-  "enterprise": [
-    "What is the B2B Aggregator dashboard?",
-    "How does Ashish design for complex merchant networks?",
-    "What problems did the B2B Enterprise solution solve?",
-  ],
-};
+// ─── Smart follow-up extraction ──────────────────────────────────────────────
+// Each entry: if these keywords appear in Ashli's RESPONSE,
+// suggest these specific deeper follow-up questions about what she JUST said.
+const RESPONSE_FOLLOW_UPS: Array<{ triggers: string[]; chips: string[] }> = [
+  // Bajaj Finance / Sales One App
+  {
+    triggers: ["sales one app", "sales one"],
+    chips: [
+      "How does the Scan & Start onboarding work?",
+      "What dashboards did Ashish design for sales agents?",
+      "How do agents track attendance and visits in the app?",
+    ],
+  },
+  // Gold Loan / Personal Loan / INSTA EMI
+  {
+    triggers: ["gold loan", "personal loan", "insta emi"],
+    chips: [
+      "How did Ashish optimize the Gold Loan journey?",
+      "What is the INSTA EMI Card UX like?",
+      "What marketing banners did Ashish create for lending?",
+    ],
+  },
+  // Merchant One App
+  {
+    triggers: ["merchant one app", "finserv for business", "merchant dashboard"],
+    chips: [
+      "What dashboards did Ashish design for merchants?",
+      "Tell me about the animated merchant training videos",
+      "How does Ashish design EDC terminal journeys?",
+    ],
+  },
+  // EDC / POS
+  {
+    triggers: ["edc", "point-of-sale", "pos terminal", "swipe"],
+    chips: [
+      "How did Ashish ensure zero errors on the POS terminal?",
+      "What accessibility principles did Ashish use for EDC?",
+      "Tell me about the Bajaj Pay branding work",
+    ],
+  },
+  // B2B Enterprise / Aggregator
+  {
+    triggers: ["b2b enterprise", "aggregator", "non-aggregator"],
+    chips: [
+      "What is the Aggregator vs Non-Aggregator dashboard difference?",
+      "How does Ashish manage complexity in B2B flows?",
+      "Tell me about the merchant onboarding dashboards",
+    ],
+  },
+  // Bajaj Finance general
+  {
+    triggers: ["bajaj finance", "bajaj finserv", "bajaj pay", "remi", "retail emi"],
+    chips: [
+      "Tell me about the Sales One App revamp",
+      "What is the Merchant One App?",
+      "How did Ashish design lending journeys at Bajaj?",
+    ],
+  },
+  // Figma AI / Figma Make
+  {
+    triggers: ["figma ai", "figma make"],
+    chips: [
+      "How does Figma AI speed up Ashish's wireframing?",
+      "What is Ashish's design system process in Figma?",
+      "How does Ashish hand off Figma designs to developers?",
+    ],
+  },
+  // Figma general
+  {
+    triggers: ["figma", "design system", "design token"],
+    chips: [
+      "How does Ashish use Figma AI and Figma Make?",
+      "How does Ashish structure design tokens in Figma?",
+      "What makes Ashish's design systems enterprise-ready?",
+    ],
+  },
+  // AI philosophy
+  {
+    triggers: ["designing with ai", "thinking like humans", "ai philosophy"],
+    chips: [
+      "Which AI tools does Ashish use in his daily workflow?",
+      "How does Ashish use ChatGPT for design copywriting?",
+      "How does Magnific AI help Ashish with visual generation?",
+    ],
+  },
+  // AI tools general
+  {
+    triggers: ["chatgpt", "magnific", "notebook lm", "n8n", "antigravity"],
+    chips: [
+      "What is Ashish's 'Designing with AI, thinking like humans' philosophy?",
+      "How does Ashish use Figma AI and Figma Make?",
+      "How does N8N agentic workflow fit in Ashish's process?",
+    ],
+  },
+  // ProtoPie
+  {
+    triggers: ["protopie", "logic-driven prototype", "interactive prototype"],
+    chips: [
+      "Why does Ashish prefer ProtoPie over basic Figma links?",
+      "How does Ashish prototype EDC terminal swipe flows in ProtoPie?",
+      "What is Ashish's full prototyping-to-handoff process?",
+    ],
+  },
+  // Framer Motion
+  {
+    triggers: ["framer motion", "framer", "micro-animation", "page transition"],
+    chips: [
+      "How is Framer Motion used in this portfolio site?",
+      "What kind of motion effects did Ashish create?",
+      "Does Ashish use Framer for live client websites?",
+    ],
+  },
+  // Motion design / After Effects
+  {
+    triggers: ["after effects", "motion design", "animation", "merchant training video"],
+    chips: [
+      "How does Ashish animate merchant training videos?",
+      "What motion graphics did Ashish create for Bajaj?",
+      "How does Ashish use motion as a usability tool?",
+    ],
+  },
+  // MedApp
+  {
+    triggers: ["medapp", "doctor appointment", "doctor booking"],
+    chips: [
+      "What features does MedApp have?",
+      "How did Ashish design the doctor availability flow?",
+      "What UX challenges did Ashish solve in MedApp?",
+    ],
+  },
+  // Prime Video
+  {
+    triggers: ["prime video", "amazon prime", "lean ux"],
+    chips: [
+      "What was Ashish's Lean UX approach for Prime Video?",
+      "What content discovery problems did the redesign solve?",
+      "Tell me about Ashish's other featured projects",
+    ],
+  },
+  // UX / user experience
+  {
+    triggers: ["user experience", "ux design", "user research", "usability"],
+    chips: [
+      "What is Ashish's UX process at Bajaj Finance?",
+      "How does Ashish conduct user research?",
+      "How does Ashish balance business needs with UX?",
+    ],
+  },
+  // Contact / hire
+  {
+    triggers: ["ashishmali234@gmail.com", "9075521047", "reach him", "available for"],
+    chips: [
+      "What kind of projects is Ashish open to?",
+      "Tell me about Ashish's Bajaj Finance work",
+      "What is Ashish's design philosophy?",
+    ],
+  },
+  // Education
+  {
+    triggers: ["animation science", "yashwantrao chavan", "midas multimedia", "cgpa"],
+    chips: [
+      "How did Ashish's animation background influence his design work?",
+      "What did Ashish learn at Midas Multimedia?",
+      "How did Ashish transition from animation to product design?",
+    ],
+  },
+];
 
-function extractFollowUps(text: string): string[] {
-  const lower = text.toLowerCase();
+// Extract follow-ups based on Ashli's actual response content
+function extractFollowUps(responseText: string): string[] {
+  const lower = responseText.toLowerCase();
   const found: string[] = [];
-  const seenSuggestions = new Set<string>();
+  const seen = new Set<string>();
 
-  for (const [keyword, suggestions] of Object.entries(KEYWORD_SUGGESTIONS)) {
-    if (lower.includes(keyword)) {
-      for (const s of suggestions) {
-        if (!seenSuggestions.has(s) && found.length < 3) {
-          found.push(s);
-          seenSuggestions.add(s);
+  for (const entry of RESPONSE_FOLLOW_UPS) {
+    // Check if ANY trigger phrase appears in Ashli's response
+    const matched = entry.triggers.some((t) => lower.includes(t.toLowerCase()));
+    if (matched) {
+      for (const chip of entry.chips) {
+        if (!seen.has(chip) && found.length < 3) {
+          found.push(chip);
+          seen.add(chip);
         }
       }
     }
     if (found.length >= 3) break;
   }
   return found;
+}
+
+// ─── Scrollable chip row with desktop arrows ──────────────────────────────────
+function ChipRow({
+  children,
+  rowId,
+}: {
+  children: React.ReactNode;
+  rowId: string;
+}) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  const checkScroll = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 4);
+    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+  };
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    checkScroll();
+    el.addEventListener("scroll", checkScroll, { passive: true });
+    const ro = new ResizeObserver(checkScroll);
+    ro.observe(el);
+    return () => {
+      el.removeEventListener("scroll", checkScroll);
+      ro.disconnect();
+    };
+  }, [children]);
+
+  const scrollBy = (dir: "left" | "right") => {
+    scrollRef.current?.scrollBy({ left: dir === "left" ? -140 : 140, behavior: "smooth" });
+  };
+
+  return (
+    <div className="relative flex items-center gap-0.5" id={rowId}>
+      {/* Left arrow — desktop only */}
+      <button
+        onClick={() => scrollBy("left")}
+        aria-label="Scroll left"
+        className={`hidden md:flex shrink-0 w-5 h-5 items-center justify-center rounded-full text-neutral-600 hover:text-neutral-300 transition-all duration-200 ${
+          canScrollLeft ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+
+      {/* Scrollable chip container */}
+      <div
+        ref={scrollRef}
+        className="flex flex-row overflow-x-auto whitespace-nowrap scrollbar-none gap-1.5 pb-0.5 scroll-smooth flex-1"
+      >
+        {children}
+      </div>
+
+      {/* Right arrow — desktop only */}
+      <button
+        onClick={() => scrollBy("right")}
+        aria-label="Scroll right"
+        className={`hidden md:flex shrink-0 w-5 h-5 items-center justify-center rounded-full text-neutral-600 hover:text-neutral-300 transition-all duration-200 ${
+          canScrollRight ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  );
 }
 
 export default function CustomAIChat() {
@@ -138,7 +295,6 @@ export default function CustomAIChat() {
   useEffect(() => {
     setMounted(true);
 
-    // Generate/retrieve a persistent unique userId for 100% free query analytics
     if (typeof window !== "undefined") {
       let storedUserId = localStorage.getItem("ashli_user_id");
       if (!storedUserId) {
@@ -147,25 +303,16 @@ export default function CustomAIChat() {
       }
     }
 
-    // Track scroll y-coordinate for the scroll-to-top CTA
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
+    const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", handleScroll, { passive: true });
-    
-    // Fallback welcome message timer in case the event is delayed or doesn't fire
+
     const fallbackTimer = setTimeout(() => {
-      if (window.scrollY < 100) {
-        setShowWelcome(true);
-      }
+      if (window.scrollY < 100) setShowWelcome(true);
     }, 5000);
 
-    // Precise welcome pop-up when hero text animation completes
     const handleHeroAnimationComplete = () => {
       clearTimeout(fallbackTimer);
-      if (window.scrollY < 100) {
-        setShowWelcome(true);
-      }
+      if (window.scrollY < 100) setShowWelcome(true);
     };
     window.addEventListener("hero-animation-complete", handleHeroAnimationComplete);
 
@@ -176,24 +323,15 @@ export default function CustomAIChat() {
     };
   }, []);
 
-  // Dismiss welcome bubble if user scrolls down
   useEffect(() => {
-    if (scrollY >= 100) {
-      setShowWelcome(false);
-    }
+    if (scrollY >= 100) setShowWelcome(false);
   }, [scrollY]);
 
   useEffect(() => {
-    if (isOpen) scrollToBottom();
+    if (isOpen) chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isOpen, isLoading]);
 
-  const scrollToBottom = () => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const scrollToTop = () => {
-    msgContainerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  const scrollToTop = () => msgContainerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
 
   if (!mounted) return null;
 
@@ -202,11 +340,7 @@ export default function CustomAIChat() {
     if (!text || isLoading) return;
 
     if (!textToSend) setInput("");
-
-    // Close FAQ panel when any message is sent so follow-ups can show
     setShowFAQ(false);
-
-    // Clear previous follow-ups while processing
     setFollowUps([]);
 
     const newMessages: Message[] = [...messages, { role: "user", content: text }];
@@ -218,10 +352,10 @@ export default function CustomAIChat() {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           messages: newMessages,
-          userId: userId,
-          userAgent: typeof navigator !== "undefined" ? navigator.userAgent : "unknown"
+          userId,
+          userAgent: typeof navigator !== "undefined" ? navigator.userAgent : "unknown",
         }),
       });
 
@@ -229,24 +363,18 @@ export default function CustomAIChat() {
 
       const data = await response.json();
       const assistantMessage =
-        data.choices?.[0]?.message?.content ||
-        "Sorry, I encountered an issue. Let's try again!";
+        data.choices?.[0]?.message?.content || "Sorry, I encountered an issue. Let's try again!";
 
       setMessages((prev) => [...prev, { role: "assistant", content: assistantMessage }]);
 
-      // Generate dynamic follow-up chips from the AI response
+      // Smart follow-ups: only suggest questions relevant to what Ashli JUST said
       const chips = extractFollowUps(assistantMessage);
       if (chips.length > 0) setFollowUps(chips);
-
     } catch (error) {
       console.error("Chat error:", error);
       setMessages((prev) => [
         ...prev,
-        {
-          role: "assistant",
-          content:
-            "I'm sorry, I'm having trouble connecting right now. Please try again in a moment.",
-        },
+        { role: "assistant", content: "I'm sorry, I'm having trouble connecting right now. Please try again in a moment." },
       ]);
     } finally {
       setIsLoading(false);
@@ -275,26 +403,31 @@ export default function CustomAIChat() {
     </svg>
   );
 
+  // Quick prompts — no emojis, clean text only
   const quickPrompts = [
     {
-      text: "💼 Bajaj Finance work",
+      text: "Bajaj Finance work",
       prompt: "Tell me about Ashish's product design work at Bajaj Finance.",
     },
     {
-      text: "🤖 How he designs with AI",
+      text: "Designing with AI",
       prompt: "How does Ashish use Figma AI, Figma Make, ChatGPT, and other AI tools in his workflow?",
     },
     {
-      text: "📱 Sales One App revamp",
+      text: "Sales One App revamp",
       prompt: "Tell me about the Sales One App revamp Ashish did at Bajaj Finance.",
     },
     {
-      text: "🎯 His design philosophy",
+      text: "Design philosophy",
       prompt: "What is Ashish's 'Designing with AI, thinking like humans' philosophy?",
     },
     {
-      text: "🏥 MedApp project",
+      text: "MedApp project",
       prompt: "Tell me about the MedApp doctor appointment booking project.",
+    },
+    {
+      text: "Prime Video redesign",
+      prompt: "Tell me about the Amazon Prime Video redesign project.",
     },
   ];
 
@@ -307,11 +440,7 @@ export default function CustomAIChat() {
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.95 }}
       >
-        <img
-          src="/images/ai_avatar.png"
-          alt="Ashli AI Avatar"
-          className="w-10 h-10 rounded-full object-contain"
-        />
+        <img src="/images/ai_avatar.png" alt="Ashli AI Avatar" className="w-10 h-10 rounded-full object-contain" />
         <span className="absolute inset-0 rounded-full border border-amber-500/20 animate-ping opacity-75 pointer-events-none" />
       </motion.button>
 
@@ -332,11 +461,7 @@ export default function CustomAIChat() {
             <div className="flex items-center justify-between p-4 border-b border-neutral-800/80 bg-[#12151c]/90 relative z-10">
               <div className="flex items-center gap-3">
                 <div className="relative flex items-center justify-center">
-                  <img
-                    src="/images/ai_avatar.png"
-                    alt="Ashli Header Avatar"
-                    className="w-10 h-10 rounded-full object-contain"
-                  />
+                  <img src="/images/ai_avatar.png" alt="Ashli Header Avatar" className="w-10 h-10 rounded-full object-contain" />
                   <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-[#090b0e] rounded-full animate-pulse" />
                 </div>
                 <div>
@@ -344,31 +469,16 @@ export default function CustomAIChat() {
                   <p className="text-[10px] text-neutral-400 font-inter">AI Assistant</p>
                 </div>
               </div>
-
               <div className="flex items-center gap-1.5">
-                {/* Scroll to top */}
-                <button
-                  onClick={scrollToTop}
-                  title="Scroll to top"
-                  className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-neutral-800/50 text-neutral-400 hover:text-amber-300 transition-colors cursor-pointer"
-                >
+                <button onClick={scrollToTop} title="Scroll to top" className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-neutral-800/50 text-neutral-400 hover:text-amber-300 transition-colors cursor-pointer">
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
                   </svg>
                 </button>
-                {/* Reset */}
-                <button
-                  onClick={handleReset}
-                  title="Clear Chat History"
-                  className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-neutral-800/50 text-neutral-400 hover:text-white transition-colors cursor-pointer"
-                >
+                <button onClick={handleReset} title="Clear Chat History" className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-neutral-800/50 text-neutral-400 hover:text-white transition-colors cursor-pointer">
                   <ResetIcon />
                 </button>
-                {/* Close */}
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-neutral-800/50 text-neutral-400 hover:text-white transition-colors cursor-pointer"
-                >
+                <button onClick={() => setIsOpen(false)} className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-neutral-800/50 text-neutral-400 hover:text-white transition-colors cursor-pointer">
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
@@ -377,21 +487,11 @@ export default function CustomAIChat() {
             </div>
 
             {/* Conversation Log */}
-            <div
-              ref={msgContainerRef}
-              className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-neutral-800 scrollbar-track-transparent"
-            >
+            <div ref={msgContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-neutral-800 scrollbar-track-transparent">
               {messages.map((msg, index) => (
-                <div
-                  key={index}
-                  className={`flex items-start gap-2.5 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}
-                >
+                <div key={index} className={`flex items-start gap-2.5 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}>
                   {msg.role === "assistant" ? (
-                    <img
-                      src="/images/ai_avatar.png"
-                      alt="AI"
-                      className="w-8 h-8 rounded-full object-contain shrink-0"
-                    />
+                    <img src="/images/ai_avatar.png" alt="AI" className="w-8 h-8 rounded-full object-contain shrink-0" />
                   ) : (
                     <div className="w-8 h-8 rounded-full bg-neutral-800 border border-neutral-700/50 flex items-center justify-center text-white shrink-0">
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -399,13 +499,11 @@ export default function CustomAIChat() {
                       </svg>
                     </div>
                   )}
-                  <div
-                    className={`max-w-[75%] p-3 rounded-2xl text-xs md:text-sm font-light leading-relaxed whitespace-pre-wrap ${
-                      msg.role === "user"
-                        ? "bg-amber-500/10 border border-amber-500/20 text-white rounded-tr-none text-left"
-                        : "bg-white/5 border border-white/5 text-white/90 rounded-tl-none text-left"
-                    }`}
-                  >
+                  <div className={`max-w-[75%] p-3 rounded-2xl text-xs md:text-sm font-light leading-relaxed whitespace-pre-wrap ${
+                    msg.role === "user"
+                      ? "bg-amber-500/10 border border-amber-500/20 text-white rounded-tr-none text-left"
+                      : "bg-white/5 border border-white/5 text-white/90 rounded-tl-none text-left"
+                  }`}>
                     {msg.content}
                   </div>
                 </div>
@@ -414,11 +512,7 @@ export default function CustomAIChat() {
               {/* Typing indicator */}
               {isLoading && (
                 <div className="flex items-start gap-2.5">
-                  <img
-                    src="/images/ai_avatar.png"
-                    alt="AI"
-                    className="w-8 h-8 rounded-full object-contain shrink-0"
-                  />
+                  <img src="/images/ai_avatar.png" alt="AI" className="w-8 h-8 rounded-full object-contain shrink-0" />
                   <div className="bg-white/5 border border-white/5 p-3 rounded-2xl rounded-tl-none flex items-center gap-1.5 min-w-[60px] justify-center">
                     <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
                     <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
@@ -433,7 +527,7 @@ export default function CustomAIChat() {
             <div className="px-2.5 py-2 border-t border-neutral-900 bg-[#090a0e]/40">
               <AnimatePresence mode="wait">
                 {showFAQ ? (
-                  /* ---- Frequently Asked Questions ---- */
+                  /* ---- Quick questions ---- */
                   <motion.div
                     key="faq"
                     initial={{ opacity: 0, y: 4 }}
@@ -446,28 +540,28 @@ export default function CustomAIChat() {
                       <button
                         onClick={() => setShowFAQ(false)}
                         title="Close"
-                        className="text-neutral-600 hover:text-neutral-400 transition-colors"
+                        className="text-neutral-700 hover:text-neutral-400 transition-colors"
                       >
                         <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
                         </svg>
                       </button>
                     </div>
-                    <div className="flex flex-row overflow-x-auto whitespace-nowrap scrollbar-none gap-1.5 pb-0.5 scroll-smooth">
+                    <ChipRow rowId="faq-chips">
                       {quickPrompts.map((btn, idx) => (
                         <button
                           key={idx}
                           disabled={isLoading}
                           onClick={() => handleSend(btn.prompt)}
-                          className="shrink-0 text-[10px] bg-white/4 hover:bg-amber-500/10 border border-white/8 hover:border-amber-500/25 text-neutral-400 hover:text-white px-2.5 py-1 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:pointer-events-none leading-none"
+                          className="shrink-0 text-[10px] bg-transparent hover:bg-white/5 border border-white/[0.07] hover:border-amber-500/25 text-neutral-500 hover:text-white px-2.5 py-1 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-40 disabled:pointer-events-none leading-none"
                         >
                           {btn.text}
                         </button>
                       ))}
-                    </div>
+                    </ChipRow>
                   </motion.div>
                 ) : followUps.length > 0 ? (
-                  /* ---- Dynamic contextual follow-up chips ---- */
+                  /* ---- Smart contextual follow-up chips ---- */
                   <motion.div
                     key="followups"
                     initial={{ opacity: 0, y: 4 }}
@@ -476,29 +570,29 @@ export default function CustomAIChat() {
                     transition={{ duration: 0.15 }}
                   >
                     <div className="flex items-center justify-between mb-1.5 px-0.5">
-                      <p className="text-[9px] text-neutral-600 font-semibold uppercase tracking-widest">Ask next</p>
+                      <p className="text-[9px] text-neutral-600 font-semibold uppercase tracking-widest">Dig deeper</p>
                       <button
                         onClick={() => setFollowUps([])}
                         title="Dismiss"
-                        className="text-neutral-600 hover:text-neutral-400 transition-colors"
+                        className="text-neutral-700 hover:text-neutral-400 transition-colors"
                       >
                         <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
                         </svg>
                       </button>
                     </div>
-                    <div className="flex flex-row overflow-x-auto whitespace-nowrap scrollbar-none gap-1.5 pb-0.5 scroll-smooth">
+                    <ChipRow rowId="followup-chips">
                       {followUps.map((chip, idx) => (
                         <button
                           key={idx}
                           disabled={isLoading}
                           onClick={() => handleSend(chip)}
-                          className="shrink-0 text-[10px] bg-amber-500/5 hover:bg-amber-500/12 border border-amber-500/15 hover:border-amber-500/35 text-amber-300/70 hover:text-amber-100 px-2.5 py-1 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:pointer-events-none leading-none"
+                          className="shrink-0 text-[10px] bg-amber-500/5 hover:bg-amber-500/12 border border-amber-500/12 hover:border-amber-500/35 text-amber-400/60 hover:text-amber-100 px-2.5 py-1 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-40 disabled:pointer-events-none leading-none"
                         >
                           {chip}
                         </button>
                       ))}
-                    </div>
+                    </ChipRow>
                   </motion.div>
                 ) : null}
               </AnimatePresence>
@@ -531,7 +625,7 @@ export default function CustomAIChat() {
         )}
       </AnimatePresence>
 
-      {/* Delayed welcome pop-up above Chatbot button trigger (only active at hero top section) */}
+      {/* Welcome pop-up above Chatbot button */}
       <AnimatePresence>
         {showWelcome && !isOpen && scrollY < 150 && (
           <motion.div
@@ -541,21 +635,14 @@ export default function CustomAIChat() {
             transition={{ type: "spring", stiffness: 350, damping: 25 }}
             className="fixed bottom-[88px] right-6 z-[9998] w-72 p-4 rounded-2xl bg-[#0d0f14]/95 border border-amber-500/20 shadow-[0_10px_30px_rgba(0,0,0,0.6)] backdrop-blur-xl text-left flex gap-3 pointer-events-auto font-inter"
           >
-            {/* Pointer arrow pointing to trigger button */}
             <div className="absolute -bottom-1.5 right-6 w-3.5 h-3.5 bg-[#0d0f14] border-r border-b border-amber-500/20 transform rotate-45 pointer-events-none" />
-            
-            <img
-              src="/images/ai_avatar.png"
-              alt="Ashli welcome"
-              className="w-8 h-8 rounded-full object-contain shrink-0 bg-[#090b0e] border border-amber-500/10"
-            />
+            <img src="/images/ai_avatar.png" alt="Ashli welcome" className="w-8 h-8 rounded-full object-contain shrink-0 bg-[#090b0e] border border-amber-500/10" />
             <div className="flex-1 pr-4">
               <h4 className="text-[10px] text-amber-500 font-semibold tracking-wider uppercase mb-0.5 font-rubik">Ashli</h4>
               <p className="text-[11px] text-white/95 leading-normal font-light">
                 Hey there! I am Ashli 👋, Ashish&apos;s interactive AI assistant. Ask me anything about him!
               </p>
             </div>
-            
             <button
               onClick={() => setShowWelcome(false)}
               className="absolute top-2 right-2 w-5 h-5 rounded-full flex items-center justify-center text-neutral-500 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
@@ -568,7 +655,7 @@ export default function CustomAIChat() {
         )}
       </AnimatePresence>
 
-      {/* Floating Scroll to Top button stacked perfectly above Chatbot button trigger (only active after scrolling) */}
+      {/* Floating Scroll to Top button */}
       <AnimatePresence>
         {scrollY >= 150 && !isOpen && (
           <motion.button

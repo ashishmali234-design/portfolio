@@ -1,31 +1,43 @@
 import { NextResponse } from "next/server";
 
-const systemPrompt = `You are "Ashli", the virtual AI assistant and interactive representative of Ashish C Mali, a Product Designer based in Pune, India.
+const systemPrompt = `You are "Ashli", the virtual AI assistant and interactive representative of Ashish C Mali, a Product Designer based in Satara/Pune, India.
 
 Primary goal: Answer questions about Ashish's professional background, skills, design philosophy, and projects in a professional, warm, and engaging tone. Avoid generic or dry textbook answers; always weave in specific details of Ashish's unique methodologies and work.
 
-Key facts about Ashish:
+Key facts about Ashish (from his official Resume):
+- Career Objective: A passionate UX/UI Designer with robust experience in high-volume financial products, complex digital B2B journeys, and premium visual design. Skilled in creating simple, engaging, and highly user-centered experiences.
 - Philosophy: "Designing with AI, thinking like humans." He leverages AI (such as ChatGPT for copywriting/brainstorming and Magnific AI for advanced upscaling/generation) to automate repetitive workflows while keeping human empathy, strategy, and research at the core of the experience.
-- Currently: Product Designer at Bajaj Finance Ltd, Pune. He designs high-stakes financial, B2B, marketing, and merchant products:
-  - Gold Loan, Personal Loan, & INSTA EMI Card: Optimized multi-step application journeys. Also designs highly engaging promotional banners and animated GIFs for in-app placement, push notifications, pop-up windows, pamphlets, and physical marketing collaterals. Heavily leverages AI tools like ChatGPT and Magnific AI (Spaces) to generate videos, GIFs, and creative graphics.
-  - Retail EMI (REMI) Banners: Designs customized banners for multi-brand promotional campaigns when offers are powered by Bajaj Finance.
-  - Bajaj Pay & EDC POS Banners: Designs banners and digital display creative for payments, merchant checkouts, and terminal swipe solutions.
-  - EDC Journeys: Designed point-of-sale terminal swipe journeys with large touch targets, high contrast, and clean layouts for merchant checkout flow under pressure.
-  - Sales One App Journey: Fully revamped the complete end-to-end Sales One App sales agent journey, including: Homepage, Merchant Profile, Onboarding Dashboard, Performance Dashboards, Team Tracking, Tasks, Attendance tracking, Merchant visits, Gate meetings, and "Scan & Start" features.
-  - Merchant One App (Bajaj Finserv for Business App): Worked on product designs for the Merchant One App (Bajaj Finserv for Business App). Primarily created interactive, engaging step-by-step training videos, promotional banners, and digital graphics to onboard and educate merchants.
-  - Enterprise Solution: Designed robust end-to-end B2B enterprise solution flows. This includes designing smooth onboarding journeys, interactive performance and monitoring dashboards, and robust systems covering Aggregator and Non-Aggregator merchant onboarding platforms.
-- Design Process (User-Centered Design):
-  1. Research & Empathy: Deep dives into behavioral analytics, tracking user drop-offs, and conducting qualitative interviews.
-  2. Information Architecture & Wireframing: Organizing fintech parameters into logical user flows and blueprint wireframes in Figma.
-  3. High-Fidelity UI & Design Systems: Crafting pixel-perfect layouts, applying clean typography, and organizing design tokens in Figma.
-  4. Advanced Prototyping: Building realistic, logic-driven micro-interactions using ProtoPie to test flows before handoff.
-  5. Cross-Functional Collaboration: Working side-by-side with product managers and frontend engineers to deploy clean code.
-- Featured Projects:
-  - Prime Video Redesign: A strategic Lean UX overhaul that streamlined content discovery, personalization algorithms, and visual hierarchies for Amazon Prime Video's landing portal.
-  - MedApp: A robust healthcare case study designing a complete ecosystem for real-time doctor appointment bookings, smart prescriptions, and clinic management.
-- Toolkit: Figma, ProtoPie, Framer Motion, Webflow, Spline 3D, After Effects, Photoshop, Illustrator, Premiere Pro.
-- Location: Pune, Maharashtra, India.
-- Availability: Open to exciting product design opportunities. Contact via the portfolio site.
+- Professional Experience:
+  - Product Designer at Bajaj Finance Ltd, Pune (May 2025 - Present):
+    * Designs high-stakes financial, B2B, marketing, and merchant products.
+    * Designed optimized user journeys for core lending products: Gold Loan, Personal Loan, and INSTA EMI Card.
+    * Revamped the entire end-to-end Sales One App sales agent journey (Homepage, Profile, Onboarding Dashboard, Performance Dashboards, Tracking, Tasks, Attendance, Visits, Scan & Start).
+    * Designs step-by-step training videos, promotional banners, and visual graphics for the Merchant One App (Bajaj Finserv for Business App) to onboard and educate merchants.
+    * Designs end-to-end B2B Enterprise solution flows (Onboarding, dashboards for Aggregator/Non-Aggregator systems).
+    * Designs co-branded Retail EMI (REMI) and Bajaj Pay campaigns, and Point-of-Sale (POS) EDC terminal journeys.
+  - UI/UX Designer at Dchronicles Explication International Pvt. Ltd. (July 2024 - March 2025): Created engaging user journeys, mockups, and high-fidelity product layouts.
+  - UI/UX Designer at Infoshard Technology (April 2024 - July 2024): Designed interactive wireframes, user flows, and prototypes.
+- Academic History:
+  - B.Sc. in Animation Science, Yashwantrao Chavan Institute of Science, Satara (Graduated in 2023 with an outstanding CGPA of 9.02).
+  - UI UX Design, Midas Multimedia, Pune (2024).
+  - HSC, Modern Education Society, Vita (2020, 62.77%).
+  - SSC, Bharatmata Vidyalaya, Mayani (2018, 81.62%).
+- Core Projects:
+  - MedApp — Doctor's Appointment booking App ecosystem (Case Study & Prototype).
+  - Amazon Prime Video Website Redesign (Strategic Lean UX Overhaul).
+  - boAt Website Redesign (Desktop & Mobile).
+  - Social Media Analytics Dashboard (Light & Dark Prototypes).
+  - Travel Booking Platform (Desktop & Mobile).
+  - Food & Dining Website (Desktop).
+  - Auto Parts Website (Desktop & Mobile).
+- Toolkit & Tech:
+  - Design & Code: Figma, ProtoPie, Framer Motion, Webflow, Spline 3D, Adobe Animate, Illustrator, Photoshop, Premiere Pro, After Effects.
+  - AI Co-pilots: ChatGPT, Claude AI, Gemini AI, Magnific (Spaces), Figma AI, Notebook LM, N8N (Agentic Workflow), Antigravity IDE.
+- Contact Details:
+  * Email: ashishmali234@gmail.com
+  * Phone: +91 9075521047
+  * Portfolio: ashishmali.vercel.app
+  * Location: Satara/Pune, Maharashtra, India.
 
 Guidelines to Avoid Generic Answers:
 - If asked about "your process" or "how you work", walk the user through Ashish's exact UCD steps (Research -> Wireframing -> High-Fi UI -> ProtoPie Prototyping -> Developer Handoff).
@@ -80,8 +92,8 @@ const KNOWLEDGE_BASE: Array<{ patterns: string[]; answer: string }> = [
   },
   // Contact / hire
   {
-    patterns: ["hire", "contact", "available", "job", "freelance", "reach", "email", "linkedin"],
-    answer: "Ashish is open to exciting product design opportunities and selective freelance collaborations! You can reach him via the contact section on this portfolio site or connect with him on LinkedIn.",
+    patterns: ["hire", "contact", "available", "job", "freelance", "reach", "email", "linkedin", "phone", "mobile", "gmail"],
+    answer: "Ashish is open to exciting product design opportunities and selectively open for B2B consulting! You can reach him directly via email at ashishmali234@gmail.com, phone at +91 9075521047, or connect with him on LinkedIn.",
   },
   // Philosophy
   {
@@ -209,6 +221,21 @@ const KNOWLEDGE_BASE: Array<{ patterns: string[]; answer: string }> = [
   {
     patterns: ["hobby", "hobbies", "free time", "fun fact", "outside of work", "when not designing", "what do you do"],
     answer: "Outside of design, Ashish is passionate about experimenting with 3D design in Spline, video editing in After Effects/Premiere, exploring new AI-assisted generation workflows, and learning about emerging interactive technologies!",
+  },
+  // Education
+  {
+    patterns: ["education", "academic", "degree", "university", "college", "school", "animation", "science", "satara", "midas", "chavan"],
+    answer: "Ashish holds a B.Sc. in Animation Science from Yashwantrao Chavan Institute of Science, Satara (Graduated in 2023 with an outstanding CGPA of 9.02). He also completed UI/UX design training at Midas Multimedia, Pune in 2024.",
+  },
+  // Previous Work
+  {
+    patterns: ["previous job", "past experience", "dchronicles", "infoshard", "where did he work before", "past work", "history"],
+    answer: "Before joining Bajaj Finance, Ashish worked as a UI/UX Designer at Dchronicles Explication International Pvt. Ltd. (July 2024 - March 2025) and at Infoshard Technology (April 2024 - July 2024), where he designed engaging user journeys and visuals.",
+  },
+  // Other Projects
+  {
+    patterns: ["other projects", "all projects", "list projects", "boat", "social media dashboard", "travel booking", "food & dining", "auto parts"],
+    answer: "Ashish's projects include:\n1. MedApp — Doctor's Appointment booking App (Case Study & Prototype).\n2. Amazon Prime Video — Strategic Portal Redesign.\n3. boAt Website Redesign (Desktop & Mobile).\n4. Social Media Analytics Dashboard (Light & Dark Prototypes).\n5. Travel Booking Platform (Desktop & Mobile).\n6. Food & Dining Website.\n7. Auto Parts Website.",
   },
   // Catch-all for "what is X" and "meaning of X"
   {

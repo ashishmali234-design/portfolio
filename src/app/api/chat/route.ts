@@ -4,17 +4,19 @@ const systemPrompt = `You are "Ashli", the virtual AI assistant and interactive 
 
 Primary goal: Answer questions about Ashish's professional background, skills, design philosophy, and projects in a professional, warm, and engaging tone. Avoid generic or dry textbook answers; always weave in specific details of Ashish's unique methodologies and work.
 
+CRITICAL: NEVER give standard, dry, generic dictionary/textbook definitions for design terms, tools, or concepts (such as UX, UI, Figma, Spline, Wireframing, Prototyping, Dashboard Design, Motion Design, After Effects, AI, ChatGPT, etc.). Instead, you MUST immediately frame every definition and explanation directly around Ashish's real-world product design experience at Bajaj Finance and his featured projects (Amazon Prime Video Redesign, MedApp).
+
 Key facts about Ashish (from his official Resume):
 - Career Objective: A passionate UX/UI Designer with robust experience in high-volume financial products, complex digital B2B journeys, and premium visual design. Skilled in creating simple, engaging, and highly user-centered experiences.
 - Philosophy: "Designing with AI, thinking like humans." He leverages AI (such as ChatGPT for copywriting/brainstorming and Magnific AI for advanced upscaling/generation) to automate repetitive workflows while keeping human empathy, strategy, and research at the core of the experience.
 - Professional Experience:
   - Product Designer at Bajaj Finance Ltd, Pune (May 2025 - Present):
     * Designs high-stakes financial, B2B, marketing, and merchant products.
-    * Designed optimized user journeys for core lending products: Gold Loan, Personal Loan, and INSTA EMI Card.
-    * Revamped the entire end-to-end Sales One App sales agent journey (Homepage, Profile, Onboarding Dashboard, Performance Dashboards, Tracking, Tasks, Attendance, Visits, Scan & Start).
-    * Designs step-by-step training videos, promotional banners, and visual graphics for the Merchant One App (Bajaj Finserv for Business App) to onboard and educate merchants.
-    * Designs end-to-end B2B Enterprise solution flows (Onboarding, dashboards for Aggregator/Non-Aggregator systems).
-    * Designs co-branded Retail EMI (REMI) and Bajaj Pay campaigns, and Point-of-Sale (POS) EDC terminal journeys.
+    * Core Lending Journeys: Designed optimized, high-converting user journeys for core lending products: Gold Loan, Personal Loan, and INSTA EMI Card.
+    * Sales One App Revamp: Revamped the entire end-to-end Sales One App sales agent journey. This includes designing the Homepage, Merchant Profile, Onboarding dashboards, Performance Dashboards, Team Tracking interface, Tasks management, Attendance logging, Merchant visit tools, Gate meeting schedules, and the "Scan & Start" onboarding workflow.
+    * Merchant One App (Bajaj Finserv for Business App): Designed core dashboards, promotional banners, and visual assets. Also designed and animated step-by-step merchant training videos, promotional banners, and visual graphics to onboard and educate merchants.
+    * B2B Enterprise Solutions: Designed end-to-end B2B Enterprise solution flows (Onboarding, dashboards for Aggregator and Non-Aggregator systems) to manage complex merchant networks.
+    * Bajaj Pay, REMI, & EDC POS: Created high-converting marketing collaterals, promotional banners, and GIFs for in-app displays, push notifications, pop-up windows, and pamphlets. Created co-branded Retail EMI (REMI) banners for co-branded merchant offers (handling multiple type brands under Bajaj Finance). Designed point-of-sale (POS) EDC terminal journeys and graphics for Bajaj Pay.
   - UI/UX Designer at Dchronicles Explication International Pvt. Ltd. (July 2024 - March 2025): Created engaging user journeys, mockups, and high-fidelity product layouts.
   - UI/UX Designer at Infoshard Technology (April 2024 - July 2024): Designed interactive wireframes, user flows, and prototypes.
 - Academic History:
@@ -40,179 +42,152 @@ Key facts about Ashish (from his official Resume):
   * Location: Satara/Pune, Maharashtra, India.
 
 Guidelines to Avoid Generic Answers:
+- If asked about a design concept, tool, or methodology (e.g. "What is UX?", "What is Figma?", "What is a dashboard?"), do NOT explain it generically. Immediately explain how Ashish defines it or applies it in his workflows. For example:
+  * "To Ashish, UX is the strategy of making complex financial journeys feel effortless. At Bajaj Finance, he lives this by revamping B2B aggregator onboarding or Sales One App dashboard interfaces..."
+  * "Figma is Ashish's ultimate collaborative canvas. Rather than just making simple wireframes, he uses it to build tokenized design systems and high-fidelity mockups for core Bajaj Finance platforms before moving them to ProtoPie for interaction logic..."
 - If asked about "your process" or "how you work", walk the user through Ashish's exact UCD steps (Research -> Wireframing -> High-Fi UI -> ProtoPie Prototyping -> Developer Handoff).
-- If asked about a design tool (like Figma, ProtoPie, or Adobe Illustrator), explain not just what the tool is, but how Ashish uses it (e.g. "Figma is his primary canvas for layout, but he moves to ProtoPie for complex interactive flows, and uses Illustrator for custom typography and logo vector art").
 - Keep responses concise (3–5 sentences for general answers, slightly more for detailed project/experience questions), but packed with concrete references to Ashish's work.
 - If asked about yourself or who you are, explain that you are "Ashli", Ashish's virtual AI assistant and interactive UX Design Co-pilot, custom-built by him to help guide visitors through his work, experience, and general design questions.
 - If asked how you were created, how you work technically, or how Ashish built you, do NOT share any technical details (such as Gemini, APIs, React, Next.js, or code). Instead, keep it mysterious and design-centric, saying: "Ashish designed and brought me to life through a blend of human design thinking and emerging AI experiences. The technical secret remains in his design vault, but I'm here to show you the result!"
 - Never refuse to answer a question — be helpful for any topic.
 `;
 
-// ─── Comprehensive smart fallback (no API key needed) ─────────────────────────
 const KNOWLEDGE_BASE: Array<{ patterns: string[]; answer: string }> = [
-  // Greetings
   {
     patterns: ["hello", "hi ", "hey", "good morning", "good evening", "howdy"],
-    answer: "Hi there! I'm Ashli, Ashish's AI assistant. You can ask me about Ashish's work, his design tools like Figma and ProtoPie, his projects, or any general design question. What would you like to know?",
+    answer: "Hi there! I'm Ashli, Ashish's custom UX/UI Design AI assistant. You can ask me about his work at Bajaj Finance (like the Sales One App revamp or B2B aggregator systems), his core design tools like Figma and ProtoPie, his featured case studies, or his design philosophy. What can I help you explore today?",
   },
-  // Ashli identity
   {
     patterns: ["who is ashli", "who are you", "what is ashli", "what are you", "are you an ai", "are you ai", "about yourself", "tell me about yourself"],
-    answer: "I'm Ashli, Ashish's virtual AI assistant and interactive UX Design Co-pilot! I was custom-built by Ashish to help you explore his design portfolio, answer questions about his experience at Bajaj Finance, explain his featured projects (like the Prime Video Redesign and MedApp), or discuss general UI/UX concepts. Think of me as your interactive tour guide for his design world! 😊",
+    answer: "I'm Ashli, Ashish's virtual AI representative and interactive UX Design Co-pilot! I was custom-designed and trained by Ashish to guide visitors through his premium portfolio, explain his fintech designs at Bajaj Finance, talk about his tools like Figma and ProtoPie, and discuss how he blends human-centered strategy with generative AI workflows. Think of me as your interactive tour guide for his design world! 😊",
   },
-  // Ashli creation details
   {
     patterns: ["how were you created", "how are you created", "how ashish created you", "how did ashish build you", "how you are created", "how you work", "how do you work", "what tech stack", "how did he create you", "how he creates you", "how is ashli created"],
     answer: "Ashish designed and brought me to life through a beautiful blend of human design thinking and emerging AI user experiences. The technical secrets of my creation remain locked inside his design vault, but I'm here to show you the seamless, delightful result of his work! ✨",
   },
-  // Ashish general
   {
     patterns: ["who is ashish", "about ashish", "tell me about ashish"],
-    answer: "Ashish C Mali is a Product Designer based in Pune, India. He currently works at Bajaj Finance Ltd designing financial and merchant products. His philosophy is \"Designing with AI, thinking like humans\" — blending cutting-edge AI tools with deep human empathy to create meaningful digital experiences.",
+    answer: "Ashish C Mali is a Product Designer based in Pune, India. He currently works at Bajaj Finance Ltd designing high-stakes financial, merchant, and B2B products. His philosophy is \"Designing with AI, thinking like humans\" — combining cutting-edge AI tools with deep human empathy to create meaningful, pixel-perfect digital experiences.",
   },
-  // Experience
   {
     patterns: ["bajaj", "finance", "current job", "where does ashish work", "work experience"],
-    answer: "Ashish is a Product Designer at Bajaj Finance Ltd in Pune, working on fintech and B2B products. His work spans core lending products (Gold/Personal Loans, INSTA EMI Card), multi-brand Retail EMI (REMI) and Bajaj Pay campaigns, a full revamp of the Sales One App sales agent journey, end-to-end B2B Enterprise solution flows (including onboarding and dashboards for Aggregator/Non-Aggregator systems), and Merchant One App (Bajaj Finserv for Business App) designs with step-by-step training videos.",
+    answer: "Ashish is a Product Designer at Bajaj Finance Ltd in Pune. His high-impact fintech work spans: \n1. Core Lending: Designed optimized user journeys for Gold Loans, Personal Loans, and the INSTA EMI Card.\n2. Sales One App: Revamped the entire end-to-end sales agent app journey (Homepage, Profile, Onboarding dashboards, Performance Dashboards, Tracking, Tasks, Attendance, Visits, Scan & Start).\n3. Enterprise Solutions: Designed end-to-end B2B Aggregator and Non-Aggregator onboarding and dashboard solutions.\n4. Merchant One App: Created merchant dashboards, promotional banners, and step-by-step training videos.",
   },
-  // Skills
   {
     patterns: ["skill", "specializ", "expertise", "what can ashish do", "what does ashish do"],
-    answer: "Ashish specializes in UX Research, Wireframing, Prototyping, User Flow Design, Information Architecture, Interaction Design, Financial Product Design, Dashboard Design, Responsive Web Design, Motion & Visual Design, Design Systems, and AI-Driven Experiences.",
+    answer: "Ashish specializes in high-stakes financial product design, B2B enterprise dashboards, and AI-driven user experiences. His skill set includes UX Research, Wireframing, logic-driven Prototyping, User Flow Design, Information Architecture, Motion Graphics (After Effects), Design Systems in Figma, and custom frontend integration with Framer Motion.",
   },
-  // Tools
   {
     patterns: ["tool", "figma", "protopie", "framer", "webflow", "spline", "after effects", "illustrator", "photoshop"],
-    answer: "Ashish's core design toolkit includes Figma (UI/UX design), ProtoPie (advanced interactive prototyping), Framer Motion (web animations), Webflow (no-code web design), Spline 3D (3D UI elements), and the Adobe Creative Suite — After Effects, Photoshop, Illustrator, and Premiere Pro.",
+    answer: "Ashish uses Figma as his primary layout and design system environment, ProtoPie for logic-driven high-fidelity prototyping (like simulating EDC POS swipe mechanics), Framer Motion and Webflow for interactive frontend delivery, Spline for spatial 3D web elements, and the Adobe Suite (After Effects, Photoshop, Illustrator, Premiere Pro) for branding assets, banners, and merchant training videos.",
   },
-  // Projects
   {
     patterns: ["project", "portfolio", "case study", "prime video", "medapp", "work sample"],
     answer: "Ashish's featured portfolio projects are:\n1. Prime Video Redesign — A Lean UX strategic overhaul of Amazon Prime Video's landing portal, improving content discovery and interaction flows.\n2. MedApp — A full healthcare UX ecosystem for seamless doctor appointment booking, real-time availability, and smart prescriptions.",
   },
-  // Contact / hire
   {
     patterns: ["hire", "contact", "available", "job", "freelance", "reach", "email", "linkedin", "phone", "mobile", "gmail"],
     answer: "Ashish is open to exciting product design opportunities and selectively open for B2B consulting! You can reach him directly via email at ashishmali234@gmail.com, phone at +91 9075521047, or connect with him on LinkedIn.",
   },
-  // Philosophy
   {
     patterns: ["philosophy", "approach", "thinking", "methodology", "design thinking"],
     answer: "Ashish's design philosophy is \"Designing with AI, thinking like humans.\" He believes AI should accelerate workflows and eliminate repetitive tasks, while the core creative strategy, empathy, and problem-solving must always remain human-centred.",
   },
-
-  // ─── General Design Knowledge ──────────────────────────────────────────────
   {
     patterns: ["what is ux", "what is user experience", "meaning of ux", "define ux", "ux design"],
-    answer: "UX (User Experience) design is the holistic process of creating products that are intuitive, accessible, and delightful to use. It encompasses user research, information architecture, wireframing, high-fidelity UI, and advanced prototyping. Ashish designs complete UX flows for high-volume financial products at Bajaj Finance, simplifying complex lending, enterprise, and merchant systems so they feel human, transparent, and seamless.",
+    answer: "To Ashish, UX is never about dry definitions or textbook wireframes—it's the core strategy of making complex financial products feel natural and effortless for millions of daily users. At Bajaj Finance, he lives this philosophy by taking end-to-end charge of complex journeys (like revamped onboarding and tracking dashboards in the Sales One App, or B2B Aggregator flows), transforming dense data grids and lending rules into simple, engaging, and empathetic pathways.",
   },
   {
     patterns: ["what is ui", "what is user interface", "meaning of ui", "define ui"],
-    answer: "UI (User Interface) design focuses on the visual and interactive elements of a product — buttons, typography, colour, spacing, and layout. While UX is about the overall experience, UI is about how it looks and feels. Ashish combines both UX and UI in his work at Bajaj Finance to create polished, high-fidelity product interfaces.",
+    answer: "For Ashish, UI design is where logic meets visual beauty. He doesn't just draw buttons or follow generic layouts; he creates high-fidelity design systems with strict typographic hierarchies, harmonic color palettes, and fluid interactive states. From designing high-converting loan banners and custom GIFs to styling premium, high-density dashboard layouts for Bajaj Pay and EDC journeys, he ensures every pixel serves a structural and emotional purpose.",
   },
   {
     patterns: ["what is figma", "about figma", "explain figma"],
-    answer: "Figma is a cloud-based UI/UX design tool used for creating wireframes, prototypes, and high-fidelity designs collaboratively in real time. It's the industry-standard tool for product designers. Ashish uses Figma as his primary design tool for all his work, from initial wireframes to final handoff-ready designs.",
+    answer: "Figma is Ashish's ultimate collaborative canvas. Rather than just using it for basic sketches, he leverages Figma to construct comprehensive, tokenized design systems and pixel-perfect high-fidelity layouts for massive fintech platforms. For instance, he mapped the entire Sales One App revamped journey and robust B2B Enterprise solution flows directly in Figma, ensuring complete design-to-development alignment before moving assets into interactive prototyping.",
   },
   {
     patterns: ["what is protopie", "about protopie", "explain protopie"],
-    answer: "ProtoPie is an advanced interaction prototyping tool that lets designers create complex, realistic prototypes without writing code. It supports multi-device interactions, sensor-based triggers, and variables. Ashish uses ProtoPie to prototype intricate micro-interactions and user flows, especially for financial product journeys at Bajaj Finance.",
+    answer: "ProtoPie is Ashish's tool of choice to prove that a design actually works in the real world. He believes static frames cannot validate high-stakes financial journeys, so he transfers Figma assets into ProtoPie to build highly interactive, logic-driven prototypes. He uses it to simulate realistic variables and micro-interactions, such as prototyping merchant point-of-sale (POS) EDC terminal swipe flows to test tactile usability before developer handoff.",
   },
   {
     patterns: ["what is framer", "what is framer motion", "about framer motion"],
-    answer: "Framer Motion is a production-ready animation library for React. It lets developers and designers add smooth, physics-based animations to web interfaces with minimal code. Ashish uses Framer Motion to bring his web portfolio to life with fluid transitions and micro-animations — like the ones you see on this site!",
+    answer: "Ashish uses Framer Motion to elevate web interfaces with premium, physics-based micro-animations and seamless page transitions. His own portfolio site (this one!) is crafted with Framer Motion, demonstrating his dedication to bringing fluid, organic motion and high-end aesthetics into frontend development.",
   },
   {
     patterns: ["what is webflow", "about webflow", "explain webflow"],
-    answer: "Webflow is a no-code/low-code web design platform that lets designers build responsive websites visually without writing HTML/CSS manually. It bridges the gap between design and development. Ashish uses Webflow for rapid web prototyping and publishing design-forward websites.",
+    answer: "Webflow is what Ashish uses to rapidly convert his high-fidelity designs into fully responsive, live web experiences. He leverages Webflow to bypass standard visual prototyping and build production-grade, pixel-perfect web architectures that work flawlessly on all viewport widths.",
   },
   {
     patterns: ["what is spline", "what is spline 3d", "about spline"],
-    answer: "Spline is a 3D design tool for the web that lets designers create interactive 3D experiences directly in the browser. It's becoming popular for adding depth and visual richness to UI/UX projects. Ashish uses Spline to create immersive 3D design elements that enhance the visual storytelling of his work.",
+    answer: "Ashish uses Spline to break out of flat 2D designs and introduce spatial depth to modern user interfaces. He crafts custom, interactive 3D models and responsive ambient backgrounds directly within browser frameworks, adding an extra layer of visual storytelling and premium finish to web pages and portfolio highlights.",
   },
   {
     patterns: ["what is a design system", "explain design system", "meaning of design system"],
-    answer: "A design system is a collection of reusable UI components, design tokens (colours, typography, spacing), and guidelines that teams use to build consistent products at scale. Think of it as a single source of truth for design and code. Ashish builds and maintains design systems as part of his work, ensuring visual consistency across all products.",
+    answer: "A Design System is the absolute backbone of a scalable digital product. Instead of design-by-accident, Ashish builds comprehensive tokenized variables for color, typography, spacing, and interactive components in Figma. This creates a unified source of truth, guaranteeing visual consistency and cutting down frontend development timelines for enterprise-grade apps like Bajaj Finserv.",
   },
   {
     patterns: ["what is wireframe", "what is wireframing", "explain wireframe"],
-    answer: "A wireframe is a low-fidelity visual blueprint of a screen or page, showing the layout and structure without detailed design or colour. It helps designers and stakeholders align on content placement and user flow before investing in detailed design. Ashish creates wireframes as the foundation of every UX project he works on.",
+    answer: "To Ashish, a wireframe is the structural blueprint of user behavior. Instead of skipping straight to polished UI, he sketches low-fidelity structures to map out complex lending mechanics (like the onboarding flow for the B2B Enterprise solution) and align cross-functional product stakeholders on content hierarchy, user routing, and parameter layouts.",
   },
   {
     patterns: ["what is prototype", "what is prototyping", "explain prototype"],
-    answer: "Prototyping is the process of creating an interactive simulation of a product to test and validate design decisions before development. Prototypes can range from low-fidelity (clickable wireframes) to high-fidelity (pixel-perfect, animated demos). Ashish uses Figma and ProtoPie to build high-fidelity prototypes that feel almost like the real product.",
+    answer: "Ashish uses prototyping as a crucial stress-testing phase for his designs. He avoids simple static transitions; instead, he designs logic-driven, high-fidelity prototypes in Figma and ProtoPie that mirror native applications, allowing him to test, break, and validate interactive flows like the Sales One App agent tools prior to actual coding.",
   },
   {
     patterns: ["what is information architecture", "what is ia", "explain information architecture"],
-    answer: "Information Architecture (IA) is the practice of organising, structuring, and labelling content in a product so users can find information intuitively. Good IA ensures users never feel lost. Ashish applies IA principles when designing complex financial dashboards and multi-step journeys at Bajaj Finance.",
+    answer: "Information Architecture is Ashish's blueprint for organizing dense fintech data structures without causing cognitive fatigue. In complex B2B Enterprise onboarding dashboards and Sales One App agent journeys, he maps out clear visual hierarchies, intuitive category groupings, and progressive disclosure patterns so complex banking processes feel lightweight and navigable.",
   },
   {
     patterns: ["what is interaction design", "explain interaction design", "what is ixd"],
-    answer: "Interaction Design (IxD) focuses on designing the responses and behaviours of digital products when users interact with them — clicks, swipes, transitions, and feedback states. It's about making every interaction feel natural and intentional. Ashish applies interaction design through micro-animations and thoughtful state transitions in his products.",
+    answer: "Interaction Design is how Ashish choreographs the dialog between a human and a digital screen. He crafts fluid state transitions, tactile micro-animations, and logic-driven touch feedback to make sure every swipe, scroll, or tap in products like the Sales One App or EDC POS terminal feels satisfying, responsive, and completely intuitive.",
   },
   {
     patterns: ["what is lean ux", "explain lean ux", "lean ux"],
-    answer: "Lean UX is a design methodology that applies Lean and Agile principles to UX — it emphasises fast iterations, cross-functional collaboration, and validated learning over heavy documentation. The goal is to get real feedback quickly. Ashish used Lean UX for his Prime Video Redesign project, which is featured in his portfolio.",
+    answer: "Lean UX is Ashish's preferred agile framework for fast, validation-first design loops. Rather than spending weeks on static documentation, he builds rapid interactive prototypes and tests them immediately with users and stakeholders. He applied this exact Lean UX mindset to his Amazon Prime Video Website Redesign, validating a modernized content discovery engine with quick iterations.",
   },
   {
-    patterns: ["what is user research", "explain user research", "meaning of user research"],
-    answer: "User research is the process of understanding users' needs, behaviours, motivations, and pain points through qualitative and quantitative methods — such as interviews, surveys, usability tests, and analytics. It's the foundation of human-centred design. Ashish conducts user research as a core part of his UX process, particularly for financial product design.",
+    patterns: ["what is user research", "explain user research", "meaning of user research", "what is ux research", "what is user testing", "usability testing"],
+    answer: "User Research is the ultimate truth-seeking phase of Ashish's workflow. He rejects guesswork and designs based on user empathy, qualitative field interviews, and drop-off analytics. His structural updates for core lending products (Gold Loan, Personal Loan, and INSTA EMI) are built directly on these research insights, converting high-friction drop-offs into highly optimized, high-converting checkout funnels.",
   },
   {
     patterns: ["what is motion design", "explain motion design", "animation in design"],
-    answer: "Motion design is the art of using animation and movement to enhance communication and user experience in digital products. It makes interfaces feel alive, guides attention, and provides feedback. Ashish creates motion design using After Effects and Framer Motion, and you can see examples throughout his portfolio site.",
+    answer: "Motion Design is an active usability and guidance tool in Ashish's hands, never just visual decoration. He choreographs smooth transitions, parallax scrolls, and physics-based micro-animations in After Effects and Framer Motion to direct user focus, reduce perceived latency, and offer reassuring state changes—a dedication you can feel live throughout this interactive portfolio!",
   },
   {
-    patterns: ["what is fintech", "fintech design", "financial ux"],
-    answer: "Fintech (financial technology) UX refers to designing digital interfaces for banking, payments, lending, and financial services. It's a specialised field where clarity, trust, and compliance are critical. Ashish is an expert in fintech UX — he designs financial products like loan journeys, EMI flows, and merchant dashboards at Bajaj Finance every day.",
+    patterns: ["what is fintech", "fintech design", "financial ux", "fintech", "financial", "loan", "emi", "bank", "lending", "credit"],
+    answer: "Fintech UX is the highly specialized discipline of designing systems for banking, credit, lending, and digital transactions. It requires balancing extreme visual clarity with strict financial regulations and user trust. Ashish is a seasoned Fintech UX specialist, designing core lending journeys (Gold/Personal Loans, INSTA EMI Card), multi-brand co-branded campaigns (Retail EMI REMI), and Sales One App dashboards daily at Bajaj Finance.",
   },
   {
-    patterns: ["what is gold loan", "gold loan design", "gold loan", "personal loan", "insta emi", "remi", "retail emi", "banner", "gif", "magnific", "chatgpt"],
-    answer: "For Gold Loan, Personal Loan, and the INSTA EMI Card, Ashish designs optimized user journeys as well as high-converting marketing collaterals. He creates banners and GIFs for in-app displays, push notifications, pop-up windows, and pamphlets. He leverages ChatGPT and Magnific AI (Spaces) to generate videos, GIFs, and Retail EMI (REMI) banners for co-branded merchant offers, plus banners for Bajaj Pay and EDC terminal products.",
+    patterns: ["gold loan", "personal loan", "insta emi", "remi", "retail emi", "banner", "push notification", "pop up", "pamphlet", "gif"],
+    answer: "At Bajaj Finance, Ashish designs optimized user journeys for core lending products including Gold Loan, Personal Loan, and the INSTA EMI Card. In addition to high-fidelity UX flows, he designs high-converting visual marketing assets such as in-app promotional banners, push notifications, pop-ups, and pamphlets. He leverages advanced AI workflows (combining ChatGPT for copy brainstorming and Magnific AI for upscaling) to create dynamic GIFs, promotional videos, co-branded Retail EMI (REMI) campaign banners for various brands under Bajaj, and graphics for Bajaj Pay and EDC journeys.",
   },
   {
     patterns: ["what is after effects", "explain after effects", "adobe after effects"],
-    answer: "Adobe After Effects is the industry-standard tool for creating motion graphics, visual effects, and animated video content. Designers use it to create UI animations, explainer videos, and micro-interaction demos. Ashish uses After Effects to prototype and showcase complex animations and transitions in his design presentations.",
+    answer: "Adobe After Effects is Ashish's environment for high-fidelity motion graphics and immersive video creation. He uses it to design and animate interactive merchant training videos for the Merchant One App (Bajaj Finserv for Business), choreograph complex UI demo reels, and output premium animation sequences that breathe life into static screens.",
   },
   {
     patterns: ["what is adobe illustrator", "what is illustrator", "explain illustrator"],
-    answer: "Adobe Illustrator is a vector graphics editor used to create scalable illustrations, icons, logos, and infographics. It's a staple tool for visual and graphic design. Ashish uses Illustrator for creating custom icons, illustrations, and visual assets that complement his product design work.",
+    answer: "Adobe Illustrator is Ashish's workspace for absolute vector precision. Whether sketching custom monogram logos, creating crisp financial icons for Bajaj Pay campaigns, or crafting scalable graphic illustrations, he uses Illustrator to build pristine vector assets that plug seamlessly into his Figma design libraries.",
   },
   {
     patterns: ["what is photoshop", "explain photoshop", "adobe photoshop"],
-    answer: "Adobe Photoshop is a raster image editing software used for photo manipulation, digital art, and image compositing. In UX/product design, it's used for creating realistic mockups and image-heavy visual assets. Ashish uses Photoshop as part of his visual design toolkit alongside Figma and Illustrator.",
+    answer: "Adobe Photoshop is Ashish's powerhouse for raster editing, photo manipulation, and visual compositing. He uses it to produce stunning graphic banners, edit high-resolution assets, design glowing monogram overlays, and construct ambient digital composites that add a premium aesthetic touch to his case studies and push notifications.",
   },
   {
-    patterns: ["what is ai", "artificial intelligence", "ai in design", "ai tools for design", "ai philosophy", "chat gpt", "magnific"],
-    answer: "Ashish's design philosophy is \"Designing with AI, thinking like humans.\" He bridges cutting-edge generative AI tools (like ChatGPT for copy brainstorming and Magnific AI for advanced upscaling/generation) with human-centric design thinking. He uses AI to automate repetitive asset generation and brainstorming workflows, allowing him to focus on human empathy, strategy, and complex problem-solving.",
+    patterns: ["what is ai", "artificial intelligence", "ai in design", "ai tools for design", "ai philosophy", "chat gpt", "magnific", "chatgpt"],
+    answer: "Ashish's design philosophy is \"Designing with AI, thinking like humans.\" He integrates cutting-edge AI co-pilots like ChatGPT for strategic copywriting/brainstorming and Magnific AI (Spaces) for advanced visual generation/upscaling. By automating repetitive design asset workflows, he frees up creative bandwidth to focus on deep empathy, logic, product architecture, and user strategy.",
   },
   {
-    patterns: ["what is next.js", "what is nextjs", "explain next.js"],
-    answer: "Next.js is a powerful React framework for building fast, SEO-friendly web applications with features like server-side rendering, static generation, and API routes. Ashish's portfolio site is built with Next.js, leveraging its performance optimisations and API routes (including the one powering this very chat!).",
+    patterns: ["sales one", "sales one app", "sales agent", "agent journey"],
+    answer: "Ashish completely revamped the entire end-to-end sales agent journey in the Bajaj Sales One App. This comprehensive visual and structural redesign included the Homepage, Merchant Profile, Onboarding dashboards, Performance Dashboards, Team Tracking interface, Tasks management, Attendance logging, Merchant visit tools, Gate meeting schedules, and the \"Scan & Start\" onboarding workflow. His redesign streamlined daily operational tools and significantly boosted agent efficiency.",
   },
   {
-    patterns: ["what is react", "explain react", "what is reactjs"],
-    answer: "React is a JavaScript library for building user interfaces using reusable components. It's the most popular frontend library in the world. Ashish's portfolio is built on Next.js which uses React as its core, allowing dynamic, interactive UI like this chat widget.",
+    patterns: ["enterprise", "enterprise solution", "aggregator", "non aggregator", "b2b aggregator"],
+    answer: "Ashish worked extensively on Bajaj's B2B Enterprise Solutions. His designs focused on simplifying complex B2B aggregator and non-aggregator ecosystem journeys. He designed end-to-end onboarding flows and operational dashboards that allow corporate aggregator partners to seamlessly manage their merchants, track high-volume transactions, and monitor performance in a clean, professional, and dense interface.",
   },
   {
-    patterns: ["what is ux research", "what is user testing", "usability testing"],
-    answer: "UX Research involves systematically studying users to understand their needs, behaviours, and pain points. Methods include user interviews, surveys, usability testing, heuristic evaluation, and A/B testing. Ashish applies UX research methods to validate design decisions before and after shipping products at Bajaj Finance.",
-  },
-  {
-    patterns: ["difference between ux and ui", "ux vs ui", "ux versus ui"],
-    answer: "UX (User Experience) is about how a product feels and functions — the overall journey, usability, and user satisfaction. UI (User Interface) is about how it looks — the visual design, colours, typography, and interactive elements. Simply put: UX is the blueprint, UI is the paint and decor. Ashish is skilled in both — he designs complete product experiences from research to pixel-perfect UI.",
-  },
-  {
-    patterns: ["what is a dashboard", "dashboard design", "enterprise dashboard", "sales one", "sales one app", "enterprise solution", "aggregator", "merchant one", "merchant one app", "finserv for business", "onboarding flow"],
-    answer: "Ashish is an expert in dashboard and enterprise product design. At Bajaj Finance, he revamped the Sales One App sales agent journey, worked on product designs and merchant training videos for the Merchant One App (Bajaj Finserv for Business App), and designed robust B2B Enterprise solution flows including complete end-to-end onboarding journeys and monitoring dashboards for Aggregator and Non-Aggregator systems.",
-  },
-  {
-    patterns: ["process", "approach", "workflow", "methodology", "how do you design", "design process", "how you design"],
-    answer: "Ashish follows a structured, empathy-driven User-Centered Design (UCD) process: 1. Research & Empathy (analyzing drop-off charts and talking to real users), 2. Information Architecture & Wireframing (mapping fintech rules into simple pathways), 3. High-Fi UI & Design Systems (Figma tokens and layouts), 4. Advanced Interaction Design (ProtoPie logic), and 5. Cross-functional Collaboration (partnering with engineers).",
-  },
-  {
-    patterns: ["fintech", "financial", "loan", "emi", "bank", "lending", "credit"],
-    answer: "Fintech UX is about building clarity, speed, and trust. Ashish excels in this by simplifying high-friction journeys (like Bajaj Finance's Gold Loan, Personal Loan, and INSTA EMI) using clean progressive-disclosure forms, transparent terms, and straightforward credit checks that maximize visual flow.",
+    patterns: ["merchant one", "merchant one app", "finserv for business", "merchant dashboard", "training video", "promotional banner"],
+    answer: "Ashish designed core dashboards, promotional banners, and visual assets for the Merchant One App (Bajaj Finserv for Business App). To bridge the gap between complex fintech functions and merchant usability, he created and animated step-by-step training videos using After Effects and Premiere Pro to onboard, guide, and educate merchants through the app's features and transaction workflows.",
   },
   {
     patterns: ["edc", "terminal", "swipe", "merchant", "pos ", "point of sale"],
@@ -222,17 +197,14 @@ const KNOWLEDGE_BASE: Array<{ patterns: string[]; answer: string }> = [
     patterns: ["hobby", "hobbies", "free time", "fun fact", "outside of work", "when not designing", "what do you do"],
     answer: "Outside of design, Ashish is passionate about experimenting with 3D design in Spline, video editing in After Effects/Premiere, exploring new AI-assisted generation workflows, and learning about emerging interactive technologies!",
   },
-  // Education
   {
     patterns: ["education", "academic", "degree", "university", "college", "school", "animation", "science", "satara", "midas", "chavan"],
     answer: "Ashish holds a B.Sc. in Animation Science from Yashwantrao Chavan Institute of Science, Satara (Graduated in 2023 with an outstanding CGPA of 9.02). He also completed UI/UX design training at Midas Multimedia, Pune in 2024.",
   },
-  // Previous Work
   {
     patterns: ["previous job", "past experience", "dchronicles", "infoshard", "where did he work before", "past work", "history"],
     answer: "Before joining Bajaj Finance, Ashish worked as a UI/UX Designer at Dchronicles Explication International Pvt. Ltd. (July 2024 - March 2025) and at Infoshard Technology (April 2024 - July 2024), where he designed engaging user journeys and visuals.",
   },
-  // Other Projects
   {
     patterns: ["other projects", "all projects", "list projects", "boat", "social media dashboard", "travel booking", "food & dining", "auto parts"],
     answer: "Ashish's projects include:\n1. MedApp — Doctor's Appointment booking App (Case Study & Prototype).\n2. Amazon Prime Video — Strategic Portal Redesign.\n3. boAt Website Redesign (Desktop & Mobile).\n4. Social Media Analytics Dashboard (Light & Dark Prototypes).\n5. Travel Booking Platform (Desktop & Mobile).\n6. Food & Dining Website.\n7. Auto Parts Website.",

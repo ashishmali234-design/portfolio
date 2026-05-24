@@ -4,7 +4,6 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, CheckCircle2 } from "lucide-react";
 import Typewriter from "./Typewriter";
-import Logo from "./Logo";
 
 // Custom official LinkedIn SVG Icon Component (Filled Variant)
 const LinkedinIcon = (props: React.SVGProps<SVGSVGElement>) => (

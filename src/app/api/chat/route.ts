@@ -284,28 +284,75 @@ export async function POST(request: Request) {
     // ── Option 2: Gemini API ─────────────────────────────────────────────────
     if (geminiKey) {
       try {
-        const listResp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${geminiKey}`);
-        const listData = await listResp.json();
-        
-        interface GeminiModel {
-          name: string;
-          supportedGenerationMethods?: string[];
+        // Gemini API strictly requires alternating roles starting with 'user'.
+        // Consecutive identical roles or leading model/assistant messages throw a 400 Bad Request.
+        interface GeminiMessage {
+          role: string;
+          parts: Array<{ text: string }>;
         }
-        let modelNames: string[] = [];
-        if (listData.models && Array.isArray(listData.models)) {
-          modelNames = (listData.models as GeminiModel[])
-            .filter((m) => m.supportedGenerationMethods?.includes("generateContent"))
-            .map((m) => m.name);
+        const geminiMessages: GeminiMessage[] = [];
+        let lastRole: string | null = null;
+
+        for (const m of messages) {
+          if (!m.content) continue;
+          const geminiRole = m.role === "assistant" ? "model" : "user";
+          
+          // Skip leading 'model' messages
+          if (geminiMessages.length === 0 && geminiRole !== "user") {
+            continue;
+          }
+
+          if (geminiRole === lastRole) {
+            // Merge identical consecutive roles to keep the array strictly alternating
+            const lastMsg = geminiMessages[geminiMessages.length - 1];
+            lastMsg.parts[0].text += "\n" + m.content;
+          } else {
+            geminiMessages.push({
+              role: geminiRole,
+              parts: [{ text: m.content }],
+            });
+            lastRole = geminiRole;
+          }
         }
-        
-        return NextResponse.json({
-          choices: [{ message: { role: "assistant", content: `Available generateContent Models: ${JSON.stringify(modelNames, null, 2)} (Pagination token: ${listData.nextPageToken || "none"})` } }]
-        });
+
+        if (geminiMessages.length === 0) {
+          geminiMessages.push({
+            role: "user",
+            parts: [{ text: userMessage || "Hello" }],
+          });
+        }
+
+        // Use the high-performance gemini-2.5-flash model discovered in diagnostics
+        const response = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              system_instruction: { parts: [{ text: systemPrompt }] },
+              contents: geminiMessages,
+              generationConfig: { temperature: 0.7, maxOutputTokens: 500 },
+            }),
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+          if (text) {
+            return NextResponse.json({
+              choices: [{ message: { role: "assistant", content: text } }],
+            });
+          }
+        } else {
+          const errText = await response.text();
+          console.error("Gemini API call failed status:", response.status, "body:", errText);
+          // Fall through to Option 3 gracefully
+        }
       } catch (err) {
         const errMsg = err instanceof Error ? err.message : String(err);
-        return NextResponse.json({
-          choices: [{ message: { role: "assistant", content: `Diagnostic Fetch Failed: ${errMsg}` } }]
-        });
+        console.error("Gemini Option 2 caught exception:", errMsg);
+        // Fall through to Option 3 gracefully
       }
     }
 

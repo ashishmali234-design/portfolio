@@ -230,8 +230,22 @@ async function getSmartFallbackResponse(message: string): Promise<string> {
   const query = message.toLowerCase();
 
   for (const entry of KNOWLEDGE_BASE) {
-    if (entry.patterns.some((p) => query.includes(p))) {
-      return entry.answer;
+    for (const rawPattern of entry.patterns) {
+      const pattern = rawPattern.trim();
+      if (!pattern) continue;
+
+      // Escape regex special chars
+      const escapedPattern = pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      
+      // Dynamically add \b boundaries only if the pattern starts or ends with a word character.
+      // This is extremely safe and prevents false positive substring matching like "they" matching "hey".
+      const startBoundary = /^\w/.test(pattern) ? '\\b' : '';
+      const endBoundary = /\w$/.test(pattern) ? '\\b' : '';
+      
+      const regex = new RegExp(`${startBoundary}${escapedPattern}${endBoundary}`, 'i');
+      if (regex.test(query)) {
+        return entry.answer;
+      }
     }
   }
 

@@ -1,14 +1,16 @@
 import { NextResponse } from "next/server";
 
-const systemPrompt = `You are "Ashli", the virtual AI assistant and interactive representative of Ashish C Mali, a Product Designer based in Satara/Pune, India.
+const systemPrompt = `You are "Ashli", the virtual AI assistant and interactive representative of Ashish Chandrakant Mali, a Product Designer based in Satara/Pune, India.
 
 Primary goal: Answer questions about Ashish's professional background, skills, design philosophy, and projects in a professional, warm, and engaging tone. Avoid generic or dry textbook answers; always weave in specific details of Ashish's unique methodologies and work.
 
 CRITICAL: NEVER give standard, dry, generic dictionary/textbook definitions for design terms, tools, or concepts (such as UX, UI, Figma, Spline, Wireframing, Prototyping, Dashboard Design, Motion Design, After Effects, AI, ChatGPT, etc.). Instead, you MUST immediately frame every definition and explanation directly around Ashish's real-world product design experience at Bajaj Finance and his featured projects (Amazon Prime Video Redesign, MedApp).
 
 Key facts about Ashish (from his official Resume):
+- Full Name: Mr. Ashish Chandrakant Mali
+- Father's Name: Mr. Chandrakant Mali
 - Career Objective: A passionate UX/UI Designer with robust experience in high-volume financial products, complex digital B2B journeys, and premium visual design. Skilled in creating simple, engaging, and highly user-centered experiences.
-- Philosophy: "Designing with AI, thinking like humans." He leverages AI (such as ChatGPT for copywriting/brainstorming and Magnific AI for advanced upscaling/generation) to automate repetitive workflows while keeping human empathy, strategy, and research at the core of the experience.
+- Philosophy: "Designing with AI, thinking like humans." He leverages AI (such as ChatGPT for copywriting/brainstorming, Figma AI / Figma Make for structural layouts, and Magnific AI for advanced upscaling/generation) to automate repetitive workflows while keeping human empathy, strategy, and research at the core of the experience.
 - Professional Experience:
   - Product Designer at Bajaj Finance Ltd, Pune (May 2025 - Present):
     * Designs high-stakes financial, B2B, marketing, and merchant products.
@@ -34,7 +36,7 @@ Key facts about Ashish (from his official Resume):
   - Auto Parts Website (Desktop & Mobile).
 - Toolkit & Tech:
   - Design & Code: Figma, ProtoPie, Framer Motion, Webflow, Spline 3D, Adobe Animate, Illustrator, Photoshop, Premiere Pro, After Effects.
-  - AI Co-pilots: ChatGPT, Claude AI, Gemini AI, Magnific (Spaces), Figma AI, Notebook LM, N8N (Agentic Workflow), Antigravity IDE.
+  - AI Co-pilots: ChatGPT, Claude AI, Gemini AI, Magnific (Spaces), Figma AI, Figma Make, Notebook LM, N8N (Agentic Workflow), Antigravity IDE.
 - Contact Details:
   * Email: ashishmali234@gmail.com
   * Phone: +91 9075521047
@@ -56,6 +58,14 @@ const KNOWLEDGE_BASE: Array<{ patterns: string[]; answer: string }> = [
   {
     patterns: ["hello", "hi ", "hey", "good morning", "good evening", "howdy"],
     answer: "Hi there! I'm Ashli, Ashish's custom UX/UI Design AI assistant. You can ask me about his work at Bajaj Finance (like the Sales One App revamp or B2B aggregator systems), his core design tools like Figma and ProtoPie, his featured case studies, or his design philosophy. What can I help you explore today?",
+  },
+  {
+    patterns: ["full name", "father", "chandrakant", "middle name", "parent", "dad"],
+    answer: "His full name is Ashish Chandrakant Mali, and his father's name is Mr. Chandrakant Mali. He is a passionate Product Designer originally from Satara/Vita, and now based in Pune, India.",
+  },
+  {
+    patterns: ["figma ai", "figma make", "ai layout", "make design"],
+    answer: "Ashish actively uses Figma AI and Figma Make in his product design process to speed up wireframing and layout brainstorming. Rather than starting from scratch, he leverages generative AI layouts to rapidly map out auto-layout grids and interface boundaries, then manually refines, pixel-polishes, and customizes each element according to his comprehensive, tokenized design systems.",
   },
   {
     patterns: ["who is ashli", "who are you", "what is ashli", "what are you", "are you an ai", "are you ai", "about yourself", "tell me about yourself"],
@@ -270,10 +280,21 @@ export async function POST(request: Request) {
 
     // ── Option 2: Gemini API ─────────────────────────────────────────────────
     if (geminiKey) {
-      const geminiMessages = messages.map((m: { role: string; content: string }) => ({
-        role: m.role === "assistant" ? "model" : "user",
-        parts: [{ text: m.content }],
-      }));
+      // Gemini API strictly requires the conversation contents array to start with a 'user' message.
+      // We skip any leading 'assistant' (model) messages.
+      const geminiMessages = [];
+      let foundUser = false;
+      for (const m of messages) {
+        if (m.role === "user") {
+          foundUser = true;
+        }
+        if (foundUser) {
+          geminiMessages.push({
+            role: m.role === "assistant" ? "model" : "user",
+            parts: [{ text: m.content }],
+          });
+        }
+      }
 
       const response = await fetch(
         `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`,

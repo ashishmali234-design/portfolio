@@ -286,8 +286,20 @@ export async function POST(request: Request) {
       try {
         const listResp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${geminiKey}`);
         const listData = await listResp.json();
+        
+        interface GeminiModel {
+          name: string;
+          supportedGenerationMethods?: string[];
+        }
+        let modelNames: string[] = [];
+        if (listData.models && Array.isArray(listData.models)) {
+          modelNames = (listData.models as GeminiModel[])
+            .filter((m) => m.supportedGenerationMethods?.includes("generateContent"))
+            .map((m) => m.name);
+        }
+        
         return NextResponse.json({
-          choices: [{ message: { role: "assistant", content: `Gemini Key Diagnostics: ${JSON.stringify(listData, null, 2)}` } }]
+          choices: [{ message: { role: "assistant", content: `Available generateContent Models: ${JSON.stringify(modelNames, null, 2)} (Pagination token: ${listData.nextPageToken || "none"})` } }]
         });
       } catch (err) {
         const errMsg = err instanceof Error ? err.message : String(err);

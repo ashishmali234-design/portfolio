@@ -454,6 +454,13 @@ function ContactPanel() {
   );
 }
 
+function getGreeting() {
+  const hour = new Date().getHours();
+  if (hour < 12) return "Good morning";
+  if (hour < 18) return "Good afternoon";
+  return "Good evening";
+}
+
 export default function CustomAIChat() {
   const [isOpen, setIsOpen] = useState(false);
   const [showFAQ, setShowFAQ] = useState(true);
@@ -463,7 +470,7 @@ export default function CustomAIChat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hey there! I am Ashli 👋, Ashish's interactive AI assistant. you can ask me anything about him!",
+      content: `${getGreeting()}! I am Ashli 👋, Ashish's interactive AI assistant. You can ask me anything about him!`,
     },
   ]);
   const [input, setInput] = useState("");
@@ -571,7 +578,7 @@ export default function CustomAIChat() {
     setMessages([
       {
         role: "assistant",
-        content: "Reset complete! Hey there! I am Ashli 👋, Ashish's interactive AI assistant. you can ask me anything about him!",
+        content: `Reset complete! ${getGreeting()}! I am Ashli 👋, Ashish's interactive AI assistant. You can ask me anything about him!`,
       },
     ]);
     setShowFAQ(true);

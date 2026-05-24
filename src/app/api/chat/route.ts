@@ -29,6 +29,7 @@ CRITICAL PERSONA RULES:
 Key facts about Ashish:
 - Full Name: Mr. Ashish Chandrakant Mali
 - Father: Mr. Chandrakant Mali
+- Birthdate: 11th June 2002
 - Philosophy: "Designing with AI, thinking like humans" — uses AI to handle repetitive work so he can focus on human empathy and strategy.
 - Current Role: Product Designer at Bajaj Finance Ltd, Pune (May 2025 – Present)
   * Core Lending Journeys: Gold Loan, Personal Loan, INSTA EMI Card — he designs the full user journey from start to finish, making complex loan processes feel easy and fast.

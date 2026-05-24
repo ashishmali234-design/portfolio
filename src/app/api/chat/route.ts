@@ -13,7 +13,7 @@ Key facts about Ashish:
   - EDC Journeys: Designed point-of-sale terminal swipe journeys with large touch targets, high contrast, and clean layouts for merchant checkout flow under pressure.
   - Sales One App Journey: Fully revamped the complete end-to-end Sales One App sales agent journey, including: Homepage, Merchant Profile, Onboarding Dashboard, Performance Dashboards, Team Tracking, Tasks, Attendance tracking, Merchant visits, Gate meetings, and "Scan & Start" features.
   - Merchant One App (Bajaj Finserv for Business App): Worked on product designs for the Merchant One App (Bajaj Finserv for Business App). Primarily created interactive, engaging step-by-step training videos, promotional banners, and digital graphics to onboard and educate merchants.
-  - Enterprise Solution: Designed robust B2B systems covering Aggregator and Non-Aggregator merchant onboarding and dashboard platforms.
+  - Enterprise Solution: Designed robust end-to-end B2B enterprise solution flows. This includes designing smooth onboarding journeys, interactive performance and monitoring dashboards, and robust systems covering Aggregator and Non-Aggregator merchant onboarding platforms.
 - Design Process (User-Centered Design):
   1. Research & Empathy: Deep dives into behavioral analytics, tracking user drop-offs, and conducting qualitative interviews.
   2. Information Architecture & Wireframing: Organizing fintech parameters into logical user flows and blueprint wireframes in Figma.
@@ -61,7 +61,7 @@ const KNOWLEDGE_BASE: Array<{ patterns: string[]; answer: string }> = [
   // Experience
   {
     patterns: ["bajaj", "finance", "current job", "where does ashish work", "work experience"],
-    answer: "Ashish is a Product Designer at Bajaj Finance Ltd in Pune, working on fintech and B2B products. His work spans core lending products (Gold/Personal Loans, INSTA EMI Card), multi-brand Retail EMI (REMI) and Bajaj Pay campaigns, full revamp of the Sales One App sales agent journey, B2B Aggregator/Non-Aggregator platforms, Merchant One App (Bajaj Finserv for Business App) product designs, and step-by-step merchant training videos.",
+    answer: "Ashish is a Product Designer at Bajaj Finance Ltd in Pune, working on fintech and B2B products. His work spans core lending products (Gold/Personal Loans, INSTA EMI Card), multi-brand Retail EMI (REMI) and Bajaj Pay campaigns, a full revamp of the Sales One App sales agent journey, end-to-end B2B Enterprise solution flows (including onboarding and dashboards for Aggregator/Non-Aggregator systems), and Merchant One App (Bajaj Finserv for Business App) designs with step-by-step training videos.",
   },
   // Skills
   {
@@ -91,8 +91,8 @@ const KNOWLEDGE_BASE: Array<{ patterns: string[]; answer: string }> = [
 
   // ─── General Design Knowledge ──────────────────────────────────────────────
   {
-    patterns: ["what is ux", "what is user experience", "meaning of ux", "define ux"],
-    answer: "UX (User Experience) design is the process of creating products that provide meaningful, relevant, and enjoyable experiences to users. It covers everything from understanding user needs through research, to designing intuitive flows, wireframes, and prototypes. Ashish applies UX principles daily at Bajaj Finance to make complex financial journeys feel simple and human.",
+    patterns: ["what is ux", "what is user experience", "meaning of ux", "define ux", "ux design"],
+    answer: "UX (User Experience) design is the holistic process of creating products that are intuitive, accessible, and delightful to use. It encompasses user research, information architecture, wireframing, high-fidelity UI, and advanced prototyping. Ashish designs complete UX flows for high-volume financial products at Bajaj Finance, simplifying complex lending, enterprise, and merchant systems so they feel human, transparent, and seamless.",
   },
   {
     patterns: ["what is ui", "what is user interface", "meaning of ui", "define ui"],
@@ -171,8 +171,8 @@ const KNOWLEDGE_BASE: Array<{ patterns: string[]; answer: string }> = [
     answer: "Adobe Photoshop is a raster image editing software used for photo manipulation, digital art, and image compositing. In UX/product design, it's used for creating realistic mockups and image-heavy visual assets. Ashish uses Photoshop as part of his visual design toolkit alongside Figma and Illustrator.",
   },
   {
-    patterns: ["what is ai", "artificial intelligence", "ai in design", "ai tools for design"],
-    answer: "Artificial Intelligence (AI) in design refers to using machine learning and AI-powered tools to enhance the design process — from auto-layout suggestions and image generation to personalised user experiences. Ashish's design philosophy is built around AI: \"Designing with AI, thinking like humans.\" He actively uses AI tools to accelerate his workflow while keeping human empathy at the centre.",
+    patterns: ["what is ai", "artificial intelligence", "ai in design", "ai tools for design", "ai philosophy", "chat gpt", "magnific"],
+    answer: "Ashish's design philosophy is \"Designing with AI, thinking like humans.\" He bridges cutting-edge generative AI tools (like ChatGPT for copy brainstorming and Magnific AI for advanced upscaling/generation) with human-centric design thinking. He uses AI to automate repetitive asset generation and brainstorming workflows, allowing him to focus on human empathy, strategy, and complex problem-solving.",
   },
   {
     patterns: ["what is next.js", "what is nextjs", "explain next.js"],
@@ -191,8 +191,8 @@ const KNOWLEDGE_BASE: Array<{ patterns: string[]; answer: string }> = [
     answer: "UX (User Experience) is about how a product feels and functions — the overall journey, usability, and user satisfaction. UI (User Interface) is about how it looks — the visual design, colours, typography, and interactive elements. Simply put: UX is the blueprint, UI is the paint and decor. Ashish is skilled in both — he designs complete product experiences from research to pixel-perfect UI.",
   },
   {
-    patterns: ["what is a dashboard", "dashboard design", "enterprise dashboard", "sales one", "sales one app", "enterprise solution", "aggregator", "merchant one", "merchant one app", "finserv for business"],
-    answer: "Ashish is an expert in dashboard and enterprise product design. At Bajaj Finance, he revamped the Sales One App sales agent journey, worked on product designs for the Merchant One App (Bajaj Finserv for Business App) creating its onboarding and merchant training videos, and designed the robust Aggregator and Non-Aggregator onboarding Enterprise Solution.",
+    patterns: ["what is a dashboard", "dashboard design", "enterprise dashboard", "sales one", "sales one app", "enterprise solution", "aggregator", "merchant one", "merchant one app", "finserv for business", "onboarding flow"],
+    answer: "Ashish is an expert in dashboard and enterprise product design. At Bajaj Finance, he revamped the Sales One App sales agent journey, worked on product designs and merchant training videos for the Merchant One App (Bajaj Finserv for Business App), and designed robust B2B Enterprise solution flows including complete end-to-end onboarding journeys and monitoring dashboards for Aggregator and Non-Aggregator systems.",
   },
   {
     patterns: ["process", "approach", "workflow", "methodology", "how do you design", "design process", "how you design"],

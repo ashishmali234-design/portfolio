@@ -197,22 +197,34 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
                 </div>
 
                 {/* Portfolio Navigation Links (Centered) */}
-                <nav className="flex flex-col gap-7 my-auto items-center text-center w-full">
-                  <span className="text-[10px] uppercase tracking-widest text-[#FFBF4F] font-black mb-2">Portfolio</span>
+                <nav className="flex flex-col gap-5 my-auto items-center text-center w-full">
+                  <span className="text-[10px] uppercase tracking-widest text-[#FFBF4F] font-black mb-1">Portfolio</span>
                   {[
-                    { name: "Experience", target: "experience" },
+                    { name: "What I Do", target: "what-i-do" },
+                    { name: "Projects", target: "projects" },
                     { name: "Skills", target: "skills" },
-                    { name: "Work", target: "projects" },
+                    { name: "About Me", target: "about-me" },
+                    { name: "Experience", target: "experience" },
                     { name: "Contact", target: "contact" }
-                  ].map((item) => (
-                    <button
-                      key={item.name}
-                      onClick={() => handleNavLinkClick(item.target)}
-                      className="text-2xl font-black uppercase tracking-widest text-white/70 hover:text-[#FFBF4F] active:text-[#FFBF4F] text-center transition-colors cursor-pointer bg-transparent border-none"
-                    >
-                      {item.name}
-                    </button>
-                  ))}
+                  ].map((item) => {
+                    const isSelected = item.target === "projects";
+                    return (
+                      <button
+                        key={item.name}
+                        onClick={() => handleNavLinkClick(item.target)}
+                        className={`text-2xl font-black uppercase tracking-widest text-center transition-all duration-300 cursor-pointer bg-transparent border-none flex items-center justify-center gap-2.5 relative ${
+                          isSelected
+                            ? "text-[#FFBF4F] font-black scale-105"
+                            : "text-white/70 hover:text-[#FFBF4F] active:text-[#FFBF4F]"
+                        }`}
+                      >
+                        {item.name}
+                        {isSelected && (
+                          <span className="w-2 h-2 rounded-full bg-[#FFBF4F] shadow-[0_0_8px_rgba(255,191,79,0.7)] shrink-0" />
+                        )}
+                      </button>
+                    );
+                  })}
                 </nav>
 
                 {/* CTAs & Footer inside drawer (Centered) */}

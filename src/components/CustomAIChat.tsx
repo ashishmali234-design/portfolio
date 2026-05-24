@@ -232,7 +232,7 @@ const RESPONSE_FOLLOW_UPS: Array<{ triggers: string[]; chips: string[] }> = [
   },
   // Contact / hire
   {
-    triggers: ["ashishmali234@gmail.com", "9075521047", "reach him", "available for"],
+    triggers: ["ashishcmaliofficial@gmail.com", "9075521047", "reach him", "available for"],
     chips: [
       "What kind of projects is Ashish open to?",
       "Tell me about Ashish's Bajaj Finance work",
@@ -351,7 +351,7 @@ function ChipRow({
 function isContactResponse(text: string): boolean {
   const lower = text.toLowerCase();
   return (
-    lower.includes("ashishmali234@gmail.com") ||
+    lower.includes("ashishcmaliofficial@gmail.com") ||
     lower.includes("9075521047") ||
     lower.includes("+91 9075") ||
     lower.includes("linkedin") ||
@@ -365,7 +365,7 @@ function isContactResponse(text: string): boolean {
 // ─── Contact CTA Panel ───────────────────────────────────────────────────────
 function ContactPanel() {
   const wa = `https://wa.me/919075521047?text=${encodeURIComponent("Hi Ashish! 👋 I came across your portfolio and would love to connect.")}`;
-  const mail = `mailto:ashishmali234@gmail.com?subject=${encodeURIComponent("Let's Connect — Saw Your Portfolio")}&body=${encodeURIComponent("Hi Ashish,\n\nI came across your portfolio and I'm really impressed by your work! I'd love to connect.\n\nBest regards,")}`;
+  const mail = `mailto:ashishcmaliofficial@gmail.com?subject=${encodeURIComponent("Let's Connect — Saw Your Portfolio")}&body=${encodeURIComponent("Hi Ashish,\n\nI came across your portfolio and I'm really impressed by your work! I'd love to connect.\n\nBest regards,")}`;
   const call = "tel:+919075521047";
   const linkedin = "https://www.linkedin.com/in/ashish-mali-b071b526b";
   const behance = "https://www.behance.net/ashishmali";

@@ -40,10 +40,10 @@ Key facts about Ashish:
 - Education: B.Sc. Animation Science, Yashwantrao Chavan Institute of Science, Satara (CGPA 9.02, 2023). UI/UX Design training at Midas Multimedia, Pune (2024).
 - Projects: MedApp (full doctor appointment booking app ecosystem), Amazon Prime Video Website Redesign (Lean UX), boAt Website Redesign, Social Media Analytics Dashboard, Travel Booking Platform, Food & Dining Website, Auto Parts Website.
 - Toolkit: Figma, ProtoPie, Framer Motion, Webflow, Spline 3D, Adobe After Effects, Illustrator, Photoshop, Premiere Pro; AI tools: ChatGPT, Claude AI, Gemini AI, Magnific AI (Spaces), Figma AI, Figma Make, Notebook LM, N8N (agentic workflows), Antigravity IDE.
-- Contact: ashishmali234@gmail.com | +91 9075521047 | ashishmali.vercel.app | Satara/Pune, Maharashtra
+- Contact: ashishcmaliofficial@gmail.com | +91 9075521047 | ashishmali.vercel.app | Satara/Pune, Maharashtra
 - LinkedIn: https://www.linkedin.com/in/ashish-mali-b071b526b
 - Behance: https://www.behance.net/ashishmali
-- When someone asks how to connect or contact Ashish, mention all channels: WhatsApp (+91 9075521047), Email (ashishmali234@gmail.com), LinkedIn, and Behance. Keep it warm and inviting.
+- When someone asks how to connect or contact Ashish, mention all channels: WhatsApp (+91 9075521047), Email (ashishcmaliofficial@gmail.com), LinkedIn, and Behance. Keep it warm and inviting.
 `;
 
 // These patterns are intercepted BEFORE calling Gemini — purely conversational, short-circuit responses
@@ -122,7 +122,7 @@ const KNOWLEDGE_BASE: Array<{ patterns: string[]; answer: string }> = [
   },
   {
     patterns: ["hire", "contact", "available", "job", "freelance", "reach", "email", "linkedin", "phone", "mobile", "gmail"],
-    answer: "Ashish is open to exciting product design opportunities! You can reach him at ashishmali234@gmail.com or call/WhatsApp at +91 9075521047. You can also connect with him on LinkedIn or visit his portfolio at ashishmali.vercel.app.",
+    answer: "Ashish is open to exciting product design opportunities! You can reach him at ashishcmaliofficial@gmail.com or call/WhatsApp at +91 9075521047. You can also connect with him on LinkedIn or visit his portfolio at ashishmali.vercel.app.",
   },
   {
     patterns: ["philosophy", "approach", "methodology", "design thinking", "designing with ai"],

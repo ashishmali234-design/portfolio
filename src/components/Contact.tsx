@@ -49,7 +49,7 @@ export default function Contact() {
     // Construct professional prefilled email text
     const subject = `Portfolio Inquiry from ${name}`;
     const body = `Hi Ashish,\n\nI filled out the contact form on your portfolio website with the following details:\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}\n\nBest regards,\n${name}`;
-    const mailtoUrl = `mailto:ashishmali234@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const mailtoUrl = `mailto:ashishcmaliofficial@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
     // Simulate premium visual delay and trigger email client opening
     setTimeout(() => {
@@ -93,10 +93,10 @@ export default function Contact() {
               <div className="text-sm font-semibold tracking-wide text-white/80">
                 Email:{" "}
                 <a 
-                  href="mailto:ashishmali234@gmail.com" 
+                  href="mailto:ashishcmaliofficial@gmail.com" 
                   className="text-amber-400 hover:text-amber-300 hover:underline transition-all duration-300"
                 >
-                  ashishmali234@gmail.com
+                  ashishcmaliofficial@gmail.com
                 </a>
               </div>
             </div>
@@ -171,7 +171,7 @@ export default function Contact() {
                     exit={{ opacity: 0, y: -10 }}
                     className="text-xs text-emerald-400 text-left font-medium mt-2 flex items-center gap-1.5"
                   >
-                    <CheckCircle2 className="w-3.5 h-3.5" /> Prefilled message prepared! If your email app did not open automatically, please send direct to <a href="mailto:ashishmali234@gmail.com" className="underline hover:text-white">ashishmali234@gmail.com</a>
+                    <CheckCircle2 className="w-3.5 h-3.5" /> Prefilled message prepared! If your email app did not open automatically, please send direct to <a href="mailto:ashishcmaliofficial@gmail.com" className="underline hover:text-white">ashishcmaliofficial@gmail.com</a>
                   </motion.p>
                 )}
               </AnimatePresence>

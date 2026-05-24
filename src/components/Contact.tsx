@@ -188,6 +188,7 @@ export default function Contact() {
               className="opacity-75 hover:opacity-100 transition-opacity duration-300 scale-90 origin-left" 
               showText={true} 
               forceShowTextOnMobile={true} 
+              gradientId="footer-logo-gold-gradient"
             />
           </div>
 

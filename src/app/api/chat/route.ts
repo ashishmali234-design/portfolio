@@ -11,9 +11,9 @@ Key facts about Ashish:
   - Retail EMI (REMI) Banners: Designs customized banners for multi-brand promotional campaigns when offers are powered by Bajaj Finance.
   - Bajaj Pay & EDC POS Banners: Designs banners and digital display creative for payments, merchant checkouts, and terminal swipe solutions.
   - EDC Journeys: Designed point-of-sale terminal swipe journeys with large touch targets, high contrast, and clean layouts for merchant checkout flow under pressure.
-  - Sales One App Journey: Fully revamped the complete end-to-end Sales One App merchant and sales agent journey, including: Homepage, Merchant Profile, Onboarding Dashboard, Performance Dashboards, Team Tracking, Tasks, Attendance tracking, Merchant visits, Gate meetings, and "Scan & Start" features.
+  - Sales One App Journey: Fully revamped the complete end-to-end Sales One App sales agent journey, including: Homepage, Merchant Profile, Onboarding Dashboard, Performance Dashboards, Team Tracking, Tasks, Attendance tracking, Merchant visits, Gate meetings, and "Scan & Start" features.
+  - Merchant One App (Bajaj Finserv for Business App): Worked on product designs for the Merchant One App (Bajaj Finserv for Business App). Primarily created interactive, engaging step-by-step training videos, promotional banners, and digital graphics to onboard and educate merchants.
   - Enterprise Solution: Designed robust B2B systems covering Aggregator and Non-Aggregator merchant onboarding and dashboard platforms.
-  - Interactive & Training Assets: Creates B2B training videos, promotional banners, and interactive digital graphics.
 - Design Process (User-Centered Design):
   1. Research & Empathy: Deep dives into behavioral analytics, tracking user drop-offs, and conducting qualitative interviews.
   2. Information Architecture & Wireframing: Organizing fintech parameters into logical user flows and blueprint wireframes in Figma.
@@ -61,7 +61,7 @@ const KNOWLEDGE_BASE: Array<{ patterns: string[]; answer: string }> = [
   // Experience
   {
     patterns: ["bajaj", "finance", "current job", "where does ashish work", "work experience"],
-    answer: "Ashish is a Product Designer at Bajaj Finance Ltd in Pune, working on fintech and B2B products. His work spans core lending products (Gold/Personal Loans, INSTA EMI Card), multi-brand Retail EMI (REMI) and Bajaj Pay campaigns, full revamp of the Sales One App agent journey, B2B Aggregator/Non-Aggregator platforms, and interactive training videos.",
+    answer: "Ashish is a Product Designer at Bajaj Finance Ltd in Pune, working on fintech and B2B products. His work spans core lending products (Gold/Personal Loans, INSTA EMI Card), multi-brand Retail EMI (REMI) and Bajaj Pay campaigns, full revamp of the Sales One App sales agent journey, B2B Aggregator/Non-Aggregator platforms, Merchant One App (Bajaj Finserv for Business App) product designs, and step-by-step merchant training videos.",
   },
   // Skills
   {
@@ -191,8 +191,8 @@ const KNOWLEDGE_BASE: Array<{ patterns: string[]; answer: string }> = [
     answer: "UX (User Experience) is about how a product feels and functions — the overall journey, usability, and user satisfaction. UI (User Interface) is about how it looks — the visual design, colours, typography, and interactive elements. Simply put: UX is the blueprint, UI is the paint and decor. Ashish is skilled in both — he designs complete product experiences from research to pixel-perfect UI.",
   },
   {
-    patterns: ["what is a dashboard", "dashboard design", "enterprise dashboard", "sales one", "sales one app", "enterprise solution", "aggregator"],
-    answer: "Ashish is an expert in dashboard and enterprise product design. At Bajaj Finance, he revamped the entire Sales One App journey, including the Homepage, Merchant Profile, Onboarding/Performance Dashboards, Team Tracking, Tasks, Attendance, Merchant Visits, Gate Meetings, and 'Scan & Start'. He also designed the Enterprise Solution covering Aggregator and Non-Aggregator onboarding and B2B merchant platforms.",
+    patterns: ["what is a dashboard", "dashboard design", "enterprise dashboard", "sales one", "sales one app", "enterprise solution", "aggregator", "merchant one", "merchant one app", "finserv for business"],
+    answer: "Ashish is an expert in dashboard and enterprise product design. At Bajaj Finance, he revamped the Sales One App sales agent journey, worked on product designs for the Merchant One App (Bajaj Finserv for Business App) creating its onboarding and merchant training videos, and designed the robust Aggregator and Non-Aggregator onboarding Enterprise Solution.",
   },
   {
     patterns: ["process", "approach", "workflow", "methodology", "how do you design", "design process", "how you design"],

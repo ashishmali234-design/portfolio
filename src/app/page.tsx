@@ -87,7 +87,7 @@ export default function Home() {
           }`}>
             {/* Logo Group */}
             <div className="flex-1 flex justify-start">
-              <Logo layoutId="rocketLogo" />
+              <Logo />
             </div>
             
             {/* Navigation Menu (Centered) */}

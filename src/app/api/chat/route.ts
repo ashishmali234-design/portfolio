@@ -254,7 +254,10 @@ export async function POST(request: Request) {
     }, null, 2));
 
     const openAiKey = process.env.OPENAI_API_KEY;
-    const geminiKey = process.env.GEMINI_API_KEY;
+    const geminiKey = process.env.GEMINI_API_KEY || 
+                      process.env.GEMINI_KEY || 
+                      process.env.NEXT_PUBLIC_GEMINI_API_KEY || 
+                      process.env.NEXT_PUBLIC_GEMINI_KEY;
 
     // ── Option 1: OpenAI ─────────────────────────────────────────────────────
     if (openAiKey) {
@@ -279,25 +282,37 @@ export async function POST(request: Request) {
     }
 
     // ── Option 2: Gemini API ─────────────────────────────────────────────────
+
     if (geminiKey) {
-      // Gemini API strictly requires the conversation contents array to start with a 'user' message.
-      // We skip any leading 'assistant' (model) messages.
+      // Gemini API strictly requires alternating roles starting with 'user'.
+      // Consecutive identical roles or leading model/assistant messages throw a 400 Bad Request.
       const geminiMessages = [];
-      let foundUser = false;
+      let lastRole = null;
+
       for (const m of messages) {
-        if (m.role === "user") {
-          foundUser = true;
+        const geminiRole = m.role === "assistant" ? "model" : "user";
+        
+        // Skip leading 'model' messages
+        if (geminiMessages.length === 0 && geminiRole !== "user") {
+          continue;
         }
-        if (foundUser) {
+
+        if (geminiRole === lastRole) {
+          // Merge identical consecutive roles to keep the array strictly alternating
+          const lastMsg = geminiMessages[geminiMessages.length - 1];
+          lastMsg.parts[0].text += "\n" + m.content;
+        } else {
           geminiMessages.push({
-            role: m.role === "assistant" ? "model" : "user",
+            role: geminiRole,
             parts: [{ text: m.content }],
           });
+          lastRole = geminiRole;
         }
       }
 
+      // Use the universally stable and free gemini-1.5-flash model
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

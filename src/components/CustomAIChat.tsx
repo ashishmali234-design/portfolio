@@ -553,7 +553,7 @@ export default function CustomAIChat() {
                           key={idx}
                           disabled={isLoading}
                           onClick={() => handleSend(btn.prompt)}
-                          className="shrink-0 text-[10px] bg-transparent hover:bg-white/5 border border-white/[0.07] hover:border-amber-500/25 text-neutral-500 hover:text-white px-2.5 py-1 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-40 disabled:pointer-events-none leading-none"
+                          className="shrink-0 text-[10px] bg-amber-500/5 hover:bg-amber-500/12 border border-amber-500/15 hover:border-amber-500/40 text-amber-400/70 hover:text-amber-100 px-2.5 py-1 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-40 disabled:pointer-events-none leading-none"
                         >
                           {btn.text}
                         </button>
@@ -587,7 +587,7 @@ export default function CustomAIChat() {
                           key={idx}
                           disabled={isLoading}
                           onClick={() => handleSend(chip)}
-                          className="shrink-0 text-[10px] bg-amber-500/5 hover:bg-amber-500/12 border border-amber-500/12 hover:border-amber-500/35 text-amber-400/60 hover:text-amber-100 px-2.5 py-1 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-40 disabled:pointer-events-none leading-none"
+                          className="shrink-0 text-[10px] bg-amber-500/5 hover:bg-amber-500/12 border border-amber-400/20 hover:border-amber-400/45 text-amber-400/70 hover:text-amber-100 px-2.5 py-1 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-40 disabled:pointer-events-none leading-none"
                         >
                           {chip}
                         </button>

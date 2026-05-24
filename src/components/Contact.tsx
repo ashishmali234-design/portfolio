@@ -181,12 +181,23 @@ export default function Contact() {
         </motion.div>
 
         {/* Footer */}
-        <div className="mt-24 pt-12 border-t border-white/5 flex flex-col items-center gap-6">
-          {/* Brand Logo inside footer */}
-          <Logo className="opacity-70 hover:opacity-100 transition-opacity duration-300 scale-90" showText={true} forceShowTextOnMobile={true} />
+        <div className="mt-24 pt-12 border-t border-white/5 relative w-full flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-4 text-center md:text-left">
+          {/* Left Side: Brand Logo and Name */}
+          <div className="flex justify-center md:justify-start">
+            <Logo 
+              className="opacity-75 hover:opacity-100 transition-opacity duration-300 scale-90 origin-left" 
+              showText={true} 
+              forceShowTextOnMobile={true} 
+            />
+          </div>
 
-          {/* Social Links inside footer */}
-          <div className="flex items-center gap-4 mt-2">
+          {/* Center: Copyright Text */}
+          <div className="text-[10px] md:text-xs text-white/35 tracking-[0.15em] uppercase font-light leading-relaxed text-center md:absolute md:left-1/2 md:-translate-x-1/2 md:max-w-md">
+            &copy; {new Date().getFullYear()} ASHISH C MALI. ALL RIGHTS RESERVED.<br className="md:hidden" /> DESIGNED & BUILT WITH PASSION.
+          </div>
+
+          {/* Right Side: Social Logos (LinkedIn, Behance) */}
+          <div className="flex justify-center md:justify-end items-center gap-3.5">
             {/* LinkedIn Icon */}
             <a 
               href="https://www.linkedin.com/in/ashish-mali-b071b526b?utm_source=share_via&utm_content=profile&utm_medium=member_android"
@@ -208,10 +219,6 @@ export default function Contact() {
             >
               <BehanceIcon className="w-4 h-4" />
             </a>
-          </div>
-
-          <div className="text-center text-[10px] md:text-xs text-white/30 tracking-[0.15em] uppercase font-light mt-2 leading-relaxed">
-            &copy; {new Date().getFullYear()} ASHISH C MALI. ALL RIGHTS RESERVED.<br className="md:hidden" /> DESIGNED & BUILT WITH PASSION.
           </div>
         </div>
       </div>

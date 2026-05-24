@@ -347,10 +347,118 @@ function ChipRow({
   );
 }
 
+// ─── Contact detection ───────────────────────────────────────────────────────
+function isContactResponse(text: string): boolean {
+  const lower = text.toLowerCase();
+  return (
+    lower.includes("ashishmali234@gmail.com") ||
+    lower.includes("9075521047") ||
+    lower.includes("+91 9075") ||
+    lower.includes("linkedin") ||
+    lower.includes("behance") ||
+    lower.includes("whatsapp") ||
+    (lower.includes("reach") && lower.includes("ashish")) ||
+    (lower.includes("contact") && (lower.includes("email") || lower.includes("phone") || lower.includes("call")))
+  );
+}
+
+// ─── Contact CTA Panel ───────────────────────────────────────────────────────
+function ContactPanel() {
+  const wa = `https://wa.me/919075521047?text=${encodeURIComponent("Hi Ashish! 👋 I came across your portfolio and would love to connect.")}`;
+  const mail = `mailto:ashishmali234@gmail.com?subject=${encodeURIComponent("Let's Connect — Saw Your Portfolio")}&body=${encodeURIComponent("Hi Ashish,\n\nI came across your portfolio and I'm really impressed by your work! I'd love to connect.\n\nBest regards,")}`;
+  const call = "tel:+919075521047";
+  const linkedin = "https://www.linkedin.com/in/ashish-mali-b071b526b";
+  const behance = "https://www.behance.net/ashishmali";
+
+  const actions = [
+    {
+      label: "WhatsApp",
+      href: wa,
+      bg: "bg-[#25D366]/10 hover:bg-[#25D366]/20 border-[#25D366]/25 hover:border-[#25D366]/50",
+      text: "text-[#25D366]",
+      icon: (
+        <svg className="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+      ),
+    },
+    {
+      label: "Email",
+      href: mail,
+      bg: "bg-amber-500/10 hover:bg-amber-500/20 border-amber-500/25 hover:border-amber-500/50",
+      text: "text-amber-400",
+      icon: (
+        <svg className="w-3 h-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+      ),
+    },
+    {
+      label: "Call",
+      href: call,
+      bg: "bg-emerald-500/10 hover:bg-emerald-500/20 border-emerald-500/25 hover:border-emerald-500/50",
+      text: "text-emerald-400",
+      icon: (
+        <svg className="w-3 h-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+        </svg>
+      ),
+    },
+    {
+      label: "LinkedIn",
+      href: linkedin,
+      bg: "bg-[#0A66C2]/10 hover:bg-[#0A66C2]/20 border-[#0A66C2]/25 hover:border-[#0A66C2]/50",
+      text: "text-[#4D9FDC]",
+      icon: (
+        <svg className="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+      ),
+    },
+    {
+      label: "Behance",
+      href: behance,
+      bg: "bg-[#1769FF]/10 hover:bg-[#1769FF]/20 border-[#1769FF]/25 hover:border-[#1769FF]/50",
+      text: "text-[#5B8FFF]",
+      icon: (
+        <svg className="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M22 7h-7V5h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.051-2.053-5.051-5s2.01-4.975 5.001-4.975c2.941 0 4.842 1.739 5.083 4.389.065.741.065 1.711.065 1.711H15.849s.13 1.851 2.001 1.851c.821 0 1.489-.316 1.764-1.031l4.112.055zM15.85 14h4.201c0-.651-.124-1.789-1.994-1.789-1.792 0-2.148 1.365-2.207 1.789zM9.798 11.01c0-.913-.478-1.74-1.629-1.937-.701-.127-1.479-.149-2.255-.149H2v9.938h3.759c.867 0 1.779-.057 2.601-.296 1.567-.449 2.506-1.563 2.506-3.268 0-1.258-.648-2.29-1.677-2.799.621-.454.609-1.083.609-1.489zm-5.549-1.239h1.629c1.126 0 1.727.494 1.727 1.344 0 .949-.68 1.375-1.771 1.375H4.249v-2.719zm3.14 5.527c0 1.037-.695 1.633-1.95 1.633H4.249v-3.179h1.19c1.374 0 1.95.524 1.95 1.546z"/>
+        </svg>
+      ),
+    },
+  ];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.2 }}
+      className="ml-10 mt-2"
+    >
+      <p className="text-[9px] text-neutral-600 font-semibold uppercase tracking-widest mb-1.5">Connect directly</p>
+      <div className="flex flex-row flex-wrap gap-1.5">
+        {actions.map((a) => (
+          <a
+            key={a.label}
+            href={a.href}
+            target={a.href.startsWith("tel:") || a.href.startsWith("mailto:") ? undefined : "_blank"}
+            rel="noopener noreferrer"
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[10px] font-medium transition-all duration-200 ${a.bg} ${a.text}`}
+          >
+            {a.icon}
+            {a.label}
+          </a>
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+
 export default function CustomAIChat() {
   const [isOpen, setIsOpen] = useState(false);
   const [showFAQ, setShowFAQ] = useState(true);
   const [followUps, setFollowUps] = useState<string[]>([]);
+  const [showContactCTAs, setShowContactCTAs] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -416,6 +524,7 @@ export default function CustomAIChat() {
     if (!textToSend) setInput("");
     setShowFAQ(false);
     setFollowUps([]);
+    setShowContactCTAs(false);
 
     const newMessages: Message[] = [...messages, { role: "user", content: text }];
     setMessages(newMessages);
@@ -441,6 +550,9 @@ export default function CustomAIChat() {
 
       setMessages((prev) => [...prev, { role: "assistant", content: assistantMessage }]);
 
+      // Show contact CTAs if response mentions contact info
+      if (isContactResponse(assistantMessage)) setShowContactCTAs(true);
+
       // Smart follow-ups: only suggest questions relevant to what Ashli JUST said
       const chips = extractFollowUps(assistantMessage);
       if (chips.length > 0) setFollowUps(chips);
@@ -464,6 +576,7 @@ export default function CustomAIChat() {
     ]);
     setShowFAQ(true);
     setFollowUps([]);
+    setShowContactCTAs(false);
   };
 
   const ResetIcon = () => (
@@ -502,6 +615,10 @@ export default function CustomAIChat() {
     {
       text: "Prime Video redesign",
       prompt: "Tell me about the Amazon Prime Video redesign project.",
+    },
+    {
+      text: "Connect with Ashish",
+      prompt: "How can I contact or connect with Ashish?",
     },
   ];
 
@@ -562,27 +679,33 @@ export default function CustomAIChat() {
 
             {/* Conversation Log */}
             <div ref={msgContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-neutral-800 scrollbar-track-transparent">
-              {messages.map((msg, index) => (
-                <div key={index} className={`flex items-start gap-2.5 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}>
-                  {msg.role === "assistant" ? (
-                    <img src="/images/ai_avatar.png" alt="AI" className="w-8 h-8 rounded-full object-contain shrink-0" />
-                  ) : (
-                    <div className="w-8 h-8 rounded-full bg-neutral-800 border border-neutral-700/50 flex items-center justify-center text-white shrink-0">
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                      </svg>
+              {messages.map((msg, index) => {
+                const isLastAssistantMsg = msg.role === "assistant" && index === messages.length - 1;
+                return (
+                  <div key={index} className={`flex items-start gap-2.5 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}>
+                    {msg.role === "assistant" ? (
+                      <img src="/images/ai_avatar.png" alt="AI" className="w-8 h-8 rounded-full object-contain shrink-0" />
+                    ) : (
+                      <div className="w-8 h-8 rounded-full bg-neutral-800 border border-neutral-700/50 flex items-center justify-center text-white shrink-0">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                      </div>
+                    )}
+                    <div className="flex flex-col gap-2 max-w-[75%]">
+                      <div className={`p-3 rounded-2xl text-xs md:text-sm font-light leading-relaxed whitespace-pre-wrap ${
+                        msg.role === "user"
+                          ? "bg-amber-500/10 border border-amber-500/20 text-white rounded-tr-none text-left"
+                          : "bg-white/5 border border-white/5 text-white/90 rounded-tl-none text-left"
+                      }`}>
+                        {msg.content}
+                      </div>
+                      {/* Contact CTAs — shown inline after the last assistant contact reply */}
+                      {isLastAssistantMsg && showContactCTAs && <ContactPanel />}
                     </div>
-                  )}
-                  <div className={`max-w-[75%] p-3 rounded-2xl text-xs md:text-sm font-light leading-relaxed whitespace-pre-wrap ${
-                    msg.role === "user"
-                      ? "bg-amber-500/10 border border-amber-500/20 text-white rounded-tr-none text-left"
-                      : "bg-white/5 border border-white/5 text-white/90 rounded-tl-none text-left"
-                  }`}>
-                    {msg.content}
                   </div>
-                </div>
-              ))}
-
+                );
+              })}
               {/* Typing indicator */}
               {isLoading && (
                 <div className="flex items-start gap-2.5">

@@ -41,6 +41,9 @@ Key facts about Ashish:
 - Projects: MedApp (full doctor appointment booking app ecosystem), Amazon Prime Video Website Redesign (Lean UX), boAt Website Redesign, Social Media Analytics Dashboard, Travel Booking Platform, Food & Dining Website, Auto Parts Website.
 - Toolkit: Figma, ProtoPie, Framer Motion, Webflow, Spline 3D, Adobe After Effects, Illustrator, Photoshop, Premiere Pro; AI tools: ChatGPT, Claude AI, Gemini AI, Magnific AI (Spaces), Figma AI, Figma Make, Notebook LM, N8N (agentic workflows), Antigravity IDE.
 - Contact: ashishmali234@gmail.com | +91 9075521047 | ashishmali.vercel.app | Satara/Pune, Maharashtra
+- LinkedIn: https://www.linkedin.com/in/ashish-mali-b071b526b
+- Behance: https://www.behance.net/ashishmali
+- When someone asks how to connect or contact Ashish, mention all channels: WhatsApp (+91 9075521047), Email (ashishmali234@gmail.com), LinkedIn, and Behance. Keep it warm and inviting.
 `;
 
 // These patterns are intercepted BEFORE calling Gemini — purely conversational, short-circuit responses

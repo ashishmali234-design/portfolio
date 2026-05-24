@@ -12,61 +12,135 @@ interface Message {
 // Each entry: if these keywords appear in Ashli's RESPONSE,
 // suggest these specific deeper follow-up questions about what she JUST said.
 const RESPONSE_FOLLOW_UPS: Array<{ triggers: string[]; chips: string[] }> = [
-  // Bajaj Finance / Sales One App
+  // ── BAJAJ FINANCE ──────────────────────────────────────────────────────────
+  // Level 3: Sales One App — very specific features mentioned
+  {
+    triggers: ["scan & start", "scan and start", "gate meeting", "merchant visit", "attendance logging"],
+    chips: [
+      "How does the Scan & Start onboarding exactly work?",
+      "What info do the Performance Dashboards show to agents?",
+      "How do agents log their merchant visits in the app?",
+    ],
+  },
+  {
+    triggers: ["homepage", "merchant profile", "onboarding dashboard", "performance dashboard", "team tracking", "tasks management"],
+    chips: [
+      "How does Scan & Start onboarding work in Sales One?",
+      "What does the Performance Dashboard actually track?",
+      "How do sales agents manage their daily tasks?",
+    ],
+  },
+  // Level 2: Sales One App mentioned by name
   {
     triggers: ["sales one app", "sales one"],
     chips: [
+      "What features did Ashish revamp in the Sales One App?",
       "How does the Scan & Start onboarding work?",
       "What dashboards did Ashish design for sales agents?",
-      "How do agents track attendance and visits in the app?",
     ],
   },
-  // Gold Loan / Personal Loan / INSTA EMI
+  // Level 3: Gold Loan / Lending deep details
+  {
+    triggers: ["high-converting", "checkout funnel", "drop-off", "conversion rate", "loan journey"],
+    chips: [
+      "How did Ashish improve the Gold Loan checkout flow?",
+      "What marketing assets did he create for lending products?",
+      "How did Ashish design the INSTA EMI Card experience?",
+    ],
+  },
+  // Level 2: Lending products mentioned
   {
     triggers: ["gold loan", "personal loan", "insta emi"],
     chips: [
-      "How did Ashish optimize the Gold Loan journey?",
+      "How did Ashish improve the Gold Loan user journey?",
       "What is the INSTA EMI Card UX like?",
       "What marketing banners did Ashish create for lending?",
     ],
   },
-  // Merchant One App
+  // Level 3: REMI / Banners / GIFs deep
+  {
+    triggers: ["remi", "retail emi", "co-branded", "push notification", "in-app banner", "promotional gif"],
+    chips: [
+      "What brands are covered in the REMI campaigns?",
+      "How does Ashish create animated GIFs for Bajaj Finance?",
+      "Tell me about the Bajaj Pay marketing collaterals",
+    ],
+  },
+  // Level 3: Merchant training videos
+  {
+    triggers: ["training video", "merchant training", "animated training", "step-by-step video"],
+    chips: [
+      "What tools does Ashish use to create training videos?",
+      "What topics do the merchant training videos cover?",
+      "How does motion design help merchants learn the app?",
+    ],
+  },
+  // Level 2: Merchant One App mentioned
   {
     triggers: ["merchant one app", "finserv for business", "merchant dashboard"],
     chips: [
-      "What dashboards did Ashish design for merchants?",
+      "What dashboards did Ashish design for the Merchant One App?",
       "Tell me about the animated merchant training videos",
-      "How does Ashish design EDC terminal journeys?",
+      "How does the app help merchants get started with Bajaj?",
     ],
   },
-  // EDC / POS
+  // Level 3: EDC POS deep
   {
-    triggers: ["edc", "point-of-sale", "pos terminal", "swipe"],
+    triggers: ["edc", "pos terminal", "point-of-sale", "swipe journey", "terminal journey"],
     chips: [
-      "How did Ashish ensure zero errors on the POS terminal?",
-      "What accessibility principles did Ashish use for EDC?",
-      "Tell me about the Bajaj Pay branding work",
+      "How did Ashish design for zero payment errors on POS?",
+      "What accessibility principles did he use for EDC screens?",
+      "Tell me about the Bajaj Pay EDC branding work",
     ],
   },
-  // B2B Enterprise / Aggregator
+  // Level 3: B2B Aggregator deep
   {
-    triggers: ["b2b enterprise", "aggregator", "non-aggregator"],
+    triggers: ["aggregator dashboard", "non-aggregator", "merchant network", "aggregator and non-aggregator"],
     chips: [
-      "What is the Aggregator vs Non-Aggregator dashboard difference?",
-      "How does Ashish manage complexity in B2B flows?",
-      "Tell me about the merchant onboarding dashboards",
+      "What's the difference between Aggregator and Non-Aggregator dashboards?",
+      "How does Ashish simplify complexity in B2B flows?",
+      "What kind of data do these dashboards manage?",
     ],
   },
-  // Bajaj Finance general
+  // Level 2: B2B Enterprise mentioned
   {
-    triggers: ["bajaj finance", "bajaj finserv", "bajaj pay", "remi", "retail emi"],
+    triggers: ["b2b enterprise", "b2b solution", "aggregator", "corporate partner"],
     chips: [
-      "Tell me about the Sales One App revamp",
+      "What is the B2B Aggregator dashboard?",
+      "How does Ashish design for large merchant networks?",
+      "What problem did the B2B Enterprise solution solve?",
+    ],
+  },
+  // Level 2: Multiple Bajaj products listed (medium detail)
+  {
+    triggers: ["sales one", "gold loan", "merchant one", "lending", "b2b"],
+    chips: [
+      "Tell me more about the Sales One App revamp",
       "What is the Merchant One App?",
-      "How did Ashish design lending journeys at Bajaj?",
+      "How did Ashish design the core lending journeys?",
     ],
   },
-  // Figma AI / Figma Make
+  // Level 1: Bajaj Finance general mention only
+  {
+    triggers: ["bajaj finance", "bajaj finserv", "bajaj pay"],
+    chips: [
+      "What exactly does Ashish work on at Bajaj Finance?",
+      "What kind of products does he design there?",
+      "How long has Ashish been at Bajaj Finance?",
+    ],
+  },
+
+  // ── AI TOOLS ───────────────────────────────────────────────────────────────
+  // Level 3: Specific AI tools deep
+  {
+    triggers: ["chatgpt", "magnific", "n8n", "notebook lm", "antigravity ide"],
+    chips: [
+      "How exactly does Ashish use ChatGPT in design work?",
+      "What does Magnific AI help Ashish create?",
+      "What is N8N and how does Ashish use it for workflows?",
+    ],
+  },
+  // Level 2: Figma AI / Figma Make
   {
     triggers: ["figma ai", "figma make"],
     chips: [

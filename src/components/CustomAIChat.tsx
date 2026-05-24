@@ -67,7 +67,7 @@ export default function CustomAIChat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hey there! I am Ashli 👋, Ashish's interactive AI assistant. Ask me anything about him!",
+      content: "Hey there! I am Ashli 👋, Ashish's interactive AI assistant. you can ask me anything about him!",
     },
   ]);
   const [input, setInput] = useState("");
@@ -190,7 +190,7 @@ export default function CustomAIChat() {
     setMessages([
       {
         role: "assistant",
-        content: "Reset complete! Hey there! I am Ashli 👋, Ashish's interactive AI assistant. Ask me anything about him!",
+        content: "Reset complete! Hey there! I am Ashli 👋, Ashish's interactive AI assistant. you can ask me anything about him!",
       },
     ]);
     setShowFAQ(true);

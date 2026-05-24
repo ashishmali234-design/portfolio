@@ -8,9 +8,17 @@ interface Message {
   content: string;
 }
 
-// ---------- keyword → follow-up chips mapping ----------
-// ---------- keyword → follow-up chips mapping ----------
 const KEYWORD_SUGGESTIONS: Record<string, string[]> = {
+  father: ["What is Ashish's background?", "Tell me about Ashish's childhood and family town.", "Where does Ashish reside now?"],
+  chandrakant: ["What is Ashish's background?", "Tell me about Ashish's childhood and family town.", "Where does Ashish reside now?"],
+  onboarding: ["How does the 'Scan & Start' onboarding flow work?", "Tell me about the merchant onboarding dashboards in the Sales One App."],
+  lending: ["How did Ashish optimize the Gold Loan journey?", "What about the Personal Loan and INSTA EMI Card UI?", "How did checkout conversions increase at Bajaj?"],
+  loan: ["How did Ashish optimize the Gold Loan journey?", "What about the Personal Loan and INSTA EMI Card UI?", "How did checkout conversions increase at Bajaj?"],
+  "b2b": ["What are the dashboards designed for B2B Aggregators?", "Explain how Ashish simplifies dense B2B merchant networks."],
+  enterprise: ["What are the dashboards designed for B2B Aggregators?", "Explain how Ashish simplifies dense B2B merchant networks."],
+  "sales one": ["What features did he revamp in the Sales One App?", "How do sales agents track attendance and visits?"],
+  "figma ai": ["How does Ashish use Figma AI in wireframing?", "What is his 'Designing with AI, thinking like humans' philosophy?"],
+  "figma make": ["How does Ashish use Figma AI in wireframing?", "What is his 'Designing with AI, thinking like humans' philosophy?"],
   figma: ["How does Ashish use Figma for design systems?", "Tell me about Ashish's Figma AI/Figma Make workflow.", "Can you explain Ashish's Figma onboarding layouts?"],
   protopie: ["Tell me about Ashish's ProtoPie swipe journeys.", "Why does Ashish prefer ProtoPie over standard Figma links?", "How does Ashish test logic-driven prototypes?"],
   "framer motion": ["How is Framer Motion used in this portfolio?", "Does Ashish use Framer for live websites?"],

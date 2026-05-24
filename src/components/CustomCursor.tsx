@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useMotionValue, AnimatePresence } from "framer-motion";
+import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
 
 export default function CustomCursor() {
   const [isVisible, setIsVisible] = useState(true); // Active immediately (even on loading screen)
@@ -13,6 +13,12 @@ export default function CustomCursor() {
   // Custom cursor position motion values
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
+
+  // Premium AI Neural Spark Trail Spring Tracking (independent spring nodes for smooth trailing lag)
+  const trailX1 = useSpring(cursorX, { stiffness: 120, damping: 24 });
+  const trailY1 = useSpring(cursorY, { stiffness: 120, damping: 24 });
+  const trailX2 = useSpring(cursorX, { stiffness: 80, damping: 18 });
+  const trailY2 = useSpring(cursorY, { stiffness: 80, damping: 18 });
 
   useEffect(() => {
     // Disable custom cursor on mobile/touch screens
@@ -94,6 +100,40 @@ export default function CustomCursor() {
 
   return (
     <>
+      {/* Premium AI Neural Spark Trail Particles */}
+      {!showIBeam && !hideCursor && (
+        <>
+          {/* Main trailing Cyber Cyan node particle */}
+          <motion.div
+            className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-cyan-400 pointer-events-none z-[99998] shadow-[0_0_8px_#00F0FF] custom-cursor-container"
+            style={{
+              x: trailX1,
+              y: trailY1,
+              translateX: "-50%",
+              translateY: "-50%",
+            }}
+            animate={{
+              opacity: isClicked ? 0.85 : 0.65,
+              scale: isClicked ? 1.5 : 1,
+            }}
+          />
+          {/* Secondary trailing Golden Amber node particle */}
+          <motion.div
+            className="fixed top-0 left-0 w-1 h-1 rounded-full bg-amber-400 pointer-events-none z-[99998] shadow-[0_0_6px_#FFBF4F] custom-cursor-container"
+            style={{
+              x: trailX2,
+              y: trailY2,
+              translateX: "-50%",
+              translateY: "-50%",
+            }}
+            animate={{
+              opacity: isClicked ? 0.65 : 0.45,
+              scale: isClicked ? 1.3 : 1,
+            }}
+          />
+        </>
+      )}
+
       <motion.div
         className="fixed top-0 left-0 pointer-events-none z-[99999] flex items-center justify-center custom-cursor-container"
         style={{
@@ -107,19 +147,24 @@ export default function CustomCursor() {
         }}
         transition={{ duration: 0.1 }}
       >
-        {/* Subtle AI-themed glowing aura pulsing behind the cursor logo/hand */}
+        {/* Extremely subtle ambient radial glow behind the cursor logo/hand for premium visual depth */}
         {!showIBeam && !hideCursor && (
-          <motion.div
-            className="absolute w-12 h-12 rounded-full border border-amber-500/20 bg-amber-500/[0.03] blur-[2px] pointer-events-none -z-10"
-            animate={{
-              scale: isClicked ? 0.65 : isHovered ? [1, 1.25, 1] : [1, 1.15, 1],
-              opacity: isHovered ? [0.4, 0.7, 0.4] : [0.25, 0.5, 0.25],
-            }}
-            transition={{
-              scale: isClicked ? { duration: 0.1 } : { repeat: Infinity, duration: 3, ease: "easeInOut" },
-              opacity: { repeat: Infinity, duration: 3, ease: "easeInOut" },
-            }}
-          />
+          <div className="absolute inset-0 flex items-center justify-center -z-10 pointer-events-none">
+            <motion.div
+              className="absolute w-14 h-14 rounded-full blur-[8px] pointer-events-none"
+              style={{
+                background: "radial-gradient(circle, rgba(0,240,255,0.06) 0%, rgba(255,191,79,0.04) 50%, rgba(0,0,0,0) 70%)"
+              }}
+              animate={{
+                scale: isClicked ? 0.75 : isHovered ? [1, 1.2, 1] : [1, 1.1, 1],
+                opacity: isHovered ? [0.35, 0.55, 0.35] : [0.2, 0.3, 0.2],
+              }}
+              transition={{
+                scale: isClicked ? { duration: 0.1 } : { repeat: Infinity, duration: 3, ease: "easeInOut" },
+                opacity: { repeat: Infinity, duration: 3, ease: "easeInOut" },
+              }}
+            />
+          </div>
         )}
 
         <AnimatePresence mode="wait">
@@ -134,14 +179,14 @@ export default function CustomCursor() {
               className="w-[2px] h-4 bg-amber-500 rounded-sm shadow-[0_0_8px_rgba(245,158,11,0.8)]"
             />
           ) : isHovered ? (
-            // User's custom pointing hand PNG (size reduced to w-8/32px normally, clicking scales to 0.75 = exactly 24px)
+            // User's custom pointing hand PNG (size reduced to w-[26px] x h-[26px] normally, clicking scales to 0.8 = exactly 20.8px)
             <motion.div
               key="hand"
               initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-              animate={{ opacity: 1, scale: isClicked ? 0.75 : 1, rotate: 0 }}
+              animate={{ opacity: 1, scale: isClicked ? 0.8 : 1, rotate: 0 }}
               exit={{ opacity: 0, scale: 0.8, rotate: -5 }}
               transition={{ duration: 0.12 }}
-              className="w-8 h-8"
+              className="w-[26px] h-[26px]"
             >
               <img
                 src="/images/hand_cursor.png"

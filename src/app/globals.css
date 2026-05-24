@@ -104,10 +104,25 @@ body {
 
 /* Hide default cursor globally on desktop screens when custom cursor is active */
 @media (hover: hover) and (pointer: fine) {
-  * {
+  html,
+  body,
+  *,
+  *::before,
+  *::after,
+  *:active,
+  *:hover,
+  *:focus,
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  [role="button"],
+  ::selection {
     cursor: none !important;
   }
 }
+
 
 /* Hide custom cursor completely on touch/mobile devices */
 @media (pointer: coarse) {

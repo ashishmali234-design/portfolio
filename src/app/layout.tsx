@@ -16,11 +16,25 @@ const rubikFont = Rubik({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ashishmali.vercel.app"),
   title: "Ashish C Mali | Product Designer & Interactive Architect",
   description: "Product Designer portfolio bridging clean layout, high-end user research, custom design systems, and robust front-end engineering.",
   icons: {
     icon: "/favicon.svg",
   },
+  openGraph: {
+    title: "Ashish C Mali | Product Designer & Interactive Architect",
+    description: "Product Designer portfolio bridging clean layout, high-end user research, custom design systems, and robust front-end engineering.",
+    url: "https://ashishmali.vercel.app",
+    siteName: "Ashish C Mali Portfolio",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ashish C Mali | Product Designer & Interactive Architect",
+    description: "Product Designer portfolio bridging clean layout, high-end user research, custom design systems, and robust front-end engineering.",
+  }
 };
 
 export const viewport = {

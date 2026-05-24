@@ -67,7 +67,7 @@ export default function CustomAIChat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hello! I'm Ashli. You can Ask me about Ashish anything.",
+      content: "Hey there! I am Ashli 👋, Ashish's interactive AI assistant. Ask me anything about him!",
     },
   ]);
   const [input, setInput] = useState("");
@@ -80,6 +80,15 @@ export default function CustomAIChat() {
 
   useEffect(() => {
     setMounted(true);
+
+    // Generate/retrieve a persistent unique userId for 100% free query analytics
+    if (typeof window !== "undefined") {
+      let storedUserId = localStorage.getItem("ashli_user_id");
+      if (!storedUserId) {
+        storedUserId = "usr_" + Math.random().toString(36).substring(2, 11) + "_" + Date.now().toString(36);
+        localStorage.setItem("ashli_user_id", storedUserId);
+      }
+    }
 
     // Track scroll y-coordinate for the scroll-to-top CTA
     const handleScroll = () => {
@@ -138,10 +147,15 @@ export default function CustomAIChat() {
     setIsLoading(true);
 
     try {
+      const userId = typeof window !== "undefined" ? localStorage.getItem("ashli_user_id") || "anonymous" : "anonymous";
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: newMessages }),
+        body: JSON.stringify({ 
+          messages: newMessages,
+          userId: userId,
+          userAgent: typeof navigator !== "undefined" ? navigator.userAgent : "unknown"
+        }),
       });
 
       if (!response.ok) throw new Error("Failed to get response");
@@ -176,7 +190,7 @@ export default function CustomAIChat() {
     setMessages([
       {
         role: "assistant",
-        content: "Reset complete! I'm Ashli. You can Ask me about Ashish anything.",
+        content: "Reset complete! Hey there! I am Ashli 👋, Ashish's interactive AI assistant. Ask me anything about him!",
       },
     ]);
     setShowFAQ(true);
@@ -463,7 +477,7 @@ export default function CustomAIChat() {
             <div className="flex-1 pr-4">
               <h4 className="text-[10px] text-amber-500 font-semibold tracking-wider uppercase mb-0.5 font-rubik">Ashli</h4>
               <p className="text-[11px] text-white/95 leading-normal font-light">
-                Hey there! I am Ashli 👋, Ashish&apos;s interactive AI assistant. Ask me anything him!
+                Hey there! I am Ashli 👋, Ashish&apos;s interactive AI assistant. Ask me anything about him!
               </p>
             </div>
             

@@ -71,7 +71,7 @@ export default function Home() {
 
   return (
     <main className="relative bg-[#121212] w-full min-h-screen text-white select-none lg:cursor-none">
-      {!showPrimeVideo && <CustomCursor />}
+      <CustomCursor />
       
       {/* Fixed Navigation Header */}
       {isLoaded && (

@@ -96,16 +96,26 @@ export default function CustomAIChat() {
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     
-    // Delayed pop-up welcome message on first load (if still at hero top)
-    const welcomeTimer = setTimeout(() => {
+    // Fallback welcome message timer in case the event is delayed or doesn't fire
+    const fallbackTimer = setTimeout(() => {
       if (window.scrollY < 100) {
         setShowWelcome(true);
       }
-    }, 2500);
+    }, 5000);
+
+    // Precise welcome pop-up when hero text animation completes
+    const handleHeroAnimationComplete = () => {
+      clearTimeout(fallbackTimer);
+      if (window.scrollY < 100) {
+        setShowWelcome(true);
+      }
+    };
+    window.addEventListener("hero-animation-complete", handleHeroAnimationComplete);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      clearTimeout(welcomeTimer);
+      window.removeEventListener("hero-animation-complete", handleHeroAnimationComplete);
+      clearTimeout(fallbackTimer);
     };
   }, []);
 

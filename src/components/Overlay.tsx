@@ -69,6 +69,11 @@ export default function Overlay() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.6, duration: 0.6, ease: "easeOut" }}
+              onAnimationComplete={() => {
+                if (typeof window !== "undefined") {
+                  window.dispatchEvent(new CustomEvent("hero-animation-complete"));
+                }
+              }}
               className="text-[12px] md:text-sm text-white/50 uppercase tracking-widest mt-3"
             >
               at <span className="font-rubik text-white font-semibold tracking-widest">Bajaj Finance</span>

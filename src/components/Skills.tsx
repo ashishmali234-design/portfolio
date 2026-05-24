@@ -393,12 +393,12 @@ export default function Skills() {
               {[...creativeTools, ...creativeTools].map((tool, idx) => (
                 <div
                   key={`creative-1-${tool.name}-${idx}`}
-                  className="flex items-center gap-3 px-6 py-3.5 rounded-full bg-[#161618]/90 border border-white/[0.08] hover:border-amber-500/30 hover:bg-[#1c1c1f]/90 hover:shadow-[0_0_20px_rgba(245,158,11,0.12)] transition-all duration-300 group cursor-default shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
+                  className="flex items-center gap-0 md:gap-3 p-3.5 md:px-6 md:py-3.5 rounded-full bg-[#161618]/90 border border-white/[0.08] hover:border-amber-500/30 hover:bg-[#1c1c1f]/90 hover:shadow-[0_0_20px_rgba(245,158,11,0.12)] transition-all duration-300 group cursor-default shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
                 >
                   <div className="flex items-center justify-center w-5 h-5 shrink-0 transition-transform duration-300 group-hover:scale-110">
                     {tool.icon}
                   </div>
-                  <span className="text-sm font-semibold tracking-wide text-neutral-300 group-hover:text-white transition-colors duration-200">
+                  <span className="hidden md:inline text-sm font-semibold tracking-wide text-neutral-300 group-hover:text-white transition-colors duration-200">
                     {tool.name}
                   </span>
                 </div>
@@ -408,12 +408,12 @@ export default function Skills() {
               {[...creativeTools, ...creativeTools].map((tool, idx) => (
                 <div
                   key={`creative-2-${tool.name}-${idx}`}
-                  className="flex items-center gap-3 px-6 py-3.5 rounded-full bg-[#161618]/90 border border-white/[0.08] hover:border-amber-500/30 hover:bg-[#1c1c1f]/90 hover:shadow-[0_0_20px_rgba(245,158,11,0.12)] transition-all duration-300 group cursor-default shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
+                  className="flex items-center gap-0 md:gap-3 p-3.5 md:px-6 md:py-3.5 rounded-full bg-[#161618]/90 border border-white/[0.08] hover:border-amber-500/30 hover:bg-[#1c1c1f]/90 hover:shadow-[0_0_20px_rgba(245,158,11,0.12)] transition-all duration-300 group cursor-default shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
                 >
                   <div className="flex items-center justify-center w-5 h-5 shrink-0 transition-transform duration-300 group-hover:scale-110">
                     {tool.icon}
                   </div>
-                  <span className="text-sm font-semibold tracking-wide text-neutral-300 group-hover:text-white transition-colors duration-200">
+                  <span className="hidden md:inline text-sm font-semibold tracking-wide text-neutral-300 group-hover:text-white transition-colors duration-200">
                     {tool.name}
                   </span>
                 </div>
@@ -427,12 +427,12 @@ export default function Skills() {
               {[...techTools, ...techTools, ...techTools].map((tool, idx) => (
                 <div
                   key={`tech-1-${tool.name}-${idx}`}
-                  className="flex items-center gap-3 px-6 py-3.5 rounded-full bg-[#161618]/90 border border-white/[0.08] hover:border-amber-500/30 hover:bg-[#1c1c1f]/90 hover:shadow-[0_0_20px_rgba(245,158,11,0.12)] transition-all duration-300 group cursor-default shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
+                  className="flex items-center gap-0 md:gap-3 p-3.5 md:px-6 md:py-3.5 rounded-full bg-[#161618]/90 border border-white/[0.08] hover:border-amber-500/30 hover:bg-[#1c1c1f]/90 hover:shadow-[0_0_20px_rgba(245,158,11,0.12)] transition-all duration-300 group cursor-default shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
                 >
                   <div className="flex items-center justify-center w-5 h-5 shrink-0 transition-transform duration-300 group-hover:scale-110">
                     {tool.icon}
                   </div>
-                  <span className="text-sm font-semibold tracking-wide text-neutral-300 group-hover:text-white transition-colors duration-200">
+                  <span className="hidden md:inline text-sm font-semibold tracking-wide text-neutral-300 group-hover:text-white transition-colors duration-200">
                     {tool.name}
                   </span>
                 </div>
@@ -442,12 +442,12 @@ export default function Skills() {
               {[...techTools, ...techTools, ...techTools].map((tool, idx) => (
                 <div
                   key={`tech-2-${tool.name}-${idx}`}
-                  className="flex items-center gap-3 px-6 py-3.5 rounded-full bg-[#161618]/90 border border-white/[0.08] hover:border-amber-500/30 hover:bg-[#1c1c1f]/90 hover:shadow-[0_0_20px_rgba(245,158,11,0.12)] transition-all duration-300 group cursor-default shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
+                  className="flex items-center gap-0 md:gap-3 p-3.5 md:px-6 md:py-3.5 rounded-full bg-[#161618]/90 border border-white/[0.08] hover:border-amber-500/30 hover:bg-[#1c1c1f]/90 hover:shadow-[0_0_20px_rgba(245,158,11,0.12)] transition-all duration-300 group cursor-default shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
                 >
                   <div className="flex items-center justify-center w-5 h-5 shrink-0 transition-transform duration-300 group-hover:scale-110">
                     {tool.icon}
                   </div>
-                  <span className="text-sm font-semibold tracking-wide text-neutral-300 group-hover:text-white transition-colors duration-200">
+                  <span className="hidden md:inline text-sm font-semibold tracking-wide text-neutral-300 group-hover:text-white transition-colors duration-200">
                     {tool.name}
                   </span>
                 </div>

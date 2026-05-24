@@ -282,61 +282,17 @@ export async function POST(request: Request) {
     }
 
     // ── Option 2: Gemini API ─────────────────────────────────────────────────
-
     if (geminiKey) {
-      // Gemini API strictly requires alternating roles starting with 'user'.
-      // Consecutive identical roles or leading model/assistant messages throw a 400 Bad Request.
-      const geminiMessages = [];
-      let lastRole = null;
-
-      for (const m of messages) {
-        const geminiRole = m.role === "assistant" ? "model" : "user";
-        
-        // Skip leading 'model' messages
-        if (geminiMessages.length === 0 && geminiRole !== "user") {
-          continue;
-        }
-
-        if (geminiRole === lastRole) {
-          // Merge identical consecutive roles to keep the array strictly alternating
-          const lastMsg = geminiMessages[geminiMessages.length - 1];
-          lastMsg.parts[0].text += "\n" + m.content;
-        } else {
-          geminiMessages.push({
-            role: geminiRole,
-            parts: [{ text: m.content }],
-          });
-          lastRole = geminiRole;
-        }
-      }
-
-      // Use the universally stable and free gemini-1.5-flash model
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            system_instruction: { parts: [{ text: systemPrompt }] },
-            contents: geminiMessages,
-            generationConfig: { temperature: 0.7, maxOutputTokens: 500 },
-          }),
-        }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-        if (text) {
-          return NextResponse.json({
-            choices: [{ message: { role: "assistant", content: text } }],
-          });
-        }
-      } else {
-        const errText = await response.text();
-        console.error("Gemini API call failed status:", response.status, "body:", errText);
+      try {
+        const listResp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${geminiKey}`);
+        const listData = await listResp.json();
         return NextResponse.json({
-          choices: [{ message: { role: "assistant", content: `Gemini API Error (Status ${response.status}): ${errText}` } }]
+          choices: [{ message: { role: "assistant", content: `Gemini Key Diagnostics: ${JSON.stringify(listData, null, 2)}` } }]
+        });
+      } catch (err) {
+        const errMsg = err instanceof Error ? err.message : String(err);
+        return NextResponse.json({
+          choices: [{ message: { role: "assistant", content: `Diagnostic Fetch Failed: ${errMsg}` } }]
         });
       }
     }

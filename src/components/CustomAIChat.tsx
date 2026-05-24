@@ -9,8 +9,8 @@ interface Message {
 }
 
 const KEYWORD_SUGGESTIONS: Record<string, string[]> = {
-  father: ["What is Ashish's background?", "Tell me about Ashish's childhood and family town.", "Where does Ashish reside now?"],
-  chandrakant: ["What is Ashish's background?", "Tell me about Ashish's childhood and family town.", "Where does Ashish reside now?"],
+  father: ["What is Ashish's full name and father's name?", "Where is Ashish based?", "What is Ashish's academic history?"],
+  chandrakant: ["What is Ashish's full name and father's name?", "Where is Ashish based?", "What is Ashish's academic history?"],
   onboarding: ["How does the 'Scan & Start' onboarding flow work?", "Tell me about the merchant onboarding dashboards in the Sales One App."],
   lending: ["How did Ashish optimize the Gold Loan journey?", "What about the Personal Loan and INSTA EMI Card UI?", "How did checkout conversions increase at Bajaj?"],
   loan: ["How did Ashish optimize the Gold Loan journey?", "What about the Personal Loan and INSTA EMI Card UI?", "How did checkout conversions increase at Bajaj?"],
@@ -397,13 +397,13 @@ export default function CustomAIChat() {
                         </svg>
                       </button>
                     </p>
-                    <div className="flex flex-wrap gap-1.5">
+                    <div className="flex flex-row overflow-x-auto whitespace-nowrap scrollbar-none gap-2 pb-1 scroll-smooth">
                       {quickPrompts.map((btn, idx) => (
                         <button
                           key={idx}
                           disabled={isLoading}
                           onClick={() => handleSend(btn.prompt)}
-                          className="text-[10px] bg-white/5 hover:bg-amber-500/10 border border-white/5 hover:border-amber-500/20 text-neutral-300 hover:text-white px-2.5 py-1.5 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:pointer-events-none"
+                          className="shrink-0 text-[10px] bg-white/5 hover:bg-amber-500/10 border border-white/5 hover:border-amber-500/20 text-neutral-300 hover:text-white px-2.5 py-1.5 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:pointer-events-none"
                         >
                           {btn.text}
                         </button>
@@ -431,13 +431,13 @@ export default function CustomAIChat() {
                         </svg>
                       </button>
                     </p>
-                    <div className="flex flex-wrap gap-1.5">
+                    <div className="flex flex-row overflow-x-auto whitespace-nowrap scrollbar-none gap-2 pb-1 scroll-smooth">
                       {followUps.map((chip, idx) => (
                         <button
                           key={idx}
                           disabled={isLoading}
                           onClick={() => handleSend(chip)}
-                          className="text-[10px] bg-amber-500/5 hover:bg-amber-500/15 border border-amber-500/10 hover:border-amber-500/30 text-amber-200/80 hover:text-amber-100 px-2.5 py-1.5 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:pointer-events-none"
+                          className="shrink-0 text-[10px] bg-amber-500/5 hover:bg-amber-500/15 border border-amber-500/10 hover:border-amber-500/30 text-amber-200/80 hover:text-amber-100 px-2.5 py-1.5 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:pointer-events-none"
                         >
                           {chip}
                         </button>

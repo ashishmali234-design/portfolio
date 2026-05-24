@@ -56,6 +56,18 @@ Guidelines to Avoid Generic Answers:
 
 const KNOWLEDGE_BASE: Array<{ patterns: string[]; answer: string }> = [
   {
+    patterns: ["thanks", "thank you", "tanks", "thx", "thankyou"],
+    answer: "You're so welcome! I'm always here to help you explore Ashish's design work, his Bajaj Finance case studies, figma systems, or prototypes. Let me know if you want to ask anything else! 😊",
+  },
+  {
+    patterns: ["ok", "okay", "cool", "awesome", "great", "perfect", "good"],
+    answer: "Awesome! I'm glad that was helpful. Let me know if you'd like to explore more of Ashish's fintech journeys, Figma process, or how he designs with AI! 🚀",
+  },
+  {
+    patterns: ["bye", "goodbye", "exit"],
+    answer: "It was great chatting with you! Thanks for visiting Ashish's portfolio. Have an amazing day! ✨",
+  },
+  {
     patterns: ["hello", "hi ", "hey", "good morning", "good evening", "howdy"],
     answer: "Hi there! I'm Ashli, Ashish's custom UX/UI Design AI assistant. You can ask me about his work at Bajaj Finance (like the Sales One App revamp or B2B aggregator systems), his core design tools like Figma and ProtoPie, his featured case studies, or his design philosophy. What can I help you explore today?",
   },

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Rubik, Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import CustomAIChat from "../components/CustomAIChat";
 import "./globals.css";
 
@@ -54,6 +55,7 @@ export default function RootLayout({
       >
         {children}
         <CustomAIChat />
+        <Analytics />
       </body>
     </html>
   );

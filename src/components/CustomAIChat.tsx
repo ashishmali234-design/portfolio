@@ -272,6 +272,100 @@ function extractFollowUps(responseText: string): string[] {
   return found;
 }
 
+// ─── Markdown-like message renderer ─────────────────────────────────────────
+function renderInline(text: string): React.ReactNode[] {
+  // Parse **bold** inline
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return <strong key={i} className="font-semibold text-white">{part.slice(2, -2)}</strong>;
+    }
+    return part;
+  });
+}
+
+function renderMessageContent(content: string): React.ReactNode {
+  const lines = content.split("\n");
+  const elements: React.ReactNode[] = [];
+  let bulletItems: React.ReactNode[] = [];
+  let numberedItems: React.ReactNode[] = [];
+  let key = 0;
+
+  const flushBullets = () => {
+    if (bulletItems.length > 0) {
+      elements.push(
+        <ul key={key++} className="list-none space-y-1 my-1.5">
+          {bulletItems}
+        </ul>
+      );
+      bulletItems = [];
+    }
+  };
+
+  const flushNumbered = () => {
+    if (numberedItems.length > 0) {
+      elements.push(
+        <ol key={key++} className="list-none space-y-1 my-1.5">
+          {numberedItems}
+        </ol>
+      );
+      numberedItems = [];
+    }
+  };
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const trimmed = line.trim();
+
+    // Skip empty lines — flush lists and add a small gap
+    if (trimmed === "") {
+      flushBullets();
+      flushNumbered();
+      continue;
+    }
+
+    // Bullet list: lines starting with *, -, or •
+    const bulletMatch = trimmed.match(/^[\*\-•]\s+(.+)/);
+    if (bulletMatch) {
+      flushNumbered();
+      bulletItems.push(
+        <li key={key++} className="flex items-start gap-2 text-white/90">
+          <span className="mt-1 shrink-0 w-1.5 h-1.5 rounded-full bg-amber-400/70 inline-block" />
+          <span>{renderInline(bulletMatch[1])}</span>
+        </li>
+      );
+      continue;
+    }
+
+    // Numbered list: lines starting with 1., 2., etc.
+    const numberedMatch = trimmed.match(/^(\d+)\.\s+(.+)/);
+    if (numberedMatch) {
+      flushBullets();
+      numberedItems.push(
+        <li key={key++} className="flex items-start gap-2 text-white/90">
+          <span className="shrink-0 font-semibold text-amber-400/80 min-w-[1.2em] text-right">{numberedMatch[1]}.</span>
+          <span>{renderInline(numberedMatch[2])}</span>
+        </li>
+      );
+      continue;
+    }
+
+    // Regular paragraph line
+    flushBullets();
+    flushNumbered();
+    elements.push(
+      <p key={key++} className="leading-relaxed text-white/90">
+        {renderInline(trimmed)}
+      </p>
+    );
+  }
+
+  flushBullets();
+  flushNumbered();
+
+  return <div className="space-y-1.5">{elements}</div>;
+}
+
 // ─── Scrollable chip row with desktop arrows ──────────────────────────────────
 function ChipRow({
   children,
@@ -721,12 +815,12 @@ export default function CustomAIChat() {
                       </div>
                     )}
                     <div className="flex flex-col gap-2 max-w-[75%]">
-                      <div className={`p-3 rounded-2xl text-xs md:text-sm font-light leading-relaxed whitespace-pre-wrap ${
+                      <div className={`p-3 rounded-2xl text-xs md:text-sm font-light leading-relaxed ${
                         msg.role === "user"
-                          ? "bg-amber-500/10 border border-amber-500/20 text-white rounded-tr-none text-left"
+                          ? "bg-amber-500/10 border border-amber-500/20 text-white rounded-tr-none text-left whitespace-pre-wrap"
                           : "bg-white/5 border border-white/5 text-white/90 rounded-tl-none text-left"
                       }`}>
-                        {msg.content}
+                        {msg.role === "user" ? msg.content : renderMessageContent(msg.content)}
                       </div>
                       {/* Contact CTAs — shown inline after the last assistant contact reply */}
                       {isLastAssistantMsg && showContactCTAs && <ContactPanel />}

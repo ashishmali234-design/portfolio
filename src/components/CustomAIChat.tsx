@@ -573,12 +573,18 @@ export default function CustomAIChat() {
   const [showWelcome, setShowWelcome] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [isVoiceMode, setIsVoiceMode] = useState(false);
+  const [playingMsgIndex, setPlayingMsgIndex] = useState<number | null>(null);
 
   const chatEndRef = useRef<HTMLDivElement>(null);
   const msgContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
+    
+    // Pre-load voices for Chrome
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.getVoices();
+    }
 
     if (typeof window !== "undefined") {
       let storedUserId = localStorage.getItem("ashli_user_id");
@@ -638,6 +644,36 @@ export default function CustomAIChat() {
   }, [messages]);
 
   const scrollToTop = () => msgContainerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+
+  const playVoice = (text: string, msgIndex: number) => {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+    
+    window.speechSynthesis.cancel();
+    setPlayingMsgIndex(msgIndex);
+    
+    const cleanText = text.replace(/(\*\*|__)(.*?)\1/g, '$2').replace(/[*#]/g, '');
+    const win = window as unknown as Record<string, { new(text: string): SpeechSynthesisUtterance }>;
+    const SpeechUtterance = win.SpeechSynthesisUtterance;
+    if (SpeechUtterance) {
+      const utterance = new SpeechUtterance(cleanText);
+      
+      const voices = window.speechSynthesis.getVoices();
+      const indianVoice = voices.find(v => (v.lang.includes('en-IN') || v.lang.includes('hi-IN')) && v.name.toLowerCase().includes('female'))
+                       || voices.find(v => v.lang.includes('en-IN') || v.lang.includes('hi-IN'))
+                       || voices.find(v => v.lang.includes('en-GB') || v.lang.includes('en-US'))
+                       || voices[0];
+                       
+      if (indianVoice) utterance.voice = indianVoice;
+      
+      utterance.rate = 1.0; 
+      utterance.pitch = 1.1; 
+      
+      utterance.onend = () => setPlayingMsgIndex(null);
+      utterance.onerror = () => setPlayingMsgIndex(null);
+      
+      window.speechSynthesis.speak(utterance);
+    }
+  };
 
   // ── Voice Input & Output Logic ──
   const toggleListening = () => {
@@ -743,18 +779,8 @@ export default function CustomAIChat() {
       setMessages((prev) => [...prev, { role: "assistant", content: assistantMessage }]);
 
       // If voice mode is active, read the message out loud
-      if (isVoiceMode && typeof window !== "undefined" && "speechSynthesis" in window) {
-        window.speechSynthesis.cancel();
-        // Remove markdown asterisks and hash symbols for cleaner speech
-        const cleanText = assistantMessage.replace(/(\*\*|__)(.*?)\1/g, '$2').replace(/[*#]/g, '');
-        const win = window as unknown as Record<string, { new(text: string): SpeechSynthesisUtterance }>;
-        const SpeechUtterance = win.SpeechSynthesisUtterance;
-        if (SpeechUtterance) {
-          const utterance = new SpeechUtterance(cleanText);
-          utterance.rate = 1.0;
-          utterance.pitch = 1.0;
-          window.speechSynthesis.speak(utterance);
-        }
+      if (isVoiceMode) {
+        playVoice(assistantMessage, newMessages.length);
       }
 
       // Show contact CTAs if response mentions contact info
@@ -784,6 +810,7 @@ export default function CustomAIChat() {
     setShowFAQ(true);
     setFollowUps([]);
     setShowContactCTAs(false);
+    setPlayingMsgIndex(null);
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
       window.speechSynthesis.cancel();
     }
@@ -791,6 +818,7 @@ export default function CustomAIChat() {
 
   const handleClose = () => {
     setIsOpen(false);
+    setPlayingMsgIndex(null);
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
       window.speechSynthesis.cancel();
     }
@@ -909,7 +937,7 @@ export default function CustomAIChat() {
                         </svg>
                       </div>
                     )}
-                    <div className="flex flex-col gap-2 max-w-[75%]">
+                    <div className="flex flex-col gap-1 max-w-[75%]">
                       <div className={`p-3 rounded-2xl text-xs md:text-sm font-light leading-relaxed ${
                         msg.role === "user"
                           ? "bg-amber-500/10 border border-amber-500/20 text-white rounded-tr-none text-left whitespace-pre-wrap"
@@ -917,6 +945,37 @@ export default function CustomAIChat() {
                       }`}>
                         {msg.role === "user" ? msg.content : renderMessageContent(msg.content)}
                       </div>
+                      
+                      {/* Assistant Actions */}
+                      {msg.role === "assistant" && (
+                        <div className="flex items-center gap-3 mt-1 ml-1">
+                          <button
+                            onClick={() => playVoice(msg.content, index)}
+                            className="flex items-center gap-1.5 text-[10px] text-neutral-500 hover:text-amber-400 transition-colors"
+                          >
+                            {playingMsgIndex === index ? (
+                              <div className="flex items-center gap-[2px] h-3">
+                                {[0, 1, 2, 3].map((i) => (
+                                  <motion.div
+                                    key={i}
+                                    animate={{ height: ["30%", "100%", "30%"] }}
+                                    transition={{ repeat: Infinity, duration: 0.6, delay: i * 0.15 }}
+                                    className="w-[2px] bg-amber-500 rounded-full"
+                                  />
+                                ))}
+                              </div>
+                            ) : (
+                              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072M17.657 6.343a8 8 0 010 11.314M11 5L6 9H2v6h4l5 4V5z" />
+                              </svg>
+                            )}
+                            <span className="font-medium tracking-wide">
+                              {playingMsgIndex === index ? "Speaking..." : "Listen"}
+                            </span>
+                          </button>
+                        </div>
+                      )}
+
                       {/* Contact CTAs — shown inline after the last assistant contact reply */}
                       {isLastAssistantMsg && showContactCTAs && <ContactPanel />}
                     </div>

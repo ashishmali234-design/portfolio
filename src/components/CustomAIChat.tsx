@@ -638,9 +638,11 @@ export default function CustomAIChat() {
   useEffect(() => {
     setMounted(true);
     
-    // Pre-load voices for Chrome
+    // Pre-load voices for Chrome and Safari
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
-      window.speechSynthesis.getVoices();
+      const loadVoices = () => window.speechSynthesis.getVoices();
+      loadVoices();
+      window.speechSynthesis.onvoiceschanged = loadVoices;
     }
 
     if (typeof window !== "undefined") {
@@ -702,6 +704,19 @@ export default function CustomAIChat() {
 
   const scrollToTop = () => msgContainerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
 
+  const toggleVoicePlayback = (text: string, msgIndex: number) => {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+    
+    // If clicking the currently playing message, stop it
+    if (playingMsgIndex === msgIndex) {
+      window.speechSynthesis.cancel();
+      setPlayingMsgIndex(null);
+      return;
+    }
+    
+    playVoice(text, msgIndex);
+  };
+
   const playVoice = (text: string, msgIndex: number) => {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
     
@@ -713,15 +728,14 @@ export default function CustomAIChat() {
     const SpeechUtterance = win.SpeechSynthesisUtterance;
     if (SpeechUtterance) {
       const utterance = new SpeechUtterance(cleanText);
+      utterance.lang = "en-IN"; // Forces the OS to prioritize an Indian accent even if find() fails!
       
       const voices = window.speechSynthesis.getVoices();
       const indianVoice = voices.find(v => v.name.includes('Microsoft Heera'))
                        || voices.find(v => v.name.includes('Google हिन्दी'))
                        || voices.find(v => v.name.includes('Microsoft Ravi'))
                        || voices.find(v => (v.lang.includes('en-IN') || v.lang.includes('hi-IN')) && v.name.toLowerCase().includes('female'))
-                       || voices.find(v => v.lang.includes('en-IN') || v.lang.includes('hi-IN'))
-                       || voices.find(v => v.lang.includes('en-GB') || v.lang.includes('en-US'))
-                       || voices[0];
+                       || voices.find(v => v.lang.includes('en-IN') || v.lang.includes('hi-IN'));
                        
       if (indianVoice) utterance.voice = indianVoice;
       
@@ -1029,7 +1043,7 @@ export default function CustomAIChat() {
                       {msg.role === "assistant" && (
                         <div className="flex items-center gap-3 mt-1 ml-1">
                           <button
-                            onClick={() => playVoice(msg.content, index)}
+                            onClick={() => toggleVoicePlayback(msg.content, index)}
                             className="flex items-center gap-1.5 text-[10px] text-neutral-500 hover:text-amber-400 transition-colors"
                           >
                             {playingMsgIndex === index ? (
@@ -1049,7 +1063,7 @@ export default function CustomAIChat() {
                               </svg>
                             )}
                             <span className="font-medium tracking-wide">
-                              {playingMsgIndex === index ? "Speaking..." : "Listen"}
+                              {playingMsgIndex === index ? "Pause" : "Listen"}
                             </span>
                           </button>
                         </div>

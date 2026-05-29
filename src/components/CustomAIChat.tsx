@@ -667,16 +667,14 @@ export default function CustomAIChat() {
       }
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    recognition.onresult = (event: any) => {
-      const transcript = event.results[0][0].transcript;
+    recognition.onresult = (event: unknown) => {
+      const transcript = (event as any).results[0][0].transcript;
       setInput(transcript);
       setTimeout(() => handleSend(transcript), 300);
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    recognition.onerror = (event: any) => {
-      console.error("Speech recognition error:", event.error);
+    recognition.onerror = (event: unknown) => {
+      console.error("Speech recognition error:", (event as any).error);
       setIsListening(false);
     };
 

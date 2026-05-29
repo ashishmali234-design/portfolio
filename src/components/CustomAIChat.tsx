@@ -17,15 +17,15 @@ const RESPONSE_FOLLOW_UPS: Array<{ triggers: string[]; chips: string[] }> = [
   {
     triggers: ["scan & start", "scan and start", "gate meeting", "merchant visit", "attendance logging"],
     chips: [
-      "How does the Scan & Start onboarding exactly work?",
+      "What was Ashish's role in designing Scan & Start?",
       "What info do the Performance Dashboards show to agents?",
-      "How do agents log their merchant visits in the app?",
+      "How did Ashish simplify the attendance logging process?",
     ],
   },
   {
     triggers: ["homepage", "merchant profile", "onboarding dashboard", "performance dashboard", "team tracking", "tasks management"],
     chips: [
-      "How does Scan & Start onboarding work in Sales One?",
+      "How did Ashish approach the Sales One App revamp?",
       "What does the Performance Dashboard actually track?",
       "How do sales agents manage their daily tasks?",
     ],
@@ -35,7 +35,7 @@ const RESPONSE_FOLLOW_UPS: Array<{ triggers: string[]; chips: string[] }> = [
     triggers: ["sales one app", "sales one"],
     chips: [
       "What features did Ashish revamp in the Sales One App?",
-      "How does the Scan & Start onboarding work?",
+      "What was the impact of the new Scan & Start onboarding?",
       "What dashboards did Ashish design for sales agents?",
     ],
   },
@@ -712,31 +712,31 @@ export default function CustomAIChat() {
     </svg>
   );
 
-  // Quick prompts — product/concept focused, not "How does Ashish use X?" style
+  // Quick prompts — no emojis, clean text only
   const quickPrompts = [
     {
-      text: "Sales One App",
-      prompt: "What is the Sales One App and what does it do?",
+      text: "Bajaj Finance work",
+      prompt: "Tell me about Ashish's product design work at Bajaj Finance.",
     },
     {
-      text: "AI in design",
-      prompt: "What does designing with AI actually mean and how does it work in practice?",
+      text: "Designing with AI",
+      prompt: "How does Ashish use Figma AI, Figma Make, ChatGPT, and other AI tools in his workflow?",
     },
     {
-      text: "Bajaj Finance products",
-      prompt: "What kind of products does Bajaj Finance have and what are their design challenges?",
+      text: "Sales One App revamp",
+      prompt: "Tell me about the Sales One App revamp Ashish did at Bajaj Finance.",
     },
     {
-      text: "MedApp",
-      prompt: "What is MedApp and what problem does it solve?",
+      text: "Design philosophy",
+      prompt: "What is Ashish's 'Designing with AI, thinking like humans' philosophy?",
+    },
+    {
+      text: "MedApp project",
+      prompt: "Tell me about the MedApp doctor appointment booking project.",
     },
     {
       text: "Prime Video redesign",
-      prompt: "What was the Prime Video redesign about and what was improved?",
-    },
-    {
-      text: "Design process",
-      prompt: "What does a product design process look like from research to final handoff?",
+      prompt: "Tell me about the Amazon Prime Video redesign project.",
     },
     {
       text: "Connect with Ashish",

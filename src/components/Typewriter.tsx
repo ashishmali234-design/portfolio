@@ -107,7 +107,7 @@ export default function Typewriter({
                         repeat: Infinity,
                         ease: "easeInOut"
                       }}
-                      className="absolute left-[48%] -translate-x-1/2 top-[-0.55em] pointer-events-none text-cyan-300"
+                      className="absolute left-[40%] -translate-x-1/2 top-[-0.55em] pointer-events-none text-cyan-300"
                       style={{
                         filter: "drop-shadow(0 0 3px rgba(0, 240, 255, 0.9)) drop-shadow(0 0 8px rgba(0, 163, 255, 0.5))"
                       }}

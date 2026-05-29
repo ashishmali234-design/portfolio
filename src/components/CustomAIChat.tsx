@@ -643,7 +643,29 @@ export default function CustomAIChat() {
   const toggleListening = () => {
     if (typeof window === "undefined") return;
 
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    interface SpeechRecognitionEvent {
+      results: { transcript: string }[][];
+    }
+    interface SpeechRecognitionErrorEvent {
+      error: string;
+    }
+    interface ISpeechRecognition {
+      lang: string;
+      interimResults: boolean;
+      maxAlternatives: number;
+      start(): void;
+      onstart: () => void;
+      onresult: (event: SpeechRecognitionEvent) => void;
+      onerror: (event: SpeechRecognitionErrorEvent) => void;
+      onend: () => void;
+    }
+
+    const win = window as unknown as {
+      SpeechRecognition?: { new (): ISpeechRecognition };
+      webkitSpeechRecognition?: { new (): ISpeechRecognition };
+    };
+
+    const SpeechRecognition = win.SpeechRecognition || win.webkitSpeechRecognition;
     if (!SpeechRecognition) {
       alert("Your browser doesn't support voice input. Try Chrome or Edge.");
       return;
@@ -667,14 +689,14 @@ export default function CustomAIChat() {
       }
     };
 
-    recognition.onresult = (event: unknown) => {
-      const transcript = (event as any).results[0][0].transcript;
+    recognition.onresult = (event: SpeechRecognitionEvent) => {
+      const transcript = event.results[0][0].transcript;
       setInput(transcript);
       setTimeout(() => handleSend(transcript), 300);
     };
 
-    recognition.onerror = (event: unknown) => {
-      console.error("Speech recognition error:", (event as any).error);
+    recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
+      console.error("Speech recognition error:", event.error);
       setIsListening(false);
     };
 

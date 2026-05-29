@@ -18,6 +18,9 @@ function MicVisualizer({ stream }: { stream: MediaStream | null }) {
     if (!AudioContextClass) return;
 
     const audioCtx = new AudioContextClass();
+    if (audioCtx.state === "suspended") {
+      audioCtx.resume();
+    }
     const analyser = audioCtx.createAnalyser();
     const source = audioCtx.createMediaStreamSource(stream);
     source.connect(analyser);
@@ -798,7 +801,7 @@ export default function CustomAIChat() {
       .catch(err => console.error("Mic access denied:", err));
 
     const recognition = new SpeechRecognition();
-    recognition.lang = "en-IN"; // Default to India locale for better Hindi/English recognition
+    // Removed strict lang assignment to allow native OS language detection/defaulting
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
 

@@ -725,10 +725,13 @@ export default function CustomAIChat() {
         window.speechSynthesis.cancel();
         // Remove markdown asterisks and hash symbols for cleaner speech
         const cleanText = assistantMessage.replace(/(\*\*|__)(.*?)\1/g, '$2').replace(/[*#]/g, '');
-        const utterance = new SpeechSynthesisUtterance(cleanText);
-        utterance.rate = 1.0;
-        utterance.pitch = 1.0;
-        window.speechSynthesis.speak(utterance);
+        const SpeechUtterance = (window as any).SpeechSynthesisUtterance;
+        if (SpeechUtterance) {
+          const utterance = new SpeechUtterance(cleanText);
+          utterance.rate = 1.0;
+          utterance.pitch = 1.0;
+          window.speechSynthesis.speak(utterance);
+        }
       }
 
       // Show contact CTAs if response mentions contact info

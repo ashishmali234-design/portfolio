@@ -571,6 +571,8 @@ export default function CustomAIChat() {
   const [isLoading, setIsLoading] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [showWelcome, setShowWelcome] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [isVoiceMode, setIsVoiceMode] = useState(false);
 
   const chatEndRef = useRef<HTMLDivElement>(null);
   const msgContainerRef = useRef<HTMLDivElement>(null);
@@ -637,6 +639,53 @@ export default function CustomAIChat() {
 
   const scrollToTop = () => msgContainerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
 
+  // ── Voice Input & Output Logic ──
+  const toggleListening = () => {
+    if (typeof window === "undefined") return;
+
+    // @ts-ignore
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Your browser doesn't support voice input. Try Chrome or Edge.");
+      return;
+    }
+
+    if (isListening) {
+      setIsListening(false);
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-IN"; // Default to India locale for better Hindi/English recognition
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onstart = () => {
+      setIsListening(true);
+      setIsVoiceMode(true); // If they speak to Ashli, Ashli speaks back
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel(); // stop any current speech
+      }
+    };
+
+    recognition.onresult = (event: any) => {
+      const transcript = event.results[0][0].transcript;
+      setInput(transcript);
+      setTimeout(() => handleSend(transcript), 300);
+    };
+
+    recognition.onerror = (event: any) => {
+      console.error("Speech recognition error:", event.error);
+      setIsListening(false);
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+
+    recognition.start();
+  };
+
   if (!mounted) return null;
 
   const handleSend = async (textToSend?: string) => {
@@ -672,6 +721,17 @@ export default function CustomAIChat() {
 
       setMessages((prev) => [...prev, { role: "assistant", content: assistantMessage }]);
 
+      // If voice mode is active, read the message out loud
+      if (isVoiceMode && typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+        // Remove markdown asterisks and hash symbols for cleaner speech
+        const cleanText = assistantMessage.replace(/(\*\*|__)(.*?)\1/g, '$2').replace(/[*#]/g, '');
+        const utterance = new SpeechSynthesisUtterance(cleanText);
+        utterance.rate = 1.0;
+        utterance.pitch = 1.0;
+        window.speechSynthesis.speak(utterance);
+      }
+
       // Show contact CTAs if response mentions contact info
       if (isContactResponse(assistantMessage)) setShowContactCTAs(true);
 
@@ -699,6 +759,16 @@ export default function CustomAIChat() {
     setShowFAQ(true);
     setFollowUps([]);
     setShowContactCTAs(false);
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
   };
 
   const ResetIcon = () => (
@@ -791,7 +861,7 @@ export default function CustomAIChat() {
                 <button onClick={handleReset} title="Clear Chat History" className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-neutral-800/50 text-neutral-400 hover:text-white transition-colors cursor-pointer">
                   <ResetIcon />
                 </button>
-                <button onClick={() => setIsOpen(false)} className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-neutral-800/50 text-neutral-400 hover:text-white transition-colors cursor-pointer">
+                <button onClick={handleClose} className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-neutral-800/50 text-neutral-400 hover:text-white transition-colors cursor-pointer">
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
@@ -926,19 +996,36 @@ export default function CustomAIChat() {
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                disabled={isLoading}
-                placeholder="Ask me anything..."
+                disabled={isLoading || isListening}
+                placeholder={isListening ? "Listening..." : "Ask me anything..."}
                 className="flex-1 bg-[#0a0c10] border border-neutral-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-amber-500/40 transition-colors disabled:opacity-50"
               />
-              <button
-                type="submit"
-                disabled={!input.trim() || isLoading}
-                className="w-10 h-10 rounded-xl bg-amber-500 hover:bg-amber-400 disabled:bg-neutral-800/50 text-[#121212] disabled:text-neutral-500 flex items-center justify-center transition-colors cursor-pointer shrink-0"
-              >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                </svg>
-              </button>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={toggleListening}
+                  disabled={isLoading}
+                  title="Voice Input"
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors cursor-pointer shrink-0 ${
+                    isListening 
+                      ? "bg-red-500/20 text-red-500 border border-red-500/50 animate-pulse" 
+                      : "bg-[#1a1d24] text-neutral-400 hover:text-white border border-neutral-800 hover:border-neutral-600"
+                  }`}
+                >
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                  </svg>
+                </button>
+                <button
+                  type="submit"
+                  disabled={!input.trim() || isLoading}
+                  className="w-10 h-10 rounded-xl bg-amber-500 hover:bg-amber-400 disabled:bg-neutral-800/50 text-[#121212] disabled:text-neutral-500 flex items-center justify-center transition-colors cursor-pointer shrink-0"
+                >
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                  </svg>
+                </button>
+              </div>
             </form>
           </motion.div>
         )}

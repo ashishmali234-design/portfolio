@@ -520,6 +520,27 @@ export default function CustomAIChat() {
     if (isOpen) chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isOpen, isLoading]);
 
+  // Trigger device vibration when welcome pop-up appears
+  useEffect(() => {
+    if (showWelcome) {
+      if (typeof navigator !== "undefined" && navigator.vibrate) {
+        navigator.vibrate(150); // Vibrate for 150ms
+      }
+    }
+  }, [showWelcome]);
+
+  // Trigger device vibration when a new assistant message is received in the chat
+  useEffect(() => {
+    if (messages.length > 1) {
+      const lastMsg = messages[messages.length - 1];
+      if (lastMsg && lastMsg.role === "assistant") {
+        if (typeof navigator !== "undefined" && navigator.vibrate) {
+          navigator.vibrate(100); // Vibrate for 100ms
+        }
+      }
+    }
+  }, [messages]);
+
   const scrollToTop = () => msgContainerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
 
   if (!mounted) return null;

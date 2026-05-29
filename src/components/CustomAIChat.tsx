@@ -643,8 +643,7 @@ export default function CustomAIChat() {
   const toggleListening = () => {
     if (typeof window === "undefined") return;
 
-    // @ts-ignore
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SpeechRecognition) {
       alert("Your browser doesn't support voice input. Try Chrome or Edge.");
       return;
@@ -668,12 +667,14 @@ export default function CustomAIChat() {
       }
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     recognition.onresult = (event: any) => {
       const transcript = event.results[0][0].transcript;
       setInput(transcript);
       setTimeout(() => handleSend(transcript), 300);
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     recognition.onerror = (event: any) => {
       console.error("Speech recognition error:", event.error);
       setIsListening(false);

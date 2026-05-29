@@ -3,6 +3,62 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+function MicVisualizer({ stream }: { stream: MediaStream | null }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    if (!stream || !canvasRef.current) return;
+
+    interface IAudioContext extends AudioContext {}
+    const win = window as unknown as {
+      AudioContext: { new (): IAudioContext };
+      webkitAudioContext: { new (): IAudioContext };
+    };
+    const AudioContextClass = win.AudioContext || win.webkitAudioContext;
+    if (!AudioContextClass) return;
+
+    const audioCtx = new AudioContextClass();
+    const analyser = audioCtx.createAnalyser();
+    const source = audioCtx.createMediaStreamSource(stream);
+    source.connect(analyser);
+    analyser.fftSize = 64;
+    
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animationId: number;
+
+    const draw = () => {
+      animationId = requestAnimationFrame(draw);
+      analyser.getByteFrequencyData(dataArray);
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const barWidth = (canvas.width / bufferLength) * 2.5;
+      let x = 0;
+
+      for (let i = 0; i < bufferLength; i++) {
+        const barHeight = (dataArray[i] / 255) * canvas.height;
+        ctx.fillStyle = `rgb(245, 158, 11)`; // amber-500
+        ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+        x += barWidth + 2;
+      }
+    };
+    draw();
+
+    return () => {
+      cancelAnimationFrame(animationId);
+      source.disconnect();
+      analyser.disconnect();
+      audioCtx.close().catch(() => {});
+    };
+  }, [stream]);
+
+  return <canvas ref={canvasRef} className="w-full h-8 opacity-80" width={200} height={32} />;
+}
+
 interface Message {
   role: "user" | "assistant";
   content: string;
@@ -574,6 +630,7 @@ export default function CustomAIChat() {
   const [isListening, setIsListening] = useState(false);
   const [isVoiceMode, setIsVoiceMode] = useState(false);
   const [playingMsgIndex, setPlayingMsgIndex] = useState<number | null>(null);
+  const [micStream, setMicStream] = useState<MediaStream | null>(null);
 
   const chatEndRef = useRef<HTMLDivElement>(null);
   const msgContainerRef = useRef<HTMLDivElement>(null);
@@ -658,7 +715,10 @@ export default function CustomAIChat() {
       const utterance = new SpeechUtterance(cleanText);
       
       const voices = window.speechSynthesis.getVoices();
-      const indianVoice = voices.find(v => (v.lang.includes('en-IN') || v.lang.includes('hi-IN')) && v.name.toLowerCase().includes('female'))
+      const indianVoice = voices.find(v => v.name.includes('Microsoft Heera'))
+                       || voices.find(v => v.name.includes('Google हिन्दी'))
+                       || voices.find(v => v.name.includes('Microsoft Ravi'))
+                       || voices.find(v => (v.lang.includes('en-IN') || v.lang.includes('hi-IN')) && v.name.toLowerCase().includes('female'))
                        || voices.find(v => v.lang.includes('en-IN') || v.lang.includes('hi-IN'))
                        || voices.find(v => v.lang.includes('en-GB') || v.lang.includes('en-US'))
                        || voices[0];
@@ -709,8 +769,19 @@ export default function CustomAIChat() {
 
     if (isListening) {
       setIsListening(false);
+      if (micStream) {
+        micStream.getTracks().forEach(t => t.stop());
+        setMicStream(null);
+      }
       return;
     }
+
+    // Request microphone access explicitly for visualizer
+    navigator.mediaDevices.getUserMedia({ audio: true })
+      .then(stream => {
+        setMicStream(stream);
+      })
+      .catch(err => console.error("Mic access denied:", err));
 
     const recognition = new SpeechRecognition();
     recognition.lang = "en-IN"; // Default to India locale for better Hindi/English recognition
@@ -734,10 +805,18 @@ export default function CustomAIChat() {
     recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
       console.error("Speech recognition error:", event.error);
       setIsListening(false);
+      setMicStream(prev => {
+        prev?.getTracks().forEach(t => t.stop());
+        return null;
+      });
     };
 
     recognition.onend = () => {
       setIsListening(false);
+      setMicStream(prev => {
+        prev?.getTracks().forEach(t => t.stop());
+        return null;
+      });
     };
 
     recognition.start();
@@ -1076,14 +1155,23 @@ export default function CustomAIChat() {
               onSubmit={(e) => { e.preventDefault(); handleSend(); }}
               className="p-4 border-t border-neutral-800/80 bg-[#12151c]/90 flex gap-2 relative z-10"
             >
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                disabled={isLoading || isListening}
-                placeholder={isListening ? "Listening..." : "Ask me anything..."}
-                className="flex-1 bg-[#0a0c10] border border-neutral-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-amber-500/40 transition-colors disabled:opacity-50"
-              />
+              {isListening && micStream ? (
+                <div className="flex-1 flex items-center px-4 bg-[#0a0c10] border border-amber-500/40 rounded-xl overflow-hidden">
+                  <span className="text-amber-500 text-xs font-medium mr-4 animate-pulse shrink-0">Listening...</span>
+                  <div className="flex-1 max-w-[200px]">
+                    <MicVisualizer stream={micStream} />
+                  </div>
+                </div>
+              ) : (
+                <input
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  disabled={isLoading || isListening}
+                  placeholder={isListening ? "Listening..." : "Ask me anything..."}
+                  className="flex-1 bg-[#0a0c10] border border-neutral-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-amber-500/40 transition-colors disabled:opacity-50"
+                />
+              )}
               <div className="flex gap-2">
                 <button
                   type="button"

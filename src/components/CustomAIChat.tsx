@@ -712,31 +712,31 @@ export default function CustomAIChat() {
     </svg>
   );
 
-  // Quick prompts — no emojis, clean text only
+  // Quick prompts — product/concept focused, not "How does Ashish use X?" style
   const quickPrompts = [
     {
-      text: "Bajaj Finance work",
-      prompt: "Tell me about Ashish's product design work at Bajaj Finance.",
+      text: "Sales One App",
+      prompt: "What is the Sales One App and what does it do?",
     },
     {
-      text: "Designing with AI",
-      prompt: "How does Ashish use Figma AI, Figma Make, ChatGPT, and other AI tools in his workflow?",
+      text: "AI in design",
+      prompt: "What does designing with AI actually mean and how does it work in practice?",
     },
     {
-      text: "Sales One App revamp",
-      prompt: "Tell me about the Sales One App revamp Ashish did at Bajaj Finance.",
+      text: "Bajaj Finance products",
+      prompt: "What kind of products does Bajaj Finance have and what are their design challenges?",
     },
     {
-      text: "Design philosophy",
-      prompt: "What is Ashish's 'Designing with AI, thinking like humans' philosophy?",
-    },
-    {
-      text: "MedApp project",
-      prompt: "Tell me about the MedApp doctor appointment booking project.",
+      text: "MedApp",
+      prompt: "What is MedApp and what problem does it solve?",
     },
     {
       text: "Prime Video redesign",
-      prompt: "Tell me about the Amazon Prime Video redesign project.",
+      prompt: "What was the Prime Video redesign about and what was improved?",
+    },
+    {
+      text: "Design process",
+      prompt: "What does a product design process look like from research to final handoff?",
     },
     {
       text: "Connect with Ashish",

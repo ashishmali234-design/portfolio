@@ -747,7 +747,8 @@ export default function CustomAIChat() {
         window.speechSynthesis.cancel();
         // Remove markdown asterisks and hash symbols for cleaner speech
         const cleanText = assistantMessage.replace(/(\*\*|__)(.*?)\1/g, '$2').replace(/[*#]/g, '');
-        const SpeechUtterance = (window as any).SpeechSynthesisUtterance;
+        const win = window as unknown as Record<string, { new(text: string): SpeechSynthesisUtterance }>;
+        const SpeechUtterance = win.SpeechSynthesisUtterance;
         if (SpeechUtterance) {
           const utterance = new SpeechUtterance(cleanText);
           utterance.rate = 1.0;

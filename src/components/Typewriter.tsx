@@ -85,40 +85,37 @@ export default function Typewriter({
 
         if (seg.text === "AI" || seg.text === "Ai") {
           return (
-            <span key={idx} className="relative inline-flex items-baseline mx-1 group font-sans font-bold">
+            <span key={idx} className="relative inline-block mx-1 group font-sans font-bold">
               {/* Vibrant Electric Neon Blue text wrapper */}
-              <span className="relative z-10 font-sans font-extrabold inline-flex items-baseline uppercase tracking-wide ai-outline">
-                {/* Render 'A' if visible */}
-                {visibleLen >= 1 && <span>{seg.text[0]}</span>}
-                {/* Render 'I' with star if visible length is 2 */}
-                {visibleLen >= 2 && (
-                  <span className="relative inline-flex items-baseline">
-                    <span>{seg.text[1]}</span>
-                    {/* Elegant sparkling star spark floating precisely ABOVE the capital 'I' */}
-                    <motion.span 
-                      animate={{ 
-                        opacity: [0.75, 1, 0.75], 
-                        scale: [0.9, 1.15, 0.9],
-                        rotate: [0, 180, 360],
-                        y: [0, -3, 0]
-                      }}
-                      transition={{ 
-                        duration: 4,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }}
-                      className="absolute left-[40%] -translate-x-1/2 top-[-0.55em] pointer-events-none text-cyan-300"
-                      style={{
-                        filter: "drop-shadow(0 0 3px rgba(0, 240, 255, 0.9)) drop-shadow(0 0 8px rgba(0, 163, 255, 0.5))"
-                      }}
-                    >
-                      <svg className="w-[0.45em] h-[0.45em] fill-cyan-300" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z" />
-                      </svg>
-                    </motion.span>
-                  </span>
-                )}
+              <span className="relative z-10 font-sans font-extrabold inline-flex items-baseline">
+                <span className="font-sans font-extrabold inline-flex items-baseline uppercase tracking-wide ai-outline">
+                  {seg.text.slice(0, visibleLen)}
+                </span>
               </span>
+              {/* Elegant sparkling star spark floating precisely ABOVE the capital 'AI' */}
+              {visibleLen >= 2 && (
+                <motion.span 
+                  animate={{ 
+                    opacity: [0.75, 1, 0.75], 
+                    scale: [0.9, 1.15, 0.9],
+                    rotate: [0, 180, 360],
+                    y: [0, -3, 0]
+                  }}
+                  transition={{ 
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className="absolute left-1/2 -translate-x-1/2 top-[-0.4em] pointer-events-none text-cyan-300"
+                  style={{
+                    filter: "drop-shadow(0 0 3px rgba(0, 240, 255, 0.9)) drop-shadow(0 0 8px rgba(0, 163, 255, 0.5))"
+                  }}
+                >
+                  <svg className="w-[0.45em] h-[0.45em] fill-cyan-300" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z" />
+                  </svg>
+                </motion.span>
+              )}
             </span>
           );
         }

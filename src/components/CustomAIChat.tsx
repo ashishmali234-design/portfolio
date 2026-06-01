@@ -9,11 +9,7 @@ function MicVisualizer({ stream }: { stream: MediaStream | null }) {
   useEffect(() => {
     if (!stream || !canvasRef.current) return;
 
-    interface IAudioContext extends AudioContext {}
-    const win = window as unknown as {
-      AudioContext: { new (): IAudioContext };
-      webkitAudioContext: { new (): IAudioContext };
-    };
+    const win = window as any;
     const AudioContextClass = win.AudioContext || win.webkitAudioContext;
     if (!AudioContextClass) return;
 

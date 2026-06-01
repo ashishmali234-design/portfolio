@@ -9,7 +9,10 @@ function MicVisualizer({ stream }: { stream: MediaStream | null }) {
   useEffect(() => {
     if (!stream || !canvasRef.current) return;
 
-    const win = window as any;
+    const win = window as unknown as {
+      AudioContext: typeof AudioContext;
+      webkitAudioContext: typeof AudioContext;
+    };
     const AudioContextClass = win.AudioContext || win.webkitAudioContext;
     if (!AudioContextClass) return;
 

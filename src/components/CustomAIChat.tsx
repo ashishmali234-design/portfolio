@@ -4,10 +4,13 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 function MicVisualizer({ stream }: { stream: MediaStream | null }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [volume, setVolume] = useState(0);
 
   useEffect(() => {
-    if (!stream || !canvasRef.current) return;
+    if (!stream) {
+      setVolume(0);
+      return;
+    }
 
     const win = window as unknown as {
       AudioContext: typeof AudioContext;
@@ -27,9 +30,6 @@ function MicVisualizer({ stream }: { stream: MediaStream | null }) {
     
     const bufferLength = analyser.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
 
     let animationId: number;
 
@@ -37,16 +37,12 @@ function MicVisualizer({ stream }: { stream: MediaStream | null }) {
       animationId = requestAnimationFrame(draw);
       analyser.getByteFrequencyData(dataArray);
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const barWidth = (canvas.width / bufferLength) * 2.5;
-      let x = 0;
-
+      let sum = 0;
       for (let i = 0; i < bufferLength; i++) {
-        const barHeight = (dataArray[i] / 255) * canvas.height;
-        ctx.fillStyle = `rgb(245, 158, 11)`; // amber-500
-        ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
-        x += barWidth + 2;
+        sum += dataArray[i];
       }
+      const avg = sum / bufferLength;
+      setVolume(prev => prev * 0.7 + avg * 0.3); // Smooth out the volume jumps
     };
     draw();
 
@@ -58,7 +54,22 @@ function MicVisualizer({ stream }: { stream: MediaStream | null }) {
     };
   }, [stream]);
 
-  return <canvas ref={canvasRef} className="w-full h-8 opacity-80" width={200} height={32} />;
+  const normalizedVol = Math.min(volume / 255, 1);
+  const scaleY = 1 + normalizedVol * 1.5;
+
+  return (
+    <div className="w-full h-8 flex items-center justify-center overflow-hidden opacity-90 relative">
+      <img 
+        src="/Equalizer.svg" 
+        alt="Voice Equalizer"
+        className="w-[200px] h-full object-cover transition-transform duration-75"
+        style={{ 
+          transform: `scaleY(${scaleY})`,
+          filter: `drop-shadow(0 0 ${8 + normalizedVol * 15}px rgba(245,158,11,0.8))`
+        }}
+      />
+    </div>
+  );
 }
 
 interface Message {

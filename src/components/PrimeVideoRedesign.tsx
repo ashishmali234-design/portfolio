@@ -49,7 +49,7 @@ interface PrimeVideoRedesignProps {
 }
 
 export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesignProps) {
-  const [activeTab, setActiveTab] = useState<"figma" | "case-study">("figma");
+  const [activeTab, setActiveTab] = useState<"figma" | "case-study">("case-study");
   const [figmaView, setFigmaView] = useState<"desktop" | "mobile">("desktop");
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const [sliderPosition, setSliderPosition] = useState(50);
@@ -125,32 +125,8 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
             </button>
           </div>
 
-          {/* Right Side Content - Tabs + Hamburger */}
+          {/* Right Side Content - Hamburger */}
           <div className="flex items-center gap-3 md:gap-5">
-            {/* Tab Toggles for case study vs figma */}
-            <div className="flex bg-[#121216] border border-white/5 p-1 rounded-full">
-              <button
-                onClick={() => setActiveTab("figma")}
-                className={`px-3 py-1.5 md:px-4 py-1.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
-                  activeTab === "figma"
-                    ? "bg-[#FFBF4F] text-black font-extrabold shadow-[0_0_15px_rgba(255,191,79,0.3)]"
-                    : "text-white/60 hover:text-white"
-                }`}
-              >
-                Prototype
-              </button>
-              <button
-                onClick={() => setActiveTab("case-study")}
-                className={`px-3 py-1.5 md:px-4 py-1.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
-                  activeTab === "case-study"
-                    ? "bg-[#FFBF4F] text-black font-extrabold shadow-[0_0_15px_rgba(255,191,79,0.3)]"
-                    : "text-white/60 hover:text-white"
-                }`}
-              >
-                Case Study
-              </button>
-            </div>
-            
             {/* Unified Hamburger Button */}
             <button 
               onClick={() => setModalMenuOpen(true)}
@@ -282,6 +258,32 @@ export default function PrimeVideoRedesign({ isOpen, onClose }: PrimeVideoRedesi
             </>
           )}
         </AnimatePresence>
+
+        {/* Sub-Header Tabs */}
+        <div className="w-full flex justify-center py-4 bg-[#070709] border-b border-white/5 sticky top-[65px] z-[90]">
+          <div className="flex bg-[#121216] border border-white/5 p-1 rounded-full">
+            <button
+              onClick={() => setActiveTab("case-study")}
+              className={`px-5 py-2 md:px-8 md:py-2.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
+                activeTab === "case-study"
+                  ? "bg-[#FFBF4F] text-black font-extrabold shadow-[0_0_15px_rgba(255,191,79,0.3)]"
+                  : "text-white/60 hover:text-white"
+              }`}
+            >
+              Case Study
+            </button>
+            <button
+              onClick={() => setActiveTab("figma")}
+              className={`px-5 py-2 md:px-8 md:py-2.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
+                activeTab === "figma"
+                  ? "bg-[#FFBF4F] text-black font-extrabold shadow-[0_0_15px_rgba(255,191,79,0.3)]"
+                  : "text-white/60 hover:text-white"
+              }`}
+            >
+              Prototype
+            </button>
+          </div>
+        </div>
 
         {/* Dynamic Inner Content */}
         <div className="flex-1 flex flex-col bg-[#070709]">

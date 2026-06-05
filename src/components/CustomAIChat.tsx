@@ -3,74 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-function MicVisualizer({ stream }: { stream: MediaStream | null }) {
-  const [volume, setVolume] = useState(0);
-
-  useEffect(() => {
-    if (!stream) {
-      setVolume(0);
-      return;
-    }
-
-    const win = window as unknown as {
-      AudioContext: typeof AudioContext;
-      webkitAudioContext: typeof AudioContext;
-    };
-    const AudioContextClass = win.AudioContext || win.webkitAudioContext;
-    if (!AudioContextClass) return;
-
-    const audioCtx = new AudioContextClass();
-    if (audioCtx.state === "suspended") {
-      audioCtx.resume();
-    }
-    const analyser = audioCtx.createAnalyser();
-    const source = audioCtx.createMediaStreamSource(stream);
-    source.connect(analyser);
-    analyser.fftSize = 64;
-    
-    const bufferLength = analyser.frequencyBinCount;
-    const dataArray = new Uint8Array(bufferLength);
-
-    let animationId: number;
-
-    const draw = () => {
-      animationId = requestAnimationFrame(draw);
-      analyser.getByteFrequencyData(dataArray);
-
-      let sum = 0;
-      for (let i = 0; i < bufferLength; i++) {
-        sum += dataArray[i];
-      }
-      const avg = sum / bufferLength;
-      setVolume(prev => prev * 0.7 + avg * 0.3); // Smooth out the volume jumps
-    };
-    draw();
-
-    return () => {
-      cancelAnimationFrame(animationId);
-      source.disconnect();
-      analyser.disconnect();
-      audioCtx.close().catch(() => {});
-    };
-  }, [stream]);
-
-  const normalizedVol = Math.min(volume / 255, 1);
-  const scaleY = 1 + normalizedVol * 1.5;
-
-  return (
-    <div className="w-full h-8 flex items-center justify-center overflow-hidden opacity-90 relative">
-      <img 
-        src="/Equalizer.svg" 
-        alt="Voice Equalizer"
-        className="w-[200px] h-full object-cover transition-transform duration-75"
-        style={{ 
-          transform: `scaleY(${scaleY})`,
-          filter: `drop-shadow(0 0 ${8 + normalizedVol * 15}px rgba(245,158,11,0.8))`
-        }}
-      />
-    </div>
-  );
-}
 
 interface Message {
   role: "user" | "assistant";
@@ -640,8 +572,7 @@ export default function CustomAIChat() {
   const [isLoading, setIsLoading] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [showWelcome, setShowWelcome] = useState(false);
-  const [isListening, setIsListening] = useState(false);
-  const [micStream, setMicStream] = useState<MediaStream | null>(null);
+
 
   const chatEndRef = useRef<HTMLDivElement>(null);
   const msgContainerRef = useRef<HTMLDivElement>(null);
@@ -708,88 +639,6 @@ export default function CustomAIChat() {
 
   const scrollToTop = () => msgContainerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
 
-  // ── Voice Input & Output Logic ──
-  const toggleListening = () => {
-    if (typeof window === "undefined") return;
-
-    interface SpeechRecognitionEvent {
-      results: { transcript: string }[][];
-    }
-    interface SpeechRecognitionErrorEvent {
-      error: string;
-    }
-    interface ISpeechRecognition {
-      lang: string;
-      interimResults: boolean;
-      maxAlternatives: number;
-      start(): void;
-      onstart: () => void;
-      onresult: (event: SpeechRecognitionEvent) => void;
-      onerror: (event: SpeechRecognitionErrorEvent) => void;
-      onend: () => void;
-    }
-
-    const win = window as unknown as {
-      SpeechRecognition?: { new (): ISpeechRecognition };
-      webkitSpeechRecognition?: { new (): ISpeechRecognition };
-    };
-
-    const SpeechRecognition = win.SpeechRecognition || win.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      alert("Your browser doesn't support voice input. Try Chrome or Edge.");
-      return;
-    }
-
-    if (isListening) {
-      setIsListening(false);
-      if (micStream) {
-        micStream.getTracks().forEach(t => t.stop());
-        setMicStream(null);
-      }
-      return;
-    }
-
-    // Request microphone access explicitly for visualizer
-    navigator.mediaDevices.getUserMedia({ audio: true })
-      .then(stream => {
-        setMicStream(stream);
-      })
-      .catch(err => console.error("Mic access denied:", err));
-
-    const recognition = new SpeechRecognition();
-    // Removed strict lang assignment to allow native OS language detection/defaulting
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-
-    recognition.onstart = () => {
-      setIsListening(true);
-    };
-
-    recognition.onresult = (event: SpeechRecognitionEvent) => {
-      const transcript = event.results[0][0].transcript;
-      setInput(transcript);
-      setTimeout(() => handleSend(transcript), 300);
-    };
-
-    recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
-      console.error("Speech recognition error:", event.error);
-      setIsListening(false);
-      setMicStream(prev => {
-        prev?.getTracks().forEach(t => t.stop());
-        return null;
-      });
-    };
-
-    recognition.onend = () => {
-      setIsListening(false);
-      setMicStream(prev => {
-        prev?.getTracks().forEach(t => t.stop());
-        return null;
-      });
-    };
-
-    recognition.start();
-  };
 
   if (!mounted) return null;
 
@@ -1081,39 +930,15 @@ export default function CustomAIChat() {
               onSubmit={(e) => { e.preventDefault(); handleSend(); }}
               className="p-4 border-t border-neutral-800/80 bg-[#12151c]/90 flex gap-2 relative z-10"
             >
-              {isListening && micStream ? (
-                <div className="flex-1 flex items-center px-4 bg-[#0a0c10] border border-amber-500/40 rounded-xl overflow-hidden">
-                  <span className="text-amber-500 text-xs font-medium mr-4 animate-pulse shrink-0">Listening...</span>
-                  <div className="flex-1 max-w-[200px]">
-                    <MicVisualizer stream={micStream} />
-                  </div>
-                </div>
-              ) : (
                 <input
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  disabled={isLoading || isListening}
-                  placeholder={isListening ? "Listening..." : "Ask me anything..."}
+                  disabled={isLoading}
+                  placeholder="Ask me anything..."
                   className="flex-1 bg-[#0a0c10] border border-neutral-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-amber-500/40 transition-colors disabled:opacity-50"
                 />
-              )}
               <div className="flex gap-2">
-                <button
-                  type="button"
-                  onClick={toggleListening}
-                  disabled={isLoading}
-                  title="Voice Input"
-                  className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors cursor-pointer shrink-0 ${
-                    isListening 
-                      ? "bg-red-500/20 text-red-500 border border-red-500/50 animate-pulse" 
-                      : "bg-[#1a1d24] text-neutral-400 hover:text-white border border-neutral-800 hover:border-neutral-600"
-                  }`}
-                >
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-                  </svg>
-                </button>
                 <button
                   type="submit"
                   disabled={!input.trim() || isLoading}

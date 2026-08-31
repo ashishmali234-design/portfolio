@@ -237,68 +237,146 @@ async function getSmartFallbackResponse(message: string): Promise<string> {
 }
 
 // Background notifier for Telegram / Discord
-async function sendInstantAlert(userMessage: string, userId?: string) {
+async function sendInstantAlert({
+  userMessage,
+  botResponse,
+  userId,
+  location,
+  userAgent,
+}: {
+  userMessage: string;
+  botResponse: string;
+  userId?: string;
+  location?: string;
+  userAgent?: string;
+}) {
   const telegramToken = process.env.TELEGRAM_BOT_TOKEN;
   const telegramChatId = process.env.TELEGRAM_CHAT_ID;
   const discordWebhook = process.env.DISCORD_WEBHOOK_URL;
 
   const timestamp = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
-  const alertText = `💬 **New Portfolio Chat!**\n📅 **Time:** ${timestamp} IST\n👤 **Visitor ID:** \`${userId || "Anonymous"}\`\n💭 **Message:**\n"${userMessage}"`;
+  const locStr = location ? `📍 **Location:** ${location}\n` : "";
 
-  // 1. Send to Telegram (if configured)
+  // Shorten for notification if exceptionally long
+  const cleanResponse = botResponse.length > 900 ? botResponse.slice(0, 897) + "..." : botResponse;
+
+  // 1. Send to Discord (if configured)
+  if (discordWebhook) {
+    try {
+      const discordPayload = {
+        embeds: [
+          {
+            title: "💬 New Portfolio Chat Conversation",
+            color: 0xf59e0b, // Amber gold color
+            fields: [
+              {
+                name: "🗣️ User Question",
+                value: userMessage || "*(Empty)*",
+                inline: false,
+              },
+              {
+                name: "🤖 Ashli's Answer",
+                value: cleanResponse || "*(No response)*",
+                inline: false,
+              },
+              {
+                name: "📍 Visitor Location",
+                value: location || "Unknown Location",
+                inline: true,
+              },
+              {
+                name: "📅 Time (IST)",
+                value: `${timestamp}`,
+                inline: true,
+              },
+            ],
+            footer: {
+              text: `Visitor ID: ${userId || "anonymous"}`,
+            },
+          },
+        ],
+      };
+
+      await fetch(discordWebhook, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(discordPayload),
+      });
+    } catch (e) {
+      console.error("Discord alert error:", e);
+    }
+  }
+
+  // 2. Send to Telegram (if configured)
   if (telegramToken && telegramChatId) {
     try {
+      const text = `💬 *New Portfolio Chat*\n${locStr}📅 *Time:* ${timestamp} IST\n👤 *Visitor:* \`${userId || "Anonymous"}\`\n\n🗣️ *User:* "${userMessage}"\n\n🤖 *Ashli:* "${cleanResponse}"`;
+
       await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           chat_id: telegramChatId,
-          text: `💬 New Portfolio Chat!\nTime: ${timestamp} IST\nVisitor: ${userId || "Anonymous"}\n\nMessage:\n"${userMessage}"`,
+          text,
+          parse_mode: "Markdown",
         }),
       });
     } catch (e) {
       console.error("Telegram alert error:", e);
     }
   }
+}
 
-  // 2. Send to Discord (if configured)
-  if (discordWebhook) {
-    try {
-      await fetch(discordWebhook, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          content: alertText,
-        }),
-      });
-    } catch (e) {
-      console.error("Discord alert error:", e);
-    }
+function extractLocationFromHeaders(headers: Headers): string {
+  const city = headers.get("x-vercel-ip-city");
+  const region = headers.get("x-vercel-ip-country-region");
+  const country = headers.get("x-vercel-ip-country");
+
+  const parts = [];
+  if (city) parts.push(decodeURIComponent(city));
+  if (region) parts.push(region);
+  if (country) parts.push(country);
+
+  if (parts.length > 0) {
+    return parts.join(", ");
   }
+
+  const forwardedFor = headers.get("x-forwarded-for");
+  if (forwardedFor) {
+    const ip = forwardedFor.split(",")[0].trim();
+    return `IP: ${ip}`;
+  }
+
+  return "Location unknown";
 }
 
 export async function POST(request: Request) {
   try {
     const { messages, userId, userAgent } = await request.json();
     const userMessage = messages[messages.length - 1]?.content || "";
+    const location = extractLocationFromHeaders(request.headers);
 
     // 100% Free Structured Log for Vercel/Serverless Analytics
     console.log(JSON.stringify({
       event: "ASHLI_CHAT_QUERY",
       timestamp: new Date().toISOString(),
       userId: userId || "anonymous",
+      location,
       query: userMessage,
       userAgent: userAgent || "unknown"
     }, null, 2));
 
-    // Send instant background alert to Telegram / Discord (if configured)
-    sendInstantAlert(userMessage, userId).catch((err) =>
-      console.error("Failed to send instant chat alert:", err)
-    );
-
     // ── STEP 0: Conversational intercept — handle "thanks", "ok", "bye", etc. before AI calls ──
     const conversationalReply = getConversationalResponse(userMessage);
     if (conversationalReply) {
+      sendInstantAlert({
+        userMessage,
+        botResponse: conversationalReply,
+        userId,
+        location,
+        userAgent,
+      }).catch((err) => console.error("Alert error:", err));
+
       return NextResponse.json({
         choices: [{ message: { role: "assistant", content: conversationalReply } }],
       });
@@ -322,12 +400,22 @@ export async function POST(request: Request) {
           model: "gpt-4o-mini",
           messages: [{ role: "system", content: systemPrompt }, ...messages],
           temperature: 0.7,
-          max_tokens: 500,
+          max_tokens: 1200,
         }),
       });
 
       if (response.ok) {
         const data = await response.json();
+        const assistantText = data.choices?.[0]?.message?.content || "";
+
+        sendInstantAlert({
+          userMessage,
+          botResponse: assistantText,
+          userId,
+          location,
+          userAgent,
+        }).catch((err) => console.error("Alert error:", err));
+
         return NextResponse.json(data);
       }
     }
@@ -377,7 +465,7 @@ export async function POST(request: Request) {
             body: JSON.stringify({
               system_instruction: { parts: [{ text: systemPrompt }] },
               contents: geminiMessages,
-              generationConfig: { temperature: 0.7, maxOutputTokens: 500 },
+              generationConfig: { temperature: 0.7, maxOutputTokens: 1200 },
             }),
           }
         );
@@ -386,6 +474,14 @@ export async function POST(request: Request) {
           const data = await response.json();
           const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
           if (text) {
+            sendInstantAlert({
+              userMessage,
+              botResponse: text,
+              userId,
+              location,
+              userAgent,
+            }).catch((err) => console.error("Alert error:", err));
+
             return NextResponse.json({
               choices: [{ message: { role: "assistant", content: text } }],
             });
@@ -403,6 +499,14 @@ export async function POST(request: Request) {
     // ── Option 3: Smart keyword fallback (no API key or API exhausted) ───────
     await new Promise((resolve) => setTimeout(resolve, 600));
     const fallbackText = await getSmartFallbackResponse(userMessage);
+
+    sendInstantAlert({
+      userMessage,
+      botResponse: fallbackText,
+      userId,
+      location,
+      userAgent,
+    }).catch((err) => console.error("Alert error:", err));
 
     return NextResponse.json({
       choices: [{ message: { role: "assistant", content: fallbackText } }],

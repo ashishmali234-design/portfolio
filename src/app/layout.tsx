@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Rubik, Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import Script from "next/script";
 import CustomAIChat from "../components/CustomAIChat";
 import "./globals.css";
 
@@ -53,6 +54,15 @@ export default function RootLayout({
       <body
         className={`${interFont.variable} ${rubikFont.variable} antialiased bg-[#121212] text-white`}
       >
+        <Script id="microsoft-clarity" strategy="afterInteractive">
+          {`
+            (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "yawy26zbqe");
+          `}
+        </Script>
         {children}
         <CustomAIChat />
         <Analytics />
@@ -60,4 +70,3 @@ export default function RootLayout({
     </html>
   );
 }
-

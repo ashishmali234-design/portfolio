@@ -235,7 +235,7 @@ async function getSmartFallbackResponse(message: string): Promise<string> {
   return "Ashish is a Product Designer based in Pune, India, working on high-stakes fintech products at Bajaj Finance Ltd. Feel free to ask me about his projects, his AI workflow, or his design philosophy!";
 }
 
-// Background notifier for Discord / Telegram
+// Guaranteed reliable background notifier for Discord / Telegram
 async function sendInstantAlert({
   userMessage,
   botResponse,
@@ -254,8 +254,11 @@ async function sendInstantAlert({
   const timestamp = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
   const locLine = location ? `📍 **Location:** ${location}\n` : "";
 
-  // 1. Format clean Discord alert
-  const discordMessage = `💬 **New Portfolio Chat!**\n${locLine}📅 **Time:** ${timestamp} IST\n👤 **Visitor ID:** \`${userId || "Anonymous"}\`\n\n🗣️ **Visitor:**\n"${userMessage}"\n\n🤖 **Ashli's Response:**\n"${botResponse}"`;
+  // Safe truncation to avoid Discord 2000 character limit drop
+  const safeUserMsg = userMessage.length > 500 ? userMessage.slice(0, 497) + "..." : userMessage;
+  const safeBotResp = botResponse.length > 1200 ? botResponse.slice(0, 1197) + "..." : botResponse;
+
+  const discordMessage = `💬 **New Portfolio Chat!**\n${locLine}📅 **Time:** ${timestamp} IST\n👤 **Visitor ID:** \`${userId || "Anonymous"}\`\n\n🗣️ **Visitor:**\n"${safeUserMsg}"\n\n🤖 **Ashli's Response:**\n"${safeBotResp}"`;
 
   // Send to Discord
   if (discordWebhook) {
@@ -263,9 +266,8 @@ async function sendInstantAlert({
       await fetch(discordWebhook, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          content: discordMessage,
-        }),
+        body: JSON.stringify({ content: discordMessage }),
+        signal: AbortSignal.timeout(2500),
       });
     } catch (e) {
       console.error("Discord alert error:", e);
@@ -275,7 +277,7 @@ async function sendInstantAlert({
   // Send to Telegram
   if (telegramToken && telegramChatId) {
     try {
-      const tgText = `💬 *New Portfolio Chat!*\n${location ? `📍 *Location:* ${location}\n` : ""}📅 *Time:* ${timestamp} IST\n👤 *Visitor:* \`${userId || "Anonymous"}\`\n\n🗣️ *Visitor:*\n"${userMessage}"\n\n🤖 *Ashli:*\n"${botResponse}"`;
+      const tgText = `💬 *New Portfolio Chat!*\n${location ? `📍 *Location:* ${location}\n` : ""}📅 *Time:* ${timestamp} IST\n👤 *Visitor:* \`${userId || "Anonymous"}\`\n\n🗣️ *Visitor:*\n"${safeUserMsg}"\n\n🤖 *Ashli:*\n"${safeBotResp}"`;
 
       await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
         method: "POST",
@@ -284,6 +286,7 @@ async function sendInstantAlert({
           chat_id: telegramChatId,
           text: tgText,
         }),
+        signal: AbortSignal.timeout(2500),
       });
     } catch (e) {
       console.error("Telegram alert error:", e);
@@ -323,12 +326,12 @@ export async function POST(request: Request) {
     // ── STEP 0: Conversational intercept ─────────────────────────────────────
     const conversationalReply = getConversationalResponse(userMessage);
     if (conversationalReply) {
-      sendInstantAlert({
+      await sendInstantAlert({
         userMessage,
         botResponse: conversationalReply,
         userId,
         location,
-      }).catch((err) => console.error("Alert error:", err));
+      });
 
       return NextResponse.json({
         choices: [{ message: { role: "assistant", content: conversationalReply } }],
@@ -361,12 +364,12 @@ export async function POST(request: Request) {
         const data = await response.json();
         const assistantText = data.choices?.[0]?.message?.content || "";
 
-        sendInstantAlert({
+        await sendInstantAlert({
           userMessage,
           botResponse: assistantText,
           userId,
           location,
-        }).catch((err) => console.error("Alert error:", err));
+        });
 
         return NextResponse.json(data);
       }
@@ -426,12 +429,12 @@ export async function POST(request: Request) {
           const data = await response.json();
           const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
           if (text) {
-            sendInstantAlert({
+            await sendInstantAlert({
               userMessage,
               botResponse: text,
               userId,
               location,
-            }).catch((err) => console.error("Alert error:", err));
+            });
 
             return NextResponse.json({
               choices: [{ message: { role: "assistant", content: text } }],
@@ -447,12 +450,12 @@ export async function POST(request: Request) {
     await new Promise((resolve) => setTimeout(resolve, 500));
     const fallbackText = await getSmartFallbackResponse(userMessage);
 
-    sendInstantAlert({
+    await sendInstantAlert({
       userMessage,
       botResponse: fallbackText,
       userId,
       location,
-    }).catch((err) => console.error("Alert error:", err));
+    });
 
     return NextResponse.json({
       choices: [{ message: { role: "assistant", content: fallbackText } }],

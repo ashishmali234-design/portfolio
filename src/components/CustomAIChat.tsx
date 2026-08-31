@@ -15,8 +15,8 @@ import {
   HelpCircle,
   Wand2,
   Mail,
-  Linkedin,
   Phone,
+  Globe,
 } from "lucide-react";
 
 interface Message {
@@ -55,7 +55,6 @@ const FAQ_SUGGESTIONS = [
 
 // Helper to format bot responses nicely
 function formatBotResponse(text: string) {
-  // If response already has markdown-style breaks, handle them cleanly
   const lines = text.split("\n");
   const elements: React.ReactNode[] = [];
 
@@ -109,7 +108,6 @@ function formatBotResponse(text: string) {
 
 // Inline styling for bold / italics / quotes
 function formatInlineStyles(text: string): React.ReactNode {
-  // Split on bold markers **text** or *text*
   const parts = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g);
   return parts.map((part, i) => {
     if (part.startsWith("**") && part.endsWith("**")) {
@@ -470,7 +468,7 @@ export default function CustomAIChat() {
                       rel="noopener noreferrer"
                       className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-white/80 hover:text-white text-[11px] transition-colors border border-white/5 col-span-2"
                     >
-                      <Linkedin className="w-3 h-3 text-blue-400" />
+                      <Globe className="w-3 h-3 text-blue-400" />
                       <span>LinkedIn Profile</span>
                       <ArrowUpRight className="w-2.5 h-2.5 ml-auto opacity-50" />
                     </a>
@@ -589,7 +587,6 @@ export default function CustomAIChat() {
           className="relative group w-14 h-14 rounded-full bg-gradient-to-tr from-amber-500 via-amber-400 to-amber-300 text-black flex items-center justify-center shadow-xl shadow-amber-500/25 border-2 border-white/20 transition-all duration-300 overflow-hidden cursor-pointer"
           aria-label="Open Ashli AI Chat"
         >
-          {/* Subtle sheen animation */}
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
 
           <AnimatePresence mode="wait">

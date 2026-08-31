@@ -232,93 +232,57 @@ async function getSmartFallbackResponse(message: string): Promise<string> {
     }
   }
 
-  // Genuine fallback — no catch-all generic message, just honest and warm
-  return "That's an interesting question! 🤔 I might not have full details on that specific thing, but feel free to ask me about Ashish's projects at Bajaj Finance, his AI design workflow, or any design concept — I love talking about his work!";
+  return "Ashish is a Product Designer based in Pune, India, working on high-stakes fintech products at Bajaj Finance Ltd. Feel free to ask me about his projects, his AI workflow, or his design philosophy!";
 }
 
-// Background notifier for Telegram / Discord
+// Background notifier for Discord / Telegram
 async function sendInstantAlert({
   userMessage,
   botResponse,
   userId,
   location,
-  userAgent,
 }: {
   userMessage: string;
   botResponse: string;
   userId?: string;
   location?: string;
-  userAgent?: string;
 }) {
   const telegramToken = process.env.TELEGRAM_BOT_TOKEN;
   const telegramChatId = process.env.TELEGRAM_CHAT_ID;
   const discordWebhook = process.env.DISCORD_WEBHOOK_URL;
 
   const timestamp = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
-  const locStr = location ? `📍 **Location:** ${location}\n` : "";
+  const locLine = location ? `📍 **Location:** ${location}\n` : "";
 
-  // Shorten for notification if exceptionally long
-  const cleanResponse = botResponse.length > 900 ? botResponse.slice(0, 897) + "..." : botResponse;
+  // 1. Format clean Discord alert
+  const discordMessage = `💬 **New Portfolio Chat!**\n${locLine}📅 **Time:** ${timestamp} IST\n👤 **Visitor ID:** \`${userId || "Anonymous"}\`\n\n🗣️ **Visitor:**\n"${userMessage}"\n\n🤖 **Ashli's Response:**\n"${botResponse}"`;
 
-  // 1. Send to Discord (if configured)
+  // Send to Discord
   if (discordWebhook) {
     try {
-      const discordPayload = {
-        embeds: [
-          {
-            title: "💬 New Portfolio Chat Conversation",
-            color: 0xf59e0b, // Amber gold color
-            fields: [
-              {
-                name: "🗣️ User Question",
-                value: userMessage || "*(Empty)*",
-                inline: false,
-              },
-              {
-                name: "🤖 Ashli's Answer",
-                value: cleanResponse || "*(No response)*",
-                inline: false,
-              },
-              {
-                name: "📍 Visitor Location",
-                value: location || "Unknown Location",
-                inline: true,
-              },
-              {
-                name: "📅 Time (IST)",
-                value: `${timestamp}`,
-                inline: true,
-              },
-            ],
-            footer: {
-              text: `Visitor ID: ${userId || "anonymous"}`,
-            },
-          },
-        ],
-      };
-
       await fetch(discordWebhook, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(discordPayload),
+        body: JSON.stringify({
+          content: discordMessage,
+        }),
       });
     } catch (e) {
       console.error("Discord alert error:", e);
     }
   }
 
-  // 2. Send to Telegram (if configured)
+  // Send to Telegram
   if (telegramToken && telegramChatId) {
     try {
-      const text = `💬 *New Portfolio Chat*\n${locStr}📅 *Time:* ${timestamp} IST\n👤 *Visitor:* \`${userId || "Anonymous"}\`\n\n🗣️ *User:* "${userMessage}"\n\n🤖 *Ashli:* "${cleanResponse}"`;
+      const tgText = `💬 *New Portfolio Chat!*\n${location ? `📍 *Location:* ${location}\n` : ""}📅 *Time:* ${timestamp} IST\n👤 *Visitor:* \`${userId || "Anonymous"}\`\n\n🗣️ *Visitor:*\n"${userMessage}"\n\n🤖 *Ashli:*\n"${botResponse}"`;
 
       await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           chat_id: telegramChatId,
-          text,
-          parse_mode: "Markdown",
+          text: tgText,
         }),
       });
     } catch (e) {
@@ -352,21 +316,11 @@ function extractLocationFromHeaders(headers: Headers): string {
 
 export async function POST(request: Request) {
   try {
-    const { messages, userId, userAgent } = await request.json();
+    const { messages, userId } = await request.json();
     const userMessage = messages[messages.length - 1]?.content || "";
     const location = extractLocationFromHeaders(request.headers);
 
-    // 100% Free Structured Log for Vercel/Serverless Analytics
-    console.log(JSON.stringify({
-      event: "ASHLI_CHAT_QUERY",
-      timestamp: new Date().toISOString(),
-      userId: userId || "anonymous",
-      location,
-      query: userMessage,
-      userAgent: userAgent || "unknown"
-    }, null, 2));
-
-    // ── STEP 0: Conversational intercept — handle "thanks", "ok", "bye", etc. before AI calls ──
+    // ── STEP 0: Conversational intercept ─────────────────────────────────────
     const conversationalReply = getConversationalResponse(userMessage);
     if (conversationalReply) {
       sendInstantAlert({
@@ -374,7 +328,6 @@ export async function POST(request: Request) {
         botResponse: conversationalReply,
         userId,
         location,
-        userAgent,
       }).catch((err) => console.error("Alert error:", err));
 
       return NextResponse.json({
@@ -413,7 +366,6 @@ export async function POST(request: Request) {
           botResponse: assistantText,
           userId,
           location,
-          userAgent,
         }).catch((err) => console.error("Alert error:", err));
 
         return NextResponse.json(data);
@@ -479,25 +431,20 @@ export async function POST(request: Request) {
               botResponse: text,
               userId,
               location,
-              userAgent,
             }).catch((err) => console.error("Alert error:", err));
 
             return NextResponse.json({
               choices: [{ message: { role: "assistant", content: text } }],
             });
           }
-        } else {
-          const errText = await response.text();
-          console.error("Gemini API call failed status:", response.status, "body:", errText);
         }
       } catch (err) {
-        const errMsg = err instanceof Error ? err.message : String(err);
-        console.error("Gemini Option 2 caught exception:", errMsg);
+        console.error("Gemini Option 2 exception:", err);
       }
     }
 
-    // ── Option 3: Smart keyword fallback (no API key or API exhausted) ───────
-    await new Promise((resolve) => setTimeout(resolve, 600));
+    // ── Option 3: Smart fallback (offline/no API key) ────────────────────────
+    await new Promise((resolve) => setTimeout(resolve, 500));
     const fallbackText = await getSmartFallbackResponse(userMessage);
 
     sendInstantAlert({
@@ -505,7 +452,6 @@ export async function POST(request: Request) {
       botResponse: fallbackText,
       userId,
       location,
-      userAgent,
     }).catch((err) => console.error("Alert error:", err));
 
     return NextResponse.json({

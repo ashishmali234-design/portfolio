@@ -236,6 +236,47 @@ async function getSmartFallbackResponse(message: string): Promise<string> {
   return "That's an interesting question! 🤔 I might not have full details on that specific thing, but feel free to ask me about Ashish's projects at Bajaj Finance, his AI design workflow, or any design concept — I love talking about his work!";
 }
 
+// Background notifier for Telegram / Discord
+async function sendInstantAlert(userMessage: string, userId?: string) {
+  const telegramToken = process.env.TELEGRAM_BOT_TOKEN;
+  const telegramChatId = process.env.TELEGRAM_CHAT_ID;
+  const discordWebhook = process.env.DISCORD_WEBHOOK_URL;
+
+  const timestamp = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
+  const alertText = `💬 **New Portfolio Chat!**\n📅 **Time:** ${timestamp} IST\n👤 **Visitor ID:** \`${userId || "Anonymous"}\`\n💭 **Message:**\n"${userMessage}"`;
+
+  // 1. Send to Telegram (if configured)
+  if (telegramToken && telegramChatId) {
+    try {
+      await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: telegramChatId,
+          text: `💬 New Portfolio Chat!\nTime: ${timestamp} IST\nVisitor: ${userId || "Anonymous"}\n\nMessage:\n"${userMessage}"`,
+        }),
+      });
+    } catch (e) {
+      console.error("Telegram alert error:", e);
+    }
+  }
+
+  // 2. Send to Discord (if configured)
+  if (discordWebhook) {
+    try {
+      await fetch(discordWebhook, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          content: alertText,
+        }),
+      });
+    } catch (e) {
+      console.error("Discord alert error:", e);
+    }
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const { messages, userId, userAgent } = await request.json();
@@ -249,6 +290,11 @@ export async function POST(request: Request) {
       query: userMessage,
       userAgent: userAgent || "unknown"
     }, null, 2));
+
+    // Send instant background alert to Telegram / Discord (if configured)
+    sendInstantAlert(userMessage, userId).catch((err) =>
+      console.error("Failed to send instant chat alert:", err)
+    );
 
     // ── STEP 0: Conversational intercept — handle "thanks", "ok", "bye", etc. before AI calls ──
     const conversationalReply = getConversationalResponse(userMessage);

@@ -577,7 +577,7 @@ export default function CustomAIChat() {
 
       const urlParams = new URLSearchParams(window.location.search);
 
-      // Person Name (?name=Rahul, ?p=Rahul, ?person=Rahul, ?user=Rahul)
+      // Extract Person Name (?name=Rahul, ?p=Rahul, ?person=Rahul, ?user=Rahul)
       const rawPerson =
         urlParams.get("name") ||
         urlParams.get("p") ||
@@ -585,7 +585,7 @@ export default function CustomAIChat() {
         urlParams.get("user") ||
         urlParams.get("to");
 
-      // Company / Team (?company=Google, ?c=Google, ?team=Google, ?for=Google, ?org=Google)
+      // Extract Company Name (?company=Google, ?c=Google, ?team=Google, ?for=Google, ?org=Google)
       const rawCompany =
         urlParams.get("company") ||
         urlParams.get("c") ||
@@ -611,6 +611,17 @@ export default function CustomAIChat() {
           },
         ]);
       }
+
+      // 🔔 SILENT PING ON PAGE LOAD: Notifies Telegram / Discord that someone opened the link!
+      fetch("/api/visit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          person: personFound || undefined,
+          company: companyFound || undefined,
+          userAgent: typeof navigator !== "undefined" ? navigator.userAgent : "unknown",
+        }),
+      }).catch(() => {});
     }
 
     const handleScroll = () => setScrollY(window.scrollY);

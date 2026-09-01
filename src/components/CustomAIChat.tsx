@@ -782,9 +782,7 @@ export default function CustomAIChat() {
                 </div>
                 <div>
                   <h3 className="font-rubik text-sm font-semibold tracking-wide text-white">Ashli</h3>
-                  <p className="text-[10px] text-neutral-400 font-inter">
-                    {targetCompany ? `Personalized for ${targetCompany} Team` : "AI Assistant"}
-                  </p>
+                  <p className="text-[10px] text-neutral-400 font-inter">AI Assistant</p>
                 </div>
               </div>
               <div className="flex items-center gap-1.5">
@@ -929,7 +927,7 @@ export default function CustomAIChat() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 disabled={isLoading}
-                placeholder={targetCompany ? `Ask about Ashish for ${targetCompany}...` : "Ask me anything..."}
+                placeholder="Ask me anything..."
                 className="flex-1 bg-[#0a0c10] border border-neutral-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-amber-500/40 transition-colors disabled:opacity-50"
               />
               <div className="flex gap-2">

@@ -511,7 +511,7 @@ function getGreeting() {
   return "Good evening";
 }
 
-function formatCompanyName(raw: string): string {
+function formatProperCase(raw: string): string {
   const cleaned = raw.replace(/[-_]+/g, " ").trim();
   if (!cleaned) return "";
   if (cleaned.length <= 4 && cleaned === cleaned.toUpperCase()) {
@@ -527,7 +527,13 @@ function formatCompanyName(raw: string): string {
     .join(" ");
 }
 
-function getInitialAssistantMessage(companyName?: string) {
+function getInitialAssistantMessage(personName?: string, companyName?: string) {
+  if (personName && companyName) {
+    return `Hey ${personName} & Team ${companyName}! 👋 I'm Ashli, Ashish's interactive AI assistant. Welcome to his portfolio! Feel free to explore his featured work, design systems, and product process — or ask me anything directly. What would you like to explore?`;
+  }
+  if (personName) {
+    return `Hey ${personName}! 👋 I'm Ashli, Ashish's interactive AI assistant. Welcome to his portfolio! Feel free to explore his featured work, design systems, and product process — or ask me anything directly. What would you like to explore?`;
+  }
   if (companyName) {
     return `Hey Team ${companyName}! 👋 I'm Ashli, Ashish's interactive AI assistant. Welcome to his portfolio! Feel free to explore his featured work, design systems, and product process — or ask me anything directly. What would you like to explore?`;
   }
@@ -540,6 +546,7 @@ export default function CustomAIChat() {
   const [followUps, setFollowUps] = useState<string[]>([]);
   const [showContactCTAs, setShowContactCTAs] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [targetPerson, setTargetPerson] = useState<string>("");
   const [targetCompany, setTargetCompany] = useState<string>("");
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -558,7 +565,9 @@ export default function CustomAIChat() {
   useEffect(() => {
     setMounted(true);
 
+    let personFound = "";
     let companyFound = "";
+
     if (typeof window !== "undefined") {
       let storedUserId = localStorage.getItem("ashli_user_id");
       if (!storedUserId) {
@@ -567,7 +576,17 @@ export default function CustomAIChat() {
       }
 
       const urlParams = new URLSearchParams(window.location.search);
-      const rawParam =
+
+      // Person Name (?name=Rahul, ?p=Rahul, ?person=Rahul, ?user=Rahul)
+      const rawPerson =
+        urlParams.get("name") ||
+        urlParams.get("p") ||
+        urlParams.get("person") ||
+        urlParams.get("user") ||
+        urlParams.get("to");
+
+      // Company / Team (?company=Google, ?c=Google, ?team=Google, ?for=Google, ?org=Google)
+      const rawCompany =
         urlParams.get("company") ||
         urlParams.get("c") ||
         urlParams.get("team") ||
@@ -575,13 +594,20 @@ export default function CustomAIChat() {
         urlParams.get("org") ||
         urlParams.get("target");
 
-      if (rawParam) {
-        companyFound = formatCompanyName(rawParam);
+      if (rawPerson) {
+        personFound = formatProperCase(rawPerson);
+        setTargetPerson(personFound);
+      }
+      if (rawCompany) {
+        companyFound = formatProperCase(rawCompany);
         setTargetCompany(companyFound);
+      }
+
+      if (personFound || companyFound) {
         setMessages([
           {
             role: "assistant",
-            content: getInitialAssistantMessage(companyFound),
+            content: getInitialAssistantMessage(personFound, companyFound),
           },
         ]);
       }
@@ -659,6 +685,7 @@ export default function CustomAIChat() {
         body: JSON.stringify({
           messages: newMessages,
           userId,
+          person: targetPerson || undefined,
           company: targetCompany || undefined,
           userAgent: typeof navigator !== "undefined" ? navigator.userAgent : "unknown",
         }),
@@ -691,8 +718,8 @@ export default function CustomAIChat() {
     setMessages([
       {
         role: "assistant",
-        content: targetCompany
-          ? `Reset complete! ${getInitialAssistantMessage(targetCompany)}`
+        content: (targetPerson || targetCompany)
+          ? `Reset complete! ${getInitialAssistantMessage(targetPerson, targetCompany)}`
           : `Reset complete! ${getGreeting()}! I am Ashli 👋, Ashish's interactive AI assistant. You can ask me anything about him!`,
       },
     ]);
@@ -961,7 +988,15 @@ export default function CustomAIChat() {
             <div className="flex-1 pr-4">
               <h4 className="text-[10px] text-amber-500 font-semibold tracking-wider uppercase mb-0.5 font-rubik">Ashli</h4>
               <p className="text-[11px] text-white/95 leading-normal font-light">
-                {targetCompany ? (
+                {targetPerson && targetCompany ? (
+                  <>
+                    Hey {targetPerson} & Team {targetCompany}! 👋 Welcome to Ashish&apos;s portfolio. I&apos;m Ashli, his interactive AI assistant. Ask me anything!
+                  </>
+                ) : targetPerson ? (
+                  <>
+                    Hey {targetPerson}! 👋 Welcome to Ashish&apos;s portfolio. I&apos;m Ashli, his interactive AI assistant. Ask me anything!
+                  </>
+                ) : targetCompany ? (
                   <>
                     Hey Team {targetCompany}! 👋 Welcome to Ashish&apos;s portfolio. I&apos;m Ashli, his interactive AI assistant. Ask me anything!
                   </>

@@ -85,5 +85,3 @@
         window.removeEventListener("hero-animation-complete", handleHeroAnimationComplete);
         clearTimeout(fallbackTimer);
       };
-    }
-  }, []);

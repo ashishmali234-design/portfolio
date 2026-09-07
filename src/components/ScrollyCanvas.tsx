@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import Overlay from "./Overlay";
 import Projects from "./Projects";
 import Skills from "./Skills";
@@ -18,7 +18,6 @@ export default function ScrollyCanvas() {
   const [images, setImages] = useState<HTMLImageElement[]>([]);
   const [isLaunchingReady, setIsLaunchingReady] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
-  const [currentFrameIndex, setCurrentFrameIndex] = useState(0);
 
   // Audio elements
   const launchAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -141,7 +140,7 @@ export default function ScrollyCanvas() {
   }, []);
 
   // Canvas render logic
-  const renderFrame = (index: number) => {
+  const renderFrame = useCallback((index: number) => {
     const canvas = canvasRef.current;
     if (!canvas || images.length === 0) return;
     const ctx = canvas.getContext("2d");
@@ -163,7 +162,6 @@ export default function ScrollyCanvas() {
     ctx.scale(dpr, dpr);
     ctx.clearRect(0, 0, width, height);
 
-    // Object-fit: cover equivalent
     const imgRatio = img.naturalWidth / img.naturalHeight;
     const canvasRatio = width / height;
 
@@ -182,7 +180,7 @@ export default function ScrollyCanvas() {
 
     ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
     ctx.restore();
-  };
+  }, [images]);
 
   // Scroll listener for frame scrubbing
   useEffect(() => {
@@ -203,8 +201,6 @@ export default function ScrollyCanvas() {
         Math.floor(progress * images.length)
       );
 
-      setCurrentFrameIndex(frameIndex);
-
       // Play sound on rocket liftoff frame
       if (hasUserInteracted && frameIndex > 10 && frameIndex < 15) {
         if (launchAudioRef.current && launchAudioRef.current.paused) {
@@ -224,14 +220,14 @@ export default function ScrollyCanvas() {
       window.removeEventListener("scroll", handleScroll);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [images, hasUserInteracted]);
+  }, [images, hasUserInteracted, renderFrame]);
 
-  // Initial resize and render
+  // Initial render when images load
   useEffect(() => {
     if (images.length > 0) {
       renderFrame(0);
     }
-  }, [images]);
+  }, [images, renderFrame]);
 
   return (
     <div className="relative w-full bg-[#121212] selection:bg-red-500 selection:text-white">

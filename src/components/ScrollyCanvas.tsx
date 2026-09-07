@@ -12,7 +12,11 @@ import CustomCursor from "./CustomCursor";
 
 const frameCount = 60;
 
-export default function ScrollyCanvas() {
+interface ScrollyCanvasProps {
+  onLoadComplete?: () => void;
+}
+
+export default function ScrollyCanvas({ onLoadComplete }: ScrollyCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [images, setImages] = useState<HTMLImageElement[]>([]);
@@ -129,6 +133,9 @@ export default function ScrollyCanvas() {
       if (validFrames.length > 0) {
         setImages(validFrames);
         setIsLaunchingReady(true);
+        if (onLoadComplete) {
+          onLoadComplete();
+        }
       }
     };
 
@@ -137,7 +144,7 @@ export default function ScrollyCanvas() {
     return () => {
       isCancelled = true;
     };
-  }, []);
+  }, [onLoadComplete]);
 
   // Canvas render logic
   const renderFrame = useCallback((index: number) => {

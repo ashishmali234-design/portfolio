@@ -4,13 +4,62 @@ import { useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Typewriter from "./Typewriter";
 
+function formatProperCase(raw: string): string {
+  const cleaned = raw.replace(/[-_]+/g, " ").trim();
+  if (!cleaned) return "";
+  if (cleaned.length <= 4 && cleaned === cleaned.toUpperCase()) {
+    return cleaned;
+  }
+  return cleaned
+    .split(" ")
+    .map((word) => {
+      const w = word.toLowerCase();
+      if (w === "ai" || w === "ui" || w === "ux") return w.toUpperCase();
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    })
+    .join(" ");
+}
+
 export default function Overlay() {
   const { scrollY } = useScroll();
 
   const [isSection2Visible, setIsSection2Visible] = useState(false);
   const [isSection3Visible, setIsSection3Visible] = useState(false);
+  const [greetingHeader, setGreetingHeader] = useState("HELLO! I'M");
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const urlParams = new URLSearchParams(window.location.search);
+
+      const rawPerson =
+        urlParams.get("name") ||
+        urlParams.get("p") ||
+        urlParams.get("person") ||
+        urlParams.get("user") ||
+        urlParams.get("to");
+
+      const rawCompany =
+        urlParams.get("company") ||
+        urlParams.get("c") ||
+        urlParams.get("team") ||
+        urlParams.get("for") ||
+        urlParams.get("org") ||
+        urlParams.get("target");
+
+      const person = rawPerson ? formatProperCase(rawPerson) : "";
+      const company = rawCompany ? formatProperCase(rawCompany) : "";
+
+      if (person && company) {
+        setGreetingHeader(`HELLO ${person.toUpperCase()} & TEAM ${company.toUpperCase()}! I'M`);
+      } else if (person) {
+        setGreetingHeader(`HELLO ${person.toUpperCase()}! I'M`);
+      } else if (company) {
+        setGreetingHeader(`HELLO TEAM ${company.toUpperCase()}! I'M`);
+      } else {
+        setGreetingHeader("HELLO! I'M");
+      }
+    }
+
     if (scrollY.get() >= 450) setIsSection2Visible(true);
     if (scrollY.get() >= 1650) setIsSection3Visible(true);
 
@@ -57,7 +106,7 @@ export default function Overlay() {
             <div className="absolute -left-5 w-screen -inset-y-36 bg-[radial-gradient(circle_at_30%_50%,rgba(15,27,61,0.95)_0%,rgba(21,16,43,0.8)_50%,rgba(18,18,18,0)_100%)] md:hidden pointer-events-none z-[-1] blur-3xl" />
             
             <span className="text-[12px] md:text-sm font-bold tracking-[0.25em] text-white/40 uppercase mb-3 block">
-              Hello! I&apos;m
+              {greetingHeader}
             </span>
             <h1 className="text-[44px] md:text-8xl font-bold tracking-tight text-white select-none uppercase leading-none min-h-[1.1em]">
               <Typewriter text="Ashish Mali" delay={150} speed={50} />
@@ -178,7 +227,6 @@ export default function Overlay() {
             </p>
           </div>
         </motion.div>
-
 
       </div>
     </div>

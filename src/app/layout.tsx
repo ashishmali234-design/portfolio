@@ -21,23 +21,66 @@ const rubikFont = Rubik({
 export const metadata: Metadata = {
   metadataBase: new URL("https://ashishmali.vercel.app"),
   title: "Ashish C Mali | Product Designer & Interactive Architect",
-  description: "Product Designer portfolio bridging clean layout, high-end user research, custom design systems, and robust front-end engineering.",
+  description:
+    "Product Designer portfolio of Ashish C Mali bridging clean layout, high-end user research, custom design systems, and robust front-end engineering.",
+  keywords: [
+    "Ashish Mali",
+    "Ashish C Mali",
+    "Ashish Mali Portfolio",
+    "Ashish Mali Designer",
+    "Product Designer",
+    "UI UX Designer",
+    "Interactive Architect",
+    "Design Systems Specialist",
+    "UX Researcher",
+    "Creative Technologist",
+    "Frontend Developer",
+    "Web Designer Portfolio",
+  ],
+  authors: [{ name: "Ashish C Mali", url: "https://ashishmali.vercel.app" }],
+  creator: "Ashish C Mali",
+  alternates: {
+    canonical: "https://ashishmali.vercel.app",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: "/favicon.svg",
+    apple: "/favicon.svg",
   },
   openGraph: {
     title: "Ashish C Mali | Product Designer & Interactive Architect",
-    description: "Product Designer portfolio bridging clean layout, high-end user research, custom design systems, and robust front-end engineering.",
+    description:
+      "Product Designer portfolio bridging clean layout, high-end user research, custom design systems, and robust front-end engineering.",
     url: "https://ashishmali.vercel.app",
     siteName: "Ashish C Mali Portfolio",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Ashish C Mali - Product Designer & Interactive Architect",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Ashish C Mali | Product Designer & Interactive Architect",
-    description: "Product Designer portfolio bridging clean layout, high-end user research, custom design systems, and robust front-end engineering.",
-  }
+    description:
+      "Product Designer portfolio bridging clean layout, high-end user research, custom design systems, and robust front-end engineering.",
+    images: ["/opengraph-image.png"],
+  },
 };
 
 export const viewport = {
@@ -50,12 +93,51 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Uses environment variable NEXT_PUBLIC_CLARITY_PROJECT_ID if set, or defaults directly to your project ID
   const clarityId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID || "yawy26zbqe";
+
+  const personSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Ashish C Mali",
+    url: "https://ashishmali.vercel.app",
+    jobTitle: "Product Designer & Interactive Architect",
+    sameAs: [
+      "https://github.com/ashishmali234-design",
+      "https://www.linkedin.com/in/ashishmali",
+    ],
+    knowsAbout: [
+      "Product Design",
+      "UI/UX Design",
+      "Design Systems",
+      "Interactive Architecture",
+      "Front-End Engineering",
+    ],
+  };
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Ashish C Mali Portfolio",
+    url: "https://ashishmali.vercel.app",
+    description:
+      "Portfolio of Ashish C Mali - Product Designer & Interactive Architect",
+    author: {
+      "@type": "Person",
+      name: "Ashish C Mali",
+    },
+  };
 
   return (
     <html lang="en" className="scroll-smooth">
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
         {clarityId && (
           <Script id="microsoft-clarity" strategy="afterInteractive">
             {`

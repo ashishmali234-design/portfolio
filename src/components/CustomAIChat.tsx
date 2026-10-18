@@ -1,3 +1,5 @@
+import StylizedAvatar3D from "./StylizedAvatar3D";
+
 "use client";
 
 import { useState, useEffect, useRef } from "react";

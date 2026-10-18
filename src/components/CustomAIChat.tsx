@@ -1076,5 +1076,46 @@ export default function CustomAIChat() {
         )}
       </AnimatePresence>
     </>
+    {/* 3D Character Companion — 3 Stages: Welcome Pop-up -> Jumps to Chat Frame -> Travels Everywhere */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.5, y: 20 }}
+        animate={
+          isOpen
+            ? {
+                // STAGE 2: Leaped high and perched right on top of the Chatbot Window
+                opacity: 1,
+                scale: 1,
+                bottom: 585,
+                right: 36,
+                rotate: [0, -14, 0], // Fun mid-air jump tilt
+              }
+            : showWelcome && scrollY < 150
+            ? {
+                // STAGE 1: Sitting comfortably right on top of the initial Welcome Pop-up
+                opacity: 1,
+                scale: 0.95,
+                bottom: 175,
+                right: 36,
+                rotate: 0,
+              }
+            : {
+                // STAGE 3: Sitting on the floating bot button, traveling everywhere with the user
+                opacity: 1,
+                scale: 0.88,
+                bottom: 64,
+                right: 14,
+                rotate: 0,
+              }
+        }
+        transition={{
+          type: "spring",
+          stiffness: 260,
+          damping: 20,
+          mass: 0.8,
+        }}
+        className="fixed z-[10000] pointer-events-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]"
+      >
+        <StylizedAvatar3D isOpen={isOpen} />
+      </motion.div>
   );
 }

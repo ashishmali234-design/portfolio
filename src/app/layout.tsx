@@ -30,6 +30,7 @@ export const metadata: Metadata = {
     capable: true,
   },
   keywords: [
+    "Ashish"
     "Ashish Mali",
     "Ashish C Mali",
     "Ashish Mali Portfolio",
@@ -37,12 +38,15 @@ export const metadata: Metadata = {
     "Ashish Mali UI UX Designer",
     "Ashish Mali Product Designer",
     "Ashish Mali Bajaj Finance",
+    "Aashish Mali",
     "UI UX Designer Pune",
     "Product Designer Pune",
+    "Product Designer",
     "Fintech UI UX Designer",
     "Interaction Designer",
     "Design Systems",
     "UX Research",
+    "UI UX Designer",
     "Figma",
     "Lean UX Case Study",
     "Prime Video Redesign",
@@ -73,10 +77,10 @@ export const metadata: Metadata = {
     type: "profile",
     images: [
       {
-        url: "https://ashishmali.vercel.app/opengraph-image.png",
+        url: "https://ashishmali.vercel.app/opengraph-image.png?v=3",
         width: 1200,
         height: 630,
-        alt: "Ashish Mali (Ashish C Mali) - UI/UX Designer & Product Designer Portfolio",
+        alt: "Ashish Mali (Ashish C Mali) - Product Designer & UI/UX Specialist",
       },
     ],
   },
@@ -85,7 +89,7 @@ export const metadata: Metadata = {
     title: "Ashish Mali (Ashish C Mali) | UI/UX Designer & Product Designer",
     description:
       "Explore selected case studies, interactive prototypes, and scalable design systems by Ashish Mali (Ashish C Mali) – Product Designer at Bajaj Finance.",
-    images: ["https://ashishmali.vercel.app/opengraph-image.png"],
+    images: ["https://ashishmali.vercel.app/opengraph-image.png?v=3"],
   },
   robots: {
     index: true,
@@ -141,6 +145,8 @@ const jsonLdSchema = {
       description:
         "Official portfolio of Ashish Mali (Ashish C Mali) – Product Designer & UI/UX Specialist crafting high-converting design systems, intuitive digital experiences, and scalable products.",
       inLanguage: "en-US",
+      primaryImageOfPage: "https://ashishmali.vercel.app/ashish-profile.jpg",
+      image: "https://ashishmali.vercel.app/ashish-profile.jpg",
       mainEntity: {
         "@id": "https://ashishmali.vercel.app/#person",
       },
@@ -172,7 +178,7 @@ const jsonLdSchema = {
         addressCountry: "IN",
       },
       url: "https://ashishmali.vercel.app/",
-      image: "https://ashishmali.vercel.app/opengraph-image.png",
+      image: "https://ashishmali.vercel.app/ashish-profile.jpg",
       sameAs: [
         "https://www.linkedin.com/in/ashish-mali-b071b526b",
         "https://www.behance.net/ashishmali",

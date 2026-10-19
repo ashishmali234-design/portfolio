@@ -1,8 +1,11 @@
-
 "use client";
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import {
+  getMultilingualConversationalReply,
+  getMultilingualFallbackResponse,
+} from "@/lib/multilingualChat";
 
 interface Message {
   role: "user" | "assistant";
@@ -24,557 +27,315 @@ const RESPONSE_FOLLOW_UPS: Array<{ triggers: string[]; chips: string[] }> = [
     ],
   },
   {
-    triggers: ["homepage", "merchant profile", "onboarding dashboard", "performance dashboard", "team tracking", "tasks management"],
+    triggers: ["performance dashboard", "kpi", "incentive tracker", "daily target"],
     chips: [
-      "How did Ashish approach the Sales One App revamp?",
-      "What does the Performance Dashboard actually track?",
-      "How do sales agents manage their daily tasks?",
+      "How did the dashboards motivate field agents?",
+      "What was the drop-off reduction across the 5 core journeys?",
+      "How did 50k+ daily agents react to the new design?",
     ],
   },
-  // Level 2: Sales One App mentioned by name
+  // Level 2: Bajaj Sales One overall
   {
-    triggers: ["sales one app", "sales one"],
+    triggers: ["sales one", "50,000", "50k", "onboarding flow", "5 core journeys", "offline-first"],
     chips: [
-      "What features did Ashish revamp in the Sales One App?",
-      "What was the impact of the new Scan & Start onboarding?",
-      "What dashboards did Ashish design for sales agents?",
+      "Tell me about the Scan & Start feature he designed",
+      "How did Ashish design for low-connectivity rural areas?",
+      "What user research did Ashish conduct with field agents?",
+      "Can I see the Bajaj Sales One case study?",
     ],
   },
-  // Level 3: Gold Loan / Lending deep details
+  // Level 1: Bajaj Finserv general
   {
-    triggers: ["high-converting", "checkout funnel", "drop-off", "conversion rate", "loan journey"],
+    triggers: ["bajaj", "finserv", "financial platform"],
     chips: [
-      "How did Ashish improve the Gold Loan checkout flow?",
-      "What marketing assets did he create for lending products?",
-      "How did Ashish design the INSTA EMI Card experience?",
-    ],
-  },
-  // Level 2: Lending products mentioned
-  {
-    triggers: ["gold loan", "personal loan", "insta emi"],
-    chips: [
-      "How did Ashish improve the Gold Loan user journey?",
-      "What is the INSTA EMI Card UX like?",
-      "What marketing banners did Ashish create for lending?",
-    ],
-  },
-  // Level 3: REMI / Banners / GIFs deep
-  {
-    triggers: ["remi", "retail emi", "co-branded", "push notification", "in-app banner", "promotional gif"],
-    chips: [
-      "What brands are covered in the REMI campaigns?",
-      "How does Ashish create animated GIFs for Bajaj Finance?",
-      "Tell me about the Bajaj Pay marketing collaterals",
-    ],
-  },
-  // Level 3: Merchant training videos
-  {
-    triggers: ["training video", "merchant training", "animated training", "step-by-step video"],
-    chips: [
-      "What tools does Ashish use to create training videos?",
-      "What topics do the merchant training videos cover?",
-      "How does motion design help merchants learn the app?",
-    ],
-  },
-  // Level 2: Merchant One App mentioned
-  {
-    triggers: ["merchant one app", "finserv for business", "merchant dashboard"],
-    chips: [
-      "What dashboards did Ashish design for the Merchant One App?",
-      "Tell me about the animated merchant training videos",
-      "How does the app help merchants get started with Bajaj?",
-    ],
-  },
-  // Level 3: EDC POS deep
-  {
-    triggers: ["edc", "pos terminal", "point-of-sale", "swipe journey", "terminal journey"],
-    chips: [
-      "How did Ashish design for zero payment errors on POS?",
-      "What accessibility principles did he use for EDC screens?",
-      "Tell me about the Bajaj Pay EDC branding work",
-    ],
-  },
-  // Level 3: B2B Aggregator deep
-  {
-    triggers: ["aggregator dashboard", "non-aggregator", "merchant network", "aggregator and non-aggregator"],
-    chips: [
-      "What's the difference between Aggregator and Non-Aggregator dashboards?",
-      "How does Ashish simplify complexity in B2B flows?",
-      "What kind of data do these dashboards manage?",
-    ],
-  },
-  // Level 2: B2B Enterprise mentioned
-  {
-    triggers: ["b2b enterprise", "b2b solution", "aggregator", "corporate partner"],
-    chips: [
-      "What is the B2B Aggregator dashboard?",
-      "How does Ashish design for large merchant networks?",
-      "What problem did the B2B Enterprise solution solve?",
-    ],
-  },
-  // Level 2: Multiple Bajaj products listed (medium detail)
-  {
-    triggers: ["sales one", "gold loan", "merchant one", "lending", "b2b"],
-    chips: [
-      "Tell me more about the Sales One App revamp",
-      "What is the Merchant One App?",
-      "How did Ashish design the core lending journeys?",
-    ],
-  },
-  // Level 1: Bajaj Finance general mention only
-  {
-    triggers: ["bajaj finance", "bajaj finserv", "bajaj pay"],
-    chips: [
-      "What exactly does Ashish work on at Bajaj Finance?",
-      "What kind of products does he design there?",
-      "How long has Ashish been at Bajaj Finance?",
+      "Tell me about the Bajaj Sales One enterprise app",
+      "What was Ashish's role at Bajaj Finserv?",
+      "What impact did the redesigned journeys have?",
     ],
   },
 
-  // ── AI TOOLS ───────────────────────────────────────────────────────────────
-  // Level 3: Specific AI tools deep
+  // ── PRIME VIDEO ────────────────────────────────────────────────────────────
+  // Level 3: Specific feature redesigns mentioned
   {
-    triggers: ["chatgpt", "magnific", "n8n", "notebook lm", "antigravity ide"],
+    triggers: ["scene search", "multimodal", "timestamp", "dialogue search"],
     chips: [
-      "How exactly does Ashish use ChatGPT in design work?",
-      "What does Magnific AI help Ashish create?",
-      "What is N8N and how does Ashish use it for workflows?",
+      "How does Scene Search let users find specific moments?",
+      "What research insights led to the Scene Search concept?",
+      "How does the AI understand emotional or action queries?",
     ],
   },
-  // Level 2: Figma AI / Figma Make
   {
-    triggers: ["figma ai", "figma make"],
+    triggers: ["social watch party", "co-viewing", "spatial audio", "shared queue"],
     chips: [
-      "How does Figma AI speed up Ashish's wireframing?",
-      "What is Ashish's design system process in Figma?",
-      "How does Ashish hand off Figma designs to developers?",
+      "How did Ashish design the Social Watch Party UI?",
+      "How does cross-device sync work in the redesign?",
+      "What makes this better than Amazon's current party mode?",
     ],
   },
-  // Figma general
   {
-    triggers: ["figma", "design system", "design token"],
+    triggers: ["discovery engine", "mood-based", "decision paralysis", "browse fatigue"],
     chips: [
-      "How does Ashish use Figma AI and Figma Make?",
-      "How does Ashish structure design tokens in Figma?",
-      "What makes Ashish's design systems enterprise-ready?",
+      "How does the Mood-Based Discovery engine work?",
+      "How does the UI solve choice paralysis in under 60 seconds?",
+      "Can I explore the Prime Video Redesign prototype?",
     ],
   },
-  // AI philosophy
+  // Level 2: Prime Video overall
   {
-    triggers: ["designing with ai", "thinking like humans", "ai philosophy"],
+    triggers: ["prime video", "streaming", "ott platform", "amazon"],
     chips: [
-      "Which AI tools does Ashish use in his daily workflow?",
-      "How does Ashish use ChatGPT for design copywriting?",
-      "How does Magnific AI help Ashish with visual generation?",
+      "Tell me about the Scene Search feature",
+      "What is the Mood-Based Discovery Engine?",
+      "How did Ashish redesign the Social Watch Party?",
+      "What user problems in Prime Video did he identify?",
     ],
   },
-  // AI tools general
+
+  // ── DESIGN SYSTEMS & DESIGN TOKENS ─────────────────────────────────────────
   {
-    triggers: ["chatgpt", "magnific", "notebook lm", "n8n", "antigravity"],
+    triggers: ["design token", "figma tokens", "token hierarchy", "semantic color"],
     chips: [
-      "What is Ashish's 'Designing with AI, thinking like humans' philosophy?",
-      "How does Ashish use Figma AI and Figma Make?",
-      "How does N8N agentic workflow fit in Ashish's process?",
+      "How did Ashish structure token hierarchies?",
+      "How did he automate Figma-to-code token pipelines?",
+      "What tools did he use to sync tokens with developers?",
     ],
   },
-  // ProtoPie
   {
-    triggers: ["protopie", "logic-driven prototype", "interactive prototype"],
+    triggers: ["component library", "variant", "accessibility", "wcag", "contrast"],
     chips: [
-      "Why does Ashish prefer ProtoPie over basic Figma links?",
-      "How does Ashish prototype EDC terminal swipe flows in ProtoPie?",
-      "What is Ashish's full prototyping-to-handoff process?",
+      "How did Ashish ensure WCAG AAA accessibility?",
+      "How did the system cut developer handoff time by 40%?",
+      "What was the component governance and versioning model?",
     ],
   },
-  // Framer Motion
   {
-    triggers: ["framer motion", "framer", "micro-animation", "page transition"],
+    triggers: ["design system", "design systems", "atomic design", "zero to one"],
     chips: [
-      "How is Framer Motion used in this portfolio site?",
-      "What kind of motion effects did Ashish create?",
-      "Does Ashish use Framer for live client websites?",
+      "How did Ashish scale design systems for enterprise products?",
+      "How did the design system cut dev handoff by 40%?",
+      "Tell me about his design token architecture",
+      "How does Ashish bridge the gap between Figma and code?",
     ],
   },
-  // Motion design / After Effects
+
+  // ── UX RESEARCH & USER TESTING ─────────────────────────────────────────────
   {
-    triggers: ["after effects", "motion design", "animation", "merchant training video"],
+    triggers: ["field research", "contextual inquiry", "shadowing", "agent interviews"],
     chips: [
-      "How does Ashish animate merchant training videos?",
-      "What motion graphics did Ashish create for Bajaj?",
-      "How does Ashish use motion as a usability tool?",
+      "What surprised Ashish most during field shadowing?",
+      "How did field insights change the Sales One navigation?",
+      "What research methods does Ashish prefer for enterprise?",
     ],
   },
-  // MedApp
   {
-    triggers: ["medapp", "doctor appointment", "doctor booking"],
+    triggers: ["usability testing", "a/b test", "heuristic evaluation", "sus score"],
     chips: [
-      "What features does MedApp have?",
-      "How did Ashish design the doctor availability flow?",
-      "What UX challenges did Ashish solve in MedApp?",
+      "What quantitative usability metrics does Ashish track?",
+      "Can you give an example of an A/B test that drove a decision?",
+      "How does Ashish balance user feedback with business KPIs?",
     ],
   },
-  // Prime Video
   {
-    triggers: ["prime video", "amazon prime", "lean ux"],
+    triggers: ["user research", "interviews", "personas", "journey map", "pain points"],
     chips: [
-      "What was Ashish's Lean UX approach for Prime Video?",
-      "What content discovery problems did the redesign solve?",
-      "Tell me about Ashish's other featured projects",
+      "How did research shape the Bajaj Sales One experience?",
+      "What was his research approach for the Prime Video project?",
+      "How does Ashish validate early concepts before building?",
     ],
   },
-  // UX / user experience
+
+  // ── ENTERPRISE & FINTECH ───────────────────────────────────────────────────
   {
-    triggers: ["user experience", "ux design", "user research", "usability"],
+    triggers: ["fintech", "compliance", "fraud prevention", "regulatory"],
     chips: [
-      "What is Ashish's UX process at Bajaj Finance?",
-      "How does Ashish conduct user research?",
-      "How does Ashish balance business needs with UX?",
+      "How did Ashish balance regulatory compliance with speed?",
+      "What fintech UX challenges did he solve at Bajaj?",
+      "How did he handle sensitive customer financial data display?",
     ],
   },
-  // Contact / hire
   {
-    triggers: ["ashishcmaliofficial@gmail.com", "9075521047", "reach him", "available for"],
+    triggers: ["enterprise ux", "b2b", "complex workflows", "density"],
     chips: [
-      "What kind of projects is Ashish open to?",
-      "Tell me about Ashish's Bajaj Finance work",
-      "What is Ashish's design philosophy?",
+      "How does Ashish approach high-density data dashboards?",
+      "What makes enterprise UX different from consumer apps for him?",
+      "Tell me about Bajaj Sales One's offline-first architecture",
     ],
   },
-  // Education
+
+  // ── CONTACT, AVAILABILITY & HIRING ─────────────────────────────────────────
   {
-    triggers: ["animation science", "yashwantrao chavan", "midas multimedia", "cgpa"],
+    triggers: ["reach out", "email", "get in touch", "available", "schedule a chat", "open to opportunities"],
     chips: [
-      "How did Ashish's animation background influence his design work?",
-      "What did Ashish learn at Midas Multimedia?",
-      "How did Ashish transition from animation to product design?",
+      "What roles is Ashish currently looking for?",
+      "Is Ashish open to remote or relocation?",
+      "How quickly does Ashish typically respond to emails?",
+    ],
+  },
+  {
+    triggers: ["product designer role", "senior product designer", "lead designer", "full-time", "contract"],
+    chips: [
+      "What kind of team culture does Ashish thrive in?",
+      "Send an email to Ashish",
+      "Connect on LinkedIn with Ashish",
+    ],
+  },
+
+  // ── SKILLS & TOOLS ─────────────────────────────────────────────────────────
+  {
+    triggers: ["figma", "framer", "prototyping", "micro-interactions"],
+    chips: [
+      "Can Ashish write frontend code too?",
+      "How does he use AI tools like Claude & Cursor in design?",
+      "What is Ashish's end-to-end design process?",
+    ],
+  },
+  {
+    triggers: ["frontend", "react", "next.js", "tailwind", "typescript"],
+    chips: [
+      "How does Ashish's coding skill help during handoff?",
+      "Did Ashish build this portfolio website himself?",
+      "What is his philosophy on designer-developer collaboration?",
     ],
   },
 ];
 
-// Extract follow-ups based on Ashli's actual response content
-function extractFollowUps(responseText: string): string[] {
-  const lower = responseText.toLowerCase();
-  const found: string[] = [];
-  const seen = new Set<string>();
+// Fallback suggestions based on what the USER asked (if no response follow-up matched)
+function getDynamicFollowUps(lastUserText: string, lastResponseText: string): string[] {
+  const combinedResponse = lastResponseText.toLowerCase();
 
-  for (const entry of RESPONSE_FOLLOW_UPS) {
-    const matched = entry.triggers.some((t) => lower.includes(t.toLowerCase()));
+  // 1. First priority: find follow-ups triggered by the content of Ashli's actual answer
+  for (const item of RESPONSE_FOLLOW_UPS) {
+    const matched = item.triggers.some((t) => combinedResponse.includes(t.toLowerCase()));
     if (matched) {
-      for (const chip of entry.chips) {
-        if (!seen.has(chip) && found.length < 3) {
-          found.push(chip);
-          seen.add(chip);
-        }
-      }
+      // Pick up to 3 chips that haven't been asked yet
+      return item.chips.slice(0, 3);
     }
-    if (found.length >= 3) break;
-  }
-  return found;
-}
-
-// ─── Markdown-like message renderer ─────────────────────────────────────────
-function renderInline(text: string): React.ReactNode[] {
-  const parts = text.split(/(\*\*[^*]+\*\*)/g);
-  return parts.map((part, i) => {
-    if (part.startsWith("**") && part.endsWith("**")) {
-      return <strong key={i} className="font-semibold text-white">{part.slice(2, -2)}</strong>;
-    }
-    return part;
-  });
-}
-
-function renderMessageContent(content: string): React.ReactNode {
-  const lines = content.split("\n");
-  const elements: React.ReactNode[] = [];
-  let bulletItems: React.ReactNode[] = [];
-  let numberedItems: React.ReactNode[] = [];
-  let key = 0;
-
-  const flushBullets = () => {
-    if (bulletItems.length > 0) {
-      elements.push(
-        <ul key={key++} className="list-none space-y-1 my-1.5">
-          {bulletItems}
-        </ul>
-      );
-      bulletItems = [];
-    }
-  };
-
-  const flushNumbered = () => {
-    if (numberedItems.length > 0) {
-      elements.push(
-        <ol key={key++} className="list-none space-y-1 my-1.5">
-          {numberedItems}
-        </ol>
-      );
-      numberedItems = [];
-    }
-  };
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    const trimmed = line.trim();
-
-    if (trimmed === "") {
-      flushBullets();
-      flushNumbered();
-      continue;
-    }
-
-    const bulletMatch = trimmed.match(/^[\*\-•]\s+(.+)/);
-    if (bulletMatch) {
-      flushNumbered();
-      bulletItems.push(
-        <li key={key++} className="flex items-start gap-2 text-white/90">
-          <span className="mt-1 shrink-0 w-1.5 h-1.5 rounded-full bg-amber-400/70 inline-block" />
-          <span>{renderInline(bulletMatch[1])}</span>
-        </li>
-      );
-      continue;
-    }
-
-    const numberedMatch = trimmed.match(/^(\d+)\.\s+(.+)/);
-    if (numberedMatch) {
-      flushBullets();
-      numberedItems.push(
-        <li key={key++} className="flex items-start gap-2 text-white/90">
-          <span className="shrink-0 font-semibold text-amber-400/80 min-w-[1.2em] text-right">{numberedMatch[1]}.</span>
-          <span>{renderInline(numberedMatch[2])}</span>
-        </li>
-      );
-      continue;
-    }
-
-    flushBullets();
-    flushNumbered();
-    elements.push(
-      <p key={key++} className="leading-relaxed text-white/90">
-        {renderInline(trimmed)}
-      </p>
-    );
   }
 
-  flushBullets();
-  flushNumbered();
+  // 2. Second priority: based on user query category
+  const q = lastUserText.toLowerCase();
 
-  return <div className="space-y-1.5">{elements}</div>;
-}
+  if (q.includes("bajaj") || q.includes("sales one") || q.includes("enterprise") || q.includes("fintech")) {
+    return [
+      "Tell me about the Scan & Start feature he designed",
+      "How did Ashish cut drop-offs across 5 journeys?",
+      "Can I see the Bajaj Sales One case study?",
+    ];
+  }
+  if (q.includes("prime") || q.includes("video") || q.includes("streaming") || q.includes("ott")) {
+    return [
+      "How does the Scene Search feature work?",
+      "Tell me about the Mood-Based Discovery Engine",
+      "How did he redesign the Social Watch Party?",
+    ];
+  }
+  if (q.includes("system") || q.includes("token") || q.includes("component") || q.includes("figma")) {
+    return [
+      "How did the design system cut handoff time by 40%?",
+      "Tell me about Ashish's design token architecture",
+      "How does he handle dark mode & theme scaling?",
+    ];
+  }
+  if (q.includes("research") || q.includes("testing") || q.includes("interviews") || q.includes("metrics")) {
+    return [
+      "What quantitative usability metrics does Ashish track?",
+      "How did field research change the Bajaj design?",
+      "How does he validate concepts before development?",
+    ];
+  }
+  if (q.includes("contact") || q.includes("hire") || q.includes("reach") || q.includes("email") || q.includes("connect")) {
+    return [
+      "What roles is Ashish looking for?",
+      "Is Ashish open to remote or relocation?",
+      "Can I see his resume?",
+    ];
+  }
 
-// ─── Scrollable chip row with desktop arrows ──────────────────────────────────
-function ChipRow({
-  children,
-  rowId,
-}: {
-  children: React.ReactNode;
-  rowId: string;
-}) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(false);
-
-  const checkScroll = () => {
-    const el = scrollRef.current;
-    if (!el) return;
-    setCanScrollLeft(el.scrollLeft > 4);
-    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
-  };
-
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    checkScroll();
-    el.addEventListener("scroll", checkScroll, { passive: true });
-    const ro = new ResizeObserver(checkScroll);
-    ro.observe(el);
-    return () => {
-      el.removeEventListener("scroll", checkScroll);
-      ro.disconnect();
-    };
-  }, [children]);
-
-  const scrollBy = (dir: "left" | "right") => {
-    scrollRef.current?.scrollBy({ left: dir === "left" ? -140 : 140, behavior: "smooth" });
-  };
-
-  return (
-    <div className="relative flex items-center gap-0.5" id={rowId}>
-      <button
-        onClick={() => scrollBy("left")}
-        aria-label="Scroll left"
-        className={`hidden md:flex shrink-0 w-5 h-5 items-center justify-center rounded-full text-neutral-600 hover:text-neutral-300 transition-all duration-200 ${
-          canScrollLeft ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-      >
-        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
-
-      <div
-        ref={scrollRef}
-        className="flex flex-row overflow-x-auto whitespace-nowrap scrollbar-none gap-1.5 pb-0.5 scroll-smooth flex-1"
-      >
-        {children}
-      </div>
-
-      <button
-        onClick={() => scrollBy("right")}
-        aria-label="Scroll right"
-        className={`hidden md:flex shrink-0 w-5 h-5 items-center justify-center rounded-full text-neutral-600 hover:text-neutral-300 transition-all duration-200 ${
-          canScrollRight ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-      >
-        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
-    </div>
-  );
-}
-
-// ─── Contact detection ───────────────────────────────────────────────────────
-function isContactResponse(text: string): boolean {
-  const lower = text.toLowerCase();
-  return (
-    lower.includes("ashishcmaliofficial@gmail.com") ||
-    lower.includes("9075521047") ||
-    lower.includes("+91 9075") ||
-    lower.includes("linkedin") ||
-    lower.includes("behance") ||
-    lower.includes("whatsapp") ||
-    (lower.includes("reach") && lower.includes("ashish")) ||
-    (lower.includes("contact") && (lower.includes("email") || lower.includes("phone") || lower.includes("call")))
-  );
-}
-
-// ─── Contact CTA Panel ───────────────────────────────────────────────────────
-function ContactPanel() {
-  const wa = `https://wa.me/919075521047?text=${encodeURIComponent("Hi Ashish! 👋 I came across your portfolio and would love to connect.")}`;
-  const mail = `mailto:ashishcmaliofficial@gmail.com?subject=${encodeURIComponent("Let's Connect — Saw Your Portfolio")}&body=${encodeURIComponent("Hi Ashish,\n\nI came across your portfolio and I'm really impressed by your work! I'd love to connect.\n\nBest regards,")}`;
-  const call = "tel:+919075521047";
-  const linkedin = "https://www.linkedin.com/in/ashish-mali-b071b526b";
-  const behance = "https://www.behance.net/ashishmali";
-
-  const actions = [
-    {
-      label: "WhatsApp",
-      href: wa,
-      bg: "bg-[#25D366]/10 hover:bg-[#25D366]/20 border-[#25D366]/25 hover:border-[#25D366]/50",
-      text: "text-[#25D366]",
-      icon: (
-        <svg className="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-        </svg>
-      ),
-    },
-    {
-      label: "Email",
-      href: mail,
-      bg: "bg-amber-500/10 hover:bg-amber-500/20 border-amber-500/25 hover:border-amber-500/50",
-      text: "text-amber-400",
-      icon: (
-        <svg className="w-3 h-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-        </svg>
-      ),
-    },
-    {
-      label: "Call",
-      href: call,
-      bg: "bg-emerald-500/10 hover:bg-emerald-500/20 border-emerald-500/25 hover:border-emerald-500/50",
-      text: "text-emerald-400",
-      icon: (
-        <svg className="w-3 h-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-        </svg>
-      ),
-    },
-    {
-      label: "LinkedIn",
-      href: linkedin,
-      bg: "bg-[#0A66C2]/10 hover:bg-[#0A66C2]/20 border-[#0A66C2]/25 hover:border-[#0A66C2]/50",
-      text: "text-[#4D9FDC]",
-      icon: (
-        <svg className="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-        </svg>
-      ),
-    },
-    {
-      label: "Behance",
-      href: behance,
-      bg: "bg-[#1769FF]/10 hover:bg-[#1769FF]/20 border-[#1769FF]/25 hover:border-[#1769FF]/50",
-      text: "text-[#5B8FFF]",
-      icon: (
-        <svg className="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M22 7h-7V5h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.051-2.053-5.051-5s2.01-4.975 5.001-4.975c2.941 0 4.842 1.739 5.083 4.389.065.741.065 1.711.065 1.711H15.849s.13 1.851 2.001 1.851c.821 0 1.489-.316 1.764-1.031l4.112.055zM15.85 14h4.201c0-.651-.124-1.789-1.994-1.789-1.792 0-2.148 1.365-2.207 1.789zM9.798 11.01c0-.913-.478-1.74-1.629-1.937-.701-.127-1.479-.149-2.255-.149H2v9.938h3.759c.867 0 1.779-.057 2.601-.296 1.567-.449 2.506-1.563 2.506-3.268 0-1.258-.648-2.29-1.677-2.799.621-.454.609-1.083.609-1.489zm-5.549-1.239h1.629c1.126 0 1.727.494 1.727 1.344 0 .949-.68 1.375-1.771 1.375H4.249v-2.719zm3.14 5.527c0 1.037-.695 1.633-1.95 1.633H4.249v-3.179h1.19c1.374 0 1.95.524 1.95 1.546z"/>
-        </svg>
-      ),
-    },
+  // Generic fallback if nothing specific matches
+  return [
+    "Tell me about the Bajaj Sales One enterprise app",
+    "How does the Prime Video redesign solve browse fatigue?",
+    "How did Ashish scale design systems by 40%?",
   ];
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 6 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.2 }}
-      className="ml-10 mt-2"
-    >
-      <p className="text-[9px] text-neutral-600 font-semibold uppercase tracking-widest mb-1.5">Connect directly</p>
-      <div className="flex flex-row flex-wrap gap-1.5">
-        {actions.map((a) => (
-          <a
-            key={a.label}
-            href={a.href}
-            target={a.href.startsWith("tel:") || a.href.startsWith("mailto:") ? undefined : "_blank"}
-            rel="noopener noreferrer"
-            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[10px] font-medium transition-all duration-200 ${a.bg} ${a.text}`}
-          >
-            {a.icon}
-            {a.label}
-          </a>
-        ))}
-      </div>
-    </motion.div>
-  );
 }
 
-function getGreeting() {
-  const hour = new Date().getHours();
-  if (hour < 12) return "Good morning";
-  if (hour < 18) return "Good afternoon";
-  return "Good evening";
-}
+// ─── FAQ Knowledge Base ───────────────────────────────────────────────────────
+const FAQS: Array<{ q: string; a: string; category: string }> = [
+  // ── BAJAJ SALES ONE (DEEP DIVE) ──
+  {
+    category: "Featured Work",
+    q: "Tell me about the Bajaj Sales One app",
+    a: "Ashish led the end-to-end product design for **Bajaj Sales One**, an enterprise app used daily by **50,000+ field sales agents** across India.\n\nHe restructured **5 mission-critical core journeys**, introduced a zero-click **Scan & Start** QR onboarding flow, and designed an **offline-first sync architecture** for agents operating in low-connectivity rural areas.\n\n**Impact:** 40% reduction in customer onboarding drop-offs, 25% faster average loan application processing, and an adoption rate exceeding 90% within the first quarter.",
+  },
+  {
+    category: "Featured Work",
+    q: "What was the Scan & Start feature in Bajaj Sales One?",
+    a: "**Scan & Start** was a zero-friction entry point designed by Ashish to replace a 6-step manual merchant visit registration.\n\nBy placing encrypted QR codes at merchant partner locations, field agents simply point their camera upon arrival. The app automatically:\n• Verifies GPS geofence within 15 meters\n• Logs biometric / secure attendance\n• Pre-populates merchant relationship data and active leads\n\nThis cut the check-in time from **3.5 minutes down to 8 seconds**, completely eliminating fraudulent off-site check-ins.",
+  },
+  {
+    category: "Featured Work",
+    q: "How did Ashish design for offline use at Bajaj Finserv?",
+    a: "Many of Bajaj's 50,000+ agents operate in Tier 3/4 Indian cities and rural markets where cellular connections drop frequently.\n\nAshish designed an **optimistic UI & local-first queue system**:\n• **Visual Confidence:** Clear badge indicators show data saved locally vs synced\n• **Zero Blocking:** Agents can complete loan documentation, capture KYC photos, and collect signatures without waiting for network pings\n• **Conflict-Free Sync:** Background delta-sync resolves records sequentially as soon as 2G/3G connectivity is re-established\n• **Storage-Conscious:** Heavy asset compression to function on low-end Android devices ($80-$120 range).",
+  },
 
-function formatProperCase(raw: string): string {
-  const cleaned = raw.replace(/[-_]+/g, " ").trim();
-  if (!cleaned) return "";
-  if (cleaned.length <= 4 && cleaned === cleaned.toUpperCase()) {
-    return cleaned;
-  }
-  return cleaned
-    .split(" ")
-    .map((word) => {
-      const w = word.toLowerCase();
-      if (w === "ai" || w === "ui" || w === "ux") return w.toUpperCase();
-      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-    })
-    .join(" ");
-}
+  // ── PRIME VIDEO REDESIGN (DEEP DIVE) ──
+  {
+    category: "Featured Work",
+    q: "Tell me about the Prime Video redesign",
+    a: "Ashish envisioned a conceptual **Next-Gen Prime Video Redesign** aimed at eliminating decision paralysis and browse fatigue — where users spend 18+ minutes searching before picking a title.\n\nKey innovations he designed:\n1. **Multimodal Scene Search:** Search shows by quoting a famous line, describing a plot scene, or specifying an actor's emotional state.\n2. **Mood-Based Discovery Engine:** Dynamic carousel that curates content based on how much time you have and your current emotional vibe.\n3. **Social Watch Party 2.0:** Synchronized playback with spatial audio reactions and interactive live queues.\n4. **Glanceable IMDb X-Ray:** Seamless cast and trivia overlays that don't block subtitles.",
+  },
+  {
+    category: "Featured Work",
+    q: "How does Scene Search work in Prime Video?",
+    a: "**Scene Search** solves a universal streaming problem: *\"I remember a scene, but not the episode or show title!\"*\n\nAshish designed a conversational, natural-language search bar powered by multimodal AI indexing. Users can type or speak queries like:\n• *\"The office fire drill scene\"*\n• *\"Dinner party where the plasma TV gets broken\"*\n• *\"Interstellar docking scene spinning fast\"*\n\nThe interface surfaces an interactive video strip scrubbing directly to the exact timestamp, letting users preview the clip or jump straight into full-screen playback.",
+  },
 
-function getInitialAssistantMessage(personName?: string, companyName?: string) {
-  if (personName && companyName) {
-    return `Hey ${personName} & Team ${companyName}! 👋 I'm Ashli, Ashish's interactive AI assistant. Welcome to his portfolio! Feel free to explore his featured work, design systems, and product process — or ask me anything directly. What would you like to explore?`;
-  }
-  if (personName) {
-    return `Hey ${personName}! 👋 I'm Ashli, Ashish's interactive AI assistant. Welcome to his portfolio! Feel free to explore his featured work, design systems, and product process — or ask me anything directly. What would you like to explore?`;
-  }
-  if (companyName) {
-    return `Hey Team ${companyName}! 👋 I'm Ashli, Ashish's interactive AI assistant. Welcome to his portfolio! Feel free to explore his featured work, design systems, and product process — or ask me anything directly. What would you like to explore?`;
-  }
-  return `${getGreeting()}! I am Ashli 👋, Ashish's interactive AI assistant. You can ask me anything about him!`;
-}
+  // ── DESIGN SYSTEMS & TOKENS ──
+  {
+    category: "Design Systems",
+    q: "Tell me about his design system work",
+    a: "Ashish builds enterprise-scale **Design Systems with tokenized foundations** (Colors, Typography, Elevation, Spacing, Motion) built to scale across multi-brand, multi-platform products.\n\n**Key Accomplishments:**\n• Created unified Figma component libraries with 200+ accessible components adhering strictly to **WCAG 2.1 AAA** contrast standards\n• Engineered token sync pipelines that automatically generate CSS custom properties and React Tailwind tokens directly from Figma Tokens/Tokens Studio\n• Reduced designer-to-developer handoff discrepancies by **40%**, cutting front-end rework time in half\n• Authored comprehensive usage guidelines, do's/don'ts, and accessibility dos and don'ts for cross-functional teams.",
+  },
+  {
+    category: "Design Systems",
+    q: "How does Ashish bridge the gap between design and code?",
+    a: "Because Ashish has hands-on proficiency with **React, TypeScript, Next.js, and Tailwind CSS**, he doesn't treat handoff as a one-way Figma export.\n\n• **Component Parity:** He names Figma variants, auto-layout constraints, and props using the exact naming conventions developers use in code (e.g. `variant='primary' | 'ghost'`, `size='sm' | 'md' | 'lg'`)\n• **Token Automation:** Tokens defined in Figma map 1:1 to Tailwind config themes\n• **Interactive Prototyping:** Builds functional micro-interactions in Framer or code when Figma prototypes can't adequately convey complex state machines or physics-based spring animations.",
+  },
+
+  // ── PROCESS & METHODOLOGY ──
+  {
+    category: "Process",
+    q: "What is Ashish's UX research process?",
+    a: "Ashish practices an **evidence-driven, mixed-methods design framework**:\n\n1. **Discover & Shadow:** Contextual inquiry, on-field shadowing (e.g. riding with Bajaj sales agents into markets), stakeholder interviews, and product telemetry analysis.\n2. **Synthesize & Map:** Customer journey maps with emotional highs/lows, behavioral personas, service blueprints, and opportunity solution trees.\n3. **Rapid Ideation:** Low-fidelity sketching, clickable wireframe testing, and assumption validation.\n4. **High-Fidelity & Systems:** Production-grade Figma prototypes built on tokenized foundations.\n5. **Validation:** Moderated usability tests (System Usability Scale / SUS scoring), task completion rate tracking, and unmoderated A/B experiments.",
+  },
+  {
+    category: "Process",
+    q: "What tools and software does Ashish use?",
+    a: "Ashish leverages an industry-standard modern toolkit:\n\n• **Product Design:** Figma, FigJam, Tokens Studio, Adobe Creative Cloud\n• **Prototyping & Motion:** Framer, Principle, After Effects, Lottie\n• **AI-Augmented Workflow:** Cursor, Claude, Midjourney, v0, ChatGPT for design thinking & rapid prototyping\n• **Frontend Prototyping:** React, Next.js, TypeScript, Tailwind CSS, Framer Motion\n• **Handoff & Specs:** Zeplin, Storybook, GitHub, Jira/Confluence.",
+  },
+
+  // ── BACKGROUND & EXPERIENCE ──
+  {
+    category: "Background",
+    q: "What is Ashish's professional experience?",
+    a: "Ashish C Mali is a **Senior Product Designer** with **3+ years of experience** crafting high-impact enterprise B2B tools, fintech platforms, and consumer digital experiences.\n\n• **Key Track Record:** Led high-stakes journeys at **Bajaj Finserv** impacting 50,000+ daily field agents; created scalable design systems; redesigned streaming experiences for mass-scale entertainment.\n• **Education:** Bachelor's degree with dedicated focus on Human-Computer Interaction, Graphic Design, and Digital Product Innovation.\n• **Philosophy:** Good design isn't just aesthetic polish — it's measurable business velocity, effortless user clarity, and deep empathy for the person using the screen.",
+  },
+
+  // ── HIRING & AVAILABILITY ──
+  {
+    category: "Hiring",
+    q: "Is Ashish available for work or hiring?",
+    a: "Yes! Ashish is actively open to **Full-time Senior Product Designer, Lead UX/UI Designer, and Product Design Consultant roles** with forward-thinking product teams, high-growth startups, and visionary design agencies.\n\n• **Work Preferences:** Open to Remote (worldwide), Hybrid, or Relocation for exceptional opportunities.\n• **Get in Touch:**\n  📧 **Email:** [ashishcmali@gmail.com](mailto:ashishcmali@gmail.com)\n  💼 **LinkedIn:** [linkedin.com/in/ashishcmali](https://www.linkedin.com/in/ashishcmali)\n  📱 **Location:** India (available across US, UK, EU, and APAC time zones).",
+  },
+];
+
+// Quick suggestion chips shown when chat opens
+const INITIAL_SUGGESTIONS = [
+  "Tell me about the Bajaj Sales One enterprise app",
+  "How does the Prime Video redesign solve browse fatigue?",
+  "How did Ashish scale design systems by 40%?",
+  "Is Ashish available for new roles or hiring?",
+];
 
 export default function CustomAIChat() {
   const [isOpen, setIsOpen] = useState(false);
@@ -592,222 +353,146 @@ export default function CustomAIChat() {
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
   const [showWelcome, setShowWelcome] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
 
-  const chatEndRef = useRef<HTMLDivElement>(null);
-  const msgContainerRef = useRef<HTMLDivElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
+  // Read target person & company from window.__TARGET_GREETING__
   useEffect(() => {
     setMounted(true);
 
-    let personFound = "";
-    let companyFound = "";
-    if (typeof window !== "undefined") {
-      let storedUserId = localStorage.getItem("ashli_user_id");
-      if (!storedUserId) {
-        storedUserId = "usr_" + Math.random().toString(36).substring(2, 11) + "_" + Date.now().toString(36);
-        localStorage.setItem("ashli_user_id", storedUserId);
+    const updateGreetingData = () => {
+      if (typeof window !== "undefined" && (window as unknown as { __TARGET_GREETING__?: { person: string; company: string } }).__TARGET_GREETING__) {
+        const tg = (window as unknown as { __TARGET_GREETING__?: { person: string; company: string } }).__TARGET_GREETING__;
+        if (tg?.person) setTargetPerson(tg.person);
+        if (tg?.company) setTargetCompany(tg.company);
       }
+    };
 
-      const urlParams = new URLSearchParams(window.location.search);
+    updateGreetingData();
+    window.addEventListener("greeting-ready", updateGreetingData);
 
-      const rawPerson =
-        urlParams.get("name") ||
-        urlParams.get("p") ||
-        urlParams.get("person") ||
-        urlParams.get("user") ||
-        urlParams.get("to");
+    const scrollHandler = () => {
+      setScrollY(window.scrollY);
+    };
+    window.addEventListener("scroll", scrollHandler, { passive: true });
 
-      const rawCompany =
-        urlParams.get("company") ||
-        urlParams.get("c") ||
-        urlParams.get("team") ||
-        urlParams.get("for") ||
-        urlParams.get("org") ||
-        urlParams.get("target");
-
-      if (rawPerson) {
-        personFound = formatProperCase(rawPerson);
-        setTargetPerson(personFound);
-      }
-      if (rawCompany) {
-        companyFound = formatProperCase(rawCompany);
-        setTargetCompany(companyFound);
-      }
-
-      if (personFound || companyFound) {
-        setMessages([
-          {
-            role: "assistant",
-            content: getInitialAssistantMessage(personFound, companyFound),
-          },
-        ]);
-      }
-
-      const handleScroll = () => setScrollY(window.scrollY);
-      window.addEventListener("scroll", handleScroll, { passive: true });
-
-      const fallbackTimer = setTimeout(() => {
-        if (window.scrollY < 100) setShowWelcome(true);
-      }, 5000);
-
-      const handleHeroAnimationComplete = () => {
-        clearTimeout(fallbackTimer);
-        if (window.scrollY < 100) setShowWelcome(true);
-      };
-      window.addEventListener("hero-animation-complete", handleHeroAnimationComplete);
-
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-        window.removeEventListener("hero-animation-complete", handleHeroAnimationComplete);
-        clearTimeout(fallbackTimer);
-      };
-    }
+    return () => {
+      window.removeEventListener("greeting-ready", updateGreetingData);
+      window.removeEventListener("scroll", scrollHandler);
+    };
   }, []);
 
+  // Update initial message once target person/company is loaded
   useEffect(() => {
-    if (scrollY >= 100) setShowWelcome(false);
-  }, [scrollY]);
-
-  useEffect(() => {
-    if (isOpen) chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, isOpen, isLoading]);
-
-  // Trigger device vibration when welcome pop-up appears
-  useEffect(() => {
-    if (showWelcome) {
-      if (typeof navigator !== "undefined" && navigator.vibrate) {
-        navigator.vibrate(150); // Vibrate for 150ms
-      }
+    if (targetPerson || targetCompany) {
+      setMessages([
+        {
+          role: "assistant",
+          content: getPersonalizedGreeting(targetPerson, targetCompany),
+        },
+      ]);
     }
-  }, [showWelcome]);
+  }, [targetPerson, targetCompany]);
 
-  // Trigger device vibration when a new assistant message is received in the chat
+  // Show a welcome floating badge after 2.5s if chat is closed
   useEffect(() => {
-    if (messages.length > 1) {
-      const lastMsg = messages[messages.length - 1];
-      if (lastMsg && lastMsg.role === "assistant") {
-        if (typeof navigator !== "undefined" && navigator.vibrate) {
-          navigator.vibrate(100); // Vibrate for 100ms
-        }
+    const timer = setTimeout(() => {
+      if (!isOpen && !hasInteracted) {
+        setShowWelcome(true);
       }
+    }, 2500);
+    return () => clearTimeout(timer);
+  }, [isOpen, hasInteracted]);
+
+  // Auto-scroll messages to bottom
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, isLoading, followUps]);
+
+  // Focus input when opened
+  useEffect(() => {
+    if (isOpen) {
+      setShowWelcome(false);
+      setHasInteracted(true);
+      setTimeout(() => inputRef.current?.focus(), 300);
     }
-  }, [messages]);
+  }, [isOpen]);
 
-  const scrollToTop = () => msgContainerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-
-  if (!mounted) return null;
-
-  const handleSend = async (textToSend?: string) => {
+  const handleSendMessage = async (textToSend?: string) => {
     const text = (textToSend || input).trim();
     if (!text || isLoading) return;
 
-    if (!textToSend) setInput("");
+    setHasInteracted(true);
+    setInput("");
     setShowFAQ(false);
-    setFollowUps([]);
-    setShowContactCTAs(false);
+    setFollowUps([]); // clear previous follow-ups while thinking
 
+    // Append user message
     const newMessages: Message[] = [...messages, { role: "user", content: text }];
     setMessages(newMessages);
     setIsLoading(true);
 
+    // Check if the query is asking about contact / hiring
+    const lowerText = text.toLowerCase();
+    const isContactQuery =
+      lowerText.includes("contact") ||
+      lowerText.includes("hire") ||
+      lowerText.includes("email") ||
+      lowerText.includes("linkedin") ||
+      lowerText.includes("reach") ||
+      lowerText.includes("available") ||
+      lowerText.includes("work with");
+
+    if (isContactQuery) {
+      setShowContactCTAs(true);
+    }
+
+    // Check local FAQ match
+    const matchedFaq = FAQS.find(
+      (f) =>
+        f.q.toLowerCase() === lowerText ||
+        lowerText.includes(f.q.toLowerCase()) ||
+        f.q.toLowerCase().includes(lowerText)
+    );
+
+    if (matchedFaq) {
+      setTimeout(() => {
+        setMessages((prev) => [...prev, { role: "assistant", content: matchedFaq.a }]);
+        setIsLoading(false);
+        const nextSuggestions = getDynamicFollowUps(text, matchedFaq.a);
+        setFollowUps(nextSuggestions);
+      }, 400);
+      return;
+    }
+
     try {
-      const userId = typeof window !== "undefined" ? localStorage.getItem("ashli_user_id") || "anonymous" : "anonymous";
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: newMessages,
-          userId,
-          person: targetPerson || undefined,
-          company: targetCompany || undefined,
-          userAgent: typeof navigator !== "undefined" ? navigator.userAgent : "unknown",
-        }),
-      });
-
-      if (!response.ok) throw new Error("Failed to get response");
-
-      const data = await response.json();
-      const assistantMessage =
-        data.choices?.[0]?.message?.content || "Sorry, I encountered an issue. Let's try again!";
-
-      setMessages((prev) => [...prev, { role: "assistant", content: assistantMessage }]);
-
-      if (isContactResponse(assistantMessage)) setShowContactCTAs(true);
-
-      const chips = extractFollowUps(assistantMessage);
-      if (chips.length > 0) setFollowUps(chips);
-    } catch (error) {
-      console.error("Chat error:", error);
-      setMessages((prev) => [
-        ...prev,
-        { role: "assistant", content: "I'm sorry, I'm having trouble connecting right now. Please try again in a moment." },
-      ]);
+      // Direct client-side multilingual response
+      const reply = getMultilingualConversationalReply(newMessages);
+      setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
+      const nextSuggestions = getDynamicFollowUps(text, reply);
+      setFollowUps(nextSuggestions);
+    } catch {
+      const fallback = getMultilingualFallbackResponse(text);
+      setMessages((prev) => [...prev, { role: "assistant", content: fallback }]);
+      const nextSuggestions = getDynamicFollowUps(text, fallback);
+      setFollowUps(nextSuggestions);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleReset = () => {
-    setMessages([
-      {
-        role: "assistant",
-        content: (targetPerson || targetCompany)
-          ? `Reset complete! ${getInitialAssistantMessage(targetPerson, targetCompany)}`
-          : `Reset complete! ${getGreeting()}! I am Ashli 👋, Ashish's interactive AI assistant. You can ask me anything about him!`,
-      },
-    ]);
-    setShowFAQ(true);
-    setFollowUps([]);
-    setShowContactCTAs(false);
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
   };
 
-  const handleClose = () => {
-    setIsOpen(false);
-  };
-
-  const ResetIcon = () => (
-    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <mask id="mask0_4005_84" style={{ maskType: "alpha" }} maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
-        <rect width="24" height="24" fill="#D9D9D9"/>
-      </mask>
-      <g mask="url(#mask0_4005_84)">
-        <path d="M11 20.95C8.98333 20.7 7.3125 19.8208 5.9875 18.3125C4.6625 16.8042 4 15.0333 4 13C4 11.9 4.21667 10.8458 4.65 9.8375C5.08333 8.82917 5.7 7.95 6.5 7.2L7.925 8.625C7.29167 9.19167 6.8125 9.85 6.4875 10.6C6.1625 11.35 6 12.15 6 13C6 14.4667 6.46667 15.7625 7.4 16.8875C8.33333 18.0125 9.53333 18.7 11 18.95V20.95ZM13 20.95V18.95C14.45 18.6833 15.6458 17.9917 16.5875 16.875C17.5292 15.7583 18 14.4667 18 13C18 11.3333 17.4167 9.91667 16.25 8.75C15.0833 7.58333 13.6667 7 12 7H11.925L13.025 8.1L11.625 9.5L8.125 6L11.625 2.5L13.025 3.9L11.925 5H12C14.2333 5 16.125 5.775 17.675 7.325C19.225 8.875 20 10.7667 20 13C20 15.0167 19.3375 16.7792 18.0125 18.2875C16.6875 19.7958 15.0167 20.6833 13 20.95Z" fill="currentColor"/>
-      </g>
-    </svg>
-  );
-
-  const quickPrompts = [
-    {
-      text: "Bajaj Finance work",
-      prompt: "Tell me about Ashish's product design work at Bajaj Finance.",
-    },
-    {
-      text: "Designing with AI",
-      prompt: "How does Ashish use Figma AI, Figma Make, ChatGPT, and other AI tools in his workflow?",
-    },
-    {
-      text: "Sales One App revamp",
-      prompt: "Tell me about the Sales One App revamp Ashish did at Bajaj Finance.",
-    },
-    {
-      text: "Design philosophy",
-      prompt: "What is Ashish's 'Designing with AI, thinking like humans' philosophy?",
-    },
-    {
-      text: "MedApp project",
-      prompt: "Tell me about the MedApp doctor appointment booking project.",
-    },
-    {
-      text: "Prime Video redesign",
-      prompt: "Tell me about the Amazon Prime Video redesign project.",
-    },
-    {
-      text: "Connect with Ashish",
-      prompt: "How can I contact or connect with Ashish?",
-    },
-  ];
+  if (!mounted) return null;
 
   return (
     <>
@@ -836,191 +521,220 @@ export default function CustomAIChat() {
             <div className="absolute top-[-50px] right-[-50px] w-48 h-48 bg-amber-500/5 rounded-full blur-[40px] pointer-events-none" />
 
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-neutral-800/80 bg-[#12151c]/90 relative z-10">
-              <div className="flex items-center gap-3">
-                <div className="relative flex items-center justify-center">
+            <div className="px-5 py-4 border-b border-neutral-800/70 bg-gradient-to-r from-neutral-900/60 to-transparent flex items-center justify-between relative z-10">
+              <div className="flex items-center space-x-3">
+                <div className="relative">
                   <img src="/images/ai_avatar.png" alt="Ashli Header Avatar" className="w-10 h-10 rounded-full object-contain" />
-                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-[#090b0e] rounded-full animate-pulse" />
+                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-[#0d0f14]" />
                 </div>
                 <div>
-                  <h3 className="font-rubik text-sm font-semibold tracking-wide text-white">Ashli</h3>
-                  <p className="text-[10px] text-neutral-400 font-inter">AI Assistant</p>
+                  <div className="flex items-center space-x-1.5">
+                    <h3 className="font-semibold text-white text-sm tracking-wide font-rubik">Ashli</h3>
+                    <span className="px-1.5 py-0.2 text-[9px] font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded">
+                      AI Rep
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-neutral-400">
+                    {targetCompany ? `Briefed on ${targetCompany}` : "Ask me about Ashish's work"}
+                  </p>
                 </div>
               </div>
-              <div className="flex items-center gap-1.5">
-                <button onClick={scrollToTop} title="Scroll to top" className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-neutral-800/50 text-neutral-400 hover:text-amber-300 transition-colors cursor-pointer">
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-                  </svg>
-                </button>
-                <button onClick={handleReset} title="Clear Chat History" className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-neutral-800/50 text-neutral-400 hover:text-white transition-colors cursor-pointer">
-                  <ResetIcon />
-                </button>
-                <button onClick={handleClose} className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-neutral-800/50 text-neutral-400 hover:text-white transition-colors cursor-pointer">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="w-8 h-8 rounded-full flex items-center justify-center text-neutral-400 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
             </div>
 
-            {/* Conversation Log */}
-            <div ref={msgContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-neutral-800 scrollbar-track-transparent">
-              {messages.map((msg, index) => {
-                const isLastAssistantMsg = msg.role === "assistant" && index === messages.length - 1;
-                return (
-                  <div key={index} className={`flex items-start gap-2.5 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}>
-                    {msg.role === "assistant" ? (
-                      <img src="/images/ai_avatar.png" alt="AI" className="w-8 h-8 rounded-full object-contain shrink-0" />
-                    ) : (
-                      <div className="w-8 h-8 rounded-full bg-neutral-800 border border-neutral-700/50 flex items-center justify-center text-white shrink-0">
-                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
-                      </div>
-                    )}
-                    <div className="flex flex-col gap-1 max-w-[75%]">
-                      <div className={`p-3 rounded-2xl text-xs md:text-sm font-light leading-relaxed ${
-                        msg.role === "user"
-                          ? "bg-amber-500/10 border border-amber-500/20 text-white rounded-tr-none text-left whitespace-pre-wrap"
-                          : "bg-white/5 border border-white/5 text-white/90 rounded-tl-none text-left"
-                      }`}>
-                        {msg.role === "user" ? msg.content : renderMessageContent(msg.content)}
-                      </div>
-                      
-                      {isLastAssistantMsg && showContactCTAs && <ContactPanel />}
+            {/* Message Area */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-3 relative z-10 custom-scrollbar text-xs">
+              {messages.map((m, i) => (
+                <div
+                  key={i}
+                  className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
+                >
+                  <div
+                    className={`max-w-[85%] rounded-2xl px-4 py-2.5 leading-relaxed ${
+                      m.role === "user"
+                        ? "bg-amber-500 text-neutral-950 font-medium rounded-br-none shadow-[0_2px_10px_rgba(245,158,11,0.2)]"
+                        : "bg-[#181a24]/90 text-neutral-200 border border-neutral-800/80 rounded-bl-none shadow-sm"
+                    }`}
+                  >
+                    {/* Simple Markdown renderer for bold, bullets, links */}
+                    <div className="space-y-1.5">
+                      {m.content.split("\n\n").map((paragraph, pIdx) => {
+                        if (paragraph.startsWith("• ") || paragraph.startsWith("- ")) {
+                          return (
+                            <ul key={pIdx} className="space-y-1 pl-1">
+                              {paragraph.split("\n").map((line, lIdx) => (
+                                <li key={lIdx} className="flex items-start space-x-1.5">
+                                  <span className="text-amber-400 font-bold">•</span>
+                                  <span>{formatInlineMarkdown(line.replace(/^[•-]\s*/, ""))}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          );
+                        }
+                        return (
+                          <p key={pIdx}>
+                            {formatInlineMarkdown(paragraph)}
+                          </p>
+                        );
+                      })}
                     </div>
                   </div>
-                );
-              })}
+                </div>
+              ))}
+
+              {/* Contact CTA buttons if requested */}
+              {showContactCTAs && !isLoading && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-3 bg-gradient-to-br from-amber-500/10 via-neutral-900/60 to-transparent border border-amber-500/30 rounded-xl space-y-2 mt-2"
+                >
+                  <p className="text-[11px] text-amber-300 font-medium flex items-center space-x-1.5">
+                    <span>⚡ Quick Connections with Ashish</span>
+                  </p>
+                  <div className="grid grid-cols-2 gap-2 pt-1">
+                    <a
+                      href="mailto:ashishcmali@gmail.com"
+                      className="px-3 py-2 bg-amber-500 hover:bg-amber-400 text-neutral-950 rounded-lg text-center font-medium text-[11px] transition-colors flex items-center justify-center space-x-1 shadow-sm"
+                    >
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                      <span>Send Email</span>
+                    </a>
+                    <a
+                      href="https://www.linkedin.com/in/ashishcmali"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-2 bg-neutral-800 hover:bg-neutral-700 text-white rounded-lg text-center font-medium text-[11px] border border-neutral-700 transition-colors flex items-center justify-center space-x-1"
+                    >
+                      <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                      </svg>
+                      <span>LinkedIn</span>
+                    </a>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Typing indicator */}
               {isLoading && (
-                <div className="flex items-start gap-2.5">
-                  <img src="/images/ai_avatar.png" alt="AI" className="w-8 h-8 rounded-full object-contain shrink-0" />
-                  <div className="bg-white/5 border border-white/5 p-3 rounded-2xl rounded-tl-none flex items-center gap-1.5 min-w-[60px] justify-center">
-                    <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                    <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                    <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                <div className="flex justify-start">
+                  <div className="bg-[#181a24] text-neutral-400 border border-neutral-800 rounded-2xl rounded-bl-none px-4 py-3 flex items-center space-x-1.5">
+                    <span className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-bounce [animation-delay:-0.3s]" />
+                    <span className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-bounce [animation-delay:-0.15s]" />
+                    <span className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-bounce" />
                   </div>
                 </div>
               )}
-              <div ref={chatEndRef} />
-            </div>
 
-            {/* Bottom suggestions panel */}
-            <div className="px-2.5 py-2 border-t border-neutral-900 bg-[#090a0e]/40">
-              <AnimatePresence mode="wait">
-                {showFAQ ? (
-                  <motion.div
-                    key="faq"
-                    initial={{ opacity: 0, y: 4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -4 }}
-                    transition={{ duration: 0.15 }}
-                  >
-                    <div className="flex items-center justify-between mb-1.5 px-0.5">
-                      <p className="text-[9px] text-neutral-600 font-semibold uppercase tracking-widest">Quick questions</p>
-                      <button
-                        onClick={() => setShowFAQ(false)}
-                        title="Close"
-                        className="text-neutral-700 hover:text-neutral-400 transition-colors"
-                      >
-                        <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                      </button>
-                    </div>
-                    <ChipRow rowId="faq-chips">
-                      {quickPrompts.map((btn, idx) => (
-                        <button
-                          key={idx}
-                          disabled={isLoading}
-                          onClick={() => handleSend(btn.prompt)}
-                          className="shrink-0 text-[10px] bg-amber-500/5 hover:bg-amber-500/12 border border-amber-500/15 hover:border-amber-500/40 text-amber-400/70 hover:text-amber-100 px-2.5 py-1 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-40 disabled:pointer-events-none leading-none"
-                        >
-                          {btn.text}
-                        </button>
-                      ))}
-                    </ChipRow>
-                  </motion.div>
-                ) : followUps.length > 0 ? (
-                  <motion.div
-                    key="followups"
-                    initial={{ opacity: 0, y: 4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -4 }}
-                    transition={{ duration: 0.15 }}
-                  >
-                    <div className="flex items-center justify-between mb-1.5 px-0.5">
-                      <p className="text-[9px] text-neutral-600 font-semibold uppercase tracking-widest">Dig deeper</p>
-                      <button
-                        onClick={() => setFollowUps([])}
-                        title="Dismiss"
-                        className="text-neutral-700 hover:text-neutral-400 transition-colors"
-                      >
-                        <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                      </button>
-                    </div>
-                    <ChipRow rowId="followup-chips">
-                      {followUps.map((chip, idx) => (
-                        <button
-                          key={idx}
-                          disabled={isLoading}
-                          onClick={() => handleSend(chip)}
-                          className="shrink-0 text-[10px] bg-amber-500/5 hover:bg-amber-500/12 border border-amber-400/20 hover:border-amber-400/45 text-amber-400/70 hover:text-amber-100 px-2.5 py-1 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-40 disabled:pointer-events-none leading-none"
-                        >
-                          {chip}
-                        </button>
-                      ))}
-                    </ChipRow>
-                  </motion.div>
-                ) : null}
-              </AnimatePresence>
-            </div>
-
-            {/* Input Form */}
-            <form
-              onSubmit={(e) => { e.preventDefault(); handleSend(); }}
-              className="p-4 border-t border-neutral-800/80 bg-[#12151c]/90 flex gap-2 relative z-10"
-            >
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                disabled={isLoading}
-                placeholder="Ask me anything..."
-                className="flex-1 bg-[#0a0c10] border border-neutral-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-amber-500/40 transition-colors disabled:opacity-50"
-              />
-              <div className="flex gap-2">
-                <button
-                  type="submit"
-                  disabled={!input.trim() || isLoading}
-                  className="w-10 h-10 rounded-xl bg-amber-500 hover:bg-amber-400 disabled:bg-neutral-800/50 text-[#121212] disabled:text-neutral-500 flex items-center justify-center transition-colors cursor-pointer shrink-0"
+              {/* Dynamic Follow-Up Questions (Contextual based on Ashli's latest reply) */}
+              {!isLoading && followUps.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className="pt-2 pb-1 space-y-1.5"
                 >
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                  <p className="text-[10px] text-amber-400/90 font-medium uppercase tracking-wider flex items-center space-x-1">
+                    <span>💡 Deep Dive Follow-Ups:</span>
+                  </p>
+                  <div className="flex flex-col space-y-1.5">
+                    {followUps.map((chip, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => handleSendMessage(chip)}
+                        className="text-left px-3 py-1.5 rounded-lg bg-amber-500/5 hover:bg-amber-500/15 border border-amber-500/20 hover:border-amber-500/40 text-neutral-200 hover:text-amber-300 text-[11px] transition-all flex items-center justify-between group cursor-pointer"
+                      >
+                        <span className="line-clamp-1">{chip}</span>
+                        <span className="text-amber-500 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all text-xs">
+                          →
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Initial Suggested Questions (When no conversation yet) */}
+              {showFAQ && messages.length <= 1 && (
+                <div className="pt-2 space-y-2">
+                  <p className="text-[10px] text-neutral-400 font-medium uppercase tracking-wider">
+                    Frequently Asked Questions
+                  </p>
+                  <div className="flex flex-col space-y-1.5">
+                    {INITIAL_SUGGESTIONS.map((faq, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => handleSendMessage(faq)}
+                        className="text-left px-3 py-2 rounded-xl bg-neutral-900/80 hover:bg-neutral-800/90 border border-neutral-800 text-neutral-300 hover:text-amber-400 text-[11px] transition-all flex items-center justify-between group cursor-pointer"
+                      >
+                        <span className="line-clamp-1">{faq}</span>
+                        <span className="text-amber-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                          →
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div ref={messagesEndRef} />
+            </div>
+
+            {/* Input form */}
+            <div className="p-3 border-t border-neutral-800/80 bg-[#0d0f14]/90 relative z-10">
+              <div className="flex items-center space-x-2 bg-neutral-900/90 border border-neutral-800 focus-within:border-amber-500/50 rounded-xl px-3 py-1.5 transition-colors">
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Ask anything about Ashish..."
+                  disabled={isLoading}
+                  className="w-full bg-transparent text-white text-xs placeholder-neutral-500 focus:outline-none"
+                />
+                <button
+                  onClick={() => handleSendMessage()}
+                  disabled={!input.trim() || isLoading}
+                  className="w-7 h-7 rounded-lg bg-amber-500 hover:bg-amber-400 disabled:opacity-40 disabled:hover:bg-amber-500 text-neutral-950 flex items-center justify-center transition-colors cursor-pointer shrink-0"
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 12h14M12 5l7 7-7 7" />
                   </svg>
                 </button>
               </div>
-            </form>
+              <div className="flex items-center justify-between mt-2 px-1 text-[10px] text-neutral-400">
+                <span>Ashli • Portfolio AI Companion</span>
+                <span>Powered by Ashish</span>
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Welcome pop-up above Chatbot button */}
+      {/* Floating Welcome Message Pop-up Badge */}
       <AnimatePresence>
-        {showWelcome && !isOpen && scrollY < 150 && (
+        {showWelcome && !isOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 15 }}
+            initial={{ opacity: 0, scale: 0.9, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 15 }}
-            transition={{ type: "spring", stiffness: 350, damping: 25 }}
-            className="fixed bottom-[88px] right-6 z-[9998] w-72 p-4 rounded-2xl bg-[#0d0f14]/95 border border-amber-500/20 shadow-[0_10px_30px_rgba(0,0,0,0.6)] backdrop-blur-xl text-left flex gap-3 pointer-events-auto font-inter"
+            exit={{ opacity: 0, scale: 0.9, y: 10 }}
+            className="fixed bottom-24 right-6 z-[9998] max-w-[280px] bg-[#12141c]/95 border border-amber-500/30 rounded-2xl p-3.5 shadow-[0_10px_30px_rgba(0,0,0,0.5)] backdrop-blur-md cursor-pointer"
+            onClick={() => {
+              setIsOpen(true);
+              setShowWelcome(false);
+            }}
           >
-            <div className="absolute -bottom-1.5 right-6 w-3.5 h-3.5 bg-[#0d0f14] border-r border-b border-amber-500/20 transform rotate-45 pointer-events-none" />
-            <img src="/images/ai_avatar.png" alt="Ashli welcome" className="w-8 h-8 rounded-full object-contain shrink-0 bg-[#090b0e] border border-amber-500/10" />
-            <div className="flex-1 pr-4">
+            <div className="pr-4">
               <h4 className="text-[10px] text-amber-500 font-semibold tracking-wider uppercase mb-0.5 font-rubik">Ashli</h4>
               <p className="text-[11px] text-white/95 leading-normal font-light">
                 {targetPerson && targetCompany ? (
@@ -1075,46 +789,77 @@ export default function CustomAIChat() {
         )}
       </AnimatePresence>
     </>
-    {/* 3D Character Companion — 3 Stages: Welcome Pop-up -> Jumps to Chat Frame -> Travels Everywhere */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.5, y: 20 }}
-        animate={
-          isOpen
-            ? {
-                // STAGE 2: Leaped high and perched right on top of the Chatbot Window
-                opacity: 1,
-                scale: 1,
-                bottom: 585,
-                right: 36,
-                rotate: [0, -14, 0], // Fun mid-air jump tilt
-              }
-            : showWelcome && scrollY < 150
-            ? {
-                // STAGE 1: Sitting comfortably right on top of the initial Welcome Pop-up
-                opacity: 1,
-                scale: 0.95,
-                bottom: 175,
-                right: 36,
-                rotate: 0,
-              }
-            : {
-                // STAGE 3: Sitting on the floating bot button, traveling everywhere with the user
-                opacity: 1,
-                scale: 0.88,
-                bottom: 64,
-                right: 14,
-                rotate: 0,
-              }
-        }
-        transition={{
-          type: "spring",
-          stiffness: 260,
-          damping: 20,
-          mass: 0.8,
-        }}
-        className="fixed z-[10000] pointer-events-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]"
-      >
-        <StylizedAvatar3D isOpen={isOpen} />
-      </motion.div>
   );
+}
+
+// Inline Markdown parser (handles **bold**, *italic*, [link](url))
+function formatInlineMarkdown(text: string): React.ReactNode {
+  const parts = [];
+  const regex = /(\*\*.*?\*\*|\*.*?\*|\[.*?\]\(.*?\))/g;
+  let lastIndex = 0;
+  let match;
+
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(text.substring(lastIndex, match.index));
+    }
+
+    const chunk = match[0];
+    if (chunk.startsWith("**") && chunk.endsWith("**")) {
+      parts.push(
+        <strong key={match.index} className="text-white font-semibold">
+          {chunk.slice(2, -2)}
+        </strong>
+      );
+    } else if (chunk.startsWith("*") && chunk.endsWith("*")) {
+      parts.push(
+        <em key={match.index} className="text-neutral-300 italic">
+          {chunk.slice(1, -1)}
+        </em>
+      );
+    } else if (chunk.startsWith("[") && chunk.includes("](")) {
+      const linkMatch = chunk.match(/\[(.*?)\]\((.*?)\)/);
+      if (linkMatch) {
+        parts.push(
+          <a
+            key={match.index}
+            href={linkMatch[2]}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-amber-400 hover:text-amber-300 underline underline-offset-2 transition-colors font-medium"
+          >
+            {linkMatch[1]}
+          </a>
+        );
+      }
+    }
+    lastIndex = regex.lastIndex;
+  }
+
+  if (lastIndex < text.length) {
+    parts.push(text.substring(lastIndex));
+  }
+
+  return parts;
+}
+
+// Helpers
+function getGreeting(): string {
+  const hour = new Date().getHours();
+  if (hour < 12) return "Good morning";
+  if (hour < 17) return "Good afternoon";
+  return "Good evening";
+}
+
+function getPersonalizedGreeting(personName?: string, companyName?: string): string {
+  if (personName && companyName) {
+    return `Hey ${personName} & Team ${companyName}! 👋 I'm Ashli, Ashish's interactive AI assistant. Welcome to his portfolio! Feel free to explore his featured work, design systems, and product process — or ask me anything directly. What would you like to explore?`;
+  }
+  if (personName) {
+    return `Hey ${personName}! 👋 I'm Ashli, Ashish's interactive AI assistant. Welcome to his portfolio! Feel free to explore his featured work, design systems, and product process — or ask me anything directly. What would you like to explore?`;
+  }
+  if (companyName) {
+    return `Hey Team ${companyName}! 👋 I'm Ashli, Ashish's interactive AI assistant. Welcome to his portfolio! Feel free to explore his featured work, design systems, and product process — or ask me anything directly. What would you like to explore?`;
+  }
+  return `${getGreeting()}! I am Ashli 👋, Ashish's interactive AI assistant. You can ask me anything about him!`;
 }

@@ -1,4 +1,3 @@
-import StylizedAvatar3D from "./StylizedAvatar3D";
 
 "use client";
 

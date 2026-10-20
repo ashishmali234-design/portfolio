@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Rubik, Inter } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
 import CustomAIChat from "../components/CustomAIChat";
 import VisitorTracker from "../components/VisitorTracker";
@@ -49,7 +48,7 @@ export const metadata: Metadata = {
     "Prime Video Redesign",
     "Best UI UX Designer Portfolio",
     "Ashish Mali Pune",
-    "Ashish C Mali Designer"
+    "Ashish C Mali Designer",
   ],
   authors: [{ name: "Ashish Mali (Ashish C Mali)", url: "https://ashishmali.vercel.app" }],
   creator: "Ashish Mali (Ashish C Mali)",
@@ -58,9 +57,7 @@ export const metadata: Metadata = {
     canonical: "https://ashishmali.vercel.app/",
   },
   icons: {
-    icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
-    ],
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
     shortcut: "/favicon.svg",
     apple: "/favicon.svg",
   },
@@ -127,7 +124,7 @@ const jsonLdSchema = {
         "Ashish Mali",
         "Ashish C Mali Portfolio",
         "Ashish Mali Portfolio",
-        "Ashish"
+        "Ashish",
       ],
       description: "Official portfolio of Ashish Mali (Ashish C Mali) – Product Designer & UI/UX Specialist.",
       publisher: {
@@ -160,7 +157,7 @@ const jsonLdSchema = {
         "Ashish C. Mali",
         "Ashish Mali UX",
         "Ashish Mali Designer",
-        "Ashish"
+        "Ashish",
       ],
       jobTitle: "Product Designer & UI/UX Designer",
       worksFor: {
@@ -307,7 +304,6 @@ export default function RootLayout({
         {children}
         <VisitorTracker />
         <CustomAIChat />
-        <Analytics />
       </body>
     </html>
   );

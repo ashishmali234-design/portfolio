@@ -200,7 +200,7 @@ void main(){
     P_HEAT   = prog(VS, FS_HEAT, ['uPrev', 'uView', 'uC', 'uV', 'dt', 'uT', 'uOn', 'uR', 'uSpin', 'uEdge', 'uCorner', 'uRect']);
     P_RENDER = prog(VS, FS_RENDER, ['uHeat', 'uView', 'uC', 'uR', 'uDark', 'uDpr', 'uGlass', 'uRect', 'uCorner']);
     PE = prog(VSE, FSE, ['uView', 'uDpr', 'uDark']);
-  } catch (e) { console.warn('[fire-cursor] disabled:', e.message); return noop; }
+  } catch (e) { return noop; }
 
   document.body.appendChild(canvas);
   let style = null;
@@ -212,7 +212,8 @@ void main(){
 
   let W = 0, H = 0, dpr = 1, simW = 0, simH = 0;
   const SIM_SCALE = .5;
-  let texHeat = [null, null], fboHeat = [null, null], curHeat = 0;
+  const texHeat = [null, null], fboHeat = [null, null];
+  let curHeat = 0;
   const floatType = gl.getExtension('EXT_color_buffer_float') ? gl.FLOAT : gl.HALF_FLOAT;
 
   function makeFBO(w, h) {
@@ -248,9 +249,9 @@ void main(){
 
   let cx = W * .5, cy = H * .5, vx = 0, vy = 0, lx = cx, ly = cy, lt = performance.now();
   let inside = false, spin = 0, hoverEdge = 0, curCorner = 0;
-  let hRect = [0, 0, 0, 0], tRect = [0, 0, 0, 0];
+  const hRect = [0, 0, 0, 0];
+  let tRect = [0, 0, 0, 0];
   let hoverEl = null, onGlass = 0, tGlass = 0;
-  let driving = false;
 
   const MAX_EMBERS = Math.min(O.embers, 400);
   const emberData = new Float32Array(MAX_EMBERS * 5);
@@ -266,10 +267,10 @@ void main(){
   gl.enableVertexAttribArray(3); gl.vertexAttribPointer(3, 1, gl.FLOAT, false, 5 * F32, 4 * F32);
   gl.bindVertexArray(null);
 
-  function spawnEmber(x, y, vvx, vvy) {
+  function spawnEmber(x, y) {
     if (emberCount >= MAX_EMBERS) return;
     const i = emberCount++; const off = i * 5;
-    const a = Math.random() * 6.28318, sp = 12 + Math.random() * 40;
+    const a = Math.random() * 6.28318;
     emberData[off] = x + Math.cos(a) * (O.radius * .6);
     emberData[off + 1] = y + Math.sin(a) * (O.radius * .6);
     emberData[off + 2] = 0;
@@ -333,7 +334,7 @@ void main(){
     }
     const speed = Math.hypot(vx, vy);
     const spawns = Math.min(4, Math.floor(speed / 180));
-    for (let i = 0; i < spawns; i++) spawnEmber(cx, cy, vx, vy);
+    for (let i = 0; i < spawns; i++) spawnEmber(cx, cy);
     wake();
   }
 
@@ -481,7 +482,6 @@ function initSmokeHover(options) {
   if (!fine && !O.touch) return noop;
   if (O.respectReducedMotion && matchMedia('(prefers-reduced-motion: reduce)').matches) return noop;
 
-  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   let alive = true, E = null;
 
   const VS = `#version 300 es
@@ -545,7 +545,7 @@ void main(){ float d = texture(uDensity, vUv).r; o = vec4(uColor, clamp(d * 1.5,
       display: prog(FS.display)
     };
 
-    let simW = 128, simH = 128;
+    const simW = 128, simH = 128;
     function makeFBO() {
       const t = gl.createTexture();
       gl.bindTexture(gl.TEXTURE_2D, t);
@@ -576,7 +576,7 @@ void main(){ float d = texture(uDensity, vUv).r; o = vec4(uColor, clamp(d * 1.5,
   try {
     E = makeEngine();
   } catch (e) {
-    console.warn('[smoke-hover] disabled:', e);
+    // WebGL fallback
   }
 
   function destroy() {

@@ -5,8 +5,8 @@
 :root {
   --background: #121212;
   --foreground: #ffffff;
-  --primary: #a855f7;
-  --secondary: #FFBF4F;
+  --primary: #a855f7; /* Purple */
+  --secondary: #FFBF4F; /* Golden Yellow */
   --muted: #888888;
   --glass-bg: rgba(18, 18, 18, 0.7);
   --glass-border: rgba(255, 255, 255, 0.08);
@@ -30,7 +30,7 @@ body {
 
 /* Custom Selection */
 ::selection {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(168, 85, 247, 0.3);
   color: #ffffff;
 }
 
@@ -52,41 +52,21 @@ body {
   background: #444444;
 }
 
-/* Fire Cursor & Smoke Liquid Glass */
-:root {
-  --fc-glass:
-    linear-gradient(118deg, rgba(255,255,255,.013) 0%, rgba(255,255,255,0) 30%, rgba(255,255,255,0) 75%,
-                    rgba(255,255,255,.006) 86%, rgba(255,255,255,0) 100%),
-    linear-gradient(160deg, rgba(255,255,255,.0275) 0%, rgba(255,255,255,.0075) 45%, rgba(255,255,255,.015) 100%);
-  --fc-glass-shadow: 0 6px 14px -8px rgba(0,0,0,.225);
-}
-
-.fc-glass {
-  background-image: var(--fc-glass);
-  background-origin: border-box;
-}
-
-.fc-glass.fc-glass--lifted {
-  box-shadow: var(--fc-glass-shadow);
-}
-
-/* Glassmorphism Styles - Clean Smoky Finish (Zero Colorful Hover Glares) */
+/* Glassmorphism Styles */
 .glass-card {
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  background-image: var(--fc-glass);
-  background-origin: border-box;
 }
 
 .glass-card:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.16);
-  box-shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.5);
-  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(168, 85, 247, 0.3);
+  box-shadow: 0 12px 40px 0 rgba(168, 85, 247, 0.15), 0 0 0 1px rgba(168, 85, 247, 0.2);
+  transform: translateY(-4px);
 }
 
 /* Decorative grid background */
@@ -152,9 +132,9 @@ body {
 
 /* Hide scrollbar utility */
 .scrollbar-none {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
 }
 .scrollbar-none::-webkit-scrollbar {
-  display: none;
+  display: none; /* Chrome, Safari and Opera */
 }

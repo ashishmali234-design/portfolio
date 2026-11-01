@@ -1,98 +1,115 @@
 import { NextResponse } from "next/server";
+import {
+  systemPrompt,
+  getMultilingualConversationalReply,
+  getMultilingualFallbackResponse,
+} from "@/lib/multilingualChat";
 
-const systemPrompt = `You are "Ashli", the interactive AI representative and UX design co-pilot for Ashish C Mali, an experienced UI/UX & Product Designer based in Pune, India.
+async function sendInstantAlert({
+  userMessage,
+  botResponse,
+  userId,
+  person,
+  company,
+  location,
+}: {
+  userMessage: string;
+  botResponse: string;
+  userId?: string;
+  person?: string;
+  company?: string;
+  location?: string;
+  userAgent?: string;
+}) {
+  const discordWebhook = process.env.DISCORD_WEBHOOK_URL;
+  const telegramToken = process.env.TELEGRAM_BOT_TOKEN;
+  const telegramChatId = process.env.TELEGRAM_CHAT_ID;
 
-Your primary mission is to answer questions about Ashish's work, background, design philosophy, skills, and projects with warmth, clarity, technical accuracy, and personality.
+  const timestamp = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
+  const cleanResponse =
+    botResponse.length > 900 ? botResponse.slice(0, 897) + "..." : botResponse;
 
-About Ashish C Mali:
-- Role: Product Designer at Bajaj Finance Ltd (Pune, India).
-- Focus: Crafting intuitive, high-converting digital products across fintech, lending, merchant ecosystems, and enterprise dashboards.
-- Design Philosophy: "Designing with AI, thinking like humans." Combining UX strategy, human-centered research, and AI-accelerated workflows.
-- Core Skills: UX Research, Wireframing, High-Fidelity Prototyping, Design Systems, Information Architecture, Interaction Design, Financial Journeys, Usability Testing, and AI-assisted UX workflows.
-- Tools: Figma, ProtoPie, Framer Motion, Spline 3D, Webflow, Adobe Creative Cloud (After Effects, Photoshop, Illustrator, Premiere Pro).
-- Key Projects:
-  1. Sales One App (Bajaj Finance): End-to-end revamp of the internal field sales engine used daily by 50,000+ agents. Streamlined onboarding with "Scan & Start", automated gate meetings, task allocation, and performance dashboards.
-  2. Amazon Prime Video Redesign: Lean UX strategic overhaul focused on content discovery, dynamic previews, and seamless navigation.
-  3. MedApp: Healthcare appointment booking and medical record tracking platform.
-  4. Core Lending Journeys: Gold Loan, Personal Loan, INSTA EMI Card, and merchant payment workflows.
-- Location: Pune, Maharashtra, India.
-- Availability: Open to select freelance collaborations, high-impact product design opportunities, and consulting.
+  if (discordWebhook) {
+    try {
+      const isTargeted = Boolean(person || company);
+      let title = "💬 New Portfolio Chat Conversation";
+      if (person && company) title = `🎯 New Chat from ${person} (${company})!`;
+      else if (person) title = `🎯 New Chat from ${person}!`;
+      else if (company) title = `🎯 New Chat from Team ${company}!`;
 
-Response Guidelines:
-- Tone: Professional, warm, insightful, and concise (2-4 sentences for casual queries, bullet points when breaking down case studies).
-- Always speak about Ashish in the third person or as his co-pilot.
-- If asked for contact details, direct the user to the Contact section or offer Ashish's email and LinkedIn.`;
-
-interface KnowledgeEntry {
-  patterns: string[];
-  answer: string;
-}
-
-const CONVERSATIONAL_INTERCEPTS = [
-  {
-    patterns: [/^(hi|hello|hey|hola|greetings)\b/i],
-    answer: "Hello! 👋 I'm Ashli, Ashish's virtual UX design co-pilot. I can walk you through his design systems at Bajaj Finance, his Prime Video case study, his design philosophy, or his availability. What would you like to explore?",
-  },
-  {
-    patterns: [/^(thanks|thank you|thx|appreciate it)\b/i],
-    answer: "You're very welcome! Let me know if there's anything else you'd like to discover about Ashish's work or design process.",
-  },
-  {
-    patterns: [/^(bye|goodbye|see you|cya)\b/i],
-    answer: "Thanks for dropping by! Feel free to reach out to Ashish directly via the Contact section whenever you're ready to collaborate.",
-  },
-];
-
-const KNOWLEDGE_BASE: KnowledgeEntry[] = [
-  {
-    patterns: ["sales one", "sales one app", "50000", "50k", "field agent"],
-    answer: "At Bajaj Finance, Ashish spearheaded the UX overhaul of the **Sales One App**, used daily by 50,000+ field agents. He introduced the 'Scan & Start' onboarding flow, streamlined merchant attendance logging, and created real-time KPI dashboards that substantially cut down transaction drop-offs.",
-  },
-  {
-    patterns: ["prime video", "amazon prime", "prime video redesign"],
-    answer: "Ashish's **Prime Video Redesign** applied a Lean UX framework to Amazon Prime Video's landing experience. By prioritizing content previews, contextual meta-tags, and personalized recommendations, the design reduced visual friction and accelerated content discovery.",
-  },
-  {
-    patterns: ["gold loan", "personal loan", "insta emi", "remi", "lending", "fintech"],
-    answer: "Ashish designs core fintech lending journeys at Bajaj Finance, including Gold Loan checkouts, Personal Loan applications, and the INSTA EMI Card experience. He also designs high-converting promotional banners, push notifications, and merchant point-of-sale flows.",
-  },
-  {
-    patterns: ["skills", "tools", "figma", "protopie", "software"],
-    answer: "Ashish's primary toolkit includes **Figma** (advanced auto-layout, design tokens, variables), **ProtoPie** for complex micro-interactions, **Framer Motion**, **Spline 3D**, and Adobe CC (After Effects, Photoshop, Illustrator). His methodologies center on Lean UX, rapid wireframing, and user research.",
-  },
-  {
-    patterns: ["contact", "hire", "email", "reach", "linkedin"],
-    answer: "You can reach Ashish directly via the Contact section below, or connect with him on LinkedIn at linkedin.com/in/ashish-mali-b071b526b. He is always open to discussing innovative product design roles and collaborations!",
-  },
-];
-
-function getConversationalResponse(message: string): string | null {
-  const trimmed = message.trim();
-  for (const intercept of CONVERSATIONAL_INTERCEPTS) {
-    for (const pattern of intercept.patterns) {
-      if (pattern.test(trimmed)) return intercept.answer;
+      await fetch(discordWebhook, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          embeds: [
+            {
+              title,
+              color: isTargeted ? 0x10b981 : 0xf59e0b,
+              fields: [
+                { name: "🗣️ User Question", value: userMessage || "*(Empty)*", inline: false },
+                { name: "🤖 Ashli's Answer", value: cleanResponse || "*(No response)*", inline: false },
+                { name: "📍 Visitor Location", value: location || "Unknown Location", inline: true },
+                { name: "📅 Time (IST)", value: `${timestamp}`, inline: true },
+              ],
+              footer: { text: `Visitor ID: ${userId || "anonymous"}` },
+            },
+          ],
+        }),
+      });
+    } catch (e) {
+      console.error("Discord alert error:", e);
     }
   }
-  return null;
-}
 
-function getSmartFallbackResponse(message: string): string {
-  const query = message.toLowerCase();
-  for (const entry of KNOWLEDGE_BASE) {
-    for (const pattern of entry.patterns) {
-      if (query.includes(pattern)) return entry.answer;
+  if (telegramToken && telegramChatId) {
+    try {
+      const text = `💬 *New Portfolio Chat*\n📅 *Time:* ${timestamp} IST\n👤 *Visitor:* \`${userId || "Anonymous"}\`\n📍 *Location:* ${location || "Unknown"}\n\n🗣️ *User:* "${userMessage}"\n\n🤖 *Ashli:* "${cleanResponse}"`;
+      await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: telegramChatId,
+          text,
+          parse_mode: "Markdown",
+        }),
+      });
+    } catch (e) {
+      console.error("Telegram alert error:", e);
     }
   }
-  return "That's an interesting question! I might not have full details on that specific topic, but feel free to ask about Ashish's work at Bajaj Finance, his Prime Video case study, his toolkit, or how to get in touch with him directly!";
+}
+
+function extractLocationFromHeaders(headers: Headers): string {
+  const city = headers.get("x-vercel-ip-city");
+  const region = headers.get("x-vercel-ip-country-region");
+  const country = headers.get("x-vercel-ip-country");
+  const parts = [];
+  if (city) parts.push(decodeURIComponent(city));
+  if (region) parts.push(region);
+  if (country) parts.push(country);
+  if (parts.length > 0) return parts.join(", ");
+  return "Location unknown";
 }
 
 export async function POST(request: Request) {
   try {
-    const { messages, userId, userAgent } = await request.json();
-    const userMessage = messages[messages.length - 1]?.content || "";
+    const { messages, userId, person, company, userAgent } = await request.json();
+    const userMessage = messages?.[messages.length - 1]?.content || "";
+    const location = extractLocationFromHeaders(request.headers);
 
-    const conversationalReply = getConversationalResponse(userMessage);
+    // Step 0: Direct multilingual conversational reply
+    const conversationalReply = getMultilingualConversationalReply(userMessage);
     if (conversationalReply) {
+      sendInstantAlert({
+        userMessage,
+        botResponse: conversationalReply,
+        userId,
+        person,
+        company,
+        location,
+        userAgent,
+      }).catch((err) => console.error("Alert error:", err));
+
       return NextResponse.json({
         choices: [{ message: { role: "assistant", content: conversationalReply } }],
       });
@@ -118,28 +135,36 @@ export async function POST(request: Request) {
             model: "gpt-4o-mini",
             messages: [{ role: "system", content: systemPrompt }, ...messages],
             temperature: 0.7,
-            max_tokens: 500,
+            max_tokens: 1200,
           }),
         });
 
         if (response.ok) {
           const data = await response.json();
+          const assistantText = data.choices?.[0]?.message?.content || "";
+          sendInstantAlert({
+            userMessage,
+            botResponse: assistantText,
+            userId,
+            person,
+            company,
+            location,
+            userAgent,
+          }).catch((err) => console.error("Alert error:", err));
           return NextResponse.json(data);
         }
       } catch (e) {
-        console.warn("OpenAI fetch failed, falling back:", e);
+        console.warn("OpenAI call failed:", e);
       }
     }
 
     // Option 2: Gemini API
     if (geminiKey) {
       try {
-        const geminiMessages = messages
-          .filter((m: { content: string }) => Boolean(m.content))
-          .map((m: { role: string; content: string }) => ({
-            role: m.role === "assistant" ? "model" : "user",
-            parts: [{ text: m.content }],
-          }));
+        const geminiMessages = messages.map((m: { role: string; content: string }) => ({
+          role: m.role === "assistant" ? "model" : "user",
+          parts: [{ text: m.content }],
+        }));
 
         const response = await fetch(
           `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`,
@@ -149,28 +174,46 @@ export async function POST(request: Request) {
             body: JSON.stringify({
               system_instruction: { parts: [{ text: systemPrompt }] },
               contents: geminiMessages,
-              generationConfig: { temperature: 0.7, maxOutputTokens: 500 },
+              generationConfig: { temperature: 0.7, maxOutputTokens: 1200 },
             }),
           }
         );
 
         if (response.ok) {
           const data = await response.json();
-          const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-          if (text) {
+          const generatedText = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+          if (generatedText) {
+            sendInstantAlert({
+              userMessage,
+              botResponse: generatedText,
+              userId,
+              person,
+              company,
+              location,
+              userAgent,
+            }).catch((err) => console.error("Alert error:", err));
             return NextResponse.json({
-              choices: [{ message: { role: "assistant", content: text } }],
+              choices: [{ message: { role: "assistant", content: generatedText } }],
             });
           }
         }
       } catch (err) {
-        console.warn("Gemini fetch failed, falling back:", err);
+        console.warn("Gemini call failed:", err);
       }
     }
 
-    // Option 3: Intelligent Knowledge Base Fallback
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    const fallbackText = getSmartFallbackResponse(userMessage);
+    // Option 3: Immediate Multilingual Knowledge Base Fallback
+    const fallbackText = getMultilingualFallbackResponse(userMessage);
+    sendInstantAlert({
+      userMessage,
+      botResponse: fallbackText,
+      userId,
+      person,
+      company,
+      location,
+      userAgent,
+    }).catch((err) => console.error("Alert error:", err));
+
     return NextResponse.json({
       choices: [{ message: { role: "assistant", content: fallbackText } }],
     });

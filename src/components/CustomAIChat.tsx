@@ -471,7 +471,7 @@ export default function CustomAIChat() {
 
     try {
       // Direct client-side multilingual response
-      const reply = getMultilingualConversationalReply(newMessages);
+      const reply = getMultilingualConversationalReply(text);
       setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
       const nextSuggestions = getDynamicFollowUps(text, reply);
       setFollowUps(nextSuggestions);

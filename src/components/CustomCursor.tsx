@@ -172,6 +172,7 @@ export default function CustomCursor() {
               className="w-[2px] h-4 bg-amber-500 rounded-sm shadow-[0_0_8px_rgba(245,158,11,0.8)]"
             />
           ) : isHovered ? (
+            /* Reduced compact size (w-5 h-5 / 20px) */
             <motion.div
               key="hand"
               initial={{ opacity: 0, scale: 0.75, rotate: -5 }}
@@ -187,6 +188,7 @@ export default function CustomCursor() {
               />
             </motion.div>
           ) : (
+            /* Modern Sleek Rounded Cursor */
             <motion.div
               key="rounded-cursor"
               initial={{ opacity: 0, scale: 0.6 }}
@@ -206,4 +208,4 @@ export default function CustomCursor() {
       </motion.div>
     </>
   );
-} 
+}

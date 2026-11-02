@@ -470,14 +470,14 @@ const reply =
   getMultilingualConversationalReply(text) ??
   getMultilingualFallbackResponse(text);
 
-setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
+
+setMessages((prev) => [
+  ...prev,
+  { role: "assistant", content: reply },
+]);
 
 const nextSuggestions = getDynamicFollowUps(text, reply);
 setFollowUps(nextSuggestions);
-      const fallback = getMultilingualFallbackResponse(text);
-      setMessages((prev) => [...prev, { role: "assistant", content: fallback }]);
-      const nextSuggestions = getDynamicFollowUps(text, fallback);
-      setFollowUps(nextSuggestions);
     } finally {
       setIsLoading(false);
     }

@@ -2,11 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  getMultilingualConversationalReply,
-  getMultilingualFallbackResponse,
-} from "@/lib/multilingualChat";
-
 interface Message {
   role: "user" | "assistant";
   content: string;

@@ -471,11 +471,14 @@ export default function CustomAIChat() {
 
     try {
       // Direct client-side multilingual response
-      const reply = getMultilingualConversationalReply(text);
-      setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
-      const nextSuggestions = getDynamicFollowUps(text, reply);
-      setFollowUps(nextSuggestions);
-    } catch {
+const reply =
+  getMultilingualConversationalReply(text) ??
+  getMultilingualFallbackResponse(text);
+
+setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
+
+const nextSuggestions = getDynamicFollowUps(text, reply);
+setFollowUps(nextSuggestions);
       const fallback = getMultilingualFallbackResponse(text);
       setMessages((prev) => [...prev, { role: "assistant", content: fallback }]);
       const nextSuggestions = getDynamicFollowUps(text, fallback);

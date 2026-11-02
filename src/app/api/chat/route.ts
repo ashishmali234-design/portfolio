@@ -1,6 +1,7 @@
+
 import { NextResponse } from "next/server";
 
-export type SupportedLanguage =
+type SupportedLanguage =
   | "english"
   | "hinglish"
   | "hindi_devanagari"
@@ -14,7 +15,7 @@ export type SupportedLanguage =
   | "portuguese"
   | "italian";
 
-export const systemPrompt = `You are "Ashli", the virtual AI assistant and interactive representative of Ashish Chandrakant Mali, a Product Designer based in Satara/Pune, India.
+const systemPrompt = `You are "Ashli", the virtual AI assistant and interactive representative of Ashish Chandrakant Mali, a Product Designer based in Satara/Pune, India.
 
 Your name "Ashli" is a blend of Ashish's own name — "Ash" from Ashish + "li" from Mali = Ashli. It's a personal touch he gave you. If someone asks what Ashli means or where the name comes from, share this warmly.
 
@@ -90,7 +91,7 @@ KEY FACTS ABOUT ASHISH:
 - Contact Channels: Phone/WhatsApp (+91 9075521047), Email (ashishcmaliofficial@gmail.com), LinkedIn, Behance.
 `;
 
-export function detectLanguage(text: string): SupportedLanguage {
+function detectLanguage(text: string): SupportedLanguage {
   const t = text.trim();
   const lower = t.toLowerCase();
 
@@ -168,7 +169,7 @@ export function detectLanguage(text: string): SupportedLanguage {
   return "english";
 }
 
-export function getMultilingualConversationalReply(message: string): string | null {
+function getMultilingualConversationalReply(message: string): string | null {
   const trimmed = message.trim();
   const lower = trimmed.toLowerCase();
   const lang = detectLanguage(message);
@@ -282,7 +283,7 @@ export function getMultilingualConversationalReply(message: string): string | nu
   return null;
 }
 
-export function getMultilingualFallbackResponse(message: string): string {
+function getMultilingualFallbackResponse(message: string): string {
   const query = message.trim().toLowerCase();
   const lang = detectLanguage(message);
 

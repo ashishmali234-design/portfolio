@@ -1,110 +1,132 @@
 import { NextResponse } from "next/server";
 
+type SupportedLanguage =
+  | "english"
+  | "hinglish"
+  | "hindi_devanagari"
+  | "marathi_devanagari"
+  | "marathi_roman"
+  | "spanish"
+  | "french"
+  | "german"
+  | "japanese"
+  | "arabic"
+  | "portuguese"
+  | "italian";
+
 const systemPrompt = `You are "Ashli", the virtual AI assistant and interactive representative of Ashish Chandrakant Mali, a Product Designer based in Satara/Pune, India.
 
 Your name "Ashli" is a blend of Ashish's own name — "Ash" from Ashish + "li" from Mali = Ashli. It's a personal touch he gave you. If someone asks what Ashli means or where the name comes from, share this warmly.
 
+CRITICAL RULE #1: UNIVERSAL MULTILINGUAL & SCRIPT MIRRORING (HIGHEST PRIORITY)
+You are a fluent, native-level polyglot assistant. You MUST support visitors from ALL OVER THE WORLD and in ALL LANGUAGES:
+- Hinglish / Roman Hindi (e.g. "ashish ka number mil sakta hai kya", "kaha rehta hai", "kya kaam karta hai")
+- Pure Hindi in Devanagari script (e.g. "आशीष का नंबर मिल सकता है क्या?", "आशीष क्या काम करता है?")
+- Marathi in Devanagari or Roman script (e.g. "आशीषचा मोबाईल नंबर मिळेल का?", "to kay karto?", "kuthe rahto?")
+- Spanish, French, German, Japanese, Arabic, Portuguese, Italian, etc.
+- English (standard international).
+
 CRITICAL PERSONA RULES:
-1. USE SIMPLE, HUMAN LANGUAGE. Always speak like a friendly, knowledgeable person — not a formal presenter or robot. Avoid jargon. If you must use a technical term, explain it in plain words right after. Every visitor should feel welcome, whether they are a designer, a student, or someone who knows nothing about design.
+1. USE SIMPLE, HUMAN LANGUAGE. Speak like a friendly, knowledgeable person.
+2. ANSWER LEVEL: Short 3–4 sentence overview for general queries; comprehensive answers when the user asks to elaborate.
+3. STRICT CONFIDENTIALITY: Never explain internal proprietary workflows step-by-step. Focus on what Ashish designed, his role, and the business outcome.
+4. Contact details: Phone/WhatsApp: +91 9075521047 | Email: ashishcmaliofficial@gmail.com | LinkedIn: linkedin.com/in/ashish-mali-b071b526b | Location: Satara / Pune, Maharashtra.`;
 
-2. ANSWER LEVEL — Match your answer depth to the question:
-   - If the question is general (e.g. "Tell me about Ashish's Bajaj Finance work") → give a SHORT overview, 3–4 sentences. Don't dump everything at once.
-   - If the user asks for more detail, digs deeper, or uses words like "detailed", "explain more", "tell me everything", "in depth", "elaborate" → give a FULL, comprehensive answer covering all the specifics.
-   - If the user asks about a specific feature or project → go deep into that specific thing only.
+function detectLanguage(text: string): SupportedLanguage {
+  const trimmed = text.trim();
+  const lower = trimmed.toLowerCase();
 
-3. STRICT CONFIDENTIALITY: NEVER explain HOW internal processes or proprietary workflows (like "Scan & Start" onboarding, or internal Bajaj tools) actually work step-by-step. Focus ONLY on WHAT Ashish designed, his ROLE, and the BUSINESS IMPACT or outcome. If asked how an internal process works, say you can't share proprietary workflow details but you can talk about Ashish's design approach.
+  if (/[\u0900-\u097F]/.test(trimmed)) {
+    if (/\b(आहे|नाही|काय|कसा|कशी|कसे|कुठे|आशीषचा|मिळेल|करतो|सांगा)\b/.test(trimmed)) {
+      return "marathi_devanagari";
+    }
+    return "hindi_devanagari";
+  }
 
-4. NEVER give dry, generic, textbook definitions. Always connect every answer to Ashish's real work.
+  if (/[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff]/.test(trimmed)) return "japanese";
+  if (/[\u0600-\u06FF]/.test(trimmed)) return "arabic";
 
-5. CONVERSATIONAL MESSAGES — Handle warmly and naturally:
-   - "thanks" / "thank you" → "You're so welcome! 😊 Feel free to ask anything else!"
-   - "ok" / "cool" / "awesome" → "Glad that helped! 😊 Want to know more?"
-   - "bye" → "Take care! Thanks for visiting Ashish's portfolio 🙌"
-   - "hi" / "hello" → Warm greeting, introduce yourself as Ashli
-   - NEVER respond to "thanks" with a design lecture!
+  if (/\b(kay|karto|kuthe|rahto|ahe|nahi|kasa|kashi|ashishcha|milel|tula|bol)\b/.test(lower)) {
+    return "marathi_roman";
+  }
 
-6. OUT-OF-SCOPE QUESTIONS — Answer using your general knowledge. Never refuse. Never say "could you rephrase" for a clear question.
+  if (
+    /\b(kya|kaise|kaha|kaisa|kaisi|bhai|batao|milega|hoga|hai|nahi|mujhe|uska|unka|karega|bolo|aap)\b/.test(lower)
+  ) {
+    return "hinglish";
+  }
 
-7. ABOUT YOURSELF — Keep it mysterious: "Ashish designed and brought me to life through a blend of design thinking and emerging AI. The technical details are his secret! ✨"
+  if (/\b(hola|como|donde|quien|numero|proyectos|gracias|buenos|dias)\b/.test(lower)) return "spanish";
+  if (/\b(bonjour|merci|comment|quel|numero|projets|qui|salut)\b/.test(lower)) return "french";
+  if (/\b(hallo|wie|danke|nummer|projekte|wer|guten)\b/.test(lower)) return "german";
+  if (/\b(ciao|come|grazie|numero|progetti|chi)\b/.test(lower)) return "italian";
+  if (/\b(ola|como|obrigado|numero|projetos|quem)\b/.test(lower)) return "portuguese";
 
-Key facts about Ashish:
-- Full Name: Mr. Ashish Chandrakant Mali
-- Father: Mr. Chandrakant Mali
-- Birthdate: 11th June 2002
-- Philosophy: "Designing with AI, thinking like humans" — uses AI to handle repetitive work so he can focus on human empathy and strategy.
-- Current Role: Product Designer at Bajaj Finance Ltd, Pune (May 2025 – Present)
-  * Core Lending Journeys: Gold Loan, Personal Loan, INSTA EMI Card — he designs the full user journey from start to finish, making complex loan processes feel easy and fast.
-  * Sales One App (Full Revamp): This is the app used by Bajaj's field sales agents every day. Ashish redesigned everything — Homepage, Merchant Profile, Onboarding dashboards, Performance Dashboards, Team Tracking, Task management, Attendance logging, Merchant Visits, Gate meeting schedules, and the "Scan & Start" onboarding flow.
-  * Merchant One App (Bajaj Finserv for Business): App for merchants. Ashish designed the core dashboards, promotional banners, and created step-by-step animated training videos (using After Effects & Premiere Pro) to help merchants understand how to use the app.
-  * B2B Enterprise Solutions: Complex systems for big corporate partners (Aggregators and Non-Aggregators) to manage their merchant networks — Ashish designed the full onboarding and dashboard experience.
-  * Bajaj Pay / REMI / EDC POS: Marketing banners, push notification graphics, GIFs, co-branded REMI campaign banners for partner brands, and the POS EDC terminal swipe journey design.
-- Previous Jobs: UI/UX Designer at Dchronicles Explication Intl. (July 2024–March 2025), Infoshard Technology (April–July 2024)
-- Education: B.Sc. Animation Science, Yashwantrao Chavan Institute of Science, Satara (CGPA 9.02, 2023). UI/UX Design training at Midas Multimedia, Pune (2024).
-- Projects: MedApp (full doctor appointment booking app ecosystem), Amazon Prime Video Website Redesign (Lean UX), boAt Website Redesign, Social Media Analytics Dashboard, Travel Booking Platform, Food & Dining Website, Auto Parts Website.
-- Toolkit: Figma, ProtoPie, Framer Motion, Webflow, Spline 3D, Adobe After Effects, Illustrator, Photoshop, Premiere Pro; AI tools: ChatGPT, Claude AI, Gemini AI, Magnific AI (Spaces), Figma AI, Figma Make, Notebook LM, N8N (agentic workflows), Antigravity IDE.
-- Contact: Phone/WhatsApp: +91 9075521047 | Email: ashishcmaliofficial@gmail.com | LinkedIn: linkedin.com/in/ashish-mali-b071b526b | Behance: behance.net/ashishmali | Location: Satara / Pune, Maharashtra, India.`;
-
-interface KnowledgeEntry {
-  patterns: string[];
-  answer: string;
+  return "english";
 }
 
-const CONVERSATIONAL_INTERCEPTS = [
-  {
-    patterns: [/^(hi|hello|hey|hola|greetings)\b/i],
-    answer: "Hello! 👋 I'm Ashli, Ashish's virtual AI co-pilot. I can walk you through his work at Bajaj Finance, his Prime Video case study, his design philosophy, or his availability. What would you like to explore?",
-  },
-  {
-    patterns: [/^(thanks|thank you|thx|appreciate it)\b/i],
-    answer: "You're so welcome! 😊 Let me know if there's anything else you'd like to discover about Ashish's work or design process.",
-  },
-  {
-    patterns: [/^(ok|okay|cool|awesome|great|got it)\b/i],
-    answer: "Glad that helped! 😊 Want to know more about any of his projects?",
-  },
-  {
-    patterns: [/^(bye|goodbye|see you|cya)\b/i],
-    answer: "Take care! Thanks for stopping by Ashish's portfolio 🙌 Feel free to reach out anytime via the Contact section below.",
-  },
-];
-
-const KNOWLEDGE_BASE: KnowledgeEntry[] = [
-  {
-    patterns: ["sales one", "sales one app", "field agent", "50000", "50k"],
-    answer: "At Bajaj Finance, Ashish spearheaded the UX overhaul of the **Sales One App**, used daily by 50,000+ field sales agents. He redesigned core modules including Homepage, Merchant Profile, Performance Dashboards, and the 'Scan & Start' onboarding flow, reducing journey drop-offs significantly.",
-  },
-  {
-    patterns: ["prime video", "amazon prime", "prime video redesign"],
-    answer: "Ashish's **Prime Video Redesign** applied a Lean UX framework to Amazon Prime Video's interface. He focused on solving choice paralysis and browse fatigue using rapid prototyping, Scene Search concepts, and synchronized Social Watch Party interactions.",
-  },
-  {
-    patterns: ["gold loan", "personal loan", "insta emi", "remi", "lending", "fintech"],
-    answer: "Ashish designs core digital lending journeys at Bajaj Finance — Gold Loan, Personal Loan, and INSTA EMI Card. He also crafts high-converting marketing collaterals, push notifications, GIFs, and co-branded Retail EMI (REMI) campaign banners.",
-  },
-  {
-    patterns: ["contact", "hire", "phone", "number", "email", "whatsapp", "call"],
-    answer: "You can reach Ashish directly via:\n📞 Phone / WhatsApp: +91 9075521047\n✉️ Email: ashishcmaliofficial@gmail.com\n🔗 LinkedIn: linkedin.com/in/ashish-mali-b071b526b\nHe is based in Pune/Satara and open to high-impact design roles!",
-  },
-];
-
-function getConversationalResponse(message: string): string | null {
+function getMultilingualConversationalReply(message: string): string | null {
   const trimmed = message.trim();
-  for (const intercept of CONVERSATIONAL_INTERCEPTS) {
-    for (const pattern of intercept.patterns) {
-      if (pattern.test(trimmed)) return intercept.answer;
+  const lower = trimmed.toLowerCase();
+  const lang = detectLanguage(message);
+
+  if (/^(hi|hello|hey|hola|bonjour|hallo|namaste|kem cho|vanakkam|salam)\b/i.test(trimmed)) {
+    switch (lang) {
+      case "hinglish":
+        return "Hello! Kaise hain aap? Main hoon Ashli, Ashish ka virtual AI design co-pilot. Ashish ke projects (Bajaj Finance, Prime Video), design skills ya contact details ke baare mein kuch bhi pooch sakte hain!";
+      case "hindi_devanagari":
+        return "नमस्ते! मैं 'अश्ली' (Ashli) हूँ, आशीष का AI डिज़ाइन साथी। आप आशीष के प्रोजेक्ट्स (Bajaj Finance, Prime Video), उनके टूल्स या संपर्क के बारे में कुछ भी पूछ सकते हैं!";
+      case "marathi_devanagari":
+      case "marathi_roman":
+        return "नमस्कार! मी 'अश्ली' (Ashli), आशिषचा व्हर्च्युअल AI डिझाइन पार्टनर. आशिषचे काम (Bajaj Finance, Prime Video), त्याचे अनुभव किंवा त्याच्याशी संपर्क कसा करायचा, याबद्दल तुम्ही विचारू शकता!";
+      default:
+        return "Hi there! 👋 I'm Ashli, Ashish's virtual UX design co-pilot. Feel free to ask about his work at Bajaj Finance, the Prime Video redesign, his UX toolkit, or how to get in touch with him directly!";
     }
   }
+
+  if (
+    lower.includes("number") ||
+    lower.includes("phone") ||
+    lower.includes("contact") ||
+    lower.includes("email") ||
+    lower.includes("whatsapp") ||
+    lower.includes("call")
+  ) {
+    switch (lang) {
+      case "hinglish":
+        return "Aap Ashish se seedha connect kar sakte hain:\n📞 Phone / WhatsApp: +91 9075521047\n✉️ Email: ashishcmaliofficial@gmail.com\n🔗 LinkedIn: linkedin.com/in/ashish-mali-b071b526b\nAap niche diye Contact section se bhi direct message bhej sakte hain!";
+      case "hindi_devanagari":
+        return "आप आशीष से सीधे संपर्क कर सकते हैं:\n📞 फोन / व्हाट्सएप: +91 9075521047\n✉️ ईमेल: ashishcmaliofficial@gmail.com\n🔗 लिंक्डइन: linkedin.com/in/ashish-mali-b071b526b";
+      case "marathi_devanagari":
+      case "marathi_roman":
+        return "तुम्ही आशिषशी थेट संपर्क साधू शकता:\n📞 फोन / व्हॉट्सॲप: +91 9075521047\n✉️ ईमेल: ashishcmaliofficial@gmail.com\n🔗 लिंक्डइन: linkedin.com/in/ashish-mali-b071b526b";
+      default:
+        return "You can reach Ashish directly via:\n📞 Phone / WhatsApp: +91 9075521047\n✉️ Email: ashishcmaliofficial@gmail.com\n🔗 LinkedIn: https://www.linkedin.com/in/ashish-mali-b071b526b\nHe is based in Pune/Satara and open to high-impact design roles!";
+    }
+  }
+
   return null;
 }
 
-function getSmartFallbackResponse(message: string): string {
+function getMultilingualFallbackResponse(message: string): string {
   const query = message.toLowerCase();
-  for (const entry of KNOWLEDGE_BASE) {
-    for (const pattern of entry.patterns) {
-      if (query.includes(pattern)) return entry.answer;
+  const lang = detectLanguage(message);
+
+  if (query.includes("bajaj") || query.includes("sales one") || query.includes("work")) {
+    if (lang === "hinglish") {
+      return "Ashish Bajaj Finance Ltd mein Product Designer hain. Unhone 'Sales One App' ka complete revamp lead kiya jo 50,000+ daily field agents use karte hain, jisme 'Scan & Start' onboarding aur live KPI dashboards shamil hain!";
     }
+    return "At Bajaj Finance, Ashish designed enterprise field journeys including the Sales One App (50k+ daily agents), Scan & Start onboarding, Gold Loan, and Retail EMI customer funnels.";
   }
-  return "That's an interesting question! I might not have full details on that specific topic, but feel free to ask about Ashish's work at Bajaj Finance, his Prime Video case study, his toolkit (Figma, ProtoPie, Framer Motion), or how to contact him directly!";
+
+  if (query.includes("prime") || query.includes("video") || query.includes("project")) {
+    if (lang === "hinglish") {
+      return "Ashish ka Prime Video Redesign ek Lean UX strategic concept hai jo users ki choice paralysis ko khatam karta hai Scene Search, Mood-based discovery, aur Social Watch Party features ke zariye!";
+    }
+    return "Ashish's Prime Video Redesign is a strategic Lean UX project introducing Mood-based Discovery, AI Scene Search, and synchronized Watch Party features to cut down browse fatigue.";
+  }
+
+  return "That's an interesting question! Feel free to ask me about Ashish's work at Bajaj Finance, his Prime Video case study, his toolkit (Figma, ProtoPie, Framer Motion), or how to contact him directly (+91 9075521047)!";
 }
 
 function extractLocationFromHeaders(headers: Headers): string {
@@ -196,11 +218,10 @@ async function sendInstantAlert({
 export async function POST(request: Request) {
   try {
     const { messages, userId, person, company, userAgent } = await request.json();
-    const userMessage = messages[messages.length - 1]?.content || "";
+    const userMessage = messages?.[messages.length - 1]?.content || "";
     const location = extractLocationFromHeaders(request.headers);
 
-    // Conversational quick-intercept
-    const conversationalReply = getConversationalResponse(userMessage);
+    const conversationalReply = getMultilingualConversationalReply(userMessage);
     if (conversationalReply) {
       sendInstantAlert({
         userMessage,
@@ -237,7 +258,7 @@ export async function POST(request: Request) {
             model: "gpt-4o-mini",
             messages: [{ role: "system", content: systemPrompt }, ...messages],
             temperature: 0.7,
-            max_tokens: 500,
+            max_tokens: 1200,
           }),
         });
 
@@ -256,19 +277,17 @@ export async function POST(request: Request) {
           return NextResponse.json(data);
         }
       } catch (e) {
-        console.warn("OpenAI API call failed, falling back:", e);
+        console.warn("OpenAI API call failed:", e);
       }
     }
 
     // Option 2: Gemini API
     if (geminiKey) {
       try {
-        const geminiMessages = messages
-          .filter((m: { content: string }) => Boolean(m.content))
-          .map((m: { role: string; content: string }) => ({
-            role: m.role === "assistant" ? "model" : "user",
-            parts: [{ text: m.content }],
-          }));
+        const geminiMessages = messages.map((m: { role: string; content: string }) => ({
+          role: m.role === "assistant" ? "model" : "user",
+          parts: [{ text: m.content }],
+        }));
 
         const response = await fetch(
           `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`,
@@ -278,7 +297,7 @@ export async function POST(request: Request) {
             body: JSON.stringify({
               system_instruction: { parts: [{ text: systemPrompt }] },
               contents: geminiMessages,
-              generationConfig: { temperature: 0.7, maxOutputTokens: 500 },
+              generationConfig: { temperature: 0.7, maxOutputTokens: 1200 },
             }),
           }
         );
@@ -302,13 +321,12 @@ export async function POST(request: Request) {
           }
         }
       } catch (err) {
-        console.warn("Gemini fetch failed, falling back:", err);
+        console.warn("Gemini fetch failed:", err);
       }
     }
 
-    // Option 3: Smart Knowledge Base Fallback
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    const fallbackText = getSmartFallbackResponse(userMessage);
+    // Option 3: Immediate Multilingual Knowledge Base Fallback
+    const fallbackText = getMultilingualFallbackResponse(userMessage);
     sendInstantAlert({
       userMessage,
       botResponse: fallbackText,

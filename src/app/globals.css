@@ -123,6 +123,7 @@ body {
   }
 }
 
+
 /* Hide custom cursor completely on touch/mobile devices */
 @media (pointer: coarse) {
   .custom-cursor-container {
@@ -138,3 +139,4 @@ body {
 .scrollbar-none::-webkit-scrollbar {
   display: none; /* Chrome, Safari and Opera */
 }
+

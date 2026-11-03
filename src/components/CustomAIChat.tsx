@@ -187,7 +187,7 @@ function ChipRow({
   rowId,
 }: {
   children: React.ReactNode;
-  rowId: string;
+  rowId?: string;
 }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -218,7 +218,7 @@ function ChipRow({
   };
 
   return (
-    <div className="relative flex items-center group/row">
+    <div id={rowId} className="relative flex items-center group/row">
       <button
         onClick={() => scrollBy("left")}
         aria-label="Scroll left"
@@ -307,13 +307,6 @@ function ContactActions() {
       icon: "🔗",
       bg: "bg-blue-500/10 hover:bg-blue-500/20 border-blue-500/30",
       text: "text-blue-400",
-    },
-    {
-      label: "Behance",
-      href: "https://www.behance.net/ashishmali",
-      icon: "🎨",
-      bg: "bg-purple-500/10 hover:bg-purple-500/20 border-purple-500/30",
-      text: "text-purple-400",
     },
   ];
 

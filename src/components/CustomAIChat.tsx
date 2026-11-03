@@ -8,7 +8,6 @@ interface Message {
   content: string;
 }
 
-// ─── Smart follow-up extraction ──────────────────────────────────────────────
 const RESPONSE_FOLLOW_UPS: Array<{ triggers: string[]; chips: string[] }> = [
   {
     triggers: ["scan & start", "scan and start", "gate meeting", "merchant visit", "attendance logging"],
@@ -19,294 +18,348 @@ const RESPONSE_FOLLOW_UPS: Array<{ triggers: string[]; chips: string[] }> = [
     ],
   },
   {
-    triggers: ["performance dashboard", "kpi", "incentive tracker", "daily target"],
+    triggers: ["homepage", "merchant profile", "onboarding dashboard", "performance dashboard", "team tracking", "tasks management"],
     chips: [
-      "How did the dashboards motivate field agents?",
-      "What was the drop-off reduction across the 5 core journeys?",
-      "How did 50k+ daily agents react to the new design?",
+      "How did Ashish approach the Sales One App revamp?",
+      "What does the Performance Dashboard actually track?",
+      "How do sales agents manage their daily tasks?",
     ],
   },
   {
-    triggers: ["sales one", "50,000", "50k", "onboarding flow", "5 core journeys", "offline-first"],
+    triggers: ["sales one app", "sales one"],
     chips: [
-      "Tell me about the Scan & Start feature he designed",
-      "How did Ashish design for low-connectivity rural areas?",
-      "What user research did Ashish conduct with field agents?",
-      "Can I see the Bajaj Sales One case study?",
+      "What features did Ashish revamp in the Sales One App?",
+      "What was the impact of the new Scan & Start onboarding?",
+      "What dashboards did Ashish design for sales agents?",
     ],
   },
   {
-    triggers: ["bajaj", "finserv", "financial platform"],
+    triggers: ["high-converting", "checkout funnel", "drop-off", "conversion rate", "loan journey"],
     chips: [
-      "Tell me about the Bajaj Sales One enterprise app",
-      "What was Ashish's role at Bajaj Finserv?",
-      "What impact did the redesigned journeys have?",
+      "How did Ashish improve the Gold Loan checkout flow?",
+      "What marketing assets did he create for lending products?",
+      "How did Ashish design the INSTA EMI Card experience?",
     ],
   },
   {
-    triggers: ["scene search", "multimodal", "timestamp", "dialogue search"],
+    triggers: ["gold loan", "personal loan", "insta emi"],
     chips: [
-      "How does Scene Search let users find specific moments?",
-      "What research insights led to the Scene Search concept?",
-      "How does the AI understand emotional or action queries?",
+      "How did Ashish improve the Gold Loan user journey?",
+      "What is the INSTA EMI Card UX like?",
+      "What marketing banners did Ashish create for lending?",
     ],
   },
   {
-    triggers: ["social watch party", "co-viewing", "spatial audio", "shared queue"],
+    triggers: ["prime video", "amazon prime", "lean ux"],
     chips: [
-      "How did Ashish design the Social Watch Party UI?",
-      "How does cross-device sync work in the redesign?",
-      "What makes this better than Amazon's current party mode?",
+      "What was Ashish's Lean UX approach for Prime Video?",
+      "What content discovery problems did the redesign solve?",
+      "Tell me about Ashish's other featured projects",
     ],
   },
   {
-    triggers: ["discovery engine", "mood-based", "decision paralysis", "browse fatigue"],
+    triggers: ["chatgpt", "magnific", "n8n", "notebook lm", "antigravity ide"],
     chips: [
-      "How does the Mood-Based Discovery engine work?",
-      "How does the UI solve choice paralysis in under 60 seconds?",
-      "Can I explore the Prime Video Redesign prototype?",
-    ],
-  },
-  {
-    triggers: ["prime video", "streaming", "ott platform", "amazon"],
-    chips: [
-      "Tell me about the Scene Search feature",
-      "What is the Mood-Based Discovery Engine?",
-      "How did Ashish redesign the Social Watch Party?",
-      "What user problems in Prime Video did he identify?",
-    ],
-  },
-  {
-    triggers: ["design token", "figma tokens", "token hierarchy", "semantic color"],
-    chips: [
-      "How did Ashish structure token hierarchies?",
-      "How did he automate Figma-to-code token pipelines?",
-      "What tools did he use to sync tokens with developers?",
-    ],
-  },
-  {
-    triggers: ["component library", "variant", "accessibility", "wcag", "contrast"],
-    chips: [
-      "How did Ashish ensure WCAG AAA accessibility?",
-      "How did the system cut developer handoff time by 40%?",
-      "What was the component governance and versioning model?",
-    ],
-  },
-  {
-    triggers: ["design system", "design systems", "atomic design", "zero to one"],
-    chips: [
-      "How did Ashish scale design systems for enterprise products?",
-      "How did the design system cut dev handoff by 40%?",
-      "Tell me about his design token architecture",
-      "How does Ashish bridge the gap between Figma and code?",
-    ],
-  },
-  {
-    triggers: ["field research", "contextual inquiry", "shadowing", "agent interviews"],
-    chips: [
-      "What surprised Ashish most during field shadowing?",
-      "How did field insights change the Sales One navigation?",
-      "What research methods does Ashish prefer for enterprise?",
-    ],
-  },
-  {
-    triggers: ["usability testing", "a/b test", "heuristic evaluation", "sus score"],
-    chips: [
-      "What quantitative usability metrics does Ashish track?",
-      "Can you give an example of an A/B test that drove a decision?",
-      "How does Ashish balance user feedback with business KPIs?",
-    ],
-  },
-  {
-    triggers: ["user research", "interviews", "personas", "journey map", "pain points"],
-    chips: [
-      "How did research shape the Bajaj Sales One experience?",
-      "What was his research approach for the Prime Video project?",
-      "How does Ashish validate early concepts before building?",
-    ],
-  },
-  {
-    triggers: ["fintech", "compliance", "fraud prevention", "regulatory"],
-    chips: [
-      "How did Ashish balance regulatory compliance with speed?",
-      "What fintech UX challenges did he solve at Bajaj?",
-      "How did he handle sensitive customer financial data display?",
-    ],
-  },
-  {
-    triggers: ["enterprise ux", "b2b", "complex workflows", "density"],
-    chips: [
-      "How does Ashish approach high-density data dashboards?",
-      "What makes enterprise UX different from consumer apps for him?",
-      "Tell me about Bajaj Sales One's offline-first architecture",
-    ],
-  },
-  {
-    triggers: ["reach out", "email", "get in touch", "available", "schedule a chat", "open to opportunities"],
-    chips: [
-      "What roles is Ashish currently looking for?",
-      "Is Ashish open to remote or relocation?",
-      "How quickly does Ashish typically respond to emails?",
-    ],
-  },
-  {
-    triggers: ["product designer role", "senior product designer", "lead designer", "full-time", "contract"],
-    chips: [
-      "What kind of team culture does Ashish thrive in?",
-      "Send an email to Ashish",
-      "Connect on LinkedIn with Ashish",
-    ],
-  },
-  {
-    triggers: ["figma", "framer", "prototyping", "micro-interactions"],
-    chips: [
-      "Can Ashish write frontend code too?",
-      "How does he use AI tools like Claude & Cursor in design?",
-      "What is Ashish's end-to-end design process?",
-    ],
-  },
-  {
-    triggers: ["frontend", "react", "next.js", "tailwind", "typescript"],
-    chips: [
-      "How does Ashish's coding skill help during handoff?",
-      "Did Ashish build this portfolio website himself?",
-      "What is his philosophy on designer-developer collaboration?",
+      "How exactly does Ashish use ChatGPT in design work?",
+      "What does Magnific AI help Ashish create?",
+      "What is N8N and how does Ashish use it for workflows?",
     ],
   },
 ];
 
-function getDynamicFollowUps(lastUserText: string, lastResponseText: string): string[] {
-  const combinedResponse = lastResponseText.toLowerCase();
+function extractFollowUps(responseText: string): string[] {
+  const lower = responseText.toLowerCase();
+  const found: string[] = [];
+  const seen = new Set<string>();
 
-  for (const item of RESPONSE_FOLLOW_UPS) {
-    const matched = item.triggers.some((t) => combinedResponse.includes(t.toLowerCase()));
+  for (const entry of RESPONSE_FOLLOW_UPS) {
+    const matched = entry.triggers.some((t) => lower.includes(t.toLowerCase()));
     if (matched) {
-      return item.chips.slice(0, 3);
+      for (const chip of entry.chips) {
+        if (!seen.has(chip) && found.length < 3) {
+          found.push(chip);
+          seen.add(chip);
+        }
+      }
     }
+    if (found.length >= 3) break;
   }
 
-  const q = lastUserText.toLowerCase();
-
-  if (q.includes("bajaj") || q.includes("sales one") || q.includes("enterprise") || q.includes("fintech")) {
-    return [
-      "Tell me about the Scan & Start feature he designed",
-      "How did Ashish cut drop-offs across 5 journeys?",
-      "Can I see the Bajaj Sales One case study?",
-    ];
-  }
-
-  if (q.includes("prime") || q.includes("video") || q.includes("streaming") || q.includes("ott")) {
-    return [
-      "How does the Scene Search feature work?",
-      "Tell me about the Mood-Based Discovery Engine",
-      "How did he redesign the Social Watch Party?",
-    ];
-  }
-
-  if (q.includes("system") || q.includes("token") || q.includes("component") || q.includes("figma")) {
-    return [
-      "How did the design system cut handoff time by 40%?",
-      "Tell me about Ashish's design token architecture",
-      "How does he handle dark mode & theme scaling?",
-    ];
-  }
-
-  if (q.includes("research") || q.includes("testing") || q.includes("interviews") || q.includes("metrics")) {
-    return [
-      "What quantitative usability metrics does Ashish track?",
-      "How did field research change the Bajaj design?",
-      "How does he validate concepts before development?",
-    ];
-  }
-
-  if (q.includes("contact") || q.includes("hire") || q.includes("reach") || q.includes("email") || q.includes("connect")) {
-    return [
-      "What roles is Ashish looking for?",
-      "Is Ashish open to remote or relocation?",
-      "Can I see his resume?",
-    ];
-  }
-
-  return [
-    "Tell me about the Bajaj Sales One enterprise app",
-    "How does the Prime Video redesign solve browse fatigue?",
-    "How did Ashish scale design systems by 40%?",
-  ];
+  return found;
 }
 
-// ─── FAQ Knowledge Base ───────────────────────────────────────────────────────
-const FAQS: Array<{ q: string; a: string; category: string }> = [
-  {
-    category: "Featured Work",
-    q: "Tell me about the Bajaj Sales One app",
-    a: "Ashish led the end-to-end product design for **Bajaj Sales One**, an enterprise app used daily by **50,000+ field sales agents** across India.\n\nHe restructured **5 mission-critical core journeys**, introduced a zero-click **Scan & Start** QR onboarding flow, and designed an **offline-first sync architecture** for agents operating in low-connectivity rural areas.\n\n**Impact:** 40% reduction in customer onboarding drop-offs, 25% faster average loan application processing, and an adoption rate exceeding 90% within the first quarter.",
-  },
-  {
-    category: "Featured Work",
-    q: "What was the Scan & Start feature in Bajaj Sales One?",
-    a: "**Scan & Start** was a zero-friction entry point designed by Ashish to replace a 6-step manual merchant visit registration.\n\nBy placing encrypted QR codes at merchant partner locations, field agents simply point their camera upon arrival. The app automatically:\n• Verifies GPS geofence within 15 meters\n• Logs biometric / secure attendance\n• Pre-populates merchant relationship data and active leads\n\nThis cut the check-in time from **3.5 minutes down to 8 seconds**, completely eliminating fraudulent off-site check-ins.",
-  },
-  {
-    category: "Featured Work",
-    q: "How did Ashish design for offline use at Bajaj Finserv?",
-    a: "Many of Bajaj's 50,000+ agents operate in Tier 3/4 Indian cities and rural markets where cellular connections drop frequently.\n\nAshish designed an **optimistic UI & local-first queue system**:\n• **Visual Confidence:** Clear badge indicators show data saved locally vs synced\n• **Zero Blocking:** Agents can complete loan documentation, capture KYC photos, and collect signatures without waiting for network pings\n• **Conflict-Free Sync:** Background delta-sync resolves records sequentially as soon as 2G/3G connectivity is re-established\n• **Storage-Conscious:** Heavy asset compression to function on low-end Android devices ($80-$120 range).",
-  },
-  {
-    category: "Featured Work",
-    q: "Tell me about the Prime Video redesign",
-    a: "Ashish envisioned a conceptual **Next-Gen Prime Video Redesign** aimed at eliminating decision paralysis and browse fatigue — where users spend 18+ minutes searching before picking a title.\n\nKey innovations he designed:\n1. **Multimodal Scene Search:** Search shows by quoting a famous line, describing a plot scene, or specifying an actor's emotional state.\n2. **Mood-Based Discovery Engine:** Dynamic carousel that curates content based on how much time you have and your current emotional vibe.\n3. **Social Watch Party 2.0:** Synchronized playback with spatial audio reactions and interactive live queues.\n4. **Glanceable IMDb X-Ray:** Seamless cast and trivia overlays that don't block subtitles.",
-  },
-  {
-    category: "Featured Work",
-    q: "How does Scene Search work in Prime Video?",
-    a: "**Scene Search** solves a universal streaming problem: *\"I remember a scene, but not the episode or show title!\"*\n\nAshish designed a conversational, natural-language search bar powered by multimodal AI indexing. Users can type or speak queries like:\n• *\"The office fire drill scene\"*\n• *\"Dinner party where the plasma TV gets broken\"*\n• *\"Interstellar docking scene spinning fast\"*\n\nThe interface surfaces an interactive video strip scrubbing directly to the exact timestamp, letting users preview the clip or jump straight into full-screen playback.",
-  },
-  {
-    category: "Design Systems",
-    q: "Tell me about his design system work",
-    a: "Ashish builds enterprise-scale **Design Systems with tokenized foundations** (Colors, Typography, Elevation, Spacing, Motion) built to scale across multi-brand, multi-platform products.\n\n**Key Accomplishments:**\n• Created unified Figma component libraries with 200+ accessible components adhering strictly to **WCAG 2.1 AAA** contrast standards\n• Engineered token sync pipelines that automatically generate CSS custom properties and React Tailwind tokens directly from Figma Tokens/Tokens Studio\n• Reduced designer-to-developer handoff discrepancies by **40%**, cutting front-end rework time in half\n• Authored comprehensive usage guidelines, do's/don'ts, and accessibility dos and don'ts for cross-functional teams.",
-  },
-  {
-    category: "Design Systems",
-    q: "How does Ashish bridge the gap between design and code?",
-    a: "Because Ashish has hands-on proficiency with **React, TypeScript, Next.js, and Tailwind CSS**, he doesn't treat handoff as a one-way Figma export.\n\n• **Component Parity:** He names Figma variants, auto-layout constraints, and props using the exact naming conventions developers use in code (e.g. `variant='primary' | 'ghost'`, `size='sm' | 'md' | 'lg'`)\n• **Token Automation:** Tokens defined in Figma map 1:1 to Tailwind config themes\n• **Interactive Prototyping:** Builds functional micro-interactions in Framer or code when Figma prototypes can't adequately convey complex state machines or physics-based spring animations.",
-  },
-  {
-    category: "Process",
-    q: "What is Ashish's UX research process?",
-    a: "Ashish practices an **evidence-driven, mixed-methods design framework**:\n\n1. **Discover & Shadow:** Contextual inquiry, on-field shadowing (e.g. riding with Bajaj sales agents into markets), stakeholder interviews, and product telemetry analysis.\n2. **Synthesize & Map:** Customer journey maps with emotional highs/lows, behavioral personas, service blueprints, and opportunity solution trees.\n3. **Rapid Ideation:** Low-fidelity sketching, clickable wireframe testing, and assumption validation.\n4. **High-Fidelity & Systems:** Production-grade Figma prototypes built on tokenized foundations.\n5. **Validation:** Moderated usability tests (System Usability Scale / SUS scoring), task completion rate tracking, and unmoderated A/B experiments.",
-  },
-  {
-    category: "Process",
-    q: "What tools and software does Ashish use?",
-    a: "Ashish leverages an industry-standard modern toolkit:\n\n• **Product Design:** Figma, FigJam, Tokens Studio, Adobe Creative Cloud\n• **Prototyping & Motion:** Framer, Principle, After Effects, Lottie\n• **AI-Augmented Workflow:** Cursor, Claude, Midjourney, v0, ChatGPT for design thinking & rapid prototyping\n• **Frontend Prototyping:** React, Next.js, TypeScript, Tailwind CSS, Framer Motion\n• **Handoff & Specs:** Zeplin, Storybook, GitHub, Jira/Confluence.",
-  },
-  {
-    category: "Background",
-    q: "What is Ashish's professional experience?",
-    a: "Ashish C Mali is a **Senior Product Designer** with **3+ years of experience** crafting high-impact enterprise B2B tools, fintech platforms, and consumer digital experiences.\n\n• **Key Track Record:** Led high-stakes journeys at **Bajaj Finserv** impacting 50,000+ daily field agents; created scalable design systems; redesigned streaming experiences for mass-scale entertainment.\n• **Education:** Bachelor's degree with dedicated focus on Human-Computer Interaction, Graphic Design, and Digital Product Innovation.\n• **Philosophy:** Good design isn't just aesthetic polish — it's measurable business velocity, effortless user clarity, and deep empathy for the person using the screen.",
-  },
-  {
-    category: "Hiring",
-    q: "Is Ashish available for work or hiring?",
-    a: "Yes! Ashish is actively open to **Full-time Senior Product Designer, Lead UX/UI Designer, and Product Design Consultant roles** with forward-thinking product teams, high-growth startups, and visionary design agencies.\n\n• **Work Preferences:** Open to Remote (worldwide), Hybrid, or Relocation for exceptional opportunities.\n• **Get in Touch:**\n  📧 **Email:** [ashishcmali@gmail.com](mailto:ashishcmali@gmail.com)\n  💼 **LinkedIn:** [linkedin.com/in/ashishcmali](https://www.linkedin.com/in/ashishcmali)\n  📱 **Location:** India (available across US, UK, EU, and APAC time zones).",
-  },
-];
+function renderInline(text: string): React.ReactNode[] {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return (
+        <strong key={i} className="font-semibold text-amber-400">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    return part;
+  });
+}
 
-const INITIAL_SUGGESTIONS = [
-  "Tell me about the Bajaj Sales One enterprise app",
-  "How does the Prime Video redesign solve browse fatigue?",
-  "How did Ashish scale design systems by 40%?",
-  "Is Ashish available for new roles or hiring?",
-];
+function renderMessageContent(content: string): React.ReactNode {
+  const lines = content.split("\n");
+  const elements: React.ReactNode[] = [];
+  let bulletItems: React.ReactNode[] = [];
+  let numberedItems: React.ReactNode[] = [];
+  let key = 0;
+
+  const flushBullets = () => {
+    if (bulletItems.length > 0) {
+      elements.push(
+        <ul key={key++} className="space-y-1.5 my-1.5 pl-0.5">
+          {bulletItems}
+        </ul>
+      );
+      bulletItems = [];
+    }
+  };
+
+  const flushNumbered = () => {
+    if (numberedItems.length > 0) {
+      elements.push(
+        <ol key={key++} className="space-y-1.5 my-1.5 pl-0.5">
+          {numberedItems}
+        </ol>
+      );
+      numberedItems = [];
+    }
+  };
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const trimmed = line.trim();
+
+    if (trimmed === "") {
+      flushBullets();
+      flushNumbered();
+      continue;
+    }
+
+    const bulletMatch = trimmed.match(/^[\*\-•]\s+(.+)/);
+    if (bulletMatch) {
+      flushNumbered();
+      bulletItems.push(
+        <li key={key++} className="flex items-start gap-2 text-white/90">
+          <span className="mt-1 shrink-0 w-1.5 h-1.5 rounded-full bg-amber-400/70 inline-block" />
+          <span>{renderInline(bulletMatch[1])}</span>
+        </li>
+      );
+      continue;
+    }
+
+    const numberedMatch = trimmed.match(/^(\d+)\.\s+(.+)/);
+    if (numberedMatch) {
+      flushBullets();
+      numberedItems.push(
+        <li key={key++} className="flex items-start gap-2 text-white/90">
+          <span className="shrink-0 font-semibold text-amber-400/80 min-w-[1.2em] text-right">
+            {numberedMatch[1]}.
+          </span>
+          <span>{renderInline(numberedMatch[2])}</span>
+        </li>
+      );
+      continue;
+    }
+
+    flushBullets();
+    flushNumbered();
+    elements.push(
+      <p key={key++} className="leading-relaxed text-white/90">
+        {renderInline(trimmed)}
+      </p>
+    );
+  }
+
+  flushBullets();
+  flushNumbered();
+
+  return <div className="space-y-2">{elements}</div>;
+}
+
+function ChipRow({
+  children,
+  rowId,
+}: {
+  children: React.ReactNode;
+  rowId: string;
+}) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  const checkScroll = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 4);
+    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+  };
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    checkScroll();
+    el.addEventListener("scroll", checkScroll, { passive: true });
+    const ro = new ResizeObserver(checkScroll);
+    ro.observe(el);
+    return () => {
+      el.removeEventListener("scroll", checkScroll);
+      ro.disconnect();
+    };
+  }, [children]);
+
+  const scrollBy = (dir: "left" | "right") => {
+    scrollRef.current?.scrollBy({ left: dir === "left" ? -140 : 140, behavior: "smooth" });
+  };
+
+  return (
+    <div className="relative flex items-center group/row">
+      <button
+        onClick={() => scrollBy("left")}
+        aria-label="Scroll left"
+        className={`hidden md:flex shrink-0 w-5 h-5 items-center justify-center rounded-full text-neutral-600 hover:text-neutral-300 transition-all duration-200 ${
+          canScrollLeft ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+
+      <div
+        ref={scrollRef}
+        className="flex flex-row overflow-x-auto whitespace-nowrap scrollbar-none gap-1.5 pb-0.5 scroll-smooth flex-1"
+      >
+        {children}
+      </div>
+
+      <button
+        onClick={() => scrollBy("right")}
+        aria-label="Scroll right"
+        className={`hidden md:flex shrink-0 w-5 h-5 items-center justify-center rounded-full text-neutral-600 hover:text-neutral-300 transition-all duration-200 ${
+          canScrollRight ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  );
+}
+
+function ResetIcon() {
+  return (
+    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+      />
+    </svg>
+  );
+}
+
+function isContactResponse(text: string): boolean {
+  const lower = text.toLowerCase();
+  return (
+    lower.includes("ashishcmaliofficial@gmail.com") ||
+    lower.includes("9075521047") ||
+    lower.includes("reach out") ||
+    lower.includes("contact") ||
+    lower.includes("linkedin.com") ||
+    lower.includes("behance.net") ||
+    lower.includes("hire")
+  );
+}
+
+function ContactActions() {
+  const actions = [
+    {
+      label: "WhatsApp",
+      href: "https://wa.me/919075521047",
+      icon: "💬",
+      bg: "bg-emerald-500/10 hover:bg-emerald-500/20 border-emerald-500/30",
+      text: "text-emerald-400",
+    },
+    {
+      label: "Email",
+      href: "mailto:ashishcmaliofficial@gmail.com",
+      icon: "✉️",
+      bg: "bg-amber-500/10 hover:bg-amber-500/20 border-amber-500/30",
+      text: "text-amber-400",
+    },
+    {
+      label: "Call",
+      href: "tel:+919075521047",
+      icon: "📞",
+      bg: "bg-cyan-500/10 hover:bg-cyan-500/20 border-cyan-500/30",
+      text: "text-cyan-400",
+    },
+    {
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/in/ashish-mali-b071b526b",
+      icon: "🔗",
+      bg: "bg-blue-500/10 hover:bg-blue-500/20 border-blue-500/30",
+      text: "text-blue-400",
+    },
+    {
+      label: "Behance",
+      href: "https://www.behance.net/ashishmali",
+      icon: "🎨",
+      bg: "bg-purple-500/10 hover:bg-purple-500/20 border-purple-500/30",
+      text: "text-purple-400",
+    },
+  ];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.2 }}
+      className="ml-10 mt-2"
+    >
+      <p className="text-[10px] text-neutral-500 uppercase tracking-widest font-semibold mb-1.5">
+        Connect directly
+      </p>
+      <div className="flex flex-wrap gap-1.5">
+        {actions.map((a) => (
+          <a
+            key={a.label}
+            href={a.href}
+            target={a.href.startsWith("tel:") || a.href.startsWith("mailto:") ? undefined : "_blank"}
+            rel="noopener noreferrer"
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[10px] font-medium transition-all duration-200 ${a.bg} ${a.text}`}
+          >
+            <span>{a.icon}</span>
+            <span>{a.label}</span>
+          </a>
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+
+function getGreeting() {
+  const hour = new Date().getHours();
+  if (hour < 12) return "Good morning";
+  if (hour < 18) return "Good afternoon";
+  return "Good evening";
+}
+
 export default function CustomAIChat() {
   const [isOpen, setIsOpen] = useState(false);
   const [showFAQ, setShowFAQ] = useState(true);
   const [followUps, setFollowUps] = useState<string[]>([]);
   const [showContactCTAs, setShowContactCTAs] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [targetPerson, setTargetPerson] = useState<string>("");
-  const [targetCompany, setTargetCompany] = useState<string>("");
+  const [targetPerson, setTargetPerson] = useState<string | null>(null);
+  const [targetCompany, setTargetCompany] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
@@ -315,190 +368,210 @@ export default function CustomAIChat() {
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [showWelcome, setShowWelcome] = useState(false);
-  const [hasInteracted, setHasInteracted] = useState(false);
   const [scrollY, setScrollY] = useState(0);
+  const [showWelcome, setShowWelcome] = useState(false);
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const chatEndRef = useRef<HTMLDivElement>(null);
+  const msgContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
 
-    const updateGreetingData = () => {
-      if (
-        typeof window !== "undefined" &&
-        (window as unknown as {
-          __TARGET_GREETING__?: { person: string; company: string };
-        }).__TARGET_GREETING__
-      ) {
-        const tg = (
-          window as unknown as {
-            __TARGET_GREETING__?: { person: string; company: string };
-          }
-        ).__TARGET_GREETING__;
+    if (typeof window !== "undefined") {
+      let storedUserId = localStorage.getItem("ashli_user_id");
+      if (!storedUserId) {
+        storedUserId =
+          "usr_" + Math.random().toString(36).substring(2, 11) + "_" + Date.now().toString(36);
+        localStorage.setItem("ashli_user_id", storedUserId);
+      }
 
-        if (tg?.person) setTargetPerson(tg.person);
-        if (tg?.company) setTargetCompany(tg.company);
+      const params = new URLSearchParams(window.location.search);
+      const p = params.get("person") || params.get("target") || params.get("p");
+      const c = params.get("company") || params.get("org") || params.get("team") || params.get("c");
+      if (p) setTargetPerson(p);
+      if (c) setTargetCompany(c);
+
+      if (p && c) {
+        setMessages([
+          {
+            role: "assistant",
+            content: `Hello ${p} and welcome to team ${c}! I am Ashli 👋, Ashish's interactive AI assistant. Ask me anything about him!`,
+          },
+        ]);
+      } else if (p) {
+        setMessages([
+          {
+            role: "assistant",
+            content: `Hello ${p}! Welcome to Ashish's portfolio. I am Ashli 👋, his interactive AI assistant. Ask me anything about him!`,
+          },
+        ]);
+      } else if (c) {
+        setMessages([
+          {
+            role: "assistant",
+            content: `Hello Team ${c}! Welcome to Ashish's portfolio. I am Ashli 👋, his interactive AI assistant. Ask me anything about him!`,
+          },
+        ]);
+      }
+    }
+
+    const handleGlobalClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target && target.closest("[data-chat-trigger]")) {
+        e.preventDefault();
+        setIsOpen(true);
+        setShowWelcome(false);
       }
     };
+    document.addEventListener("click", handleGlobalClick);
 
-    updateGreetingData();
-    window.addEventListener("greeting-ready", updateGreetingData);
-
-    const scrollHandler = () => {
+    const handleScroll = () => {
       setScrollY(window.scrollY);
     };
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
-    window.addEventListener("scroll", scrollHandler, { passive: true });
+    const fallbackTimer = setTimeout(() => {
+      if (window.scrollY < 100) setShowWelcome(true);
+    }, 2500);
+
+    const handleHeroAnimationComplete = () => {
+      clearTimeout(fallbackTimer);
+      if (window.scrollY < 100) setShowWelcome(true);
+    };
+    window.addEventListener("hero-animation-complete", handleHeroAnimationComplete);
 
     return () => {
-      window.removeEventListener("greeting-ready", updateGreetingData);
-      window.removeEventListener("scroll", scrollHandler);
+      document.removeEventListener("click", handleGlobalClick);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("hero-animation-complete", handleHeroAnimationComplete);
+      clearTimeout(fallbackTimer);
     };
   }, []);
 
   useEffect(() => {
-    if (targetPerson || targetCompany) {
-      setMessages([
-        {
-          role: "assistant",
-          content: getPersonalizedGreeting(targetPerson, targetCompany),
-        },
-      ]);
-    }
-  }, [targetPerson, targetCompany]);
+    if (scrollY >= 100) setShowWelcome(false);
+  }, [scrollY]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!isOpen && !hasInteracted) {
-        setShowWelcome(true);
+    if (isOpen) chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, isOpen, isLoading]);
+
+  useEffect(() => {
+    if (showWelcome) {
+      if (typeof navigator !== "undefined" && navigator.vibrate) {
+        navigator.vibrate(150);
       }
-    }, 2500);
-
-    return () => clearTimeout(timer);
-  }, [isOpen, hasInteracted]);
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, isLoading, followUps]);
-
-  useEffect(() => {
-    if (isOpen) {
-      setShowWelcome(false);
-      setHasInteracted(true);
-      setTimeout(() => inputRef.current?.focus(), 300);
     }
-  }, [isOpen]);
+  }, [showWelcome]);
 
-  // ─── AI Chat Handler ───────────────────────────────────────────────────────
-  const handleSendMessage = async (textToSend?: string) => {
+  useEffect(() => {
+    if (messages.length > 1) {
+      const lastMsg = messages[messages.length - 1];
+      if (lastMsg && lastMsg.role === "assistant") {
+        if (typeof navigator !== "undefined" && navigator.vibrate) {
+          navigator.vibrate(100);
+        }
+      }
+    }
+  }, [messages]);
+
+  const scrollToTop = () => msgContainerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+
+  if (!mounted) return null;
+
+  const handleSend = async (textToSend?: string) => {
     const text = (textToSend || input).trim();
     if (!text || isLoading) return;
 
-    setHasInteracted(true);
-    setInput("");
+    if (!textToSend) setInput("");
     setShowFAQ(false);
     setFollowUps([]);
+    setShowContactCTAs(false);
 
-    // Preserve the conversation history for contextual AI responses.
-    const newMessages: Message[] = [
-      ...messages,
-      { role: "user", content: text },
-    ];
-
+    const newMessages: Message[] = [...messages, { role: "user", content: text }];
     setMessages(newMessages);
     setIsLoading(true);
 
-    const lowerText = text.toLowerCase();
-
-    const isContactQuery =
-      lowerText.includes("contact") ||
-      lowerText.includes("hire") ||
-      lowerText.includes("email") ||
-      lowerText.includes("linkedin") ||
-      lowerText.includes("reach") ||
-      lowerText.includes("available") ||
-      lowerText.includes("work with") ||
-      lowerText.includes("फोन") ||
-      lowerText.includes("मोबाईल") ||
-      lowerText.includes("संपर्क") ||
-      lowerText.includes("नंबर");
-
-    if (isContactQuery) {
-      setShowContactCTAs(true);
-    }
-
     try {
+      const userId =
+        typeof window !== "undefined"
+          ? localStorage.getItem("ashli_user_id") || "anonymous"
+          : "anonymous";
+
       const response = await fetch("/api/chat", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           messages: newMessages,
-          person: targetPerson,
-          company: targetCompany,
+          userId,
+          person: targetPerson || undefined,
+          company: targetCompany || undefined,
+          userAgent: typeof navigator !== "undefined" ? navigator.userAgent : "unknown",
         }),
       });
 
+      if (!response.ok) throw new Error("Failed to get response");
+
       const data = await response.json();
+      const assistantMessage =
+        data.choices?.[0]?.message?.content || "Sorry, I encountered an issue. Let's try again!";
 
-      if (!response.ok) {
-        throw new Error(
-          typeof data?.error === "string"
-            ? data.error
-            : `Chat request failed with status ${response.status}`
-        );
-      }
+      setMessages((prev) => [...prev, { role: "assistant", content: assistantMessage }]);
 
-      const reply = data?.choices?.[0]?.message?.content?.trim();
+      if (isContactResponse(assistantMessage)) setShowContactCTAs(true);
 
-      if (typeof reply !== "string" || !reply) {
-        throw new Error("The AI service returned an empty response.");
-      }
-
-      setMessages((prev) => [
-        ...prev,
-        { role: "assistant", content: reply },
-      ]);
-
-      setFollowUps(getDynamicFollowUps(text, reply));
-    } catch (error) {
-      console.error("Ashli chat request failed:", error);
-
+      const dynamicChips = extractFollowUps(assistantMessage);
+      setFollowUps(dynamicChips);
+    } catch {
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
           content:
-            "I'm having trouble connecting to my AI service right now. Please try again in a moment.",
+            "I'm having a little trouble connecting right now. You can reach Ashish directly via WhatsApp (+91 9075521047) or email (ashishcmaliofficial@gmail.com)!",
         },
       ]);
-
-      setFollowUps([]);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
-    }
+  const handleReset = () => {
+    const initialGreeting =
+      targetPerson && targetCompany
+        ? `Hello ${targetPerson} and welcome to team ${targetCompany}! I am Ashli 👋, Ashish's interactive AI assistant. Ask me anything about him!`
+        : targetPerson
+        ? `Hello ${targetPerson}! Welcome to Ashish's portfolio. I am Ashli 👋, his interactive AI assistant. Ask me anything about him!`
+        : targetCompany
+        ? `Hello Team ${targetCompany}! Welcome to Ashish's portfolio. I am Ashli 👋, his interactive AI assistant. Ask me anything about him!`
+        : `${getGreeting()}! I am Ashli 👋, Ashish's interactive AI assistant. You can ask me anything about him!`;
+
+    setMessages([{ role: "assistant", content: initialGreeting }]);
+    setFollowUps([]);
+    setShowContactCTAs(false);
+    setShowFAQ(true);
+    setInput("");
   };
 
-  if (!mounted) return null;
+  const QUICK_ACTIONS = [
+    { text: "💼 Bajaj Finance", prompt: "Tell me about Ashish's work at Bajaj Finance" },
+    { text: "🎬 Prime Video", prompt: "Explain the Prime Video redesign case study" },
+    { text: "⚡ His Toolkit", prompt: "What design tools and AI workflows does Ashish use?" },
+    { text: "📬 Contact Ashish", prompt: "How can I contact Ashish directly?" },
+  ];
 
   return (
     <>
-      {/* Floating Chat Trigger Button */}
+      {/* Floating Trigger Button */}
       <motion.button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          setIsOpen(!isOpen);
+          setShowWelcome(false);
+        }}
         className="fixed bottom-6 right-6 z-[9999] w-14 h-14 rounded-full bg-[#12141c]/90 border border-amber-500/30 flex items-center justify-center shadow-[0_4px_20px_rgba(245,158,11,0.15)] hover:shadow-[0_4px_25px_rgba(245,158,11,0.35)] cursor-pointer"
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.95 }}
+        aria-label="Open AI Assistant"
       >
         <img
           src="/images/ai_avatar.png"
@@ -508,7 +581,7 @@ export default function CustomAIChat() {
         <span className="absolute inset-0 rounded-full border border-amber-500/20 animate-ping opacity-75 pointer-events-none" />
       </motion.button>
 
-      {/* Bespoke Chat Window Panel */}
+      {/* Chat Window Panel */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -522,286 +595,220 @@ export default function CustomAIChat() {
             <div className="absolute top-[-50px] right-[-50px] w-48 h-48 bg-amber-500/5 rounded-full blur-[40px] pointer-events-none" />
 
             {/* Header */}
-            <div className="px-5 py-4 border-b border-neutral-800/70 bg-gradient-to-r from-neutral-900/60 to-transparent flex items-center justify-between relative z-10">
-              <div className="flex items-center space-x-3">
-                <div className="relative">
+            <div className="flex items-center justify-between p-4 border-b border-neutral-800/80 bg-[#12151c]/90 relative z-10">
+              <div className="flex items-center gap-3">
+                <div className="relative flex items-center justify-center">
                   <img
                     src="/images/ai_avatar.png"
                     alt="Ashli Header Avatar"
                     className="w-10 h-10 rounded-full object-contain"
                   />
-                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-[#0d0f14]" />
+                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-[#090b0e] rounded-full animate-pulse" />
                 </div>
-
                 <div>
-                  <div className="flex items-center space-x-1.5">
-                    <h3 className="font-semibold text-white text-sm tracking-wide font-rubik">
-                      Ashli
-                    </h3>
-                    <span className="px-1.5 py-0.2 text-[9px] font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded">
-                      AI Rep
-                    </span>
-                  </div>
-
-                  <p className="text-[11px] text-neutral-400">
-                    {targetCompany
-                      ? `Briefed on ${targetCompany}`
-                      : "Ask me about Ashish's work"}
-                  </p>
+                  <h3 className="font-rubik text-sm font-semibold tracking-wide text-white">Ashli</h3>
+                  <p className="text-[10px] text-neutral-400 font-inter">AI Assistant</p>
                 </div>
               </div>
 
-              <button
-                onClick={() => setIsOpen(false)}
-                className="w-8 h-8 rounded-full flex items-center justify-center text-neutral-400 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
-              >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-                        {/* Message Area */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3 relative z-10 custom-scrollbar text-xs">
-              {messages.map((m, i) => (
-                <div
-                  key={i}
-                  className={`flex ${
-                    m.role === "user" ? "justify-end" : "justify-start"
-                  }`}
-                >
-                  <div
-                    className={`max-w-[85%] rounded-2xl px-4 py-2.5 leading-relaxed ${
-                      m.role === "user"
-                        ? "bg-amber-500 text-neutral-950 font-medium rounded-br-none shadow-[0_2px_10px_rgba(245,158,11,0.2)]"
-                        : "bg-[#181a24]/90 text-neutral-200 border border-neutral-800/80 rounded-bl-none shadow-sm"
-                    }`}
-                  >
-                    <div className="space-y-1.5">
-                      {m.content.split("\n\n").map((paragraph, pIdx) => {
-                        if (
-                          paragraph.startsWith("• ") ||
-                          paragraph.startsWith("- ")
-                        ) {
-                          return (
-                            <ul key={pIdx} className="space-y-1 pl-1">
-                              {paragraph.split("\n").map((line, lIdx) => (
-                                <li
-                                  key={lIdx}
-                                  className="flex items-start space-x-1.5"
-                                >
-                                  <span className="text-amber-400 font-bold">
-                                    •
-                                  </span>
-                                  <span>
-                                    {formatInlineMarkdown(
-                                      line.replace(/^[•-]\s*/, "")
-                                    )}
-                                  </span>
-                                </li>
-                              ))}
-                            </ul>
-                          );
-                        }
-
-                        return (
-                          <p key={pIdx}>
-                            {formatInlineMarkdown(paragraph)}
-                          </p>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
-              ))}
-
-              {/* Contact CTA buttons if requested */}
-              {showContactCTAs && !isLoading && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="p-3 bg-gradient-to-br from-amber-500/10 via-neutral-900/60 to-transparent border border-amber-500/30 rounded-xl space-y-2 mt-2"
-                >
-                  <p className="text-[11px] text-amber-300 font-medium flex items-center space-x-1.5">
-                    <span>⚡ Quick Connections with Ashish</span>
-                  </p>
-
-                  <div className="grid grid-cols-2 gap-2 pt-1">
-                    <a
-                      href="mailto:ashishcmali@gmail.com"
-                      className="px-3 py-2 bg-amber-500 hover:bg-amber-400 text-neutral-950 rounded-lg text-center font-medium text-[11px] transition-colors flex items-center justify-center space-x-1 shadow-sm"
-                    >
-                      <svg
-                        className="w-3.5 h-3.5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                        />
-                      </svg>
-                      <span>Send Email</span>
-                    </a>
-
-                    <a
-                      href="https://www.linkedin.com/in/ashishcmali"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-3 py-2 bg-neutral-800 hover:bg-neutral-700 text-white rounded-lg text-center font-medium text-[11px] border border-neutral-700 transition-colors flex items-center justify-center space-x-1"
-                    >
-                      <svg
-                        className="w-3.5 h-3.5 fill-current"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                      </svg>
-                      <span>LinkedIn</span>
-                    </a>
-                  </div>
-                </motion.div>
-              )}
-
-              {/* Typing indicator */}
-              {isLoading && (
-                <div className="flex justify-start">
-                  <div className="bg-[#181a24] text-neutral-400 border border-neutral-800 rounded-2xl rounded-bl-none px-4 py-3 flex items-center space-x-1.5">
-                    <span className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-bounce [animation-delay:-0.3s]" />
-                    <span className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-bounce [animation-delay:-0.15s]" />
-                    <span className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-bounce" />
-                  </div>
-                </div>
-              )}
-
-              {/* Dynamic Follow-Up Questions */}
-              {!isLoading && followUps.length > 0 && (
-                <motion.div
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.25 }}
-                  className="pt-2 pb-1 space-y-1.5"
-                >
-                  <p className="text-[10px] text-amber-400/90 font-medium uppercase tracking-wider flex items-center space-x-1">
-                    <span>💡 Deep Dive Follow-Ups:</span>
-                  </p>
-
-                  <div className="flex flex-col space-y-1.5">
-                    {followUps.map((chip, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => handleSendMessage(chip)}
-                        className="text-left px-3 py-1.5 rounded-lg bg-amber-500/5 hover:bg-amber-500/15 border border-amber-500/20 hover:border-amber-500/40 text-neutral-200 hover:text-amber-300 text-[11px] transition-all flex items-center justify-between group cursor-pointer"
-                      >
-                        <span className="line-clamp-1">{chip}</span>
-                        <span className="text-amber-500 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all text-xs">
-                          →
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-                            {/* Initial Suggested Questions */}
-              {showFAQ && messages.length <= 1 && (
-                <div className="pt-2 space-y-2">
-                  <p className="text-[10px] text-neutral-400 font-medium uppercase tracking-wider">
-                    Frequently Asked Questions
-                  </p>
-
-                  <div className="flex flex-col space-y-1.5">
-                    {INITIAL_SUGGESTIONS.map((faq, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => handleSendMessage(faq)}
-                        className="text-left px-3 py-2 rounded-xl bg-neutral-900/80 hover:bg-neutral-800/90 border border-neutral-800 text-neutral-300 hover:text-amber-400 text-[11px] transition-all flex items-center justify-between group cursor-pointer"
-                      >
-                        <span className="line-clamp-1">{faq}</span>
-                        <span className="text-amber-500 opacity-0 group-hover:opacity-100 transition-opacity">
-                          →
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <div ref={messagesEndRef} />
-            </div>
-
-            {/* Input form */}
-            <div className="p-3 border-t border-neutral-800/80 bg-[#0d0f14]/90 relative z-10">
-              <div className="flex items-center space-x-2 bg-neutral-900/90 border border-neutral-800 focus-within:border-amber-500/50 rounded-xl px-3 py-1.5 transition-colors">
-                <input
-                  ref={inputRef}
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  placeholder="Ask anything about Ashish..."
-                  disabled={isLoading}
-                  className="w-full bg-transparent text-white text-xs placeholder-neutral-500 focus:outline-none"
-                />
-
+              <div className="flex items-center gap-1.5">
                 <button
-                  onClick={() => handleSendMessage()}
-                  disabled={!input.trim() || isLoading}
-                  className="w-7 h-7 rounded-lg bg-amber-500 hover:bg-amber-400 disabled:opacity-40 disabled:hover:bg-amber-500 text-neutral-950 flex items-center justify-center transition-colors cursor-pointer shrink-0"
+                  onClick={scrollToTop}
+                  title="Scroll to top"
+                  className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-neutral-800/50 text-neutral-400 hover:text-amber-300 transition-colors cursor-pointer"
                 >
-                  <svg
-                    className="w-3.5 h-3.5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2.5}
-                      d="M5 12h14M12 5l7 7-7 7"
-                    />
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                  </svg>
+                </button>
+                <button
+                  onClick={handleReset}
+                  title="Clear Chat History"
+                  className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-neutral-800/50 text-neutral-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  <ResetIcon />
+                </button>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-neutral-800/50 text-neutral-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
               </div>
-
-              <div className="flex items-center justify-between mt-2 px-1 text-[10px] text-neutral-400">
-                <span>Ashli • Portfolio AI Companion</span>
-                <span>Powered by Ashish</span>
-              </div>
             </div>
+
+            {/* Conversation Log */}
+            <div
+              ref={msgContainerRef}
+              className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-neutral-800 scrollbar-track-transparent"
+            >
+              {messages.map((msg, index) => {
+                const isLastAssistantMsg =
+                  msg.role === "assistant" && index === messages.length - 1;
+                return (
+                  <div
+                    key={index}
+                    className={`flex items-start gap-2.5 ${
+                      msg.role === "user" ? "flex-row-reverse" : "flex-row"
+                    }`}
+                  >
+                    {msg.role === "assistant" ? (
+                      <img
+                        src="/images/ai_avatar.png"
+                        alt="AI"
+                        className="w-8 h-8 rounded-full object-contain shrink-0"
+                      />
+                    ) : (
+                      <div className="w-8 h-8 rounded-full bg-neutral-800 border border-neutral-700/80 flex items-center justify-center text-xs font-semibold text-neutral-300 shrink-0">
+                        You
+                      </div>
+                    )}
+                    <div className="flex flex-col gap-1 max-w-[78%]">
+                      <div
+                        className={`p-3.5 rounded-2xl text-xs md:text-sm leading-relaxed ${
+                          msg.role === "user"
+                            ? "bg-amber-500 text-black font-semibold rounded-tr-none text-left whitespace-pre-wrap shadow-[0_2px_10px_rgba(245,158,11,0.2)]"
+                            : "bg-[#14161f]/95 border border-neutral-800/80 text-neutral-200 rounded-tl-none text-left"
+                        }`}
+                      >
+                        {msg.role === "user" ? msg.content : renderMessageContent(msg.content)}
+                      </div>
+
+                      {isLastAssistantMsg && showContactCTAs && <ContactActions />}
+                    </div>
+                  </div>
+                );
+              })}
+
+              {isLoading && (
+                <div className="flex items-start gap-2.5">
+                  <img
+                    src="/images/ai_avatar.png"
+                    alt="AI Loading"
+                    className="w-8 h-8 rounded-full object-contain shrink-0 animate-pulse"
+                  />
+                  <div className="bg-[#14161f]/95 text-neutral-400 border border-neutral-800/80 p-3.5 rounded-2xl rounded-tl-none flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-bounce" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-bounce [animation-delay:0.2s]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-bounce [animation-delay:0.4s]" />
+                  </div>
+                </div>
+              )}
+              <div ref={chatEndRef} />
+            </div>
+
+            {/* Smart Chips Area */}
+            <div className="p-3 border-t border-neutral-800/60 bg-[#0d0f14]/80 flex flex-col gap-2 relative z-10">
+              <AnimatePresence mode="wait">
+                {showFAQ ? (
+                  <motion.div
+                    key="quickactions"
+                    initial={{ opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    <ChipRow rowId="quick-actions">
+                      {QUICK_ACTIONS.map((btn) => (
+                        <button
+                          key={btn.text}
+                          onClick={() => handleSend(btn.prompt)}
+                          className="shrink-0 text-[10px] bg-amber-500/5 hover:bg-amber-500/12 border border-amber-500/15 hover:border-amber-500/40 text-amber-400/70 hover:text-amber-100 px-2.5 py-1 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-40 disabled:pointer-events-none leading-none"
+                        >
+                          {btn.text}
+                        </button>
+                      ))}
+                    </ChipRow>
+                  </motion.div>
+                ) : followUps.length > 0 ? (
+                  <motion.div
+                    key="followups"
+                    initial={{ opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    <div className="flex items-center justify-between mb-1.5 px-0.5">
+                      <p className="text-[9px] text-neutral-600 font-semibold uppercase tracking-widest">
+                        Dig deeper
+                      </p>
+                      <button
+                        onClick={() => setFollowUps([])}
+                        className="text-[9px] text-neutral-600 hover:text-neutral-400 transition-colors cursor-pointer"
+                      >
+                        dismiss
+                      </button>
+                    </div>
+                    <ChipRow rowId="follow-ups">
+                      {followUps.map((chip) => (
+                        <button
+                          key={chip}
+                          onClick={() => handleSend(chip)}
+                          className="shrink-0 text-[10px] bg-amber-500/5 hover:bg-amber-500/12 border border-amber-400/20 hover:border-amber-400/45 text-amber-400/70 hover:text-amber-100 px-2.5 py-1 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-40 disabled:pointer-events-none leading-none"
+                        >
+                          {chip}
+                        </button>
+                      ))}
+                    </ChipRow>
+                  </motion.div>
+                ) : null}
+              </AnimatePresence>
+            </div>
+
+            {/* Input Form */}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSend();
+              }}
+              className="p-4 border-t border-neutral-800/80 bg-[#12151c]/90 flex gap-2 relative z-10"
+            >
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                disabled={isLoading}
+                placeholder="Ask me anything..."
+                className="flex-1 bg-[#0a0c10] border border-neutral-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-amber-500/40 transition-colors disabled:opacity-50"
+              />
+              <div className="flex gap-2">
+                <button
+                  type="submit"
+                  disabled={!input.trim() || isLoading}
+                  className="w-10 h-10 rounded-xl bg-neutral-800 hover:bg-neutral-700 border border-neutral-700/60 disabled:opacity-40 text-neutral-300 hover:text-amber-400 flex items-center justify-center transition-colors cursor-pointer shrink-0"
+                >
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                  </svg>
+                </button>
+              </div>
+            </form>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Floating Welcome Message Pop-up Badge */}
+      {/* Welcome pop-up above Chatbot button */}
       <AnimatePresence>
-        {showWelcome && !isOpen && (
+        {showWelcome && !isOpen && scrollY < 150 && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 10 }}
+            initial={{ opacity: 0, scale: 0.9, y: 15 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 10 }}
-            className="fixed bottom-24 right-6 z-[9998] max-w-[280px] bg-[#12141c]/95 border border-amber-500/30 rounded-2xl p-3.5 shadow-[0_10px_30px_rgba(0,0,0,0.5)] backdrop-blur-md cursor-pointer"
-            onClick={() => {
-              setIsOpen(true);
-              setShowWelcome(false);
-            }}
+            exit={{ opacity: 0, scale: 0.9, y: 15 }}
+            transition={{ type: "spring", stiffness: 350, damping: 25 }}
+            className="fixed bottom-[88px] right-6 z-[9998] w-72 p-4 rounded-2xl bg-[#0d0f14]/95 border border-amber-500/20 shadow-[0_10px_30px_rgba(0,0,0,0.6)] backdrop-blur-xl text-left flex gap-3 pointer-events-auto font-inter"
           >
-            <div className="pr-4">
+            <div className="absolute -bottom-1.5 right-6 w-3.5 h-3.5 bg-[#0d0f14] border-r border-b border-amber-500/20 transform rotate-45 pointer-events-none" />
+            <img
+              src="/images/ai_avatar.png"
+              alt="Ashli welcome"
+              className="w-8 h-8 rounded-full object-contain shrink-0 bg-[#090b0e] border border-amber-500/10"
+            />
+            <div className="flex-1 pr-4">
               <h4 className="text-[10px] text-amber-500 font-semibold tracking-wider uppercase mb-0.5 font-rubik">
                 Ashli
               </h4>
-
               <p className="text-[11px] text-white/95 leading-normal font-light">
                 {targetPerson && targetCompany ? (
                   <>
@@ -822,23 +829,12 @@ export default function CustomAIChat() {
                 )}
               </p>
             </div>
-
             <button
               onClick={() => setShowWelcome(false)}
               className="absolute top-2 right-2 w-5 h-5 rounded-full flex items-center justify-center text-neutral-500 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
             >
-              <svg
-                className="w-3.5 h-3.5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2.5}
-                  d="M6 18L18 6M6 6l12 12"
-                />
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </motion.div>
@@ -859,105 +855,12 @@ export default function CustomAIChat() {
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.95 }}
           >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2.5}
-                d="M5 15l7-7 7 7"
-              />
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 15l7-7 7 7" />
             </svg>
           </motion.button>
         )}
       </AnimatePresence>
     </>
   );
-}
-
-// Inline Markdown parser
-function formatInlineMarkdown(text: string): React.ReactNode {
-  const parts = [];
-  const regex = /(\*\*.*?\*\*|\*.*?\*|\[.*?\]\(.*?\))/g;
-  let lastIndex = 0;
-  let match;
-
-  while ((match = regex.exec(text)) !== null) {
-    if (match.index > lastIndex) {
-      parts.push(text.substring(lastIndex, match.index));
-    }
-
-    const chunk = match[0];
-
-    if (chunk.startsWith("**") && chunk.endsWith("**")) {
-      parts.push(
-        <strong key={match.index} className="text-white font-semibold">
-          {chunk.slice(2, -2)}
-        </strong>
-      );
-    } else if (chunk.startsWith("*") && chunk.endsWith("*")) {
-      parts.push(
-        <em key={match.index} className="text-neutral-300 italic">
-          {chunk.slice(1, -1)}
-        </em>
-      );
-    } else if (chunk.startsWith("[") && chunk.includes("](")) {
-      const linkMatch = chunk.match(/\[(.*?)\]\((.*?)\)/);
-
-      if (linkMatch) {
-        parts.push(
-          <a
-            key={match.index}
-            href={linkMatch[2]}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-amber-400 hover:text-amber-300 underline underline-offset-2 transition-colors font-medium"
-          >
-            {linkMatch[1]}
-          </a>
-        );
-      }
-    }
-
-    lastIndex = regex.lastIndex;
-  }
-
-  if (lastIndex < text.length) {
-    parts.push(text.substring(lastIndex));
-  }
-
-  return parts;
-}
-
-// Helpers
-function getGreeting(): string {
-  const hour = new Date().getHours();
-
-  if (hour < 12) return "Good morning";
-  if (hour < 17) return "Good afternoon";
-
-  return "Good evening";
-}
-
-function getPersonalizedGreeting(
-  personName?: string,
-  companyName?: string
-): string {
-  if (personName && companyName) {
-    return `Hey ${personName} & Team ${companyName}! 👋 I'm Ashli, Ashish's interactive AI assistant. Welcome to his portfolio! Feel free to explore his featured work, design systems, and product process — or ask me anything directly. What would you like to explore?`;
-  }
-
-  if (personName) {
-    return `Hey ${personName}! 👋 I'm Ashli, Ashish's interactive AI assistant. Welcome to his portfolio! Feel free to explore his featured work, design systems, and product process — or ask me anything directly. What would you like to explore?`;
-  }
-
-  if (companyName) {
-    return `Hey Team ${companyName}! 👋 I'm Ashli, Ashish's interactive AI assistant. Welcome to his portfolio! Feel free to explore his featured work, design systems, and product process — or ask me anything directly. What would you like to explore?`;
-  }
-
-  return `${getGreeting()}! I am Ashli 👋, Ashish's interactive AI assistant. You can ask me anything about him!`;
 }
